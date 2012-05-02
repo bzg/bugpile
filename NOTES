@@ -5,6 +5,37 @@
 A collection of working notes, tasks and important dates.
 
 * Notes
+** Setup elnode
+   :PROPERTIES:
+   :results:  silent
+   :END:
+An abbreviated version of the instructions from
+https://github.com/nicferrier/elnode.
+
+1. clone locally to somewhere on the =load-path=.
+   #+begin_src sh
+   git clone git://github.com/nicferrier/elnode.git
+   #+end_src
+2. load up elnode
+   #+begin_src emacs-lisp
+   (require 'elnode)
+   #+end_src
+3. define a simple handler function
+   #+begin_src emacs-lisp
+     (defun simple-handler (httpcon)
+       (elnode-http-start httpcon "200" '("Content-type" . "text/html"))
+       (elnode-http-return httpcon "<html><b>HELLO!</b></html>"))
+   #+end_src
+4. start the server
+   #+begin_src emacs-lisp
+     (elnode-start 'simple-handler :port 3333 :host "localhost")
+   #+end_src
+5. point your browser at elnode http://localhost:3333/
+6. stop the server
+   #+begin_src emacs-lisp
+     (elnode-stop 3333)
+   #+end_src
+
 * Tasks
 * Dates
 Taken from [[http://www.google-melange.com/gsoc/homepage/google/gsoc2012][here]].

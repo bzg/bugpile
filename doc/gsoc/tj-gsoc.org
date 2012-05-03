@@ -1,0 +1,497 @@
+* bond [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
+
+** TODO Bugpile Requirements Analysis
+*** TODO Use Cases in textual form
+
+**** DONE Register as user
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+**** DONE Edit user details
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** DONE Login
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** DONE Logout
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** TODO Add user to assignees
+     SCHEDULED: <2012-05-03 Do>
+
+**** TODO Remove user from assignees
+     SCHEDULED: <2012-05-03 Do>
+
+**** TODO Add user to notification list
+     SCHEDULED: <2012-05-03 Do>
+
+**** TODO Remove user from notification list
+     SCHEDULED: <2012-05-03 Do>
+
+**** TODO Add reminder
+     SCHEDULED: <2012-05-03 Do>
+
+**** TODO Remove reminder
+     SCHEDULED: <2012-05-03 Do>
+
+
+*** TODO Integrated UML Modelling of Use Cases and UI
+
+**** DONE Register as user
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+**** DONE Edit user details
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+**** DONE Login
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+**** DONE Logout
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+
+**** TODO Add user to assignees
+     SCHEDULED: <2012-05-04 Fr>
+
+**** TODO Remove user from assignees
+     SCHEDULED: <2012-05-04 Fr>
+
+**** TODO Add user to notification list
+     SCHEDULED: <2012-05-04 Fr>
+
+**** TODO Remove user from notification list
+     SCHEDULED: <2012-05-04 Fr>
+
+**** TODO Add reminder
+     SCHEDULED: <2012-05-04 Fr>
+
+**** TODO Remove reminder
+     SCHEDULED: <2012-05-04 Fr>
+
+
+*** TODO Use Case Models
+**** NEXT User management
+     SCHEDULED: <2012-05-06 So>
+
+** TODO Bugpile Software Specification
+*** TODO Transforming Requirements into Specifications
+**** TODO Integrated UML Modelling of Use Cases and UI
+******* TODO Register as user
+        SCHEDULED: <2012-05-03 Do>
+******* TODO Edit user details
+        SCHEDULED: <2012-05-03 Do>
+
+******* TODO Login
+        SCHEDULED: <2012-05-03 Do>
+
+******* TODO Logout
+        SCHEDULED: <2012-05-03 Do>
+
+******* TODO Add user to assignees
+        SCHEDULED: <2012-05-04 Fr>
+
+******* TODO Remove user from assignees
+        SCHEDULED: <2012-05-04 Fr>
+
+******* TODO Add user to notification list
+        SCHEDULED: <2012-05-04 Fr>
+
+******* TODO Remove user from notification list
+        SCHEDULED: <2012-05-04 Fr>
+
+******* TODO Add reminder
+        SCHEDULED: <2012-05-04 Fr>
+
+******* TODO Remove reminder
+        SCHEDULED: <2012-05-04 Fr>
+
+** TODO iOrg
+*** TODO Figure out Authentication
+**** TODO Analyse 'basic http authentication'
+     SCHEDULED: <2012-05-04 Fr>
+**** TODO Analyse 'OAuth'
+     SCHEDULED: <2012-05-05 Sa>
+**** TODO Try authentication prototype
+     SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+*** TODO Figure out Sessions
+**** TODO Analyse 'connect' (node.js framework)
+     SCHEDULED: <2012-05-03 Do>
+**** TODO Analyse 'express' (node.js framework)
+     SCHEDULED: <2012-05-03 Do>
+*** TODO Figure out object-orientation
+**** TODO Define (abstract) class/entitiy and object [analogies] in iOrg
+     SCHEDULED: <2012-05-06 So>
+**** TODO Define inheritence in iOrg
+     SCHEDULED: <2012-05-06 So>
+**** TODO Define composition in iOrg
+     SCHEDULED: <2012-05-06 So>
+**** TODO Try class/entitiy prototype
+     SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+
+* bond [madrid]  <2012-05-10 Do>--<2012-05-20 So>
+
+** TODO Bugpile Requirements Analysis
+*** TODO Use Cases in textual form
+
+**** TODO Create project
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Delete project
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Switch project
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Open new task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Re-open task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Edit task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Close task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Add related task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Remove related task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Assign task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Add comment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Edit comment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Delete comment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Add attachment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Delete attachment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Attach a file
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Search tasklist
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Take action on selected tasks
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Search event log
+     SCHEDULED: <2012-05-10 Do>
+
+*** TODO Integrated UML Modelling of Use Cases and UI
+
+**** TODO Create project
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Delete project
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Switch project
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Open new task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Re-open task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Edit task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Close task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Add related task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Remove related task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Assign task
+     SCHEDULED: <2012-05-11 Fr>
+
+**** TODO Add comment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Edit comment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Delete comment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Add attachment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Delete attachment
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Attach a file
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Search tasklist
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Take action on selected tasks
+     SCHEDULED: <2012-05-10 Do>
+
+**** TODO Search event log
+     SCHEDULED: <2012-05-10 Do>
+
+
+*** TODO Use Case Models
+
+**** TODO User management
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO Task management
+     SCHEDULED: <2012-05-12 Sa>
+
+*** TODO System Activities
+**** TODO Search
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO Report
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO Notificate
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO Remind
+     SCHEDULED: <2012-05-12 Sa>
+
+*** TODO Domain Class Model
+**** TODO Class Model of Requirements Analysis
+     SCHEDULED: <2012-05-12 Sa>
+
+** TODO Bugpile Software Specification
+*** TODO Transforming Requirements into Specifications
+**** TODO Integrated UML Modelling of Use Cases and UI
+***** TODO Create project
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Delete project
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Switch project
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Open new task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Re-open task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Edit task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Close task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Add related task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Remove related task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Assign task
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Add comment
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Edit comment
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Delete comment
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Add attachment
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Delete attachment
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Attach a file
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Search tasklist
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Take action on selected tasks
+      SCHEDULED: <2012-05-13 So>
+
+***** TODO Search event log
+      SCHEDULED: <2012-05-13 So>
+
+**** TODO System Activities
+***** TODO Search
+      SCHEDULED: <2012-05-14 Mo>
+***** TODO Report
+      SCHEDULED: <2012-05-14 Mo>
+***** TODO Notificate
+      SCHEDULED: <2012-05-14 Mo>
+***** TODO Remind
+      SCHEDULED: <2012-05-14 Mo>
+
+** TODO iOrg
+*** TODO Authentication
+**** TODO Implement basic authentication
+     SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+**** TODO Implement basic authentication
+     SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+
+
+* code [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
+** TODO Bugpile Software Architecture
+*** TODO Modified 5-Layer Architecture
+**** TODO Textual description
+     SCHEDULED: <2012-05-21 Mo>
+**** TODO Graphical depiction
+     SCHEDULED: <2012-05-21 Mo>
+** TODO Bugpile Application Design
+*** TODO Locally Refining the Software Architecture
+**** TODO Class Model of Application Design
+***** TODO Adapt the domain class model
+      SCHEDULED: <2012-05-21 Mo>
+***** TODO Transform uml scenes into =views=
+      SCHEDULED: <2012-05-22 Di>--<2012-05-23 Mi>
+***** TODO Transform uml activities  into =actions=
+      SCHEDULED: <2012-05-24 Do>--<2012-05-25 Fr>
+***** TODO Transform uml system actions into =beans=
+      SCHEDULED: <2012-05-26 Sa>--<2012-05-27 So>
+**** TODO Refining the Logic
+***** TODO Complete the bean functions signatures
+      SCHEDULED: <2012-05-28 Mo>
+***** TODO Add operations to entities.
+      SCHEDULED: <2012-05-29 Di>
+***** TODO Write uml interaction models (if necesary)
+      SCHEDULED: <2012-05-30 Mi>
+***** TODO Decide about asynchrous beans
+      SCHEDULED: <2012-05-30 Mi>
+
+** TODO iOrg
+*** TODO Sessions
+**** TODO (partially) Implement 'connect' (node.js)
+     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+**** TODO (partially) Implement 'express' (node.js)
+     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+*** TODO Classes/Entities
+**** TODO Design persistence system
+     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+
+* code [berlin] <2012-05-31 Do>--<2012-07-08 So>
+** Bugpile Implementation
+
+
+* eval [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
+** GSoC mid-term evalution 
+
+
+* code [berlin] <2012-07-14 Sa>--<2012-08-12 So>
+** Bugpile Implementation
+** Bugpile Verification
+
+
+* clean [berlin] <2012-08-13 Mo>--<2012-08-19 So>
+** Clean code
+** Clean documentation
+
+* eval [berlin] <2012-08-20 Mo>--<2012-08-24 Fr>
+** GSoC Final evaluation
+
+
+* Appendix
+** How do evaluations work? 
+Quote from GSoC [[http://www.google-melange.com/document/show/gsoc_program/google/gsoc2012/faqs][faq]]:
+
+#+begin_quote
+Google will pre-publish the evaluation questions for both students
+and mentors. Mentors will fill out mid-term and final evaluations
+for their students via the Google Summer of Code 2012 site. These
+evaluations will be visible in the system to the mentor and the
+mentoring organization's administrator(s). Students will fill out a
+mid-term and final evaluation of their mentors online as well, and
+their evaluations will only be visible in the system to the
+mentoring organization's administrator(s). Program administrators
+from Google will have access to all evaluation data.
+
+Any student who does not submit an evaluation by the evaluation
+deadline will fail that evaluation, regardless of the grade the
+mentor gives the student. If a student submits his or her evaluation
+on time but the mentor does not, then the student is  in an
+"undecided" state until the program administrators can speak to the
+mentor and determine the student's grade.
+
+Students who fail the mid-term are immediately removed from the
+program: it's not possible to fail the mid-term, stay in the
+program, and then have a final evaluation.
+
+In almost all cases, students will never see their mentor's
+evaluation of their progress, nor will a mentor see a student's
+evaluation of her/his mentorship. However, in the case where the
+mentoring organization's administrator and a student's mentor are
+one and the same, the student's evaluation will be shared with the
+mentor. If you are a student in a situation where your mentor is
+also your organization's administrator and you would like to discuss
+an issue with the program, please contact the Google Summer of Code
+program administrators. Organization administrators are expected to
+review mid-term and final evaluations and to provide course
+corrections where necessary.
+In some cases, Google's program administrators may need to share the
+results of evaluations with the student and mentor, such as to
+arbitrate when payment should not be made. Should this need arise,
+all parties will be notified in advance.
+
+In the unlikely event that a mentor and organization administrator
+do not agree on a student's grade for any evaluation, the decision
+of the organization administrator is the final one.
+
+In the also unlikely event that a student does not agree with a
+mentoring organization's evaluation decision at either the midterm
+or the final, the student may choose to submit his/her entire
+project plan, timeline and code sample to Google's program
+administrators. Google will choose an independent engineer to review
+the code and arbitrate the decision. The decision of Google's
+independent engineer is final.
+
+Finally, any mentor who misses a deadline for an evaluation of his/
+her student without notifying the program administrators beforehand
+will not be allowed to attend the Google Summer of Code mentor
+summit. Timely evaluations of Google Summer of Code students are
+crucial to us.
+#+end_quote
+
+
+
+
+
+

@@ -1,0 +1,1017 @@
+#+OPTIONS:    H:3 num:nil toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate hideblocks
+#+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
+#+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
+#+TITLE:      iOrg - interactive Org
+#+AUTHOR:     Thorsten Jolitz
+#+EMAIL:      tj[at]data-driven[dot]de
+#+LANGUAGE:   en
+#+STYLE:      <style type="text/css">#outline-container-introduction{ clear:both; }</style>
+#+LINK_UP:    index.html
+#+LINK_HOME:  http://orgmode.org/worg/
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+# #+name: banner
+# #+begin_html
+#   <div id="subtitle" style="float: center; text-align: center;">
+#   <p>
+#   A Web-Framework based on <a href="http://orgmode.org/">Org-mode</a> and
+#                                 <a href="http://picolisp.com/5000/!wiki?home/">PicoLisp</a>
+#   </p>
+#   <p>
+#   <a href="http://picolisp.com/5000/!wiki?home/">
+#   <img src="http://picolisp.com/5000/wiki/logo.png"/>
+#   </a>
+#   </p>
+#   </div>
+# #+end_html
+
+/A framework for dynamic webprogramming with GNU Emacs Org-mode/
+
+* Introduction
+  :PROPERTIES:
+  :CUSTOM_ID: intro
+  :END:
+
+iOrg is a pure Org-mode and Emacs web framework with
+persistence and versioning through dVCs. It aims at extending
+Org-modes static webpublishing capacities with dynamcic components
+(like html forms and buttons that allow user interaction) and database
+functionality (storing and querying state). 
+
+The web framework abstracts away all of the boilerplate required for
+its [[id:lang-tools][components]] to work together, allowing application builders the
+freedom to focus on the logic of their particular applications.
+
+* Languages and tools
+  :PROPERTIES:
+  :CUSTOM_ID: lang-tools
+  :END:
+
+| Emacs Lisp  | server side                                      |
+| Java Script | client side                                      |
+| Elnode      | web server, handles get and post requests        |
+| Org-mode    | content storage both database and marked up text |
+| DVCS        | data persistence and versioning                  |
+
+* Graphical depiction of the frameworks architecture
+:                                                                         Server
+:                                                  +-------------------------------------------------------+
+:        Client Browser                            |                                                       |
+:     +-------------------+                        |  +-------------------+                                |
+:     |  Static HTML      |     full pages         |  |   Emacs / Elisp   |   +---------------+  +-------+ |
+:     |   Content         | <-----------------+    |  +-------------------+   | Content in    |  |  DVCS | |
+:     |                   |       HTML        |    |  |          +------+ |   | flat files    |==|       | |
+:     |    +--------------+                   +----+--+----------| Org  |-+-->| on file       |==|       | |
+:     |    | inter-mixed  |                        |  | +------+=|      |<+---| system        |==|       | |
+:     |    | interactive  |                        |  | |elnode|=+------+ |   |               |==|       | |
+:     |    | JS forms,    |  JS requests get/post  |  | |      |          |   |               |  |       | |
+:     |    | buttons,     | -----------------------+--+>|      |          |   +---------------+  +-------+ |
+:     |    | etc...       |  form data & json      |  | +--+---+     |    |                          ^     |
+:     |    |              |                        |  +----+---------+----+                          |     |
+:     +----+--------------+                        |       |         |        commit changes         |     |
+:                ^                                 |       |         +-------------------------------+     |
+:                |           responses             |       |             checkout previous versions        |
+:                +---------------------------------+-------+                                               |
+:                        json or raw HTML          |                                                       |
+:                                                  +-------------------------------------------------------+
+
+* The Example Application
+  :PROPERTIES:
+  :CUSTOM_ID: ex-app
+  :END:
+** Bugpile
+   :PROPERTIES:
+   :CUSTOM_ID: bugpile
+   :END:
+A bug tracker (bugpile) is used as an example application for iOrg
+which provides an interactive web interface and bug reports stored in
+Org-mode files. A 'lightweight--version' of a systematic software
+engineering approach is used for the development of bugpile, that can
+be used as a guide for developing web applications with iOrg.
+** About Bugtrackers
+   :PROPERTIES:
+   :CUSTOM_ID: bugtrackers
+   :END:
+*** Why bugtrackers matter
+    :PROPERTIES:
+    :CUSTOM_ID: bugtr-matter
+    :END:
+
+The following quote from [[http://www.joelonsoftware.com/articles/fog0000000043.html][Joel Spolsky]] emphases the importance of
+bugtrackers for good software development:
+
+#+BEGIN_QUOTE
+: Do you have a bug database?
+: 
+: I don't care what you say. If you are developing code, even on a team
+: of one, without an organized database listing all known bugs in the
+: code, you are going to ship low quality code. Lots of programmers
+: think they can hold the bug list in their heads. Nonsense. I can't
+: remember more than two or three bugs at a time, and the next morning,
+: or in the rush of shipping, they are forgotten. You absolutely have to
+: keep track of bugs formally.
+: 
+: Bug databases can be complicated or simple. A minimal useful bug
+: database must include the following data for every bug:
+: 
+:   - complete steps to reproduce the bug
+:   - expected behavior
+:   - observed (buggy) behavior
+:   - who it's assigned to
+:   - whether it has been fixed or not
+: 
+: If the complexity of bug tracking software is the only thing stopping
+: you from tracking your bugs, just make a simple 5 column table with
+: these crucial fields and start using it.
+#+END_QUOTE
+
+*** Elements of a good bug report
+    :PROPERTIES:
+    :CUSTOM_ID: elem-bug-report
+    :END:
+
+Again citing [[http://www.joelonsoftware.com/articles/fog0000000029.html][Joel Spolsky]], here are the three fundamental elements of
+a good bug report:
+
+#+BEGIN_QUOTE
+: It's pretty easy to remember the rule for a good bug report. Every
+: good bug report needs exactly three things.
+: 
+:  1. Steps to reproduce,
+:  2. What you expected to see, and
+:  3. What you saw instead.
+#+END_QUOTE
+
+# ** The design of bugtrackers
+
+** Popular free bugtrackers
+   :PROPERTIES:
+   :CUSTOM_ID: free-bug-tracker
+   :END:
+From the many free bugtrackers available, two have been of special
+importance as inspiration and reference for the bugpile project:
+
+- bugzilla :: a feature-rich, established and well documented
+              [[http://www.bugzilla.org/][bugtracker]].
+- flyspray :: an uncomplicated, web-based [[http://flyspray.org/][bug tracking system]], used
+              by ArchLinux.
+
+* Requirements Analysis
+  :PROPERTIES:
+  :CUSTOM_ID: req-analysis
+  :END:
+** Real World vs Software World
+   :PROPERTIES:
+   :CUSTOM_ID: real-world-vs-sw-world
+   :END:
+When applying an software-engineering like approach to (web)
+application programming, it is important to be aware of the
+distinction between the problem domain (in the real world) and the
+solution domain (in the software world). The /requirements analysis/
+is all about the real world and the users point of view. Even when
+doing a one man project with only imaginary users that can't be
+interviewed, the programmer should try to take on the role of a user
+in this phase. The following phases (/specification/ and /design/)
+transform the real-world model of the /analysis/ into a software model
+in the solution space, which can then be implemented.
+
+** Use Cases in textual form
+   :PROPERTIES:
+   :CUSTOM_ID: use-case-txt
+   :END:
+
+*** Register as user
+    :PROPERTIES:
+    :CUSTOM_ID: register-as-user-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | register as user               |
+| *actors*           | user                           |
+| *precondition*     | --                             |
+| *main flow*        | user selects the 'registration' option and enters 'username' (that might be a real name) and 'email' |
+| *alternative flow* | --                             |
+| *postcondition*    | user authentication data permanently stored in the system |
+
+
+*** Edit user details
+    :PROPERTIES:
+    :CUSTOM_ID: edit-user-details-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | edit user details              |
+| *actors*           | user                           |
+| *precondition*     | user is logged in              |
+| *main flow*        | user selects 'edit user details' option, modifies some information, and stores the modified information |
+| *alternative flow* | user selects the 'edit user details' option first, and then the 'delete user' option |
+| *postcondition*    | user deleted or valid authentication data stored in the system |
+
+*** Login
+    :PROPERTIES:
+    :CUSTOM_ID: login-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | login                          |
+| *actors*           | user                           |
+| *precondition*     | user is registered             |
+| *main flow*        | user selects the 'log in' option and enters his credentials |
+| *alternative flow* | --                             |
+| *postcondition*    | user is logged in              |
+
+*** Logout
+    :PROPERTIES:
+    :CUSTOM_ID: logout-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | logout                         |
+| *actors*           | user                           |
+| *precondition*     | user is logged in              |
+| *main flow*        | user selects logout option     |
+| *alternative flow* | --                             |
+| *postcondition*    | user is logged out             |
+
+*** Create project
+    :PROPERTIES:
+    :CUSTOM_ID: create-project-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Delete project
+    :PROPERTIES:
+    :CUSTOM_ID: delete-project-txt
+    :END:      
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Switch project
+    :PROPERTIES:
+    :CUSTOM_ID: switch-project-txt
+    :END:   
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Open new task
+    :PROPERTIES:
+    :CUSTOM_ID: open-new-task-txt
+    :END:      
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Re-open task
+    :PROPERTIES:
+    :CUSTOM_ID: reopen-task-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Edit task
+    :PROPERTIES:
+    :CUSTOM_ID: edit-task-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Close task
+    :PROPERTIES:
+    :CUSTOM_ID: close-task-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Add related task
+    :PROPERTIES:
+    :CUSTOM_ID: add-related-task-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Remove related task
+    :PROPERTIES:
+    :CUSTOM_ID: remove-related-task-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Add user to assignees
+    :PROPERTIES:
+    :CUSTOM_ID: add-user-assignees-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Remove user from assignees
+    :PROPERTIES:
+    :CUSTOM_ID: remove-user-assignees-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Assign task
+    :PROPERTIES:
+    :CUSTOM_ID: assign-task-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Add comment
+    :PROPERTIES:
+    :CUSTOM_ID: add-comment-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Edit comment
+    :PROPERTIES:
+    :CUSTOM_ID: edit-comment-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Delete comment
+    :PROPERTIES:
+    :CUSTOM_ID: delete-comment-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Add attachment
+    :PROPERTIES:
+    :CUSTOM_ID: add-attachment-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Delete attachment
+    :PROPERTIES:
+    :CUSTOM_ID: delete-attachment-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Attach a file
+    :PROPERTIES:
+    :CUSTOM_ID: attach-file-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Search tasklist
+    :PROPERTIES:
+    :CUSTOM_ID: search-task-list-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Take action on selected tasks
+    :PROPERTIES:
+    :CUSTOM_ID: take-action-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Add user to notification list
+    :PROPERTIES:
+    :CUSTOM_ID: add-user-notification-list-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Remove user from notification list
+    :PROPERTIES:
+    :CUSTOM_ID: remove-user-notification-list-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Add reminder
+    :PROPERTIES:
+    :CUSTOM_ID: add-reminder-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Remove reminder
+    :PROPERTIES:
+    :CUSTOM_ID: remove-reminder-txt
+    :END: 
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Search event log 
+    :PROPERTIES:
+    :CUSTOM_ID: search-event-log-txt
+    :END: 
+
+
+| *use case*         |    |
+| *actors*           |    |
+| *precondition*     | -- |
+| *main flow*        |    |
+| *alternative flow* | -- |
+| *postcondition*    | -- |
+
+*** Two Use cases                                                  :noexport:
+Here are some use cases demonstrating how the pieces all play
+together, that should shed light on the couplings displayed above.
+
+**** Change the state of a bug from TODO to DONE
+First lets assume that we have a list of bugs stored in an Org-mode
+document on the file system.  Each bug will be represented by a
+headline with some meta-data stored in the properties, e.g.,
+
+#+begin_src org
+  ,* bugs
+  ,** TODO foo doesn't work
+  ,   :PROPERTIES:
+  ,   :submitted-by: user-x
+  ,   :assigned-to: user-y
+  ,   :priority: HIGH
+  ,   :ID:       515a1747-8ee1-42a7-8ca1-9a0c38844218
+  ,   :END:
+  ,I don't like it when =foo= doesn't work.  Here's my reproduction
+  ,information...
+  ,** TODO bar works too well
+  ,   :PROPERTIES:
+  ,   :submitted-by: user-y
+  ,   :assigned-to: user-z
+  ,   :priority: LOW
+  ,   :ID:       cda87532-62f5-413d-a748-17bc909064f8
+  ,   :END:
+  ,Feature =bar= works too well and is making =foo= look bad, please stop
+  ,showing off.
+#+end_src
+
+A remote user navigates to the bug listing page in her browser, the
+browser requests the page from elnode, which requests the html export
+of the page from Org, which reads the page from the file system,
+exports to html which is then passed back to elnode which serves the
+page.  Some JS is inserted into each headline adding buttons for
+perform actions like changing the properties of a bug, editing its
+contents etc...
+
+The user has just completed the first bug "foo doesn't work", so she
+hits the [close this bug] button.  The associated JS is run sending an
+async post request to the server holding the id of the heading and the
+data =state->DONE=.  Elnode parses this post request, and calls the
+associated elisp function passing in the Org-id and the new state as
+arguments.  This elisp function uses the Org-mode API to change the
+state in the actual file on disk, it possibly also calls the
+`vc-checkin' function (see vc.el) to commit the new version of the
+file to the repository.
+
+After this action is performed, Org-mode re-exports the changed
+subtree to HTML.  This new HTML is returned by the function to elnode,
+which sends it as a response to the async JS request.  On the browser
+side the subtree holding this subtree is replaced with the new HTML
+(in which the state is marked as DONE).
+
+**** View a previous version of a wiki page
+A user browses to a wiki page.  The corresponding page is rendered by
+Org-mode to HTML and is wrapped in a wiki-specific template either by
+the Org-mode publishing system or by elnode or by some combination of
+the two (the framework).
+
+Along those items included in the wrapping template are buttons for
+reverting to a previous version.  The user selects this button sending
+a request to elnode.  Elnode parses this request and calls the
+corresponding vc function to list recent commits with commit messages.
+These are then converted to HTML by elnode (possibly with the help of
+Org-mode), and are displayed to the user.
+
+The user selects a particular commit sending a request to the server.
+This request includes the commit ID.  This ID is handed to a vc
+function which checks out a version of the file at that ID, hands this
+file to Org-mode which exports it to HTML, which is then handed to
+elnode and served to the user.
+
+# This would also require specifying the format of these
+# Org-mode files (e.g., what properties do bugs have), and writing elisp
+# functions which could be used outside of the framework e.g., for
+# searching and sorting bug reports.
+
+
+** Integrated UML Modelling of Use Cases and UI
+   :PROPERTIES:
+   :CUSTOM_ID: use-cases-uml
+   :exports:  both
+   :END:      
+
+*** Requirements Oriented UML Activity Diagrams (ROA)
+   :PROPERTIES:
+   :CUSTOM_ID: req-oriented-act-uml
+   :END:      
+
+UML activity diagrams are well suited for modelling complex activities
+with several alternative flows. Based on the [[id:use-case-txt][textual descriptions]] we
+develop one diagram for each use case. While the meaning of the
+diagrams should be self-explanatory (in fact, their main /razon
+d'etre/ is easy communication with non-technical users), there are
+some abbreviations and symbols that require explanation:
+
+| <roa>     | requirements oriented activity |
+| <<UA>>    | User Activity                  |
+| <<UD>>    | User Decision                  |
+| <<SA>>    | (complex) System Activity      |
+| <<SD>>    | System Decision                |
+| <<UC>>    | Use Case                       |
+| *⋔*       | (pitchfork) sub-activity       |
+| <<scene>> | basic elements of web UI       |
+
+
+Each /activity/ has one startpoint and one or several endpoints. Each
+/user activity/ is associated with a /scene/. Other /use cases/ that
+are included in the use case modelled, as well as complex /system
+activities/, are marked as subactivities with a pitchfork (⋔). Only
+complex system activities are considered, not simple stuff like
+storing form data. 
+
+/note: use 'C-x 8 RET pitchfork' (type 'pit' then TAB for completion) to/
+/enter the ⋔ character with Emacs (⋔ is used to mark subactivities)/
+
+*** Register as user
+    :PROPERTIES:
+    :CUSTOM_ID: register-as-user-uml-roa
+    :END: 
+
+#+srcname register-as-user-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/register-as-user-uml-roa.png 
+    title Register as User <roa>
+    note right: <<precondition>> -- \n<<postcondition>> user credentials stored
+    (*) -->  "<<UA>>\nSelect 'register' option"
+      note right: <<scene>>\n<<button/link>>\nregister
+      --> "<<UA>>\nSubmit entered credentials"
+      note right: <<scene>>\n<<input attributes>>\n username, email\n<<button/link>>\nsubmit
+      if "credentials valid?                                   " then
+      --> [  true]  (*)
+    else
+      ---> [  false] "<<UA>>\nSubmit entered credentials"
+    endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/register-as-user-uml-roa.png]]
+
+
+*** Edit user details
+    :PROPERTIES:
+    :CUSTOM_ID: edit-user-details-uml-roa
+    :END: 
+
+#+srcname edit-user-details-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png 
+  title Edit User Details <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> user deleted OR credentials stored
+  (*) --> "<<UA>>\nSelect 'edit user details' option"
+  note right: <<scene>>\n<<button/link>>\nedit user
+  if "delete user?                   " then
+    --> [true] "<<UA>>\nDelete user"
+    note bottom: <<scene>>\n<<button/link>>\ndelete user
+    --> (*)
+  else
+    --> [false] "<<UA>>\nSubmit modified credentials"
+        note bottom: <<scene>>\n<<input attributes>>\n username, email\n<<button/link>>\nsubmit
+    --> (*)
+  endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png]]
+
+
+*** Login
+    :PROPERTIES:
+    :CUSTOM_ID: login-uml-roa
+    :END: 
+
+
+#+srcname login-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/login-uml-roa.png 
+  title Login <roa>
+  note right: <<precondition>> user is registered
+  (*) --> "<<UA>>\nSelect 'login' option"
+  note right: <<scene>>\n<<button/link>>\nlogin
+  if "                                              credentials valid?" then
+    --> [  true] (*)
+  else
+    ---> [  false] "<<UA>>\nSelect 'login' option"
+  endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/login-uml-roa.png]]
+
+
+
+*** Logout
+    :PROPERTIES:
+    :CUSTOM_ID: logout-uml-roa
+    :END: 
+
+# |                    | <30>                           |
+# | *use case*         | logout                         |
+# | *actors*           | user                           |
+# | *precondition*     | user is logged in              |
+# | *main flow*        | user selects logout option     |
+# | *alternative flow* | --                             |
+# | *postcondition*    | user is logged out             |
+
+
+#+srcname logout-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/logout-uml-roa.png 
+  title Logout <roa>
+  note right: <<precondition>> user is logged in
+  (*) --> "<<UA>>\nSelect 'logout' option"
+  note right: <<scene>>\n<<button/link>>\nlogout
+  --> (*)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/logout-uml-roa.png]]
+
+
+*** Create project
+    :PROPERTIES:
+    :CUSTOM_ID: create-project-uml-roa
+    :END: 
+
+
+*** Delete project
+    :PROPERTIES:
+    :CUSTOM_ID: delete-project-uml-roa
+    :END:      
+
+
+*** Switch project
+    :PROPERTIES:
+    :CUSTOM_ID: switch-project-uml-roa
+    :END: 
+
+
+*** Open new task
+    :PROPERTIES:
+    :CUSTOM_ID: open-new-task-uml-roa
+    :END:      
+
+
+*** Re-open task
+    :PROPERTIES:
+    :CUSTOM_ID: reopen-task-uml-roa
+    :END: 
+
+
+*** Edit task
+    :PROPERTIES:
+    :CUSTOM_ID: edit-task-uml-roa
+    :END: 
+
+
+*** Close task
+    :PROPERTIES:
+    :CUSTOM_ID: close-task-uml-roa
+    :END: 
+
+
+*** Add related task
+    :PROPERTIES:
+    :CUSTOM_ID: add-related-task-uml-roa
+    :END: 
+
+
+*** Remove related task
+    :PROPERTIES:
+    :CUSTOM_ID: remove-related-task-uml-roa
+    :END: 
+
+
+*** Add user to assignees
+    :PROPERTIES:
+    :CUSTOM_ID: add-user-assignees-uml-roa
+    :END: 
+
+
+*** Remove user from assignees
+    :PROPERTIES:
+    :CUSTOM_ID: remove-user-assignees-uml-roa
+    :END: 
+
+
+*** Assign task
+    :PROPERTIES:
+    :CUSTOM_ID: assign-task-uml-roa
+    :END: 
+
+
+*** Add comment
+    :PROPERTIES:
+    :CUSTOM_ID: add-comment-uml-roa
+    :END: 
+
+
+*** Edit comment
+    :PROPERTIES:
+    :CUSTOM_ID: edit-comment-uml-roa
+    :END: 
+
+
+*** Delete comment
+    :PROPERTIES:
+    :CUSTOM_ID: delete-comment-uml-roa
+    :END: 
+
+
+*** Add attachment
+    :PROPERTIES:
+    :CUSTOM_ID: add-attachment-uml-roa
+    :END: 
+
+
+*** Delete attachment
+    :PROPERTIES:
+    :CUSTOM_ID: delete-attachment-uml-roa
+    :END: 
+
+
+*** Attach a file
+    :PROPERTIES:
+    :CUSTOM_ID: attach-file-uml-roa
+    :END: 
+
+
+*** Search tasklist
+    :PROPERTIES:
+    :CUSTOM_ID: search-task-list-uml-roa
+    :END: 
+
+
+*** Take action on selected tasks
+    :PROPERTIES:
+    :CUSTOM_ID: take-action-uml-roa
+    :END: 
+
+
+*** Add user to notification list
+    :PROPERTIES:
+    :CUSTOM_ID: add-user-notification-list-uml-roa
+    :END: 
+
+
+*** Remove user from notification list
+    :PROPERTIES:
+    :CUSTOM_ID: remove-user-notification-list-uml-roa
+    :END: 
+
+
+*** Add reminder
+    :PROPERTIES:
+    :CUSTOM_ID: add-reminder-uml-roa
+    :END: 
+
+
+*** Remove reminder
+    :PROPERTIES:
+    :CUSTOM_ID: remove-reminder-uml-roa
+    :END: 
+
+
+*** Search event log 
+    :PROPERTIES:
+    :CUSTOM_ID: search-event-log-uml-roa
+    :END: 
+
+
+
+
+
+** Use Case Models
+   :PROPERTIES:
+   :CUSTOM_ID: use-case-models
+   :exports:  both
+   :END:
+
+*** User management
+    :PROPERTIES:
+    :CUSTOM_ID: user-management-uc-model
+    :END: 
+
+#+srcname user-management-uml-uc
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png
+  title Use Cases for\n<b>User Management</b>
+
+  usecase (Register as user) as (Reg)
+  usecase (Edit user details) as (Ed)
+  usecase (Login) as (In)
+  usecase (Logout) as (Out)
+
+  User --> (Reg) 
+  User --> (Ed) 
+  User --> (In) 
+  User --> (Out) 
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png]]
+
+
+** System Activities
+   :PROPERTIES:
+   :CUSTOM_ID: syst-activities
+   :END:
+** Domain Class Model
+   :PROPERTIES:
+   :CUSTOM_ID: domain-class-model
+   :exports: both
+   :END:
+
+#+srcname domain-class-uml
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/domain-class-uml.png 
+  title Domain Class Model
+  User : username\nemail
+  Role : name 
+  Permission : name
+  User "             0..*" -down- "1..*           " Role
+  Role "1..*" -left- "1..*" Permission
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/domain-class-uml.png]]
+
+
+* Software Specification
+  :PROPERTIES:
+  :CUSTOM_ID: softw-spec
+  :END:
+** Transforming Requirements into Specifications
+   :PROPERTIES:
+   :CUSTOM_ID: trans-req-into-spec
+   :END:
+* Software Architecture
+  :PROPERTIES:
+  :CUSTOM_ID: softw-arch
+  :END:
+** Modified 5-Layer Architecture
+   :PROPERTIES:
+   :CUSTOM_ID: 5-layer-arch
+   :END:
+* Application Design
+  :PROPERTIES:
+  :CUSTOM_ID: appl-design
+  :END:
+** Locally Refining the Software Architecture
+   :PROPERTIES:
+   :CUSTOM_ID: loc-ref-softw-arch
+   :END:
+** Class Model
+   :PROPERTIES:
+   :CUSTOM_ID: class-model
+   :END:
+Based on the assumption that an Org-mode file can be modeled as a kind
+of class hierarchy with inheritance and instantiation, a class model
+can be developed for the application. With the file itself (loosly)
+interpreted as a kind of abstract root class that can not be
+instantiated but has global attributes, and the tree nodes (loosly)
+interpreted as class definitions that can be instantiated (several
+nodes of the same type at the same tree level) and inherited from
+(subnodes), object-oriented design techniques can be applied to
+Org-mode files. Of course the similarities only go so far, and do
+exist only on the conceptual level. The implementation in Emacs Lisp
+is based on functions and (e.g.) lists as data stores that are in no
+way encapsulated into formal classes that are part of the language
+core.
+** Refining the Logic
+   :PROPERTIES:
+   :CUSTOM_ID: refine-logic
+   :END:
+* Implementation
+  :PROPERTIES:
+  :CUSTOM_ID: implementation
+  :END:
+* Verification
+  :PROPERTIES:
+  :CUSTOM_ID: verification
+  :END:
+

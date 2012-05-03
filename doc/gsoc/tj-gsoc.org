@@ -1,92 +1,96 @@
+# -*- mode:org -*-
+#+Options: ^:nil
+##+CATEGORY: bugpile
+
 * bond [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
 
 ** TODO Bugpile Requirements Analysis
 *** TODO Use Cases in textual form
 
-**** DONE Register as user
+**** DONE [req-uc-txt] Register as user
      CLOSED: [2012-05-02 Mi 21:13]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
      :END:
-**** DONE Edit user details
-     CLOSED: [2012-05-02 Mi 21:13]
-     :LOGBOOK:
-     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
-     :END:
-
-**** DONE Login
+**** DONE [req-uc-txt] Edit user details
      CLOSED: [2012-05-02 Mi 21:13]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
      :END:
 
-**** DONE Logout
+**** DONE [req-uc-txt] Login
      CLOSED: [2012-05-02 Mi 21:13]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
      :END:
 
-**** TODO Add user to assignees
+**** DONE [req-uc-txt] Logout
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** TODO [req-uc-txt] Add user to assignees
      SCHEDULED: <2012-05-03 Do>
 
-**** TODO Remove user from assignees
+**** TODO [req-uc-txt] Remove user from assignees
      SCHEDULED: <2012-05-03 Do>
 
-**** TODO Add user to notification list
+**** TODO [req-uc-txt] Add user to notification list
      SCHEDULED: <2012-05-03 Do>
 
-**** TODO Remove user from notification list
+**** TODO [req-uc-txt] Remove user from notification list
      SCHEDULED: <2012-05-03 Do>
 
-**** TODO Add reminder
+**** TODO [req-uc-txt] Add reminder
      SCHEDULED: <2012-05-03 Do>
 
-**** TODO Remove reminder
+**** TODO [req-uc-txt] Remove reminder
      SCHEDULED: <2012-05-03 Do>
 
 
 *** TODO Integrated UML Modelling of Use Cases and UI
 
-**** DONE Register as user
+**** DONE [req-uc-uml] Register as user
      CLOSED: [2012-05-02 Mi 21:18]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
      :END:
-**** DONE Edit user details
-     CLOSED: [2012-05-02 Mi 21:18]
-     :LOGBOOK:
-     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
-     :END:
-
-**** DONE Login
+**** DONE [req-uc-uml] Edit user details
      CLOSED: [2012-05-02 Mi 21:18]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
      :END:
 
-**** DONE Logout
+**** DONE [req-uc-uml] Login
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+**** DONE [req-uc-uml] Logout
      CLOSED: [2012-05-02 Mi 21:18]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
      :END:
 
 
-**** TODO Add user to assignees
+**** TODO [req-uc-uml] Add user to assignees
      SCHEDULED: <2012-05-04 Fr>
 
-**** TODO Remove user from assignees
+**** TODO [req-uc-uml] Remove user from assignees
      SCHEDULED: <2012-05-04 Fr>
 
-**** TODO Add user to notification list
+**** TODO [req-uc-uml] Add user to notification list
      SCHEDULED: <2012-05-04 Fr>
 
-**** TODO Remove user from notification list
+**** TODO [req-uc-uml] Remove user from notification list
      SCHEDULED: <2012-05-04 Fr>
 
-**** TODO Add reminder
+**** TODO [req-uc-uml] Add reminder
      SCHEDULED: <2012-05-04 Fr>
 
-**** TODO Remove reminder
+**** TODO [req-uc-uml] Remove reminder
      SCHEDULED: <2012-05-04 Fr>
 
 
@@ -97,56 +101,56 @@
 ** TODO Bugpile Software Specification
 *** TODO Transforming Requirements into Specifications
 **** TODO Integrated UML Modelling of Use Cases and UI
-******* TODO Register as user
+******* TODO [spec-uc-uml] Register as user
         SCHEDULED: <2012-05-03 Do>
-******* TODO Edit user details
-        SCHEDULED: <2012-05-03 Do>
-
-******* TODO Login
+******* TODO [spec-uc-uml] Edit user details
         SCHEDULED: <2012-05-03 Do>
 
-******* TODO Logout
+******* TODO [spec-uc-uml] Login
         SCHEDULED: <2012-05-03 Do>
 
-******* TODO Add user to assignees
+******* TODO [spec-uc-uml] Logout
+        SCHEDULED: <2012-05-03 Do>
+
+******* TODO [spec-uc-uml] Add user to assignees
         SCHEDULED: <2012-05-04 Fr>
 
-******* TODO Remove user from assignees
+******* TODO [spec-uc-uml] Remove user from assignees
         SCHEDULED: <2012-05-04 Fr>
 
-******* TODO Add user to notification list
+******* TODO [spec-uc-uml] Add user to notification list
         SCHEDULED: <2012-05-04 Fr>
 
-******* TODO Remove user from notification list
+******* TODO [spec-uc-uml] Remove user from notification list
         SCHEDULED: <2012-05-04 Fr>
 
-******* TODO Add reminder
+******* TODO [spec-uc-uml] Add reminder
         SCHEDULED: <2012-05-04 Fr>
 
-******* TODO Remove reminder
+******* TODO [spec-uc-uml] Remove reminder
         SCHEDULED: <2012-05-04 Fr>
 
 ** TODO iOrg
 *** TODO Figure out Authentication
-**** TODO Analyse 'basic http authentication'
+**** TODO [iorg-req-authent] Analyse 'basic http authentication'
      SCHEDULED: <2012-05-04 Fr>
-**** TODO Analyse 'OAuth'
+**** TODO [iorg-req-authent] Analyse 'OAuth'
      SCHEDULED: <2012-05-05 Sa>
-**** TODO Try authentication prototype
+**** TODO [iorg-req-authent] Try authentication prototype
      SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
 *** TODO Figure out Sessions
-**** TODO Analyse 'connect' (node.js framework)
+**** TODO [iorg-req-sessions] Analyse 'connect' (node.js framework)
      SCHEDULED: <2012-05-03 Do>
-**** TODO Analyse 'express' (node.js framework)
+**** TODO [iorg-req-sessions] Analyse 'express' (node.js framework)
      SCHEDULED: <2012-05-03 Do>
 *** TODO Figure out object-orientation
-**** TODO Define (abstract) class/entitiy and object [analogies] in iOrg
+**** TODO [iorg-req-obj-orient] Define (abstract) class/entitiy and object [analogies] in iOrg
      SCHEDULED: <2012-05-06 So>
-**** TODO Define inheritence in iOrg
+**** TODO [iorg-req-obj-orient] Define inheritence in iOrg
      SCHEDULED: <2012-05-06 So>
-**** TODO Define composition in iOrg
+**** TODO [iorg-req-obj-orient] Define composition in iOrg
      SCHEDULED: <2012-05-06 So>
-**** TODO Try class/entitiy prototype
+**** TODO [iorg-req-obj-orient] Try class/entitiy prototype
      SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
 
 * bond [madrid]  <2012-05-10 Do>--<2012-05-20 So>
@@ -154,258 +158,258 @@
 ** TODO Bugpile Requirements Analysis
 *** TODO Use Cases in textual form
 
-**** TODO Create project
+**** TODO [req-uc-txt] Create project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Delete project
+**** TODO [req-uc-txt] Delete project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Switch project
+**** TODO [req-uc-txt] Switch project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Open new task
+**** TODO [req-uc-txt] Open new task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Re-open task
+**** TODO [req-uc-txt] Re-open task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Edit task
+**** TODO [req-uc-txt] Edit task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Close task
+**** TODO [req-uc-txt] Close task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Add related task
+**** TODO [req-uc-txt] Add related task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Remove related task
+**** TODO [req-uc-txt] Remove related task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Assign task
+**** TODO [req-uc-txt] Assign task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Add comment
+**** TODO [req-uc-txt] Add comment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Edit comment
+**** TODO [req-uc-txt] Edit comment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Delete comment
+**** TODO [req-uc-txt] Delete comment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Add attachment
+**** TODO [req-uc-txt] Add attachment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Delete attachment
+**** TODO [req-uc-txt] Delete attachment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Attach a file
+**** TODO [req-uc-txt] Attach a file
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Search tasklist
+**** TODO [req-uc-txt] Search tasklist
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Take action on selected tasks
+**** TODO [req-uc-txt] Take action on selected tasks
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Search event log
+**** TODO [req-uc-txt] Search event log
      SCHEDULED: <2012-05-10 Do>
 
 *** TODO Integrated UML Modelling of Use Cases and UI
 
-**** TODO Create project
+**** TODO [req-uc-uml] Create project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Delete project
+**** TODO [req-uc-uml] Delete project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Switch project
+**** TODO [req-uc-uml] Switch project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Open new task
+**** TODO [req-uc-uml] Open new task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Re-open task
+**** TODO [req-uc-uml] Re-open task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Edit task
+**** TODO [req-uc-uml] Edit task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Close task
+**** TODO [req-uc-uml] Close task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Add related task
+**** TODO [req-uc-uml] Add related task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Remove related task
+**** TODO [req-uc-uml] Remove related task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Assign task
+**** TODO [req-uc-uml] Assign task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO Add comment
+**** TODO [req-uc-uml] Add comment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Edit comment
+**** TODO [req-uc-uml] Edit comment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Delete comment
+**** TODO [req-uc-uml] Delete comment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Add attachment
+**** TODO [req-uc-uml] Add attachment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Delete attachment
+**** TODO [req-uc-uml] Delete attachment
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Attach a file
+**** TODO [req-uc-uml] Attach a file
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Search tasklist
+**** TODO [req-uc-uml] Search tasklist
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Take action on selected tasks
+**** TODO [req-uc-uml] Take action on selected tasks
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO Search event log
+**** TODO [req-uc-uml] Search event log
      SCHEDULED: <2012-05-10 Do>
 
 
 *** TODO Use Case Models
 
-**** TODO User management
+**** TODO [req-uc-mod] User management
      SCHEDULED: <2012-05-12 Sa>
-**** TODO Task management
+**** TODO [req-uc-mod] Task management
      SCHEDULED: <2012-05-12 Sa>
 
 *** TODO System Activities
-**** TODO Search
+**** TODO [req-syst-act-uml] Search
      SCHEDULED: <2012-05-12 Sa>
-**** TODO Report
+**** TODO [req-syst-act-uml] Report
      SCHEDULED: <2012-05-12 Sa>
-**** TODO Notificate
+**** TODO [req-syst-act-uml] Notificate
      SCHEDULED: <2012-05-12 Sa>
-**** TODO Remind
+**** TODO [req-syst-act-uml] Remind
      SCHEDULED: <2012-05-12 Sa>
 
 *** TODO Domain Class Model
-**** TODO Class Model of Requirements Analysis
+**** TODO [req-dom-class-mod-uml] Class Model of Requirements Analysis
      SCHEDULED: <2012-05-12 Sa>
 
 ** TODO Bugpile Software Specification
 *** TODO Transforming Requirements into Specifications
 **** TODO Integrated UML Modelling of Use Cases and UI
-***** TODO Create project
+***** TODO [spec-uc-uml] Create project
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Delete project
+***** TODO [spec-uc-uml] Delete project
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Switch project
+***** TODO [spec-uc-uml] Switch project
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Open new task
+***** TODO [spec-uc-uml] Open new task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Re-open task
+***** TODO [spec-uc-uml] Re-open task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Edit task
+***** TODO [spec-uc-uml] Edit task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Close task
+***** TODO [spec-uc-uml] Close task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Add related task
+***** TODO [spec-uc-uml] Add related task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Remove related task
+***** TODO [spec-uc-uml] Remove related task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Assign task
+***** TODO [spec-uc-uml] Assign task
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Add comment
+***** TODO [spec-uc-uml] Add comment
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Edit comment
+***** TODO [spec-uc-uml] Edit comment
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Delete comment
+***** TODO [spec-uc-uml] Delete comment
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Add attachment
+***** TODO [spec-uc-uml] Add attachment
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Delete attachment
+***** TODO [spec-uc-uml] Delete attachment
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Attach a file
+***** TODO [spec-uc-uml] Attach a file
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Search tasklist
+***** TODO [spec-uc-uml] Search tasklist
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Take action on selected tasks
+***** TODO [spec-uc-uml] Take action on selected tasks
       SCHEDULED: <2012-05-13 So>
 
-***** TODO Search event log
+***** TODO [spec-uc-uml] Search event log
       SCHEDULED: <2012-05-13 So>
 
 **** TODO System Activities
-***** TODO Search
+***** TODO [spec-syst-act-uml] Search
       SCHEDULED: <2012-05-14 Mo>
-***** TODO Report
+***** TODO [spec-syst-act-uml] Report
       SCHEDULED: <2012-05-14 Mo>
-***** TODO Notificate
+***** TODO [spec-syst-act-uml] Notificate
       SCHEDULED: <2012-05-14 Mo>
-***** TODO Remind
+***** TODO [spec-syst-act-uml] Remind
       SCHEDULED: <2012-05-14 Mo>
 
 ** TODO iOrg
 *** TODO Authentication
-**** TODO Implement basic authentication
+**** TODO [iorg-impl-auth] Implement basic authentication
      SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
-**** TODO Implement basic authentication
+**** TODO [iorg-impl-auth] Implement OAuth authentication
      SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
 
 
 * code [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
 ** TODO Bugpile Software Architecture
 *** TODO Modified 5-Layer Architecture
-**** TODO Textual description
+**** TODO [sw-arch-bp] Textual description
      SCHEDULED: <2012-05-21 Mo>
-**** TODO Graphical depiction
+**** TODO [sw-arch-bp] Graphical depiction
      SCHEDULED: <2012-05-21 Mo>
 ** TODO Bugpile Application Design
 *** TODO Locally Refining the Software Architecture
 **** TODO Class Model of Application Design
-***** TODO Adapt the domain class model
+***** TODO [design-class-model] Adapt the domain class model
       SCHEDULED: <2012-05-21 Mo>
-***** TODO Transform uml scenes into =views=
+***** TODO [design-class-model] Transform uml scenes into =views=
       SCHEDULED: <2012-05-22 Di>--<2012-05-23 Mi>
-***** TODO Transform uml activities  into =actions=
+***** TODO [design-class-model] Transform uml activities  into =actions=
       SCHEDULED: <2012-05-24 Do>--<2012-05-25 Fr>
-***** TODO Transform uml system actions into =beans=
+***** TODO [design-class-model] Transform uml system actions into =beans=
       SCHEDULED: <2012-05-26 Sa>--<2012-05-27 So>
 **** TODO Refining the Logic
-***** TODO Complete the bean functions signatures
+***** TODO [design-refine-logic] Complete the bean functions signatures
       SCHEDULED: <2012-05-28 Mo>
-***** TODO Add operations to entities.
+***** TODO [design-refine-logic] Add operations to entities.
       SCHEDULED: <2012-05-29 Di>
-***** TODO Write uml interaction models (if necesary)
+***** TODO [design-refine-logic] Write uml interaction models (if necesary)
       SCHEDULED: <2012-05-30 Mi>
-***** TODO Decide about asynchrous beans
+***** TODO [design-refine-logic] Decide about asynchrous beans
       SCHEDULED: <2012-05-30 Mi>
 
 ** TODO iOrg
 *** TODO Sessions
-**** TODO (partially) Implement 'connect' (node.js)
+**** TODO [iorg-impl-sessions] (partially) Implement 'connect' (node.js)
      SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
-**** TODO (partially) Implement 'express' (node.js)
+**** TODO [iorg-impl-sessions] (partially) Implement 'express' (node.js)
      SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
 *** TODO Classes/Entities
-**** TODO Design persistence system
+**** TODO [iorg-design-persist] Design persistence system
      SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
 
 * code [berlin] <2012-05-31 Do>--<2012-07-08 So>
@@ -427,71 +431,5 @@
 
 * eval [berlin] <2012-08-20 Mo>--<2012-08-24 Fr>
 ** GSoC Final evaluation
-
-
-* Appendix
-** How do evaluations work? 
-Quote from GSoC [[http://www.google-melange.com/document/show/gsoc_program/google/gsoc2012/faqs][faq]]:
-
-#+begin_quote
-Google will pre-publish the evaluation questions for both students
-and mentors. Mentors will fill out mid-term and final evaluations
-for their students via the Google Summer of Code 2012 site. These
-evaluations will be visible in the system to the mentor and the
-mentoring organization's administrator(s). Students will fill out a
-mid-term and final evaluation of their mentors online as well, and
-their evaluations will only be visible in the system to the
-mentoring organization's administrator(s). Program administrators
-from Google will have access to all evaluation data.
-
-Any student who does not submit an evaluation by the evaluation
-deadline will fail that evaluation, regardless of the grade the
-mentor gives the student. If a student submits his or her evaluation
-on time but the mentor does not, then the student is  in an
-"undecided" state until the program administrators can speak to the
-mentor and determine the student's grade.
-
-Students who fail the mid-term are immediately removed from the
-program: it's not possible to fail the mid-term, stay in the
-program, and then have a final evaluation.
-
-In almost all cases, students will never see their mentor's
-evaluation of their progress, nor will a mentor see a student's
-evaluation of her/his mentorship. However, in the case where the
-mentoring organization's administrator and a student's mentor are
-one and the same, the student's evaluation will be shared with the
-mentor. If you are a student in a situation where your mentor is
-also your organization's administrator and you would like to discuss
-an issue with the program, please contact the Google Summer of Code
-program administrators. Organization administrators are expected to
-review mid-term and final evaluations and to provide course
-corrections where necessary.
-In some cases, Google's program administrators may need to share the
-results of evaluations with the student and mentor, such as to
-arbitrate when payment should not be made. Should this need arise,
-all parties will be notified in advance.
-
-In the unlikely event that a mentor and organization administrator
-do not agree on a student's grade for any evaluation, the decision
-of the organization administrator is the final one.
-
-In the also unlikely event that a student does not agree with a
-mentoring organization's evaluation decision at either the midterm
-or the final, the student may choose to submit his/her entire
-project plan, timeline and code sample to Google's program
-administrators. Google will choose an independent engineer to review
-the code and arbitrate the decision. The decision of Google's
-independent engineer is final.
-
-Finally, any mentor who misses a deadline for an evaluation of his/
-her student without notifying the program administrators beforehand
-will not be allowed to attend the Google Summer of Code mentor
-summit. Timely evaluations of Google Summer of Code students are
-crucial to us.
-#+end_quote
-
-
-
-
 
 

@@ -342,29 +342,33 @@ in the solution space, which can then be implemented.
 | *alternative flow* | -- |
 | *postcondition*    | -- |
 
-*** Add user to assignees
+*** Search users
     :PROPERTIES:
-    :CUSTOM_ID: add-user-assignees-txt
+    :CUSTOM_ID: search-users-txt
     :END: 
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | search users                   |
+| *actors*           | admin                          |
+| *precondition*     | admin is logged in             |
+| *main flow*        | admin selects 'search users' option |
+| *alternative flow* | --                             |
+| *postcondition*    | admin sees registered users    |
 
-*** Remove user from assignees
+*** Take action on selected users
     :PROPERTIES:
-    :CUSTOM_ID: remove-user-assignees-txt
+    :CUSTOM_ID: take-action-users-txt
     :END: 
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+/e.g. add user(s) to assignees, remove user(s) from assignees/
+
+|                    | <30>                           |
+| *use case*         | take action on selected users  |
+| *actors*           | admin                          |
+| *precondition*     | admin is logged in AND at least one registered user |
+| *main flow*        | admin selects users and the action to take on them |
+| *alternative flow* | --                             |
+| *postcondition*    | action was applied to selected users |
 
 *** Assign task
     :PROPERTIES:
@@ -464,8 +468,10 @@ in the solution space, which can then be implemented.
 
 *** Take action on selected tasks
     :PROPERTIES:
-    :CUSTOM_ID: take-action-txt
+    :CUSTOM_ID: take-action-tasks-txt
     :END: 
+
+/e.g. 'add/remove user to notification list', 'add/remove reminder'/
 
 | *use case*         |    |
 | *actors*           |    |
@@ -474,53 +480,7 @@ in the solution space, which can then be implemented.
 | *alternative flow* | -- |
 | *postcondition*    | -- |
 
-*** Add user to notification list
-    :PROPERTIES:
-    :CUSTOM_ID: add-user-notification-list-txt
-    :END: 
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Remove user from notification list
-    :PROPERTIES:
-    :CUSTOM_ID: remove-user-notification-list-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Add reminder
-    :PROPERTIES:
-    :CUSTOM_ID: add-reminder-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Remove reminder
-    :PROPERTIES:
-    :CUSTOM_ID: remove-reminder-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
 
 *** Search event log 
     :PROPERTIES:
@@ -808,17 +768,16 @@ storing form data.
     :END: 
 
 
-*** Add user to assignees
+*** Search users
     :PROPERTIES:
-    :CUSTOM_ID: add-user-assignees-uml-roa
+    :CUSTOM_ID: search-users--uml-roa
     :END: 
 
 
-*** Remove user from assignees
+*** Take action on selected users
     :PROPERTIES:
-    :CUSTOM_ID: remove-user-assignees-uml-roa
+    :CUSTOM_ID: take-action-users-uml-roa
     :END: 
-
 
 *** Assign task
     :PROPERTIES:
@@ -871,30 +830,6 @@ storing form data.
 *** Take action on selected tasks
     :PROPERTIES:
     :CUSTOM_ID: take-action-uml-roa
-    :END: 
-
-
-*** Add user to notification list
-    :PROPERTIES:
-    :CUSTOM_ID: add-user-notification-list-uml-roa
-    :END: 
-
-
-*** Remove user from notification list
-    :PROPERTIES:
-    :CUSTOM_ID: remove-user-notification-list-uml-roa
-    :END: 
-
-
-*** Add reminder
-    :PROPERTIES:
-    :CUSTOM_ID: add-reminder-uml-roa
-    :END: 
-
-
-*** Remove reminder
-    :PROPERTIES:
-    :CUSTOM_ID: remove-reminder-uml-roa
     :END: 
 
 

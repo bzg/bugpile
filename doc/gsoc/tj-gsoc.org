@@ -6,6 +6,11 @@
 
 ** TODO Bugpile Requirements Analysis
 *** TODO Use Cases in textual form
+    :LOGBOOK:
+    CLOCK: [2012-05-03 Do 18:27]--[2012-05-03 Do 18:30] =>  0:03
+    CLOCK: [2012-05-03 Do 18:25]--[2012-05-03 Do 18:26] =>  0:01
+    CLOCK: [2012-05-03 Do 18:16]--[2012-05-03 Do 18:18] =>  0:02
+    :END:
 
 **** DONE [req-uc-txt] Register as user
      CLOSED: [2012-05-02 Mi 21:13]
@@ -30,24 +35,50 @@
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
      :END:
 
-**** TODO [req-uc-txt] Add user to assignees
-     SCHEDULED: <2012-05-03 Do>
+**** DONE [req-uc-txt] Add user to assignees
+     CLOSED: [2012-05-03 Do 18:00] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:00]
+     CLOCK: [2012-05-03 Do 17:24]--[2012-05-03 Do 17:59] =>  0:35
+     :END:
+Deleted, is special case of search users and take actions on selected
+users. 
+**** DONE [req-uc-txt] Remove user from assignees
+     CLOSED: [2012-05-03 Do 18:16] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:16]
+     CLOCK: [2012-05-03 Do 17:59]--[2012-05-03 Do 18:16] =>  0:17
+     :END:
 
-**** TODO [req-uc-txt] Remove user from assignees
-     SCHEDULED: <2012-05-03 Do>
+Deleted, is special case of search users and take actions on selected
+users. 
 
-**** TODO [req-uc-txt] Add user to notification list
-     SCHEDULED: <2012-05-03 Do>
+**** DONE [req-uc-txt] Add user to notification list
+     CLOSED: [2012-05-03 Do 18:25] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:25]
+     CLOCK: [2012-05-03 Do 18:18]--[2012-05-03 Do 18:25] =>  0:07
+     :END:
+Deleted, is a special case of 'take action on selected task'
 
-**** TODO [req-uc-txt] Remove user from notification list
-     SCHEDULED: <2012-05-03 Do>
+**** DONE [req-uc-txt] Remove user from notification list
+     CLOSED: [2012-05-03 Do 18:25] SCHEDULED: <2012-05-03 Do>
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:25]
+Deleted, is a special case of 'take action on selected task'
 
-**** TODO [req-uc-txt] Add reminder
-     SCHEDULED: <2012-05-03 Do>
+**** DONE [req-uc-txt] Add reminder
+     CLOSED: [2012-05-03 Do 18:26] SCHEDULED: <2012-05-03 Do>
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:26]
+Deleted, is a special case of 'take action on selected task'
 
-**** TODO [req-uc-txt] Remove reminder
-     SCHEDULED: <2012-05-03 Do>
+**** DONE [req-uc-txt] Remove reminder
+     CLOSED: [2012-05-03 Do 18:27] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:27]
+     CLOCK: [2012-05-03 Do 18:26]--[2012-05-03 Do 18:27] =>  0:01
+     :END:
 
+Deleted, is a special case of 'take action on selected task'
 
 *** TODO Integrated UML Modelling of Use Cases and UI
 

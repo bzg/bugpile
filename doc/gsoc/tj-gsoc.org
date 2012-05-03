@@ -2,7 +2,7 @@
 #+Options: ^:nil
 ##+CATEGORY: bugpile
 
-* bond [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
+* Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
 
 ** TODO Bugpile Requirements Analysis
 *** TODO Use Cases in textual form
@@ -153,7 +153,7 @@
 **** TODO [iorg-req-obj-orient] Try class/entitiy prototype
      SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
 
-* bond [madrid]  <2012-05-10 Do>--<2012-05-20 So>
+* Community bonding [madrid]  <2012-05-10 Do>--<2012-05-20 So>
 
 ** TODO Bugpile Requirements Analysis
 *** TODO Use Cases in textual form
@@ -374,7 +374,7 @@
      SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
 
 
-* code [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
+* Coding [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
 ** TODO Bugpile Software Architecture
 *** TODO Modified 5-Layer Architecture
 **** TODO [sw-arch-bp] Textual description
@@ -412,24 +412,24 @@
 **** TODO [iorg-design-persist] Design persistence system
      SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
 
-* code [berlin] <2012-05-31 Do>--<2012-07-08 So>
+* Coding [berlin] <2012-05-31 Do>--<2012-07-08 So>
 ** Bugpile Implementation
 
 
-* eval [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
+* Evaluating (mid-term) [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
 ** GSoC mid-term evalution 
 
 
-* code [berlin] <2012-07-14 Sa>--<2012-08-12 So>
+* Coding [berlin] <2012-07-14 Sa>--<2012-08-12 So>
 ** Bugpile Implementation
 ** Bugpile Verification
 
 
-* clean [berlin] <2012-08-13 Mo>--<2012-08-19 So>
+* Cleaning up [berlin] <2012-08-13 Mo>--<2012-08-19 So>
 ** Clean code
 ** Clean documentation
 
-* eval [berlin] <2012-08-20 Mo>--<2012-08-24 Fr>
+* Evaluating (final) [berlin] <2012-08-20 Mo>--<2012-08-24 Fr>
 ** GSoC Final evaluation
 
 

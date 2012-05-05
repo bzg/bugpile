@@ -757,22 +757,18 @@ storing form data.
 # | *alternative flow* | --                             |
 # | *postcondition*    | action was applied to selected users |
 
-#+srcname edit-user-details-uml-roa
-#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png 
-  title Edit User Details <roa>
-  note right: <<precondition>> user is logged in\n<<postcondition>> user deleted OR credentials stored
-  (*) --> "<<UA>>\nSelect 'edit user details' option"
-  note right: <<scene>>\n<<button/link>>\nedit user
-  if "delete user?                   " then
-    --> [true] "<<UA>>\nDelete user"
-    note bottom: <<scene>>\n<<button/link>>\ndelete user
-    --> (*)
-  else
-    --> [false] "<<UA>>\nSubmit modified credentials"
-        note bottom: <<scene>>\n<<input attributes>>\n username, email\n<<button/link>>\nsubmit
-    --> (*)
-  endif
+#+srcname take-action-select-users-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png 
+  title Take action on selected user<roa>
+  note right: <<precondition>> admin is logged in\n<<postcondition>>action on user performed
+  (*) --> "<<UA>>\nSearch users ⋔" 
+  --> "<<UA>>\nTake action on selected users"
+  note right: <<scene>>\n<<button/link>>>>\nsubmit
+  --> (*)
 #+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png]]
 
 *** Create project
     :PROPERTIES:

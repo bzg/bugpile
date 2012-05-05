@@ -81,6 +81,9 @@ Deleted, is a special case of 'take action on selected task'
 Deleted, is a special case of 'take action on selected task'
 
 *** TODO Integrated UML Modelling of Use Cases and UI
+    :LOGBOOK:
+    CLOCK: [2012-05-05 Sa 20:07]
+    :END:
 
 **** DONE [req-uc-uml] Register as user
      CLOSED: [2012-05-02 Mi 21:18]
@@ -112,10 +115,11 @@ Deleted, is a special case of 'take action on selected task'
      - State "TODO"       from "DONE"       [2012-05-05 Sa 16:43]
      - State "DONE"       from ""           [2012-05-05 Sa 16:43]
      :END:
-**** NEXT [req-uc-uml] Take action on selected users
-     SCHEDULED: <2012-05-05 Sa>
+**** DONE [req-uc-uml] Take action on selected users
+     CLOSED: [2012-05-05 Sa 20:07] SCHEDULED: <2012-05-05 Sa>
      :LOGBOOK:
-     CLOCK: [2012-05-05 Sa 19:18]
+     - State "DONE"       from "NEXT"       [2012-05-05 Sa 20:07]
+     CLOCK: [2012-05-05 Sa 19:18]--[2012-05-05 Sa 20:07] =>  0:49
      :END:
 **** CANCELLED [req-uc-uml] Add user to assignees                 :CANCELLED:
      CLOSED: [2012-05-05 Sa 16:43] SCHEDULED: <2012-05-04 Fr>

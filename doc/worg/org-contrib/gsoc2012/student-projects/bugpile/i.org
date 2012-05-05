@@ -714,6 +714,66 @@ storing form data.
 [[file:../../../../images/gsoc/2012/bugpile/logout-uml-roa.png]]
 
 
+*** Search users
+    :PROPERTIES:
+    :CUSTOM_ID: search-users-uml-roa
+    :END: 
+
+# |                    | <30>                           |
+# | *use case*         | search users                   |
+# | *actors*           | admin                          |
+# | *precondition*     | admin is logged in             |
+# | *main flow*        | admin selects 'search users' option |
+# | *alternative flow* | --                             |
+# | *postcondition*    | admin sees registered users    |
+
+#+srcname search-users--uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-users-uml-roa.png 
+  title Search Users<roa>
+  note right: <<precondition>> admin is logged in
+  (*) --> "<<UA>>\nSelect 'search users' option"
+  note right: <<scene>>\n<<button/link>>\nsearch users
+  --> "<<UA>>\nDefine search criteria"
+  note right: <<scene>>\n<<input attributes>>\nusername, email, task \n<<button/link>>\nsearch
+  --> (*)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/search-users-uml-roa.png]]
+
+
+
+*** Take action on selected users
+    :PROPERTIES:
+    :CUSTOM_ID: take-action-select-users-uml-roa
+    :END: 
+
+
+# |                    | <30>                           |
+# | *use case*         | take action on selected users  |
+# | *actors*           | admin                          |
+# | *precondition*     | admin is logged in AND at least one registered user |
+# | *main flow*        | admin selects users and the action to take on them |
+# | *alternative flow* | --                             |
+# | *postcondition*    | action was applied to selected users |
+
+#+srcname edit-user-details-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png 
+  title Edit User Details <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> user deleted OR credentials stored
+  (*) --> "<<UA>>\nSelect 'edit user details' option"
+  note right: <<scene>>\n<<button/link>>\nedit user
+  if "delete user?                   " then
+    --> [true] "<<UA>>\nDelete user"
+    note bottom: <<scene>>\n<<button/link>>\ndelete user
+    --> (*)
+  else
+    --> [false] "<<UA>>\nSubmit modified credentials"
+        note bottom: <<scene>>\n<<input attributes>>\n username, email\n<<button/link>>\nsubmit
+    --> (*)
+  endif
+#+end_src
+
 *** Create project
     :PROPERTIES:
     :CUSTOM_ID: create-project-uml-roa
@@ -768,17 +828,6 @@ storing form data.
     :END: 
 
 
-*** Search users
-    :PROPERTIES:
-    :CUSTOM_ID: search-users--uml-roa
-    :END: 
-
-
-*** Take action on selected users
-    :PROPERTIES:
-    :CUSTOM_ID: take-action-users-uml-roa
-    :END: 
-
 *** Assign task
     :PROPERTIES:
     :CUSTOM_ID: assign-task-uml-roa
@@ -829,7 +878,7 @@ storing form data.
 
 *** Take action on selected tasks
     :PROPERTIES:
-    :CUSTOM_ID: take-action-uml-roa
+    :CUSTOM_ID: take-action-select-tasks-uml-roa
     :END: 
 
 
@@ -1036,6 +1085,26 @@ since we want to keep things simple and our text-based drawing tool/
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/login-uml-soa.png]]
+
+*** Logout
+    :PROPERTIES:
+    :CUSTOM_ID: logout-uml-soa
+    :END: 
+
+
+#+srcname logout-uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/logout-uml-soa.png 
+  title Logout <soa>
+  note right: <<precondition>> user is logged in
+  (*) --> "<<UA>>\nSelect 'logout' option"
+  note right: <<scene>>\n<<button/link>>\nlogout
+  --> "<<SA>>\nLogout user"
+  --> (*)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/logout-uml-soa.png]]
+
 
 
 

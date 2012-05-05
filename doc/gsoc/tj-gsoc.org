@@ -105,24 +105,65 @@ Deleted, is a special case of 'take action on selected task'
      - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
      :END:
 
+**** DONE [req-uc-uml] Search users
+     CLOSED: [2012-05-05 Sa 19:17] SCHEDULED: <2012-05-05 Sa>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-05 Sa 19:17]
+     - State "TODO"       from "DONE"       [2012-05-05 Sa 16:43]
+     - State "DONE"       from ""           [2012-05-05 Sa 16:43]
+     :END:
+**** NEXT [req-uc-uml] Take action on selected users
+     SCHEDULED: <2012-05-05 Sa>
+     :LOGBOOK:
+     CLOCK: [2012-05-05 Sa 19:18]
+     :END:
+**** CANCELLED [req-uc-uml] Add user to assignees                 :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:43] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:43] \\
+       use case deleted, is special case of 'search user/ take action on
+       selected user'.
+     :END:
 
-**** TODO [req-uc-uml] Add user to assignees
-     SCHEDULED: <2012-05-04 Fr>
+**** CANCELLED [req-uc-uml] Remove user from assignees            :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:44] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:44] \\
+       use case deleted, is special case of 'search user/ take action on
+       selected user'.
+     :END:
 
-**** TODO [req-uc-uml] Remove user from assignees
-     SCHEDULED: <2012-05-04 Fr>
+**** CANCELLED [req-uc-uml] Add user to notification list         :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
 
-**** TODO [req-uc-uml] Add user to notification list
-     SCHEDULED: <2012-05-04 Fr>
+**** CANCELLED [req-uc-uml] Remove user from notification list    :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
 
-**** TODO [req-uc-uml] Remove user from notification list
-     SCHEDULED: <2012-05-04 Fr>
+**** CANCELLED [req-uc-uml] Add reminder                          :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
 
-**** TODO [req-uc-uml] Add reminder
-     SCHEDULED: <2012-05-04 Fr>
-
-**** TODO [req-uc-uml] Remove reminder
-     SCHEDULED: <2012-05-04 Fr>
+**** CANCELLED [req-uc-uml] Remove reminder                       :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
 
 
 *** TODO Use Case Models
@@ -132,6 +173,9 @@ Deleted, is a special case of 'take action on selected task'
 ** TODO Bugpile Software Specification
 *** TODO Transforming Requirements into Specifications
 **** TODO Integrated UML Modelling of Use Cases and UI
+     :LOGBOOK:
+     CLOCK: [2012-05-05 Sa 16:37]--[2012-05-05 Sa 19:18] =>  2:41
+     :END:
 ******* DONE [spec-uc-uml] Register as user
         CLOSED: [2012-05-05 Sa 15:34] SCHEDULED: <2012-05-03 Do>
         :LOGBOOK:
@@ -152,29 +196,67 @@ Deleted, is a special case of 'take action on selected task'
         CLOCK: [2012-05-05 Sa 16:14]--[2012-05-05 Sa 16:25] =>  0:11
         :END:
 
-******* NEXT [spec-uc-uml] Logout
-        SCHEDULED: <2012-05-03 Do>
+******* DONE [spec-uc-uml] Logout
+        CLOSED: [2012-05-05 Sa 16:37] SCHEDULED: <2012-05-03 Do>
         :LOGBOOK:
-        CLOCK: [2012-05-05 Sa 16:25]
+        - State "DONE"       from "NEXT"       [2012-05-05 Sa 16:37]
+        CLOCK: [2012-05-05 Sa 16:25]--[2012-05-05 Sa 16:37] =>  0:12
+        :END:
+******* TODO [spec-uc-uml] Search users
+        SCHEDULED: <2012-05-05 Sa>
+        :LOGBOOK:
+        - State "TODO"       from "DONE"       [2012-05-05 Sa 16:43]
+        - State "DONE"       from ""           [2012-05-05 Sa 16:43]
+        :END:
+******* TODO [spec-uc-uml] Take action on selected users
+        SCHEDULED: <2012-05-05 Sa>
+******* CANCELLED [spec-uc-uml] Add user to assignees             :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:50] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:50] \\
+          use case deleted, is special case of 'search user/ take action on
+          selected user.
         :END:
 
-******* TODO [spec-uc-uml] Add user to assignees
-        SCHEDULED: <2012-05-04 Fr>
+******* CANCELLED [spec-uc-uml] Remove user from assignees        :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:51] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:51] \\
+          use case deleted, is special case of 'search user/ take action on
+          selected user'.
+        :END:
 
-******* TODO [spec-uc-uml] Remove user from assignees
-        SCHEDULED: <2012-05-04 Fr>
+******* CANCELLED [spec-uc-uml] Add user to notification list     :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
 
-******* TODO [spec-uc-uml] Add user to notification list
-        SCHEDULED: <2012-05-04 Fr>
+******* CANCELLED [spec-uc-uml] Remove user from notification list :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
 
-******* TODO [spec-uc-uml] Remove user from notification list
-        SCHEDULED: <2012-05-04 Fr>
+******* CANCELLED [spec-uc-uml] Add reminder                      :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
 
-******* TODO [spec-uc-uml] Add reminder
-        SCHEDULED: <2012-05-04 Fr>
-
-******* TODO [spec-uc-uml] Remove reminder
-        SCHEDULED: <2012-05-04 Fr>
+******* CANCELLED [spec-uc-uml] Remove reminder                   :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
 
 ** TODO iOrg
 *** TODO Figure out Authentication

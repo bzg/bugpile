@@ -184,6 +184,7 @@ Deleted, is a special case of 'take action on selected task'
 **** TODO [iorg-req-obj-orient] Try class/entitiy prototype
      SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
 
+
 * Community bonding [madrid]  <2012-05-10 Do>--<2012-05-20 So>
 
 ** TODO Bugpile Requirements Analysis

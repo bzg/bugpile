@@ -1013,6 +1013,32 @@ since we want to keep things simple and our text-based drawing tool/
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/edit-user-details-uml-soa.png]]
 
+*** Login
+    :PROPERTIES:
+    :CUSTOM_ID: login-uml-soa
+    :END: 
+
+
+#+srcname login-uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/login-uml-soa.png 
+  title Login <soa>
+  note right: <<precondition>> user is registered
+  (*) --> "<<UA>>\nSelect 'login' option"
+  note right: <<scene>>\n<<button/link>>\nlogin
+  --> "<<SA>>\nValidate credentials" 
+     if "                                                 credentials valid?" then
+       --> [  true] "<<SA>>\nLogin user" 
+       --> (*)
+     else
+       ---> [  false] "<<UA>>\nSelect 'login' option"
+     endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/login-uml-soa.png]]
+
+
+
 
 
 

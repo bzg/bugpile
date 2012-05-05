@@ -949,9 +949,9 @@ activity/:
 | <<scene>> | basic elements of web UI   |
 
 
-/note: we make no attempt to conform to [[http://www.omg.org/spec/][formal uml specifications]]/
-/since we want to keep things simple and our text-based drawing tool/
-/[[http://plantuml.sourceforge.net/][PlantUML]] does have its limitations/.
+note: we make no attempt to conform to [[http://www.omg.org/spec/][formal uml specifications]]
+since we want to keep things simple and our text-based drawing tool/
+[[http://plantuml.sourceforge.net/][PlantUML]] does have its limitations.
 
 *** Register as user
     :PROPERTIES:
@@ -971,7 +971,6 @@ activity/:
       if "credentials valid?                                   " then
       --> [  true] "<<SA>>\nStore entered credentials"
       -->  (*)
-
     else
       ---> [  false] "<<UA>>\nSubmit entered credentials"
     endif
@@ -979,6 +978,41 @@ activity/:
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/register-as-user-uml-soa.png]]
+
+*** Edit user details
+    :PROPERTIES:
+    :CUSTOM_ID: edit-user-details-uml-soa
+    :END: 
+
+#+srcname edit-user-details-uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-user-details-uml-soa.png 
+  title Edit User Details <soa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> user deleted OR credentials stored
+  (*) --> "<<UA>>\nSelect 'edit user details' option"
+  note right: <<scene>>\n<<button/link>>\nedit user
+  --> "<<SA>>\nShow 'edit user details' form"
+  if "delete user?                   " then
+    --> [true] "<<UA>>\nDelete user"
+    note bottom: <<scene>>\n<<button/link>>\ndelete user
+    --> "<<SA>>\nFlag user as deleted"
+    --> (*)
+  else
+    --> [false] "<<UA>>\nSubmit modified credentials"
+        note bottom: <<scene>>\n<<input attributes>>\n username, email\n<<button/link>>\nsubmit
+      --> "<<SA>>\nValidate modified credentials"
+      if "credentials valid?                                   " then
+      --> [  true] "<<SA>>\nStore modified credentials"
+      -->  (*)
+     else
+      ---> [  false] "<<UA>>\nSubmit modified credentials"
+     endif
+    --> (*)
+  endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/edit-user-details-uml-soa.png]]
+
 
 
 

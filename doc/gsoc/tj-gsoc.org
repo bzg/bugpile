@@ -132,10 +132,17 @@ Deleted, is a special case of 'take action on selected task'
 ** TODO Bugpile Software Specification
 *** TODO Transforming Requirements into Specifications
 **** TODO Integrated UML Modelling of Use Cases and UI
-******* TODO [spec-uc-uml] Register as user
+******* DONE [spec-uc-uml] Register as user
+        CLOSED: [2012-05-05 Sa 15:34] SCHEDULED: <2012-05-03 Do>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-05 Sa 15:34]
+        CLOCK: [2012-05-05 Sa 13:43]--[2012-05-05 Sa 15:34] =>  1:51
+        :END:
+******* NEXT [spec-uc-uml] Edit user details
         SCHEDULED: <2012-05-03 Do>
-******* TODO [spec-uc-uml] Edit user details
-        SCHEDULED: <2012-05-03 Do>
+        :LOGBOOK:
+        CLOCK: [2012-05-05 Sa 15:34]
+        :END:
 
 ******* TODO [spec-uc-uml] Login
         SCHEDULED: <2012-05-03 Do>

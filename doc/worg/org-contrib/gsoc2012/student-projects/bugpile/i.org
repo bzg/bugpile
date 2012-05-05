@@ -904,6 +904,84 @@ storing form data.
    :PROPERTIES:
    :CUSTOM_ID: trans-req-into-spec
    :END:
+*** Software Oriented UML Activity Diagrams (SOA)
+   :PROPERTIES:
+   :CUSTOM_ID: req-oriented-act-uml
+   :END:      
+
+We used UML activity diagrams in the requirements analysis to model
+the real world system from the user's point of view. Now, the
+[[id:req-oriented-act-uml][requirements oriented activitiy diagrams (roa)]] have to be transformed
+into a software specification that forms the basis for the design of a
+software system. We call the tranformed diagrams /software oriented/
+/activity diagrams/. The transformation rule is easy and the whole
+transformation process might well be implemented as a non-interactive
+function:
+
+#+begin_quote
+*Transformation Rule*
+
+Each edge from a vertex with a user action has its endpoint in a
+vertex with a system action. 
+#+end_quote
+
+This reflects the typical behaviour of interactive systems, where
+every user action is followed by a system reaction. The reason to not
+include these /system (re-)action vertices/ in the activity diagrams
+from the start is to keep the diagrams simple and focussed on the
+user's point of view. After all, the requirement analysis is about
+communicating with non-technical end users (or, in one-man-projects,
+about the programmer taking on the role of the non-technical end
+user).
+
+For convenience, we repeat the explanation of abbreviations and
+symbols used in the /factivity diagrams/ here, but there is really only
+one new abbreviation involved: /<soa>/ for /software oriented
+activity/: 
+
+| <soa>     | software oriented activity |
+| <<UA>>    | User Activity              |
+| <<UD>>    | User Decision              |
+| <<SA>>    | (complex) System Activity  |
+| <<SD>>    | System Decision            |
+| <<UC>>    | Use Case                   |
+| *⋔*       | (pitchfork) sub-activity   |
+| <<scene>> | basic elements of web UI   |
+
+
+/note: we make no attempt to conform to [[http://www.omg.org/spec/][formal uml specifications]]/
+/since we want to keep things simple and our text-based drawing tool/
+/[[http://plantuml.sourceforge.net/][PlantUML]] does have its limitations/.
+
+*** Register as user
+    :PROPERTIES:
+    :CUSTOM_ID: register-as-user-uml-soa
+    :END: 
+
+#+srcname register-as-user-uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/register-as-user-uml-soa.png 
+    title Register as User <soa>
+    note right: <<precondition>> -- \n<<postcondition>> user credentials stored
+    (*) -->  "<<UA>>\nSelect 'register' option"
+      note right: <<scene>>\n<<button/link>>\nregister
+      --> "<<SA>>\nShow register formular"
+      --> "<<UA>>\nSubmit entered credentials"
+      note right: <<scene>>\n<<input attributes>>\n username, email\n<<button/link>>\nsubmit
+      --> "<<SA>>\nValidate entered credentials"
+      if "credentials valid?                                   " then
+      --> [  true] "<<SA>>\nStore entered credentials"
+      -->  (*)
+
+    else
+      ---> [  false] "<<UA>>\nSubmit entered credentials"
+    endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/register-as-user-uml-soa.png]]
+
+
+
 * Software Architecture
   :PROPERTIES:
   :CUSTOM_ID: softw-arch

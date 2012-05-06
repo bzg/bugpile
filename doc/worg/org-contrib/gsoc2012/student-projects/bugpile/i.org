@@ -719,14 +719,6 @@ storing form data.
     :CUSTOM_ID: search-users-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | search users                   |
-# | *actors*           | admin                          |
-# | *precondition*     | admin is logged in             |
-# | *main flow*        | admin selects 'search users' option |
-# | *alternative flow* | --                             |
-# | *postcondition*    | admin sees registered users    |
-
 #+srcname search-users--uml-roa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-users-uml-roa.png 
   title Search Users<roa>
@@ -747,15 +739,6 @@ storing form data.
     :PROPERTIES:
     :CUSTOM_ID: take-action-select-users-uml-roa
     :END: 
-
-
-# |                    | <30>                           |
-# | *use case*         | take action on selected users  |
-# | *actors*           | admin                          |
-# | *precondition*     | admin is logged in AND at least one registered user |
-# | *main flow*        | admin selects users and the action to take on them |
-# | *alternative flow* | --                             |
-# | *postcondition*    | action was applied to selected users |
 
 #+srcname take-action-select-users-uml-roa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png 
@@ -1105,6 +1088,48 @@ since we want to keep things simple and our text-based drawing tool/
 
 
 
+
+*** Search users
+    :PROPERTIES:
+    :CUSTOM_ID: search-users-uml-soa
+    :END: 
+
+#+srcname search-users--uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-users-uml-soa.png 
+  title Search Users<soa>
+  note right: <<precondition>> admin is logged in
+  (*) --> "<<UA>>\nSelect 'search users' option"
+  note right: <<scene>>\n<<button/link>>\nsearch users
+  --> "<<SA>>\nShow user search form"
+  --> "<<UA>>\nDefine user search criteria"
+  note right: <<scene>>\n<<input attributes>>\nusername, email, task \n<<button/link>>\nsearch
+  --> "<<SA>>\nShow queried users"
+  --> (*)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/search-users-uml-soa.png]]
+
+
+
+*** Take action on selected users
+    :PROPERTIES:
+    :CUSTOM_ID: take-action-select-users-uml-soa
+    :END: 
+
+#+srcname take-action-select-users-uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-soa.png 
+  title Take action on selected users<soa>
+  note right: <<precondition>> admin is logged in
+  (*) --> "<<UC>>\nSearch users ⋔" 
+  --> "<<UA>>\nTake action on selected users"
+  note right: <<scene>>\n<<button/link>>>>\nsubmit
+  --> "<<SA>>\nPerform action on selected users"
+  --> (*)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-soa.png]]
 
 
 * Software Architecture

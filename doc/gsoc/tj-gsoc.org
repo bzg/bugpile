@@ -206,14 +206,19 @@ Deleted, is a special case of 'take action on selected task'
         - State "DONE"       from "NEXT"       [2012-05-05 Sa 16:37]
         CLOCK: [2012-05-05 Sa 16:25]--[2012-05-05 Sa 16:37] =>  0:12
         :END:
-******* TODO [spec-uc-uml] Search users
-        SCHEDULED: <2012-05-05 Sa>
+******* DONE [spec-uc-uml] Search users
+        CLOSED: [2012-05-06 So 19:30] SCHEDULED: <2012-05-05 Sa>
         :LOGBOOK:
+        - State "DONE"       from "TODO"       [2012-05-06 So 19:30]
         - State "TODO"       from "DONE"       [2012-05-05 Sa 16:43]
         - State "DONE"       from ""           [2012-05-05 Sa 16:43]
         :END:
-******* TODO [spec-uc-uml] Take action on selected users
-        SCHEDULED: <2012-05-05 Sa>
+******* DONE [spec-uc-uml] Take action on selected users
+        CLOSED: [2012-05-06 So 19:45] SCHEDULED: <2012-05-05 Sa>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-06 So 19:45]
+        CLOCK: [2012-05-06 So 19:30]--[2012-05-06 So 19:45] =>  0:15
+        :END:
 ******* CANCELLED [spec-uc-uml] Add user to assignees             :CANCELLED:
         CLOSED: [2012-05-05 Sa 16:50] SCHEDULED: <2012-05-04 Fr>
         :LOGBOOK:

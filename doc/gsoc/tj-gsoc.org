@@ -82,7 +82,7 @@ Deleted, is a special case of 'take action on selected task'
 
 *** TODO Integrated UML Modelling of Use Cases and UI
     :LOGBOOK:
-    CLOCK: [2012-05-05 Sa 20:07]
+    CLOCK: [2012-05-05 Sa 20:07]--[2012-05-06 So 11:46] => 15:39
     :END:
 
 **** DONE [req-uc-uml] Register as user

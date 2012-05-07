@@ -80,6 +80,37 @@ Deleted, is a special case of 'take action on selected task'
 
 Deleted, is a special case of 'take action on selected task'
 
+**** TODO create bug report
+     SCHEDULED: <2012-05-11 Fri>
+**** TODO change meta-data of bug report
+     SCHEDULED: <2012-05-11 Fri>
+meta-data could include
+- type
+  - bug
+  - feature request
+  - refactoring
+- state
+  - unconfirmed
+  - confirmed
+  - open
+  - close
+  - assigned
+  - superseded
+  - etc...
+- priority
+  - low
+  - medium
+  - high
+  - breaking
+  - etc...
+
+**** TODO change text of bug report
+     SCHEDULED: <2012-05-11 Fri>
+This would be the actual textual notes, which would presumably live in
+the body of an Org-mode headline.
+
+**** TODO associate bug report with commit in version control repository
+     SCHEDULED: <2012-05-11 Fri>
 *** TODO Integrated UML Modelling of Use Cases and UI
     :LOGBOOK:
     CLOCK: [2012-05-05 Sa 20:07]--[2012-05-06 So 11:46] => 15:39
@@ -269,17 +300,44 @@ Deleted, is a special case of 'take action on selected task'
 
 ** TODO iOrg
 *** TODO Figure out Authentication
-**** TODO [iorg-req-authent] Analyse 'basic http authentication'
+**** CANCELED [iorg-req-authent] Analyse 'basic http authentication'
      SCHEDULED: <2012-05-04 Fr>
-**** TODO [iorg-req-authent] Analyse 'OAuth'
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:27] \\
+       nope, this is not as convenience as cookies
+**** CANCELED [iorg-req-authent] Analyse 'OAuth'
      SCHEDULED: <2012-05-05 Sa>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       nicferrier is handling this, we can let him do the implementation
 **** TODO [iorg-req-authent] Try authentication prototype
      SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
-*** TODO Figure out Sessions
-**** TODO [iorg-req-sessions] Analyse 'connect' (node.js framework)
+This should be a simple cookie system.  For now we can just keep a
+server-side list of usernames and passwords.  The authentication
+process will be as follows.
+
+1. user sends username and password to the server.  For now we warn
+   users not to user sensitive passwords, as they'll be transferred
+   and stored in plain text.  These limitations are easily fixed later
+   by running elnode behind an apache https server, and storing only
+   hashes of passwords locally
+
+2. server checks that username and password are in the system,
+   generates a cookie which is associated with the user and sent to
+   the client
+
+3. client stores the cookie, and includes it in all future connections
+   to the system
+
+*** CANCELED Figure out Sessions
+    - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:30] \\
+      not needed, for now we'll just use a simple cookie-based system
+**** CANCELED [iorg-req-sessions] Analyse 'connect' (node.js framework)
      SCHEDULED: <2012-05-03 Do>
-**** TODO [iorg-req-sessions] Analyse 'express' (node.js framework)
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       not part of this project
+**** CANCELED [iorg-req-sessions] Analyse 'express' (node.js framework)
      SCHEDULED: <2012-05-03 Do>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       not part of this project
 *** TODO Figure out object-orientation
 **** TODO [iorg-req-obj-orient] Define (abstract) class/entitiy and object [analogies] in iOrg
      SCHEDULED: <2012-05-06 So>

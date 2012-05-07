@@ -5,6 +5,10 @@
 A collection of working notes.
 
 * Notes
+** Starting an elnode server
+=nicferrier= suggests this script to launch an elnode server.
+https://gist.github.com/2628802
+
 ** Setup elnode
    :PROPERTIES:
    :results:  silent

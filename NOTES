@@ -5,6 +5,12 @@
 A collection of working notes.
 
 * Notes
+** suggestion for auth issues
+From =#emacs= WRT: how we can handle authentication issues moving forward.
+: 10:44 < nicferrier> _schulte_: I think you should ignore the auth issues and just use a 
+:                     client side cookie. that interface can always be improved.
+: 10:44 < _schulte_> nicferrier: I vigorously agree
+
 ** Starting an elnode server
 =nicferrier= suggests this script to launch an elnode server.
 https://gist.github.com/2628802

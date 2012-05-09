@@ -931,6 +931,7 @@ storing form data.
 ** Transforming Requirements into Specifications
    :PROPERTIES:
    :CUSTOM_ID: trans-req-into-spec
+   :exports:  both
    :END:
 *** Software Oriented UML Activity Diagrams (SOA)
    :PROPERTIES:
@@ -963,7 +964,7 @@ about the programmer taking on the role of the non-technical end
 user).
 
 For convenience, we repeat the explanation of abbreviations and
-symbols used in the /factivity diagrams/ here, but there is really only
+symbols used in the /activity diagrams/ here, but there is really only
 one new abbreviation involved: /<soa>/ for /software oriented
 activity/: 
 

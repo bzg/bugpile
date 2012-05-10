@@ -1,5 +1,5 @@
 #+OPTIONS:    H:3 num:nil toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
-#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate hideblocks
+#+STARTUP:    align fold nodlcheck oddeven lognotestate hideblocks
 #+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
 #+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
 #+TITLE:      iOrg - interactive Org
@@ -275,12 +275,13 @@ in the solution space, which can then be implemented.
     :CUSTOM_ID: open-new-task-txt
     :END:      
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | open new ask                   |
+| *actors*           | user                           |
+| *precondition*     | user is logged in              |
+| *main flow*        | user selects 'open new task' option, user submits task information. |
+| *alternative flow* | --                             |
+| *postcondition*    | task stored in system          |
 
 *** Re-open task
     :PROPERTIES:
@@ -776,6 +777,20 @@ storing form data.
     :CUSTOM_ID: open-new-task-uml-roa
     :END:      
 
+#+srcname open-new-task-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png 
+  title Open New Task <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>>task stored in system
+  (*) --> "<<UA>>\nSelect 'open new task' option"
+  note right: <<scene>>\n<<button/link>>\nedit new task
+  --> "<<UA>>\nSubmit task information"
+  note right: <<scene>>\n<<input attributes>>\nproject, type, severity, description \n<<button/link>>\nsubmit
+  --> (*)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png]]
+
 
 *** Re-open task
     :PROPERTIES:
@@ -1087,6 +1102,32 @@ since we want to keep things simple and our text-based drawing tool/
 
 
 
+
+
+*** Open new task
+    :PROPERTIES:
+    :CUSTOM_ID: open-new-task-uml-soa
+    :END:      
+
+#+srcname open-new-task-uml-soa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png 
+  title Open New Task <soa>
+  note right: <<precondition>> user is logged in\n<<postcondition>>task stored in system
+  (*) --> "<<UA>>\nSelect 'open new task' option"
+  note right: <<scene>>\n<<button/link>>\nopen new task
+  --> "<<SA>>\nShow 'open new task' page"
+  --> "<<UA>>\nSubmit task information"
+  note right: <<scene>>\n<<input attributes>>\nproject, type, severity, description \n<<button/link>>\nsubmit
+  if "task information valid?                                   " then
+      --> [  true] "<<SA>>\nStore new task"
+      -->  (*)
+ else
+      ---> [  false] "<<UA>>\nSubmit task information"
+ endif
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png]]
 
 
 

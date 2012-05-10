@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-06T19:53+0200"/>
+<meta name="generated" content="2012-05-10 11:10:40 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -515,12 +515,12 @@ in the solution space, which can then be implemented.
 <colgroup><col class="left" /><col class="left" />
 </colgroup>
 <tbody>
-<tr><td class="left"><b>use case</b></td><td class="left"></td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left"></td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left"></td></tr>
+<tr><td class="left"><b>use case</b></td><td class="left">open new ask</td></tr>
+<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
+<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in</td></tr>
+<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'open new task' option, user submits task information.</td></tr>
 <tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">&ndash;</td></tr>
+<tr><td class="left"><b>postcondition</b></td><td class="left">task stored in system</td></tr>
 </tbody>
 </table>
 
@@ -1130,6 +1130,11 @@ storing form data.
 
 
 
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png" />
+</p>
+
 </div>
 
 </div>
@@ -1388,7 +1393,7 @@ user).
 </p>
 <p>
 For convenience, we repeat the explanation of abbreviations and
-symbols used in the <i>factivity diagrams</i> here, but there is really only
+symbols used in the <i>activity diagrams</i> here, but there is really only
 one new abbreviation involved: <i>&lt;soa&gt;</i> for <i>software oriented activity</i>: 
 </p>
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -1476,13 +1481,28 @@ since we want to keep things simple and our text-based drawing tool/
 
 
 
+</div>
+
+</div>
+
+<div id="outline-container-open-new-task-uml-soa" class="outline-4">
+<h4 id="open-new-task-uml-soa"><a name="sec-6-1-6" id="sec-6-1-6"></a>Open new task</h4>
+<div class="outline-text-4" id="text-open-new-task-uml-soa">
+
+
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png" />
+</p>
+
 
 </div>
 
 </div>
 
 <div id="outline-container-search-users-uml-soa" class="outline-4">
-<h4 id="search-users-uml-soa"><a name="sec-6-1-6" id="sec-6-1-6"></a>Search users</h4>
+<h4 id="search-users-uml-soa"><a name="sec-6-1-7" id="sec-6-1-7"></a>Search users</h4>
 <div class="outline-text-4" id="text-search-users-uml-soa">
 
 
@@ -1498,7 +1518,7 @@ since we want to keep things simple and our text-based drawing tool/
 </div>
 
 <div id="outline-container-take-action-select-users-uml-soa" class="outline-4">
-<h4 id="take-action-select-users-uml-soa"><a name="sec-6-1-7" id="sec-6-1-7"></a>Take action on selected users</h4>
+<h4 id="take-action-select-users-uml-soa"><a name="sec-6-1-8" id="sec-6-1-8"></a>Take action on selected users</h4>
 <div class="outline-text-4" id="text-take-action-select-users-uml-soa">
 
 
@@ -1593,9 +1613,9 @@ core.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-06T19:53+0200</p>
+<p class="date">Date: 2012-05-10 11:10:40 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
-<p class="creator">Org version 7.8.09 with Emacs version 24</p>
+<p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 
 </div>

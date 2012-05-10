@@ -305,8 +305,11 @@ Deleted, is a special case of 'take action on selected task'
 **** TODO [req-uc-txt] Switch project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO [req-uc-txt] Open new task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Open new task
+     CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-10 Do 11:21]
+     :END:
 
 **** TODO [req-uc-txt] Re-open task
      SCHEDULED: <2012-05-11 Fr>
@@ -364,8 +367,11 @@ Deleted, is a special case of 'take action on selected task'
 **** TODO [req-uc-uml] Switch project
      SCHEDULED: <2012-05-10 Do>
 
-**** TODO [req-uc-uml] Open new task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-uml] Open new task
+     CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-10 Do 11:21]
+     :END:
 
 **** TODO [req-uc-uml] Re-open task
      SCHEDULED: <2012-05-11 Fr>

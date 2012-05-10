@@ -370,7 +370,6 @@ Deleted, is a special case of 'take action on selected task'
 **** DONE [req-uc-uml] Open new task
      CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
      :LOGBOOK:
-     - State "DONE"       from "TODO"       [2012-05-10 Do 11:21]
      :END:
 
 **** TODO [req-uc-uml] Re-open task

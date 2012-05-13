@@ -82,6 +82,24 @@
 
 ;; Customization variables
 ;; Define the iOrg-mode
+;; Initialize new iOrg project
+
+
+(defun iorg-initialize-project (dir)
+  "Copy the iOrg project template into the current directory or DIR."
+
+  (interactive "DProject directory: ")
+   (if (file-directory-p dir)
+       (copy-directory (concat
+                  (car (split-string (file-name-directory
+                   (symbol-file 'iorg-initialize-project 'defun)) "lisp/$"))
+                  "project")
+                 dir)
+    (message "Not a valid directory name")))
+       
+
+
+  
 ;; ...
 ;; Key bindings
 ;; Documentation

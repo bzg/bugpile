@@ -43,8 +43,8 @@
 ;; with functions that handle the http-requests ('handlers') and functions that
 ;; implement the actual application logic ('workers'). While the 'handlers' are
 ;; only useful for web-frontends of iOrg applications, the 'workers' contain 
-;; essential application logic independent from the web-frontend. They are needed
-;; too when power users access the application directly via Emacs. 
+;; essential application logic independent from the kind of frontend. They are
+;; needed too when power users access the application directly via Emacs. 
 ;;
 ;; Installation and Activation
 ;; ---------------------------
@@ -71,17 +71,15 @@
 ;; (eval-when-compile
 ;;   (require 'gnus-sum))
 
-;; (require 'calendar)
+(require 'org)
 
-;; Other stuff we need.
-;; (require 'time-date)
+;;;; Other stuff we need.
 ;; (unless (fboundp 'time-subtract) (defalias 'time-subtract 'subtract-time))
 
 ;; (declare-function org-inlinetask-at-task-p "org-inlinetask" ())
 ;; (declare-function org-inlinetask-outline-regexp "org-inlinetask" ())
 
 
-;; Require other packages
 ;; Customization variables
 ;; Define the iOrg-mode
 ;; ...

@@ -82,12 +82,11 @@
 
 ;; Customization variables
 ;; Define the iOrg-mode
-;; Initialize new iOrg project
 
+;; Initialize new iOrg project
 
 (defun iorg-initialize-project (dir)
   "Copy the iOrg project template into the current directory or DIR."
-
   (interactive "DProject directory: ")
    (if (file-directory-p dir)
        (copy-directory (concat
@@ -97,7 +96,15 @@
                  dir)
     (message "Not a valid directory name")))
        
+;; Export iOrg project
 
+(defun iorg-export (dir &optional server)
+  "Export project defined in the current directory or in DIR, and start the elnode server when SERVER is non-nil"
+  (interactive "DProject directory: ")
+  (if (file-directory-p dir)
+      () ;check dir structure, tangle ob files, export org files
+    (message "Not a valid directory name")))
+    
 
   
 ;; ...

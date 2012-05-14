@@ -81,19 +81,47 @@
 
 
 ;; Customization variables
+
+(defgroup iorg nil
+  "A webframework based on Org-mode, elnode and dVCS."
+  :tag "iOrg"
+  :group 'org
+  :group 'elnode)
+
+(defcustom iorg-mode-hook nil
+  "Mode hook for iOrg-mode, run after the mode was turned on."
+  :group 'iorg
+  :type 'hook)
+
+(defcustom iorg-load-hook nil
+  "Hook that is run after iorg.el has been loaded."
+  :group 'iorg
+  :type 'hook)
+
+(defcustom iorg-project-name "project"
+  "String used to name the iOrg project"
+  :group 'iorg
+  :type 'string)
+
 ;; Define the iOrg-mode
 
 ;; Initialize new iOrg project
 
-(defun iorg-initialize-project (dir)
-  "Copy the iOrg project template into the current directory or DIR."
+(defun iorg-initialize-project (dir &optional name)
+  "Copy the iOrg project template into the current directory or DIR and optionally rename the project."
   (interactive "DProject directory: ")
-   (if (file-directory-p dir)
-       (copy-directory (concat
-                  (car (split-string (file-name-directory
+     (if (file-directory-p dir)
+            (progn
+              (if (stringp name) customize-set-variable
+                iorg-project-name name)
+              (copy-directory
+               (concat
+                (car
+                 (split-string
+                  (file-name-directory
                    (symbol-file 'iorg-initialize-project 'defun)) "lisp/$"))
-                  "project")
-                 dir)
+                iorg-project-name)
+               dir))
     (message "Not a valid directory name")))
        
 ;; Export iOrg project

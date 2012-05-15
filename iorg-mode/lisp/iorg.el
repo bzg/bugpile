@@ -1,4 +1,4 @@
-;;; iorg.el --- A webframework based on Org-mode and elnode
+;;; iorg.el --- A webframework based on Org-mode and Elnode
 
 ;; Programming interactive web-applications with Org-mode 
 ;; Copyright (C) 2012  Thorsten Jolitz 
@@ -30,7 +30,7 @@
 ;;; Commentary:
 ;;
 ;; iOrg is a framework for developing web-applications with GNU Emacs
-;; Org-mode, using Emacs and its libraries (Org-mode, elnode, VC, etc)
+;; Org-mode, using Emacs and its libraries (Org-mode, Elnode, VC, etc)
 ;; as development environment as well as runtime environment. 
 ;;
 ;; iOrg enables declarative programming of dynamic web-applications. For
@@ -68,10 +68,15 @@
 
 ;;;; Require other packages
 
-;; (eval-when-compile
-;;   (require 'gnus-sum))
+(eval-when-compile
+  (require 'cl)
+;;   (require 'gnus-sum)
+  )
 
 (require 'org)
+(require 'ob-tangle)
+(require 'elnode)
+(require 'vc)
 
 ;;;; Other stuff we need.
 ;; (unless (fboundp 'time-subtract) (defalias 'time-subtract 'subtract-time))
@@ -83,7 +88,7 @@
 ;; Customization variables
 
 (defgroup iorg nil
-  "A webframework based on Org-mode, elnode and dVCS."
+  "A webframework based on Org-mode, Elnode and dVCS."
   :tag "iOrg"
   :group 'org
   :group 'elnode)
@@ -98,32 +103,47 @@
   :group 'iorg
   :type 'hook)
 
-(defcustom iorg-project-name "project"
-  "String used to name the iOrg project"
+(defcustom iorg-current-project-name "project"
+  "String used to name the current iOrg project"
   :group 'iorg
   :type 'string)
 
-;; Define the iOrg-mode
+;; Initialize new iOrg projects
 
-;; Initialize new iOrg project
+(defvar iorg-projects-plist nil
+  "Plist storing names and directories of iOrg projects created with `iorg-initialize-project'.")
+
+(defvar iorg-anonymos-projects-counter 0
+  "Integer value counting the number of iOrg projects initialized without name")
 
 (defun iorg-initialize-project (dir &optional name)
   "Copy the iOrg project template into the current directory or DIR and optionally rename the project."
-  (interactive "DProject directory: ")
+  (interactive "DProject directory: \nsProject name: ")
      (if (file-directory-p dir)
             (progn
-              (if (stringp name) customize-set-variable
-                iorg-project-name name)
-              (copy-directory
-               (concat
-                (car
-                 (split-string
-                  (file-name-directory
-                   (symbol-file 'iorg-initialize-project 'defun)) "lisp/$"))
-                iorg-project-name)
-               dir))
+              (customize-set-variable
+               iorg-current-project-name
+               (if (stringp name)
+                   name
+                 ((1+ iorg-anonymos-projects-counter)
+                  (concat "project" iorg-anonymos-projects-counter))))
+              (let ((template-dir
+                      (car
+                       (split-string
+                        (file-name-directory
+                         (symbol-file 'iorg-initialize-project 'defun)) "lisp/$")))
+                    (project-dir (concat dir iorg-current-project-name)))
+                (copy-directory
+                 (concat template-dir iorg-current-project-name)
+                 dir)
+                (put 'iorg-projects-plist iorg-current-project-name project-dir)))
     (message "Not a valid directory name")))
-       
+
+;; Delete iOrg project
+
+(defun iorg-delete-project (&optional project)
+  "Delete directory of current project or PROJECT and eliminate it from the `iorg-projects-plist'"
+)       
 ;; Export iOrg project
 
 (defun iorg-export (dir &optional server)

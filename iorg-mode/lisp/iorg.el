@@ -121,22 +121,24 @@
   (interactive "DProject directory: \nsProject name: ")
      (if (file-directory-p dir)
             (progn
-              (customize-set-variable
-               iorg-current-project-name
-               (if (stringp name)
-                   name
-                 ((1+ iorg-anonymos-projects-counter)
-                  (concat "project" iorg-anonymos-projects-counter))))
-              (let ((template-dir
+              (setq iorg-current-project-name
+                    (if (stringp name)
+                        name
+                      (1+ iorg-anonymos-projects-counter)
+                      (concat "project"
+                              (number-to-string iorg-anonymos-projects-counter))))
+              (let ((template-dir  
                       (car
                        (split-string
                         (file-name-directory
                          (symbol-file 'iorg-initialize-project 'defun)) "lisp/$")))
                     (project-dir (concat dir iorg-current-project-name)))
                 (copy-directory
-                 (concat template-dir iorg-current-project-name)
-                 dir)
-                (put 'iorg-projects-plist iorg-current-project-name project-dir)))
+                 (concat template-dir "project")
+                dir)
+                ;; rename dir and files TODO
+                (
+                 (put 'iorg-projects-plist iorg-current-project-name project-dir)))
     (message "Not a valid directory name")))
 
 ;; Delete iOrg project

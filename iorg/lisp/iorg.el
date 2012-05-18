@@ -118,18 +118,19 @@
   "Copy the iOrg project template into DIR and optionally rename the project."
   (interactive "DProject directory: \nsProject name: ")
   (if (file-directory-p dir)
-      (let* ((iorg-current-project-name 
-              (if (and (stringp name) (> (length name) 0))
+      (let* ((project-name 
+              (if (and name (stringp name) (> (length name) 0))
                   name
                 (concat
                  "project"
                  (number-to-string
                   (1+ (iorg--max-numbering-unnamed-projects))))))
-             (project-dir (concat dir iorg-current-project-name)))
+             (project-dir (concat dir project-name)))
         (copy-directory
-         (expand-file-name iorg-dir "project")
+         (expand-file-name "project" iorg-dir)
          project-dir)
-        (iorg--update-project))
+        (iorg-rename-project project-name project-dir)
+        (iorg--update-project project-dir))
     (message "Not a valid directory name")))
 
 (defun iorg--update-project (&optional dir)
@@ -158,8 +159,7 @@
          (new-prefix
           (if (and name (stringp name))
               name
-            (nth (- (length (split-string proj "/")) 2)
-                 (split-string proj "/"))))
+            (cdr (iorg--split-dir-name proj))))
          (old-prefix))
     ;; get the old prefix
     (mapc
@@ -186,11 +186,12 @@
 
 (defun iorg--replace-filename-prefix (old-prefix new-prefix &optional dir)
   "Replace OLD-PREFIX with NEW-PREFIX in filename of all (non-directory) files in present working directory or DIR."
-  (condition-case err
+   (condition-case err
       (let ((proj
+             (expand-file-name
              (if (and dir (file-directory-p dir))
                  dir
-               (iorg--pwd))))
+               (iorg--pwd)))))
         (mapc
          (lambda (x)
            (and
@@ -209,7 +210,7 @@
     (error 
      (princ
       (format
-       "There was an error while replacing the filename-prefix: %s" err))
+       "Error replacing the filename-prefix: %s" err))
      nil)))
 
 (defun iorg--goto-outline-tree-root ()
@@ -248,8 +249,8 @@
                 (setq unnamed-max proj-count))))
        unnamed-proj)
       ;; kill iorg-config.org buffer
-      (kill-buffer current-buffer)
-      ;; build the return list
+      (kill-buffer (current-buffer))
+      ;; build the retpurn list
       (list
        (length proj) ; total number of projects
        (length unnamed-proj) ; number of unnamed projects
@@ -271,16 +272,16 @@
 (defun iorg--project-directory-structure-p (&optional dir)
   "Return t if present working directory or DIR confirms to the iOrg project directory structure, nil otherwise."
   (let* ((project-dir
+          (expand-file-name
           (if (and dir (file-directory-p dir))
               dir
-            (iorg--pwd)))
+            (iorg--pwd))))
          (dir-files (directory-files project-dir)))
     (not
      (cond
       ((not (member
              (concat
-              (nth (- (length (split-string  project-dir "/")) 2)
-                 (split-string  project-dir "/"))"-config.org")
+              (cadr (iorg--split-dir-name project-dir)) "-config.org")
              dir-files)))
        ((not (member "blob" dir-files)))
        ((not (member "controller" dir-files)))
@@ -298,14 +299,51 @@
 
 (defun iorg-rename-project (name &optional dir)
   "Rename iOrg project in present working directory of DIR."
-  (interactive "DProject directory: \nsNew project name: "
+  (interactive "sNew project name: \nDProject directory: ")
   (let ((proj
-          (if (and dir (file-directory-p dir))
-              dir
-            (iorg--pwd))))
-    (if (not (iorg--project-directory-structure-p proj))
-        (message "Directory does not confirm to iOrg directory structure") ))))
+         (if (and dir (file-directory-p dir))
+             dir
+           (iorg--pwd))))
+    (cond
+     ((not (iorg--project-directory-structure-p proj))
+      (message "Directory does not confirm to iOrg directory structure"))
+     ((not (and name (stringp name)))
+      (message "New project name is not a valid directory name"))
+     (t
+      (condition-case err
+          (and name proj
+               ;; rename the project directory
+               (rename-file
+                proj
+                (concat (car (iorg--split-dir-name proj)) name))
+               ;; update the project to the new name
+               (iorg--update-project))        
+        (error 
+         (princ
+          (format
+           "Error while renaming project: %s" err))
+         nil))))))
 
+
+(defun iorg--split-dir-name (&optional dir)
+  "Return as list of strings the base part and the last part of the name of the present working directory or DIR.
+
+The base part is really the name of the parent directory, the last part is the directory name that would appear in the `directory-files' list of the parent directory."
+  (let* ((dir-name
+          (expand-file-name
+           (if (and dir (file-directory-p dir))
+               dir
+             (iorg--pwd))))
+         (split-list
+          (split-string dir-name "/"))
+         (last-part
+          (if (string-equal (car (last split-list)) "")
+              (nth (- (length split-list) 2) split-list)
+            (car (last split-list))))
+         (base-part
+          (car (split-string dir-name last-part))))
+    
+    (list base-part last-part)))  
    
 
 ;; Delete iOrg project

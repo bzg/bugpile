@@ -334,11 +334,15 @@ The base part is really the name of the parent directory, the last part is the d
            (if (and dir (file-directory-p dir))
                dir
              (iorg--pwd))))
+         (rel-name
+          (file-relative-name dir-name))
          (split-list
-          (split-string dir-name "/"))
+          (split-string rel-name "/")
+          
          (last-part
-          (if (string-equal (car (last split-list)) "")
-              (nth (- (length split-list) 2) split-list)
+          (if (string-equal
+               (car (last (split-string rel-name)) "")
+               (nth (- (length split-list) 2) rel-name)
             (car (last split-list))))
          (base-part
           (car (split-string dir-name last-part))))
@@ -346,6 +350,13 @@ The base part is really the name of the parent directory, the last part is the d
     (list base-part last-part)))  
    
 
+(defun iorg--existing-dir-name (dir)
+  "Return name of existing DIR in canonical form"
+  (if (not (and dir (file-directory-p dir)))
+      (message "Not a directory name")
+    (expand-file-name (file-name-as-directory dir))))
+
+ 
 ;; Delete iOrg project
 
 (defun iorg-delete-project (&optional project)

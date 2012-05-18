@@ -198,12 +198,12 @@
              (concat "\\(^\\)\\(" old-prefix "\\)\\(.+\\)\\($\\)") x)
             (not (file-directory-p
                   (expand-file-name x proj)))               
-            (let* ((first (match-string 2 x))
-                   (last (match-string 3 x)))
-              (and first last
+            (let* ((first-part (match-string 2 x))
+                   (last-part (match-string 3 x)))
+              (and first-part last-part
                    (rename-file
-                    (concat proj first last)
-                    (concat proj new-prefix last))))))
+                    (concat proj first-part last-part)
+                    (concat proj new-prefix last-part))))))
          (directory-files proj)))
     ;; error handler
     (error 
@@ -240,10 +240,10 @@
       ;; get the highest numbering of unnamed projects
       (mapc
        (lambda (x)
+         (string-match "(project)([0-9]+)($)" x)
          (let ((proj-count
-                string-to-number
-                (match-string-no-properties
-                 2 (string-match "(project)([0-9]+)($)" x))))
+                (string-to-number
+                 (match-string 2 x))))
            (and (> proj-count unnamed-max)
                 (setq unnamed-max proj-count))))
        unnamed-proj)
@@ -277,18 +277,21 @@
          (dir-files (directory-files project-dir)))
     (not
      (cond
-      ((not (member (concat (file-name-nondirectory project-dir)
-                            "-config.org") dir-files))
-       (not (member "blob" dir-files))
-       (not (member "controller" dir-files))
-       (not (member "dat" dir-files))
-       (not (member "db" dir-files))
-       (not (member "img" dir-files))
-       (not (member "loc" dir-files))
-       (not (member "log" dir-files))
-       (not (member "model" dir-files))
-       (not (member "test" dir-files))
-       (not (member "view" dir-files)))))))
+      ((not (member
+             (concat
+              (nth (- (length (split-string  project-dir "/")) 2)
+                 (split-string  project-dir "/"))"-config.org")
+             dir-files)))
+       ((not (member "blob" dir-files)))
+       ((not (member "controller" dir-files)))
+       ((not (member "dat" dir-files)))
+       ((not (member "db" dir-files)))
+       ((not (member "img" dir-files)))
+       ((not (member "loc" dir-files)))
+       ((not (member "log" dir-files)))
+       ((not (member "model" dir-files)))
+       ((not (member "test" dir-files)))
+       ((not (member "view" dir-files)))))))
 
 
 ;; Rename iOrg project

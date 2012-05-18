@@ -1,0 +1,8 @@
+* iOrg
+  :PROPERTIES:
+  :projects: nil
+  :server-port-base: 8000
+  :default-host: localhost
+  :END:
+
+ 

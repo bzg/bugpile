@@ -82,10 +82,10 @@
 
 ;; remember this directory
 (setq iorg-dir
-      (car
-       (split-string
+      (file-name-directory
+       (directory-file-name
         (file-name-directory
-         (or load-file-name (buffer-file-name))) "lisp/$")))
+         (or load-file-name (buffer-file-name))))))
 
 ;; (unless (fboundp 'time-subtract) (defalias 'time-subtract 'subtract-time))
 
@@ -314,7 +314,7 @@
      ((not (iorg--project-directory-structure-p proj))
       (message "Directory does not confirm to iOrg directory structure"))
      ((not (iorg--stringp name))
-      (message "New project name is not a valid directory name"))
+      (message "New project name must be a string of lenght > 0"))
      (t
       (condition-case err
           ;; rename and update project 

@@ -144,9 +144,16 @@
               (iorg--normalize-existing-dir-name dir)
             (iorg--pwd))))
       (iorg--rename-project-files nil proj)
-      ;; (iorg--update-projectconfig proj)
+      ;; (iorg--update-project-config proj)
       ;; (iorg--update-iorg-config proj)
       ))
+
+(defun iorg--update-project-config (&optional dir)
+  "Update the iOrg project configuration of project in present working directory or DIR.")
+
+(defun iorg--update-iorg-config ()
+  "Update the iorg-config.org file in iorg-dir.")
+
 
 (defun iorg--pwd ()
   "Return the (normalized) directory part of the function `pwd'."

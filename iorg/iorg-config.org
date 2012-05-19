@@ -1,6 +1,6 @@
 * iOrg
   :PROPERTIES:
-  :projects: nil
+  :projects: /home/tj/junk/project1 /home/tj/junk/iorgjunk
   :server-port-base: 8000
   :default-host: localhost
   :END:

@@ -148,12 +148,36 @@
       ;; (iorg--update-iorg-config proj)
       ))
 
-(defun iorg--update-project-config (&optional dir)
+(defun iorg--update-project-config (prop val &optional dir)
   "Update the iOrg project configuration of project in present working directory or DIR.")
+  (org-entry-add-to-multivalued-property
+   (iorg--global-pom) prop val))
+   
+   
+(defun iorg--local-pom (&optional dir)
+  "Move point to outline tree root of the iOrg project config file in present working directory of DIR."
+  (let ((proj
+          (if dir
+              (iorg--normalize-existing-dir-name dir)
+            (iorg--pwd))))
+ (find-file-existing
+  (expand-file-name
+   (concat
+    (file-name-nondirectory
+     (directory-file-name proj)) "-config.org")
+   proj))
+    (iorg--goto-outline-tree-root)))
 
-(defun iorg--update-iorg-config ()
-  "Update the iorg-config.org file in iorg-dir.")
 
+(defun iorg--global-pom ()
+  "Move point to outline tree root of iOrgs global config file in the iOrg directory."
+ (find-file-existing (expand-file-name "iorg-config.org" iorg-dir))
+    (iorg--goto-outline-tree-root))
+
+(defun iorg--update-iorg-config (prop val)
+  "Update property PROP with value VAL in the global iOrg configuration file."
+  (org-entry-add-to-multivalued-property
+   (iorg--global-pom) prop val))
 
 (defun iorg--pwd ()
   "Return the (normalized) directory part of the function `pwd'."
@@ -210,7 +234,7 @@
            (and
             (string-match
              (concat "\\(^\\)\\(" old-prefix "\\)\\(.+\\)\\($\\)") x)
-            (not (file-directory-p
+            ((not (file-directory-p)
                   (concat proj x)))               
             (let* ((first-part (match-string 2 x))
                    (last-part (match-string 3 x)))
@@ -362,7 +386,7 @@
 )       
 ;; Export iOrg project
 
-(defun iorg-export (dir &optional server)
+(defun iorg-export-project (dir &optional server)
   "Export project defined in the current directory or in DIR, and start the elnode server when SERVER is non-nil"
   (interactive "DProject directory: ")
   (if (file-directory-p dir)

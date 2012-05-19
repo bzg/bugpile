@@ -114,30 +114,34 @@
 
 ;; Initialize new iOrg projects
 
-(defun iorg-initialize-project (dir &optional name)
+(defun iorg-initialize-project (&optional dir name)
   "Copy the iOrg project template into DIR and optionally rename the project."
   (interactive "DProject directory: \nsProject name: ")
-  (if (file-directory-p dir)
-      (let* ((project-name 
-              (if (and name (stringp name) (> (length name) 0))
-                  name
-                (concat
-                 "project"
-                 (number-to-string
-                  (1+ (iorg--max-numbering-unnamed-projects))))))
-             (project-dir (concat dir project-name)))
+  (let* ((directory
+          (if dir
+              (iorg--normalize-existing-dir-name dir)
+            (iorg--pwd)))
+         (project-name 
+          (if (and name (iorg--stringp name))
+              name
+            (concat
+             "project"
+             (number-to-string
+              (1+ (iorg--max-numbering-unnamed-projects))))))
+         (project-dir (concat directory project-name)))
         (copy-directory
-         (expand-file-name "project" iorg-dir)
+         (concat
+          (iorg--normalize-existing-dir-name iorg-dir) "project")
          project-dir)
         (iorg-rename-project project-name project-dir)
         (iorg--update-project project-dir))
-    (message "Not a valid directory name")))
+    (message "Not a valid directory name"))
 
 (defun iorg--update-project (&optional dir)
   "Update filenames and configuration file for iOrg project in present working directory or DIR."
   (let ((proj
-          (if (and dir (file-directory-p dir))
-              dir
+          (if dir
+              (iorg--normalize-existing-dir-name dir)
             (iorg--pwd))))
       (iorg--rename-project-files nil proj)
       ;; (iorg--update-project-config proj)
@@ -145,21 +149,23 @@
       ))
 
 (defun iorg--pwd ()
-  "Return the directory part of the function `pwd'."
-  (cadr (split-string (pwd) " ")))
+  "Return the (normalized) directory part of the function `pwd'."
+  (expand-file-name
+   (file-name-as-directory
+    (cadr (split-string (pwd) " ")))))
 
 
 (defun iorg--rename-project-files (&optional name dir)
   "Rename all prefixed files in the present working directory or DIR, replacing the old prefix (taken from <<project>>-config.org) with `file-name-nondirectory' of the project directory."
   (let* ((proj
-          (if (and dir (file-directory-p dir))
-              dir
+          (if dir
+              (iorg--normalize-existing-dir-name dir)
             (iorg--pwd)))
          (dir-files (directory-files proj))
          (new-prefix
-          (if (and name (stringp name))
+          (if (and name (iorg--stringp name))
               name
-            (cdr (iorg--split-dir-name proj))))
+            (file-name-nondirectory (directory-file-name proj))))
          (old-prefix))
     ;; get the old prefix
     (mapc
@@ -172,33 +178,33 @@
     ;; replace old-prefix with new-prefix
     ;; project directory
     (iorg--replace-filename-prefix old-prefix new-prefix proj)
-    ;; subdirectories (1 level)
+    ;; subdirectories (1st level)
     (mapc
      (lambda (x)
        (unless (string-match-p "^\\.+" x)
-         (let ((f (expand-file-name x proj)))
-           (and
-            (file-directory-p f)
-            (iorg--replace-filename-prefix
-             old-prefix new-prefix (concat f "/"))))))
+         (let ((f (iorg--normalize-new-dir-name
+                   (concat proj x))))
+               (and
+                (file-directory-p f)
+                (iorg--replace-filename-prefix
+                 old-prefix new-prefix f)))))
      dir-files)))
 
 
 (defun iorg--replace-filename-prefix (old-prefix new-prefix &optional dir)
   "Replace OLD-PREFIX with NEW-PREFIX in filename of all (non-directory) files in present working directory or DIR."
-   (condition-case err
+  (condition-case err
       (let ((proj
-             (expand-file-name
-             (if (and dir (file-directory-p dir))
-                 dir
-               (iorg--pwd)))))
+             (if dir
+                 (iorg--normalize-existing-dir-name dir)
+               (iorg--pwd))))
         (mapc
          (lambda (x)
            (and
             (string-match
              (concat "\\(^\\)\\(" old-prefix "\\)\\(.+\\)\\($\\)") x)
             (not (file-directory-p
-                  (expand-file-name x proj)))               
+                  (concat proj x)))               
             (let* ((first-part (match-string 2 x))
                    (last-part (match-string 3 x)))
               (and first-part last-part
@@ -272,27 +278,27 @@
 (defun iorg--project-directory-structure-p (&optional dir)
   "Return t if present working directory or DIR confirms to the iOrg project directory structure, nil otherwise."
   (let* ((project-dir
-          (expand-file-name
-          (if (and dir (file-directory-p dir))
-              dir
-            (iorg--pwd))))
+          (if dir
+              (iorg--normalize-existing-dir-name dir)
+            (iorg--pwd)))
          (dir-files (directory-files project-dir)))
     (not
      (cond
       ((not (member
              (concat
-              (cadr (iorg--split-dir-name project-dir)) "-config.org")
+              (file-name-nondirectory
+               (directory-file-name project-dir)) "-config.org")
              dir-files)))
-       ((not (member "blob" dir-files)))
-       ((not (member "controller" dir-files)))
-       ((not (member "dat" dir-files)))
-       ((not (member "db" dir-files)))
-       ((not (member "img" dir-files)))
-       ((not (member "loc" dir-files)))
-       ((not (member "log" dir-files)))
-       ((not (member "model" dir-files)))
-       ((not (member "test" dir-files)))
-       ((not (member "view" dir-files)))))))
+      ((not (member "blob" dir-files)))
+      ((not (member "controller" dir-files)))
+      ((not (member "dat" dir-files)))
+      ((not (member "db" dir-files)))
+      ((not (member "img" dir-files)))
+      ((not (member "loc" dir-files)))
+      ((not (member "log" dir-files)))
+      ((not (member "model" dir-files)))
+      ((not (member "test" dir-files)))
+      ((not (member "view" dir-files)))))))
 
 
 ;; Rename iOrg project
@@ -301,60 +307,45 @@
   "Rename iOrg project in present working directory of DIR."
   (interactive "sNew project name: \nDProject directory: ")
   (let ((proj
-         (if (and dir (file-directory-p dir))
-             dir
+         (if dir
+             (iorg--normalize-existing-dir-name dir)
            (iorg--pwd))))
     (cond
      ((not (iorg--project-directory-structure-p proj))
       (message "Directory does not confirm to iOrg directory structure"))
-     ((not (and name (stringp name)))
+     ((not (iorg--stringp name))
       (message "New project name is not a valid directory name"))
      (t
       (condition-case err
-          (and name proj
-               ;; rename the project directory
-               (rename-file
-                proj
-                (concat (car (iorg--split-dir-name proj)) name))
-               ;; update the project to the new name
-               (iorg--update-project))        
+          ;; rename and update project 
+          (iorg--update-project
+           (rename-file
+            (directory-file-name proj)
+            (concat
+             (file-name-directory
+              (directory-file-name proj)) name)))        
         (error 
          (princ
           (format
            "Error while renaming project: %s" err))
          nil))))))
 
-
-(defun iorg--split-dir-name (&optional dir)
-  "Return as list of strings the base part and the last part of the name of the present working directory or DIR.
-
-The base part is really the name of the parent directory, the last part is the directory name that would appear in the `directory-files' list of the parent directory."
-  (let* ((dir-name
-          (expand-file-name
-           (if (and dir (file-directory-p dir))
-               dir
-             (iorg--pwd))))
-         (rel-name
-          (file-relative-name dir-name))
-         (split-list
-          (split-string rel-name "/")
-          
-         (last-part
-          (if (string-equal
-               (car (last (split-string rel-name)) "")
-               (nth (- (length split-list) 2) rel-name)
-            (car (last split-list))))
-         (base-part
-          (car (split-string dir-name last-part))))
-    
-    (list base-part last-part)))  
-   
-
-(defun iorg--existing-dir-name (dir)
+(defun iorg--normalize-existing-dir-name (dir)
   "Return name of existing DIR in canonical form"
-  (if (not (and dir (file-directory-p dir)))
-      (message "Not a directory name")
-    (expand-file-name (file-name-as-directory dir))))
+  (if (file-directory-p dir)
+      (expand-file-name (file-name-as-directory dir))
+    (message "Not a directory name")))
+
+(defun iorg--stringp (str)
+  "Return t if function argument STR is a string of length > 0, nil otherwise."
+ (if (and (stringp str) (> (length str) 0))
+     str
+   nil))
+  
+(defun iorg--normalize-new-dir-name (name)
+  "Return NAME for a new directory in canonical form"
+  (and (iorg--stringp name)
+       (expand-file-name (file-name-as-directory name))))
 
  
 ;; Delete iOrg project

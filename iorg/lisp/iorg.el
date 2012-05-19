@@ -133,8 +133,7 @@
          (concat
           iorg-dir "project")
          project-dir)
-        (iorg-rename-project project-name project-dir)
-        (iorg-update-project project-dir))
+        (iorg-rename-project project-name project-dir))
     (message "Not a valid directory name"))
 
 (defun iorg-update-project (&optional dir)
@@ -145,7 +144,7 @@
               (iorg--normalize-existing-dir-name dir)
             (iorg--pwd))))
       (iorg--rename-project-files nil proj)
-      ;; (iorg--update-project-config proj)
+      ;; (iorg--update-projectconfig proj)
       ;; (iorg--update-iorg-config proj)
       ))
 
@@ -315,11 +314,11 @@
      ((not (iorg--project-directory-structure-p proj))
       (message "Directory does not confirm to iOrg directory structure"))
      ((not (iorg--stringp name))
-      (message "New project name must be a string of lenght > 0"))
+      (message "New project name must be a string of length > 0"))
      (t
       (condition-case err
           ;; rename and update project 
-          (iorg--update-project
+          (iorg-update-project
            (rename-file
             (directory-file-name proj)
             (concat

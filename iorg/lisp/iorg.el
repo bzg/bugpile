@@ -82,15 +82,15 @@
 
 ;; remember this directory
 (setq iorg-dir
-      (file-name-directory
-       (directory-file-name
-        (file-name-directory
-         (or load-file-name (buffer-file-name))))))
+      (expand-file-name
+       (file-name-directory
+        (directory-file-name
+         (file-name-directory
+          (or load-file-name (buffer-file-name)))))))
 
-;; (unless (fboundp 'time-subtract) (defalias 'time-subtract 'subtract-time))
+;; (unless (fboundp 'xyz) (defalias 'xyz 'uvw))
 
-;; (declare-function org-inlinetask-at-task-p "org-inlinetask" ())
-;; (declare-function org-inlinetask-outline-regexp "org-inlinetask" ())
+;; (declare-function iorg-xyz-uvw-abc "iorg-xyz" ())
 
 
 ;; Customization variables
@@ -115,7 +115,7 @@
 ;; Initialize new iOrg projects
 
 (defun iorg-initialize-project (&optional dir name)
-  "Copy the iOrg project template into DIR and optionally rename the project."
+  "Copy the iOrg project template into DIR and rename the project."
   (interactive "DProject directory: \nsProject name: ")
   (let* ((directory
           (if dir
@@ -131,14 +131,15 @@
          (project-dir (concat directory project-name)))
         (copy-directory
          (concat
-          (iorg--normalize-existing-dir-name iorg-dir) "project")
+          iorg-dir "project")
          project-dir)
         (iorg-rename-project project-name project-dir)
-        (iorg--update-project project-dir))
+        (iorg-update-project project-dir))
     (message "Not a valid directory name"))
 
-(defun iorg--update-project (&optional dir)
+(defun iorg-update-project (&optional dir)
   "Update filenames and configuration file for iOrg project in present working directory or DIR."
+  (interactive "DProject directory: ")
   (let ((proj
           (if dir
               (iorg--normalize-existing-dir-name dir)

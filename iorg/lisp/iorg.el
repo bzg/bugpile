@@ -129,24 +129,24 @@
              (number-to-string
               (1+ (iorg--max-numbering-unnamed-projects))))))
          (project-dir (concat directory project-name)))
-        (copy-directory
-         (concat
-          iorg-dir "project")
-         project-dir)
-        (iorg-rename-project project-name project-dir))
-    (message "Not a valid directory name"))
+    (copy-directory
+     (concat
+      iorg-dir "project")
+     project-dir)
+    (iorg-update-project project-dir)))
+
 
 (defun iorg-update-project (&optional dir)
   "Update filenames and configuration file for iOrg project in present working directory or DIR."
   (interactive "DProject directory: ")
   (let ((proj
-          (if dir
-              (iorg--normalize-existing-dir-name dir)
-            (iorg--pwd))))
-      (iorg--rename-project-files nil proj)
-      ;; (iorg--update-project-config proj)
-      ;; (iorg--update-iorg-config proj)
-      ))
+         (if dir
+             (iorg--normalize-existing-dir-name dir)
+           (iorg--pwd))))
+    (iorg--rename-project-files nil proj)
+    ;; (iorg--update-project-config proj)
+    ;; (iorg--update-iorg-config proj)
+    ))
 
 (defun iorg--update-project-config (prop val &optional dir)
   "Update the iOrg project configuration of project in present working directory or DIR."
@@ -219,31 +219,30 @@
 
 (defun iorg--replace-filename-prefix (old-prefix new-prefix &optional dir)
   "Replace OLD-PREFIX with NEW-PREFIX in filename of all (non-directory) files in present working directory or DIR."
-  (condition-case err
-      (let ((proj
-             (if dir
-                 (iorg--normalize-existing-dir-name dir)
-               (iorg--pwd))))
+  (let ((proj
+         (if dir
+             (iorg--normalize-existing-dir-name dir)
+           (iorg--pwd))))
+    (condition-case err
         (mapc
          (lambda (x)
            (and
             (string-match
              (concat "\\(^\\)\\(" old-prefix "\\)\\(.+\\)\\($\\)") x)
-            ((not (file-directory-p)
-                  (concat proj x)))               
+            (not (file-directory-p (concat proj x)))
             (let* ((first-part (match-string 2 x))
                    (last-part (match-string 3 x)))
               (and first-part last-part
                    (rename-file
                     (concat proj first-part last-part)
-                    (concat proj new-prefix last-part))))))
-         (directory-files proj)))
+                    (concat proj new-prefix last-part) t)))))
+         (directory-files proj))
     ;; error handler
     (error 
      (princ
       (format
        "Error replacing the filename-prefix: %s" err))
-     nil)))
+     nil))))
 
 (defun iorg--goto-first-entry (&optional file)
   "Move point to the beginning of line of the first entry in the current buffer or FILE."
@@ -308,7 +307,7 @@
 (defun iorg--number-of-unnamed-projects ()
   "Return the number of current unnamed iOrg projects."
   (nth 1 (iorg--meta-data)))
-
+ 
 (defun iorg--max-numbering-unnamed-projects ()
   "Return the highest numbering of unnamed iOrg projects."
   (nth 2 (iorg--meta-data)))
@@ -351,18 +350,21 @@
            (iorg--pwd))))
     (cond
      ((not (iorg--project-directory-structure-p proj))
-      (message "Directory does not confirm to iOrg directory structure"))
+      (message "Directory does not confirm to iOrg directory structure."))
      ((not (iorg--stringp name))
       (message "New project name must be a string of length > 0"))
      (t
       (condition-case err
-          ;; rename and update project 
-          (iorg-update-project
-           (rename-file
-            (directory-file-name proj)
-            (concat
-             (file-name-directory
-              (directory-file-name proj)) name)))        
+          ;; rename and update project
+          (let ((new-proj
+                 (iorg--normalize-new-dir-name
+                  (concat
+                   (file-name-directory
+                    (directory-file-name proj)) name))))
+            (rename-file
+             (directory-file-name proj)
+             new-proj)
+            (iorg-update-project new-proj))
         (error 
          (princ
           (format

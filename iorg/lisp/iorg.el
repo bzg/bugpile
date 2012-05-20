@@ -149,35 +149,30 @@
       ))
 
 (defun iorg--update-project-config (prop val &optional dir)
-  "Update the iOrg project configuration of project in present working directory or DIR.")
+  "Update the iOrg project configuration of project in present working directory or DIR."
   (org-entry-add-to-multivalued-property
-   (iorg--global-pom) prop val))
+   (iorg--goto-first-entry
+    (if dir
+        (expand-file-name
+         (concat
+          (file-name-nondirectory
+           (directory-file-name
+            (iorg--normalize-existing-dir-name dir))) "-config.org")
+         (iorg--normalize-existing-dir-name dir))
+      (expand-file-name
+       (concat
+        (file-name-nondirectory
+         (directory-file-name
+          (iorg--pwd))) "-config.org")
+       (iorg--pwd)))
+    prop val)))
+
    
-   
-(defun iorg--local-pom (&optional dir)
-  "Move point to outline tree root of the iOrg project config file in present working directory of DIR."
-  (let ((proj
-          (if dir
-              (iorg--normalize-existing-dir-name dir)
-            (iorg--pwd))))
- (find-file-existing
-  (expand-file-name
-   (concat
-    (file-name-nondirectory
-     (directory-file-name proj)) "-config.org")
-   proj))
-    (iorg--goto-outline-tree-root)))
-
-
-(defun iorg--global-pom ()
-  "Move point to outline tree root of iOrgs global config file in the iOrg directory."
- (find-file-existing (expand-file-name "iorg-config.org" iorg-dir))
-    (iorg--goto-outline-tree-root))
-
 (defun iorg--update-iorg-config (prop val)
   "Update property PROP with value VAL in the global iOrg configuration file."
   (org-entry-add-to-multivalued-property
-   (iorg--global-pom) prop val))
+   (iorg--goto-first-entry
+    (expand-file-name "iorg-config.org" iorg-dir)) prop val))
 
 (defun iorg--pwd ()
   "Return the (normalized) directory part of the function `pwd'."
@@ -250,13 +245,28 @@
        "Error replacing the filename-prefix: %s" err))
      nil)))
 
-(defun iorg--goto-outline-tree-root ()
-  "Move point to the beginning of line of the outermost (or first) outline item in the buffer."
-  (progn
+(defun iorg--goto-first-entry (&optional file)
+  "Move point to the beginning of line of the first entry in the current buffer or FILE."
+  (with-current-buffer
+      (if (and file (file-exists-p file))
+          (find-file-existing file)
+        (current-buffer))
     (org-goto-line 1)
     (or (looking-at org-outline-regexp)
         (re-search-forward org-outline-regexp-bol nil t))
     (beginning-of-line)))
+
+(defun iorg--goto-last-entry (&optional file)
+  "Move point to the beginning of line of the last entry in the current buffer or FILE."
+  (with-current-buffer
+      (if (and file (file-exists-p file))
+          (find-file-existing file)
+        (current-buffer))
+    (org-goto-line
+     (line-number-at-pos (point-max))
+     (or (looking-at org-outline-regexp)
+         (re-search-backward org-outline-regexp-bol nil t))
+     (beginning-of-line))))
     
 
 (defun iorg--filter-multival-property (prop reg)
@@ -269,9 +279,7 @@
 
 (defun iorg--meta-data ()
   "Return a list with meta-data about the current iOrg projects, gathered from the iorg-config.org file."
-  (save-excursion
-    (find-file-existing (expand-file-name "iorg-config.org" iorg-dir))
-    (iorg--goto-outline-tree-root)
+    (iorg--goto-first-entry (expand-file-name "iorg-config.org" iorg-dir))
     (let* ((proj (org-entry-get (point) "projects"))
            (unnamed-proj (iorg--filter-multival-property proj "project[0-9]+$"))
            (unnamed-max 0))
@@ -291,7 +299,7 @@
       (list
        (length proj) ; total number of projects
        (length unnamed-proj) ; number of unnamed projects
-       unnamed-max)))) ; highest numbering of unnamed project
+       unnamed-max))) ; highest numbering of unnamed project
        
 (defun iorg--number-of-projects ()
   "Return the total number of current iOrg projects."

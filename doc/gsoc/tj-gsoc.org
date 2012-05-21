@@ -296,14 +296,23 @@ Deleted, is a special case of 'take action on selected task'
 ** TODO Bugpile Requirements Analysis
 *** TODO Use Cases in textual form
 
-**** TODO [req-uc-txt] Create project
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Create project
+     CLOSED: [2012-05-21 Mo 14:46] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 14:46]
+     :END:
 
-**** TODO [req-uc-txt] Delete project
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Delete project
+     CLOSED: [2012-05-21 Mo 15:07] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 15:07]
+     :END:
 
-**** TODO [req-uc-txt] Switch project
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Switch project
+     CLOSED: [2012-05-21 Mo 15:12] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 15:12]
+     :END:
 
 **** DONE [req-uc-txt] Open new task
      CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
@@ -311,61 +320,117 @@ Deleted, is a special case of 'take action on selected task'
      - State "DONE"       from "TODO"       [2012-05-10 Do 11:21]
      :END:
 
-**** TODO [req-uc-txt] Re-open task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Re-open task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
-**** TODO [req-uc-txt] Edit task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Edit task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
-**** TODO [req-uc-txt] Close task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Close task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
-**** TODO [req-uc-txt] Add related task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Add related task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
-**** TODO [req-uc-txt] Remove related task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Remove related task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
-**** TODO [req-uc-txt] Assign task
-     SCHEDULED: <2012-05-11 Fr>
+**** DONE [req-uc-txt] Assign task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
-**** TODO [req-uc-txt] Add comment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Add comment
+     CLOSED: [2012-05-21 Mo 22:25] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:25]
+     :END:
 
-**** TODO [req-uc-txt] Edit comment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Edit comment
+     CLOSED: [2012-05-21 Mo 22:25] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:25]
+     :END:
 
-**** TODO [req-uc-txt] Delete comment
-     SCHEDULED: <2012-05-10 Do>
+**** CANCELLED [req-uc-txt] Delete comment                        :CANCELLED:
+     CLOSED: [2012-05-21 Mo 22:25] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-21 Mo 22:25] \\
+       merged with other use case
+     :END:
 
-**** TODO [req-uc-txt] Add attachment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Add attachment
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:26]
+     :END:
 
-**** TODO [req-uc-txt] Delete attachment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Delete attachment
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:26]
+     :END:
 
-**** TODO [req-uc-txt] Attach a file
-     SCHEDULED: <2012-05-10 Do>
+**** CANCELLED [req-uc-txt] Attach a file                         :CANCELLED:
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-21 Mo 22:26] \\
+       same as add attachment
+     :END:
 
-**** TODO [req-uc-txt] Search tasklist
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Search tasklist
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:26]
+     :END:
 
-**** TODO [req-uc-txt] Take action on selected tasks
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Take action on selected tasks
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
-**** TODO [req-uc-txt] Search event log
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-txt] Search event log
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
 *** TODO Integrated UML Modelling of Use Cases and UI
 
-**** TODO [req-uc-uml] Create project
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-uml] Create project
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
-**** TODO [req-uc-uml] Delete project
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-uml] Delete project
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
-**** TODO [req-uc-uml] Switch project
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-uml] Switch project
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
 **** DONE [req-uc-uml] Open new task
      CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
@@ -390,17 +455,30 @@ Deleted, is a special case of 'take action on selected task'
 **** TODO [req-uc-uml] Assign task
      SCHEDULED: <2012-05-11 Fr>
 
-**** TODO [req-uc-uml] Add comment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-uml] Add comment
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
-**** TODO [req-uc-uml] Edit comment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-uml] Edit comment
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
 
-**** TODO [req-uc-uml] Delete comment
-     SCHEDULED: <2012-05-10 Do>
+**** CANCELLED [req-uc-uml] Delete comment                        :CANCELLED:
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-21 Mo 22:27] \\
+       merged with edit comment
+     :END:
 
-**** TODO [req-uc-uml] Add attachment
-     SCHEDULED: <2012-05-10 Do>
+**** DONE [req-uc-uml] Add attachment
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
 
 **** TODO [req-uc-uml] Delete attachment
      SCHEDULED: <2012-05-10 Do>

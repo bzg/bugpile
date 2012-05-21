@@ -194,7 +194,6 @@ in the solution space, which can then be implemented.
 | *alternative flow* | --                             |
 | *postcondition*    | user authentication data permanently stored in the system |
 
-
 *** Edit user details
     :PROPERTIES:
     :CUSTOM_ID: edit-user-details-txt
@@ -230,118 +229,9 @@ in the solution space, which can then be implemented.
 | *use case*         | logout                         |
 | *actors*           | user                           |
 | *precondition*     | user is logged in              |
-| *main flow*        | user selects logout option     |
+| *main flow*        | user selects 'logout' option   |
 | *alternative flow* | --                             |
 | *postcondition*    | user is logged out             |
-
-*** Create project
-    :PROPERTIES:
-    :CUSTOM_ID: create-project-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Delete project
-    :PROPERTIES:
-    :CUSTOM_ID: delete-project-txt
-    :END:      
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Switch project
-    :PROPERTIES:
-    :CUSTOM_ID: switch-project-txt
-    :END:   
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Open new task
-    :PROPERTIES:
-    :CUSTOM_ID: open-new-task-txt
-    :END:      
-
-|                    | <30>                           |
-| *use case*         | open new ask                   |
-| *actors*           | user                           |
-| *precondition*     | user is logged in              |
-| *main flow*        | user selects 'open new task' option, user submits task information. |
-| *alternative flow* | --                             |
-| *postcondition*    | task stored in system          |
-
-*** Re-open task
-    :PROPERTIES:
-    :CUSTOM_ID: reopen-task-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Edit task
-    :PROPERTIES:
-    :CUSTOM_ID: edit-task-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Close task
-    :PROPERTIES:
-    :CUSTOM_ID: close-task-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Add related task
-    :PROPERTIES:
-    :CUSTOM_ID: add-related-task-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Remove related task
-    :PROPERTIES:
-    :CUSTOM_ID: remove-related-task-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
 
 *** Search users
     :PROPERTIES:
@@ -361,140 +251,242 @@ in the solution space, which can then be implemented.
     :CUSTOM_ID: take-action-users-txt
     :END: 
 
-/e.g. add user(s) to assignees, remove user(s) from assignees/
+/e.g.:/
+- /add user(s) to assignees/
+- /remove user(s) from assignees/
+- /delete user(s)/
+- /edit user details/
 
 |                    | <30>                           |
 | *use case*         | take action on selected users  |
 | *actors*           | admin                          |
-| *precondition*     | admin is logged in AND at least one registered user |
-| *main flow*        | admin selects users and the action to take on them |
+| *precondition*     | admin is logged in and at least one user registered |
+| *main flow*        | admin selects users and the action to perform on them |
 | *alternative flow* | --                             |
-| *postcondition*    | action was applied to selected users |
+| *postcondition*    | action was applied to selected user(s) |
 
-*** Assign task
+*** Create project
     :PROPERTIES:
-    :CUSTOM_ID: assign-task-txt
+    :CUSTOM_ID: create-project-txt
     :END: 
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | create project                 |
+| *actors*           | admin                          |
+| *precondition*     | admin is logged in             |
+| *main flow*        | admin selects 'create project' option and submits project information |
+| *alternative flow* | --                             |
+| *postcondition*    | new project is stored in the system |
 
-*** Add comment
+*** Edit project
     :PROPERTIES:
-    :CUSTOM_ID: add-comment-txt
-    :END: 
+    :CUSTOM_ID: edit-project-txt
+    :END:      
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | edit project                   |
+| *actors*           | admin                          |
+| *precondition*     | admin is logged in, project exists |
+| *main flow*        | admin selects 'edit project' option, selects one project, and submits the modified project information |
+| *alternative flow* | admin marks selected project as deleted |
+| *postcondition*    | modified project info stored in the system OR project deleted |
 
-*** Edit comment
+*** Switch project
     :PROPERTIES:
-    :CUSTOM_ID: edit-comment-txt
-    :END: 
+    :CUSTOM_ID: switch-project-txt
+    :END:   
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | switch project                 |
+| *actors*           | user                           |
+| *precondition*     | --                             |
+| *main flow*        | user selects the 'switch project' option and selects a different project |
+| *alternative flow* | --                             |
+| *postcondition*    | a different project is the current project |
 
-*** Delete comment
+*** Open new task
     :PROPERTIES:
-    :CUSTOM_ID: delete-comment-txt
-    :END: 
+    :CUSTOM_ID: open-new-task-txt
+    :END:      
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Add attachment
-    :PROPERTIES:
-    :CUSTOM_ID: add-attachment-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Delete attachment
-    :PROPERTIES:
-    :CUSTOM_ID: delete-attachment-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
-
-*** Attach a file
-    :PROPERTIES:
-    :CUSTOM_ID: attach-file-txt
-    :END: 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | open new task                  |
+| *actors*           | user                           |
+| *precondition*     | user is logged in              |
+| *main flow*        | user selects 'open new task' option and submits task information. |
+| *alternative flow* | --                             |
+| *postcondition*    | task stored in system          |
 
 *** Search tasklist
     :PROPERTIES:
     :CUSTOM_ID: search-task-list-txt
     :END: 
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | search tasklist                |
+| *actors*           | user                           |
+| *precondition*     | at least one task in system    |
+| *main flow*        | user selects 'search tasklist' option and submits search criteria |
+| *alternative flow* | --                             |
+| *postcondition*    | user sees a (possibly empty) result list |
 
 *** Take action on selected tasks
     :PROPERTIES:
     :CUSTOM_ID: take-action-tasks-txt
     :END: 
 
-/e.g. 'add/remove user to notification list', 'add/remove reminder'/
+/e.g.:/
+- /add (remove) yourself (as user) to (from) notification list/
+- /add (remove) reminder/
+- /close task/
+- /re-open closed task/
+- /assign yourself (as assignee) to the task(s)/ 
+- /edit task/
+- /associate related tasks/
+- /dissociate related tasks/
+- /associate  tasks and assignees/
+- /dissociate tasks and assignees/
 
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+
+|                    | <30>                           |
+| *use case*         | take action on selected tasks  |
+| *actors*           | user                           |
+| *precondition*     | user has necessary permissions |
+| *main flow*        | user select tasks and the action to perform on them |
+| *alternative flow* | --                             |
+| *postcondition*    | action performed on selected tasks |
+
+*** Edit task
+    :PROPERTIES:
+    :CUSTOM_ID: edit-task-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | edit task                      |
+| *actors*           | admin or assignee              |
+| *precondition*     | admin or assignee logged in, task exists |
+| *main flow*        | admin or assignee searches the tasklist, selects a task, takes action 'edit' on the selected task, and finally submits the modified task info |
+| *alternative flow* | --                             |
+| *postcondition*    | modified task info stored in system |
+
+*** Associate related tasks
+    :PROPERTIES:
+    :CUSTOM_ID: assoc-rel-tasks-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | associate related tasks        |
+| *actors*           | admin or assignee              |
+| *precondition*     | --                             |
+| *main flow*        | admin or assignee searches the tasklist, selects at least two related tasks and takes action 'associate related tasks' on them |
+| *alternative flow* | --                             |
+| *postcondition*    | tasks flagged as related       |
+
+*** Dissociate related tasks
+    :PROPERTIES:
+    :CUSTOM_ID: dissoc-rel-tasks-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | dissociate related tasks       |
+| *actors*           | admin or assignee              |
+| *precondition*     | selected tasks are flagged as related |
+| *main flow*        | admin or assignee searches the tasklist, selects at least two tasks that are flagged as related, and takes action 'dissociate related tasks' on them |
+| *alternative flow* | --                             |
+| *postcondition*    | selected tasks not flagged as related anymore |
 
 
+*** Associate tasks and assignees 
+    :PROPERTIES:
+    :CUSTOM_ID: assoc-task-assignee-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | associate tasks and assignees  |
+| *actors*           | admin                          |
+| *precondition*     | admin is logged in             |
+| *main flow*        | admin synchronously searches the task and user (assignee) lists, selects one or more tasks and one or more assignees, and takes action 'associate tasks and assignees' on them. |
+| *alternative flow* | --                             |
+| *postcondition*    | selected tasks are flagged as assigned to selected assignees |
+
+*** Dissociate tasks and assignees
+    :PROPERTIES:
+    :CUSTOM_ID: dissoc-tasks-assignee-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | dissociate assignees from tasks |
+| *actors*           | admin                          |
+| *precondition*     | selected tasks are flagged as assigned to selected assignees |
+| *main flow*        | admin synchronously searches the task and user (assignee) list, selects at least one task and one of its assigned assignees,  and takes action 'dissociate tasks and assignees' on them |
+| *alternative flow* | --                             |
+| *postcondition*    | selected tasks are not assigned to selected assignees anymore |
+
+
+*** Add comment
+    :PROPERTIES:
+    :CUSTOM_ID: add-comment-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | add comment                    |
+| *actors*           | user                           |
+| *precondition*     | user is logged in and views a task |
+| *main flow*        | user submits a comment to the current task |
+| *alternative flow* | --                             |
+| *postcondition*    | comment stored in system       |
+
+*** Edit comment
+    :PROPERTIES:
+    :CUSTOM_ID: edit-comment-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | edit comment                   |
+| *actors*           | user                           |
+| *precondition*     | user is logged in and views a task with comments AND has necessary permissions |
+| *main flow*        | user selects 'edit comment' option and submits edited text |
+| *alternative flow* | user selects 'edit comment' option and deletes comment |
+| *postcondition*    | edited comment stored in system |
+
+*** Add attachment
+    :PROPERTIES:
+    :CUSTOM_ID: add-attachment-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | add attachment                 |
+| *actors*           | user                           |
+| *precondition*     | user is logged in, views a task, and has the necessary permissions |
+| *main flow*        | user selects 'add attachment' option and submits the selected file |
+| *alternative flow* | --                             |
+| *postcondition*    | selected file stored in the system and attached to task |
+
+*** Delete attachment
+    :PROPERTIES:
+    :CUSTOM_ID: delete-attachment-txt
+    :END: 
+
+|                    | <30>                           |
+| *use case*         | delete attachment              |
+| *actors*           | user                           |
+| *precondition*     | user is logged in, views a task with attachments, and has the necessary permissions |
+| *main flow*        | user flags attachment as deleted and submits flag |
+| *alternative flow* | --                             |
+| *postcondition*    | attachment flagged as deleted in system |
 
 *** Search event log 
     :PROPERTIES:
     :CUSTOM_ID: search-event-log-txt
     :END: 
 
-
-| *use case*         |    |
-| *actors*           |    |
-| *precondition*     | -- |
-| *main flow*        |    |
-| *alternative flow* | -- |
-| *postcondition*    | -- |
+|                    | <30>                           |
+| *use case*         | search event log               |
+| *actors*           | user                           |
+| *precondition*     | --                             |
+| *main flow*        | user selects 'search event log' option |
+| *alternative flow* | --                             |
+| *postcondition*    | --                             |
 
 *** Two Use cases                                                  :noexport:
 Here are some use cases demonstrating how the pieces all play
@@ -693,14 +685,6 @@ storing form data.
     :CUSTOM_ID: logout-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | logout                         |
-# | *actors*           | user                           |
-# | *precondition*     | user is logged in              |
-# | *main flow*        | user selects logout option     |
-# | *alternative flow* | --                             |
-# | *postcondition*    | user is logged out             |
-
 
 #+srcname logout-uml-roa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/logout-uml-roa.png 
@@ -759,17 +743,47 @@ storing form data.
     :CUSTOM_ID: create-project-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | create project                 |
+# | *actors*           | admin                          |
+# | *precondition*     | admin is logged in             |
+# | *main flow*        | admin selects 'create project' option and submits project information |
+# | *alternative flow* | --                             |
+# | *postcondition*    | new project is stored in the system |
 
-*** Delete project
+
+
+*** Edit project
     :PROPERTIES:
-    :CUSTOM_ID: delete-project-uml-roa
+    :CUSTOM_ID: edit-project-uml-roa
     :END:      
+
+# |                    | <30>                           |
+# | *use case*         | edit project                   |
+# | *actors*           | admin                          |
+# | *precondition*     | admin is logged in, project exists |
+# | *main flow*        | admin selects 'edit project' option, selects one project, and submits the modified project information |
+# | *alternative flow* | admin marks selected project as deleted |
+# | *postcondition*    | modified project info stored in the system OR project deleted |
 
 
 *** Switch project
     :PROPERTIES:
     :CUSTOM_ID: switch-project-uml-roa
     :END: 
+
+# *** Switch project
+#     :PROPERTIES:
+#     :CUSTOM_ID: switch-project-txt
+#     :END:   
+
+# |                    | <30>                           |
+# | *use case*         | switch project                 |
+# | *actors*           | user                           |
+# | *precondition*     | --                             |
+# | *main flow*        | user selects the 'switch project' option and selects a different project |
+# | *alternative flow* | --                             |
+# | *postcondition*    | a different project is the current project |
 
 
 *** Open new task
@@ -792,10 +806,44 @@ storing form data.
 [[file:../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png]]
 
 
-*** Re-open task
+
+*** Search tasklist
     :PROPERTIES:
-    :CUSTOM_ID: reopen-task-uml-roa
+    :CUSTOM_ID: search-task-list-uml-roa
     :END: 
+
+# |                    | <30>                           |
+# | *use case*         | search tasklist                |
+# | *actors*           | user                           |
+# | *precondition*     | at least one task in system    |
+# | *main flow*        | user selects 'search tasklist' option and submits search criteria |
+# | *alternative flow* | --                             |
+# | *postcondition*    | user sees a (possibly empty) result list |
+
+*** Take action on selected tasks
+    :PROPERTIES:
+    :CUSTOM_ID: take-action-tasks-uml-roa
+    :END: 
+
+# /e.g.:/
+# - /add (remove) yourself (as user) to (from) notification list/
+# - /add (remove) reminder/
+# - /close task/
+# - /re-open closed task/
+# - /assign yourself (as assignee) to the task(s)/ 
+# - /edit task/
+# - /associate related tasks/
+# - /dissociate related tasks/
+# - /assign task/
+
+# |                    | <30>                           |
+# | *use case*         | take action on selected tasks  |
+# | *actors*           | user                           |
+# | *precondition*     | user has necessary permissions |
+# | *main flow*        | user select tasks and the action to perform on them |
+# | *alternative flow* | --                             |
+# | *postcondition*    | action performed on selected tasks |
+
 
 
 *** Edit task
@@ -803,29 +851,68 @@ storing form data.
     :CUSTOM_ID: edit-task-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | edit task                      |
+# | *actors*           | admin or assignee              |
+# | *precondition*     | admin or assignee logged in, task exists |
+# | *main flow*        | admin or assignee searches the tasklist, selects a task, takes action 'edit' on the selected task, and finally submits the modified task info |
+# | *alternative flow* | --                             |
+# | *postcondition*    | modified task info stored in system |
 
-*** Close task
+
+*** Associate related tasks
     :PROPERTIES:
-    :CUSTOM_ID: close-task-uml-roa
+    :CUSTOM_ID: assoc-rel-tasks-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | associate related tasks        |
+# | *actors*           | admin or assignee              |
+# | *precondition*     | --                             |
+# | *main flow*        | admin or assignee searches the tasklist, selects at least two related tasks and takes action 'associate related tasks' on them |
+# | *alternative flow* | --                             |
+# | *postcondition*    | tasks flagged as related       |
 
-*** Add related task
+*** Dissociate related tasks
     :PROPERTIES:
-    :CUSTOM_ID: add-related-task-uml-roa
+    :CUSTOM_ID: dissoc-rel-tasks-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | dissociate related tasks       |
+# | *actors*           | admin or assignee              |
+# | *precondition*     | selected tasks are flagged as related |
+# | *main flow*        | admin or assignee searches the tasklist, selects at least two tasks that are flagged as related, and takes action 'dissociate related tasks' on them |
+# | *alternative flow* | --                             |
+# | *postcondition*    | selected tasks not flagged as related anymore |
 
-*** Remove related task
+
+
+*** Associate tasks and assignees 
     :PROPERTIES:
-    :CUSTOM_ID: remove-related-task-uml-roa
+    :CUSTOM_ID: assoc-task-assignee-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | associate tasks and assignees  |
+# | *actors*           | admin                          |
+# | *precondition*     | admin is logged in             |
+# | *main flow*        | admin synchronously searches the task and user (assignee) lists, selects one or more tasks and one or more assignees, and takes action 'associate tasks and assignees' on them. |
+# | *alternative flow* | --                             |
+# | *postcondition*    | selected tasks are flagged as assigned to selected assignees |
 
-*** Assign task
+*** Dissociate tasks and assignees
     :PROPERTIES:
-    :CUSTOM_ID: assign-task-uml-roa
+    :CUSTOM_ID: dissoc-tasks-assignee-uml-roa
     :END: 
+
+# |                    | <30>                           |
+# | *use case*         | dissociate assignees from tasks |
+# | *actors*           | admin                          |
+# | *precondition*     | selected tasks are flagged as assigned to selected assignees |
+# | *main flow*        | admin synchronously searches the task and user (assignee) list, selects at least one task and one of its assigned assignees,  and takes action 'dissociate tasks and assignees' on them |
+# | *alternative flow* | --                             |
+# | *postcondition*    | selected tasks are not assigned to selected assignees anymore |
 
 
 *** Add comment
@@ -833,17 +920,28 @@ storing form data.
     :CUSTOM_ID: add-comment-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | add comment                    |
+# | *actors*           | user                           |
+# | *precondition*     | user is logged in and views a task |
+# | *main flow*        | user submits a comment to the current task |
+# | *alternative flow* | --                             |
+# | *postcondition*    | comment stored in system       |
+
 
 *** Edit comment
     :PROPERTIES:
     :CUSTOM_ID: edit-comment-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | edit comment                   |
+# | *actors*           | user                           |
+# | *precondition*     | user is logged in and views a task with comments AND has necessary permissions |
+# | *main flow*        | user selects 'edit comment' option and submits edited text |
+# | *alternative flow* | user selects 'edit comment' option and deletes comment |
+# | *postcondition*    | edited comment stored in system |
 
-*** Delete comment
-    :PROPERTIES:
-    :CUSTOM_ID: delete-comment-uml-roa
-    :END: 
 
 
 *** Add attachment
@@ -852,28 +950,29 @@ storing form data.
     :END: 
 
 
+# |                    | <30>                           |
+# | *use case*         | add attachment                 |
+# | *actors*           | user                           |
+# | *precondition*     | user is logged in, views a task, and has the necessary permissions |
+# | *main flow*        | user selects 'add attachment' option and submits the selected file |
+# | *alternative flow* | --                             |
+# | *postcondition*    | selected file stored in the system and attached to task |
+
+
+
 *** Delete attachment
     :PROPERTIES:
     :CUSTOM_ID: delete-attachment-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | delete attachment              |
+# | *actors*           | user                           |
+# | *precondition*     | user is logged in, views a task with attachments, and has the necessary permissions |
+# | *main flow*        | user flags attachment as deleted and submits flag |
+# | *alternative flow* | --                             |
+# | *postcondition*    | attachment flagged as deleted in system |
 
-*** Attach a file
-    :PROPERTIES:
-    :CUSTOM_ID: attach-file-uml-roa
-    :END: 
-
-
-*** Search tasklist
-    :PROPERTIES:
-    :CUSTOM_ID: search-task-list-uml-roa
-    :END: 
-
-
-*** Take action on selected tasks
-    :PROPERTIES:
-    :CUSTOM_ID: take-action-select-tasks-uml-roa
-    :END: 
 
 
 *** Search event log 
@@ -881,6 +980,13 @@ storing form data.
     :CUSTOM_ID: search-event-log-uml-roa
     :END: 
 
+# |                    | <30>                           |
+# | *use case*         | search event log               |
+# | *actors*           | user                           |
+# | *precondition*     | --                             |
+# | *main flow*        | user selects 'search event log' option |
+# | *alternative flow* | --                             |
+# | *postcondition*    | --                             |
 
 
 

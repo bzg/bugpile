@@ -328,7 +328,7 @@ in the solution space, which can then be implemented.
 | *precondition*     | at least one task in system    |
 | *main flow*        | user selects 'search tasklist' option and submits search criteria |
 | *alternative flow* | --                             |
-| *postcondition*    | user sees a (possibly empty) result list |
+| *postcondition*    |                                |
 
 *** Take action on selected tasks
     :PROPERTIES:
@@ -364,37 +364,10 @@ in the solution space, which can then be implemented.
 |                    | <30>                           |
 | *use case*         | edit task                      |
 | *actors*           | admin or assignee              |
-| *precondition*     | admin or assignee logged in, task exists |
+| *precondition*     | adminf or assignee logged in   |
 | *main flow*        | admin or assignee searches the tasklist, selects a task, takes action 'edit' on the selected task, and finally submits the modified task info |
 | *alternative flow* | --                             |
 | *postcondition*    | modified task info stored in system |
-
-*** Associate related tasks
-    :PROPERTIES:
-    :CUSTOM_ID: assoc-rel-tasks-txt
-    :END: 
-
-|                    | <30>                           |
-| *use case*         | associate related tasks        |
-| *actors*           | admin or assignee              |
-| *precondition*     | --                             |
-| *main flow*        | admin or assignee searches the tasklist, selects at least two related tasks and takes action 'associate related tasks' on them |
-| *alternative flow* | --                             |
-| *postcondition*    | tasks flagged as related       |
-
-*** Dissociate related tasks
-    :PROPERTIES:
-    :CUSTOM_ID: dissoc-rel-tasks-txt
-    :END: 
-
-|                    | <30>                           |
-| *use case*         | dissociate related tasks       |
-| *actors*           | admin or assignee              |
-| *precondition*     | selected tasks are flagged as related |
-| *main flow*        | admin or assignee searches the tasklist, selects at least two tasks that are flagged as related, and takes action 'dissociate related tasks' on them |
-| *alternative flow* | --                             |
-| *postcondition*    | selected tasks not flagged as related anymore |
-
 
 *** Associate tasks and assignees 
     :PROPERTIES:
@@ -567,7 +540,6 @@ elnode and served to the user.
 # functions which could be used outside of the framework e.g., for
 # searching and sorting bug reports.
 
-
 ** Integrated UML Modelling of Use Cases and UI
    :PROPERTIES:
    :CUSTOM_ID: use-cases-uml
@@ -738,19 +710,22 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png]]
 
+
 *** Create project
     :PROPERTIES:
     :CUSTOM_ID: create-project-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | create project                 |
-# | *actors*           | admin                          |
-# | *precondition*     | admin is logged in             |
-# | *main flow*        | admin selects 'create project' option and submits project information |
-# | *alternative flow* | --                             |
-# | *postcondition*    | new project is stored in the system |
-
+#+srcname create-project-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/create-project-uml-roa.png 
+  title Create project <roa>
+  note right: <<precondition>> admin is logged in\n<<postcondition>>new project is stored in the system
+  (*) --> "<<UA>>\nSelect 'create project' option"
+  note right: <<scene>>\n<<button/link>>\ncreate project
+  --> "<<UA>>\nSubmit project information"
+  note right: <<scene>>\n<<input attributes>>\nname\n<<button/link>>\nsubmit
+  --> (*)
+#+end_src
 
 
 *** Edit project
@@ -758,33 +733,30 @@ storing form data.
     :CUSTOM_ID: edit-project-uml-roa
     :END:      
 
-# |                    | <30>                           |
-# | *use case*         | edit project                   |
-# | *actors*           | admin                          |
-# | *precondition*     | admin is logged in, project exists |
-# | *main flow*        | admin selects 'edit project' option, selects one project, and submits the modified project information |
-# | *alternative flow* | admin marks selected project as deleted |
-# | *postcondition*    | modified project info stored in the system OR project deleted |
-
+#+srcname edit-project-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-project-uml-roa.png 
+  title Edit project <roa>
+  note right: <<precondition>>admin is logged in and project exists\n<<postcondition>>modified project info stored in the system or project deleted
+  (*) --> "<<UA>>\nSelect 'edit project' option"
+  note right: <<scene>>\n<<button/link>>\nedit project
+  --> "<<UA>>\nSubmit modified project information"
+  note right: <<scene>>\n<<input attributes>>\nname, deleted \n<<button/link>>\nsubmit
+  --> (*)
+#+end_src
 
 *** Switch project
     :PROPERTIES:
     :CUSTOM_ID: switch-project-uml-roa
     :END: 
 
-# *** Switch project
-#     :PROPERTIES:
-#     :CUSTOM_ID: switch-project-txt
-#     :END:   
-
-# |                    | <30>                           |
-# | *use case*         | switch project                 |
-# | *actors*           | user                           |
-# | *precondition*     | --                             |
-# | *main flow*        | user selects the 'switch project' option and selects a different project |
-# | *alternative flow* | --                             |
-# | *postcondition*    | a different project is the current project |
-
+#+srcname switch-project-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/switch-project-uml-roa.png 
+  title Switch project <roa>
+  note right: <<precondition>>--\n<<postcondition>>a different project is the current project
+  (*) --> "<<UA>>\nSelect 'switch project' option"
+  note right: <<scene>>\n<<select option>>\nproject
+  --> (*)
+#+end_src
 
 *** Open new task
     :PROPERTIES:
@@ -812,38 +784,31 @@ storing form data.
     :CUSTOM_ID: search-task-list-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | search tasklist                |
-# | *actors*           | user                           |
-# | *precondition*     | at least one task in system    |
-# | *main flow*        | user selects 'search tasklist' option and submits search criteria |
-# | *alternative flow* | --                             |
-# | *postcondition*    | user sees a (possibly empty) result list |
+#+srcname search-tasklist--uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-tasklist-uml-roa.png 
+  title Search tasklist <roa>
+  note right: <<precondition>>at least one task in system<<postcondition>>--
+  (*) --> "<<UA>>\nSelect 'search tasklist' option"
+  note right: <<scene>>\n<<button/link>>\nsearch tasklist
+  --> "<<UA>>\nDefine search criteria"
+  note right: <<scene>>\n<<input attributes>>\nname, id, keyword \n<<button/link>>\nsearch
+  --> (*)
+#+end_src
 
 *** Take action on selected tasks
     :PROPERTIES:
     :CUSTOM_ID: take-action-tasks-uml-roa
     :END: 
 
-# /e.g.:/
-# - /add (remove) yourself (as user) to (from) notification list/
-# - /add (remove) reminder/
-# - /close task/
-# - /re-open closed task/
-# - /assign yourself (as assignee) to the task(s)/ 
-# - /edit task/
-# - /associate related tasks/
-# - /dissociate related tasks/
-# - /assign task/
-
-# |                    | <30>                           |
-# | *use case*         | take action on selected tasks  |
-# | *actors*           | user                           |
-# | *precondition*     | user has necessary permissions |
-# | *main flow*        | user select tasks and the action to perform on them |
-# | *alternative flow* | --                             |
-# | *postcondition*    | action performed on selected tasks |
-
+#+srcname take-action-select-tasks-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-roa.png 
+  title Take action on selected tasks<roa>
+  note right: <<precondition>>user is logged in and has necessary permissions\n<<postcondition>>action performed on selected tasks
+  (*) --> "<<UA>>\nSearch tasks ⋔" 
+  --> "<<UA>>\nTake action on selected tasks"
+  note right: <<scene>>\n<<button/link>>>>\nsubmit
+  --> (*)
+#+end_src
 
 
 *** Edit task
@@ -851,41 +816,16 @@ storing form data.
     :CUSTOM_ID: edit-task-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | edit task                      |
-# | *actors*           | admin or assignee              |
-# | *precondition*     | admin or assignee logged in, task exists |
-# | *main flow*        | admin or assignee searches the tasklist, selects a task, takes action 'edit' on the selected task, and finally submits the modified task info |
-# | *alternative flow* | --                             |
-# | *postcondition*    | modified task info stored in system |
-
-
-*** Associate related tasks
-    :PROPERTIES:
-    :CUSTOM_ID: assoc-rel-tasks-uml-roa
-    :END: 
-
-# |                    | <30>                           |
-# | *use case*         | associate related tasks        |
-# | *actors*           | admin or assignee              |
-# | *precondition*     | --                             |
-# | *main flow*        | admin or assignee searches the tasklist, selects at least two related tasks and takes action 'associate related tasks' on them |
-# | *alternative flow* | --                             |
-# | *postcondition*    | tasks flagged as related       |
-
-*** Dissociate related tasks
-    :PROPERTIES:
-    :CUSTOM_ID: dissoc-rel-tasks-uml-roa
-    :END: 
-
-# |                    | <30>                           |
-# | *use case*         | dissociate related tasks       |
-# | *actors*           | admin or assignee              |
-# | *precondition*     | selected tasks are flagged as related |
-# | *main flow*        | admin or assignee searches the tasklist, selects at least two tasks that are flagged as related, and takes action 'dissociate related tasks' on them |
-# | *alternative flow* | --                             |
-# | *postcondition*    | selected tasks not flagged as related anymore |
-
+#+srcname edit-task-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-task-uml-roa.png 
+  title Edit task<roa>
+  note right: <<precondition>> admin or assignee logged in\n<<postcondition>> modified task info stored in system
+  (*) --> "<<UA>>\nSearch tasks ⋔" 
+  --> "<<UA>>\nTake action on selected tasks ⋔"
+  --> "<<UA>>\nEdit task"
+  note right: <<scene>>\n<<button/link>>>>\nsubmit
+  --> (*)
+#+end_src
 
 
 *** Associate tasks and assignees 
@@ -920,13 +860,16 @@ storing form data.
     :CUSTOM_ID: add-comment-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | add comment                    |
-# | *actors*           | user                           |
-# | *precondition*     | user is logged in and views a task |
-# | *main flow*        | user submits a comment to the current task |
-# | *alternative flow* | --                             |
-# | *postcondition*    | comment stored in system       |
+#+srcname add-comment-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/add-comment-uml-roa.png 
+  title Add comment <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> comment stored in system
+  (*) --> "<<UA>>\nSearch tasks ⋔" 
+  --> "<<UA>>\nTake action on selected tasks ⋔"
+  --> "<<UA>>\nAdd comment"
+  note right: <<scene>>\n<<textarea>>\ncomment\n<<button/link>>>>\nsubmit
+  --> (*)
+#+end_src
 
 
 *** Edit comment
@@ -934,30 +877,39 @@ storing form data.
     :CUSTOM_ID: edit-comment-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | edit comment                   |
-# | *actors*           | user                           |
-# | *precondition*     | user is logged in and views a task with comments AND has necessary permissions |
-# | *main flow*        | user selects 'edit comment' option and submits edited text |
-# | *alternative flow* | user selects 'edit comment' option and deletes comment |
-# | *postcondition*    | edited comment stored in system |
-
-
+#+srcname edit-comment-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/edit-comment-uml-roa.png 
+  title Edit comment <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> edited comment stored in system or comment deleted
+  (*) --> "<<UA>>\nSearch tasks ⋔" 
+  --> "<<UA>>\nTake action on selected tasks ⋔"
+  --> "<<UA>>\nEdit comment"
+  if "delete comment?                   " then
+    --> [true] "<<UA>>\nDelete comment"
+    note bottom: <<scene>>\n<<button/link>>\ndelete comment
+    --> (*)
+  else
+    --> [false] "<<UA>>\nSubmit modified comment"
+        note bottom: <<scene>>\n<<text area>>\ncomment\n<<button/link>>\nsubmit
+    --> (*)
+  endif
+#+end_src
 
 *** Add attachment
     :PROPERTIES:
     :CUSTOM_ID: add-attachment-uml-roa
     :END: 
 
-
-# |                    | <30>                           |
-# | *use case*         | add attachment                 |
-# | *actors*           | user                           |
-# | *precondition*     | user is logged in, views a task, and has the necessary permissions |
-# | *main flow*        | user selects 'add attachment' option and submits the selected file |
-# | *alternative flow* | --                             |
-# | *postcondition*    | selected file stored in the system and attached to task |
-
+#+srcname add-attachment-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/add-attachment-uml-roa.png 
+  title Add attachment <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> selected file stored in the system and attached to task
+  (*) --> "<<UA>>\nSearch tasks ⋔" 
+  --> "<<UA>>\nTake action on selected tasks ⋔"
+  --> "<<UA>>\nAdd attachment"
+  note right: <<scene>>\n<<select option>>\nfile\n<<button/link>>>>\nadd file
+  --> (*)
+#+end_src
 
 
 *** Delete attachment
@@ -974,20 +926,33 @@ storing form data.
 # | *postcondition*    | attachment flagged as deleted in system |
 
 
+#+srcname delete-attachment-uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/delete-attachment-uml-roa.png 
+  title Delete attachment <roa>
+  note right: <<precondition>> user is logged in\n<<postcondition>> attachment flagged as deleted in system
+  (*) --> "<<UA>>\nSearch tasks ⋔" 
+  --> "<<UA>>\nTake action on selected tasks ⋔"
+  --> "<<UA>>\nDelete attachment"
+  note right: <<scene>>\n<<button/link>>>>\ndelete
+  --> (*)
+#+end_src
+
 
 *** Search event log 
     :PROPERTIES:
     :CUSTOM_ID: search-event-log-uml-roa
     :END: 
 
-# |                    | <30>                           |
-# | *use case*         | search event log               |
-# | *actors*           | user                           |
-# | *precondition*     | --                             |
-# | *main flow*        | user selects 'search event log' option |
-# | *alternative flow* | --                             |
-# | *postcondition*    | --                             |
-
+#+srcname search-event-log--uml-roa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png 
+  title Search event log<roa>
+  note right: <<precondition>> -- <<precondition>> --
+  (*) --> "<<UA>>\nSelect 'search event log' option"
+  note right: <<scene>>\n<<button/link>>\nsearch events
+  --> "<<UA>>\nDefine search criteria"
+  note right: <<scene>>\n<<input attributes>>\nname, date, type \n<<button/link>>\nsearch
+  --> (*)
+#+end_src
 
 
 

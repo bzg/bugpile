@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-21 23:43:53 CEST"/>
+<meta name="generated" content="2012-05-22 03:54:27 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -605,7 +605,7 @@ in the solution space, which can then be implemented.
 <tr><td class="left"><b>precondition</b></td><td class="left">at least one task in system</td></tr>
 <tr><td class="left"><b>main flow</b></td><td class="left">user selects 'search tasklist' option and submits search criteria</td></tr>
 <tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">user sees a (possibly empty) result list</td></tr>
+<tr><td class="left"><b>postcondition</b></td><td class="left"></td></tr>
 </tbody>
 </table>
 
@@ -677,7 +677,7 @@ in the solution space, which can then be implemented.
 <tbody>
 <tr><td class="left"><b>use case</b></td><td class="left">edit task</td></tr>
 <tr><td class="left"><b>actors</b></td><td class="left">admin or assignee</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">admin or assignee logged in, task exists</td></tr>
+<tr><td class="left"><b>precondition</b></td><td class="left">adminf or assignee logged in</td></tr>
 <tr><td class="left"><b>main flow</b></td><td class="left">admin or assignee searches the tasklist, selects a task, takes action 'edit' on the selected task, and finally submits the modified task info</td></tr>
 <tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
 <tr><td class="left"><b>postcondition</b></td><td class="left">modified task info stored in system</td></tr>
@@ -689,57 +689,8 @@ in the solution space, which can then be implemented.
 
 </div>
 
-<div id="outline-container-assoc-rel-tasks-txt" class="outline-4">
-<h4 id="assoc-rel-tasks-txt"><a name="sec-5-2-14" id="sec-5-2-14"></a>Associate related tasks</h4>
-<div class="outline-text-4" id="text-assoc-rel-tasks-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">associate related tasks</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin or assignee</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin or assignee searches the tasklist, selects at least two related tasks and takes action 'associate related tasks' on them</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">tasks flagged as related</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-dissoc-rel-tasks-txt" class="outline-4">
-<h4 id="dissoc-rel-tasks-txt"><a name="sec-5-2-15" id="sec-5-2-15"></a>Dissociate related tasks</h4>
-<div class="outline-text-4" id="text-dissoc-rel-tasks-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">dissociate related tasks</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin or assignee</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">selected tasks are flagged as related</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin or assignee searches the tasklist, selects at least two tasks that are flagged as related, and takes action 'dissociate related tasks' on them</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">selected tasks not flagged as related anymore</td></tr>
-</tbody>
-</table>
-
-
-
-</div>
-
-</div>
-
 <div id="outline-container-assoc-task-assignee-txt" class="outline-4">
-<h4 id="assoc-task-assignee-txt"><a name="sec-5-2-16" id="sec-5-2-16"></a>Associate tasks and assignees</h4>
+<h4 id="assoc-task-assignee-txt"><a name="sec-5-2-14" id="sec-5-2-14"></a>Associate tasks and assignees</h4>
 <div class="outline-text-4" id="text-assoc-task-assignee-txt">
 
 
@@ -763,7 +714,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-dissoc-tasks-assignee-txt" class="outline-4">
-<h4 id="dissoc-tasks-assignee-txt"><a name="sec-5-2-17" id="sec-5-2-17"></a>Dissociate tasks and assignees</h4>
+<h4 id="dissoc-tasks-assignee-txt"><a name="sec-5-2-15" id="sec-5-2-15"></a>Dissociate tasks and assignees</h4>
 <div class="outline-text-4" id="text-dissoc-tasks-assignee-txt">
 
 
@@ -788,7 +739,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-add-comment-txt" class="outline-4">
-<h4 id="add-comment-txt"><a name="sec-5-2-18" id="sec-5-2-18"></a>Add comment</h4>
+<h4 id="add-comment-txt"><a name="sec-5-2-16" id="sec-5-2-16"></a>Add comment</h4>
 <div class="outline-text-4" id="text-add-comment-txt">
 
 
@@ -812,7 +763,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-edit-comment-txt" class="outline-4">
-<h4 id="edit-comment-txt"><a name="sec-5-2-19" id="sec-5-2-19"></a>Edit comment</h4>
+<h4 id="edit-comment-txt"><a name="sec-5-2-17" id="sec-5-2-17"></a>Edit comment</h4>
 <div class="outline-text-4" id="text-edit-comment-txt">
 
 
@@ -836,7 +787,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-add-attachment-txt" class="outline-4">
-<h4 id="add-attachment-txt"><a name="sec-5-2-20" id="sec-5-2-20"></a>Add attachment</h4>
+<h4 id="add-attachment-txt"><a name="sec-5-2-18" id="sec-5-2-18"></a>Add attachment</h4>
 <div class="outline-text-4" id="text-add-attachment-txt">
 
 
@@ -860,7 +811,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-delete-attachment-txt" class="outline-4">
-<h4 id="delete-attachment-txt"><a name="sec-5-2-21" id="sec-5-2-21"></a>Delete attachment</h4>
+<h4 id="delete-attachment-txt"><a name="sec-5-2-19" id="sec-5-2-19"></a>Delete attachment</h4>
 <div class="outline-text-4" id="text-delete-attachment-txt">
 
 
@@ -884,7 +835,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-search-event-log-txt" class="outline-4">
-<h4 id="search-event-log-txt"><a name="sec-5-2-22" id="sec-5-2-22"></a>Search event log</h4>
+<h4 id="search-event-log-txt"><a name="sec-5-2-20" id="sec-5-2-20"></a>Search event log</h4>
 <div class="outline-text-4" id="text-search-event-log-txt">
 
 
@@ -1050,6 +1001,7 @@ storing form data.
 <p>
 <img src="../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png" />
 </p>
+
 </div>
 
 </div>
@@ -1061,6 +1013,9 @@ storing form data.
 
 
 
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/create-project-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/create-project-uml-roa.png" />
+</p>
 
 </div>
 
@@ -1073,6 +1028,9 @@ storing form data.
 
 
 
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/edit-project-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-project-uml-roa.png" />
+</p>
 </div>
 
 </div>
@@ -1084,7 +1042,9 @@ storing form data.
 
 
 
-
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/switch-project-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/switch-project-uml-roa.png" />
+</p>
 </div>
 
 </div>
@@ -1111,6 +1071,10 @@ storing form data.
 
 
 
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/search-tasklist-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/search-tasklist-uml-roa.png" />
+</p>
 </div>
 
 </div>
@@ -1122,7 +1086,9 @@ storing form data.
 
 
 
-
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-roa.png" />
+</p>
 
 </div>
 
@@ -1135,34 +1101,16 @@ storing form data.
 
 
 
-</div>
-
-</div>
-
-<div id="outline-container-assoc-rel-tasks-uml-roa" class="outline-4">
-<h4 id="assoc-rel-tasks-uml-roa"><a name="sec-5-3-15" id="sec-5-3-15"></a>Associate related tasks</h4>
-<div class="outline-text-4" id="text-assoc-rel-tasks-uml-roa">
-
-
-
-</div>
-
-</div>
-
-<div id="outline-container-dissoc-rel-tasks-uml-roa" class="outline-4">
-<h4 id="dissoc-rel-tasks-uml-roa"><a name="sec-5-3-16" id="sec-5-3-16"></a>Dissociate related tasks</h4>
-<div class="outline-text-4" id="text-dissoc-rel-tasks-uml-roa">
-
-
-
-
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/edit-task-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-task-uml-roa.png" />
+</p>
 
 </div>
 
 </div>
 
 <div id="outline-container-assoc-task-assignee-uml-roa" class="outline-4">
-<h4 id="assoc-task-assignee-uml-roa"><a name="sec-5-3-17" id="sec-5-3-17"></a>Associate tasks and assignees</h4>
+<h4 id="assoc-task-assignee-uml-roa"><a name="sec-5-3-15" id="sec-5-3-15"></a>Associate tasks and assignees</h4>
 <div class="outline-text-4" id="text-assoc-task-assignee-uml-roa">
 
 
@@ -1172,7 +1120,7 @@ storing form data.
 </div>
 
 <div id="outline-container-dissoc-tasks-assignee-uml-roa" class="outline-4">
-<h4 id="dissoc-tasks-assignee-uml-roa"><a name="sec-5-3-18" id="sec-5-3-18"></a>Dissociate tasks and assignees</h4>
+<h4 id="dissoc-tasks-assignee-uml-roa"><a name="sec-5-3-16" id="sec-5-3-16"></a>Dissociate tasks and assignees</h4>
 <div class="outline-text-4" id="text-dissoc-tasks-assignee-uml-roa">
 
 
@@ -1183,60 +1131,76 @@ storing form data.
 </div>
 
 <div id="outline-container-add-comment-uml-roa" class="outline-4">
-<h4 id="add-comment-uml-roa"><a name="sec-5-3-19" id="sec-5-3-19"></a>Add comment</h4>
+<h4 id="add-comment-uml-roa"><a name="sec-5-3-17" id="sec-5-3-17"></a>Add comment</h4>
 <div class="outline-text-4" id="text-add-comment-uml-roa">
 
 
 
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/add-comment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/add-comment-uml-roa.png" />
+</p>
 
 </div>
 
 </div>
 
 <div id="outline-container-edit-comment-uml-roa" class="outline-4">
-<h4 id="edit-comment-uml-roa"><a name="sec-5-3-20" id="sec-5-3-20"></a>Edit comment</h4>
+<h4 id="edit-comment-uml-roa"><a name="sec-5-3-18" id="sec-5-3-18"></a>Edit comment</h4>
 <div class="outline-text-4" id="text-edit-comment-uml-roa">
 
 
 
 
-
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/edit-comment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-comment-uml-roa.png" />
+</p>
 </div>
 
 </div>
 
 <div id="outline-container-add-attachment-uml-roa" class="outline-4">
-<h4 id="add-attachment-uml-roa"><a name="sec-5-3-21" id="sec-5-3-21"></a>Add attachment</h4>
+<h4 id="add-attachment-uml-roa"><a name="sec-5-3-19" id="sec-5-3-19"></a>Add attachment</h4>
 <div class="outline-text-4" id="text-add-attachment-uml-roa">
 
 
 
 
-
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/add-attachment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/add-attachment-uml-roa.png" />
+</p>
 
 </div>
 
 </div>
 
 <div id="outline-container-delete-attachment-uml-roa" class="outline-4">
-<h4 id="delete-attachment-uml-roa"><a name="sec-5-3-22" id="sec-5-3-22"></a>Delete attachment</h4>
+<h4 id="delete-attachment-uml-roa"><a name="sec-5-3-20" id="sec-5-3-20"></a>Delete attachment</h4>
 <div class="outline-text-4" id="text-delete-attachment-uml-roa">
 
 
 
 
 
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/delete-attachment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/delete-attachment-uml-roa.png" />
+</p>
+
 </div>
 
 </div>
 
 <div id="outline-container-search-event-log-uml-roa" class="outline-4">
-<h4 id="search-event-log-uml-roa"><a name="sec-5-3-23" id="sec-5-3-23"></a>Search event log</h4>
+<h4 id="search-event-log-uml-roa"><a name="sec-5-3-21" id="sec-5-3-21"></a>Search event log</h4>
 <div class="outline-text-4" id="text-search-event-log-uml-roa">
 
 
 
 
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png" />
+</p>
 
 
 </div>
@@ -1564,7 +1528,7 @@ core.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-21 23:43:53 CEST</p>
+<p class="date">Date: 2012-05-22 03:54:27 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

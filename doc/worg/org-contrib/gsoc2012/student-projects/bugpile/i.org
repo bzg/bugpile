@@ -956,6 +956,11 @@ storing form data.
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png
   title Use Cases for\n<b>User Management</b>
 
+  :User: <<Human>>
+  :Admin: <<Human>>
+
+  User <|-down- Admin
+
   usecase (Register as user) as (Reg)
   usecase (Edit user details) as (Ed)
   usecase (Login) as (In)
@@ -963,11 +968,13 @@ storing form data.
   usecase (Search users) as (Search)
   usecase (Take action on selected user) as (Act)
 
+  (Act) .> (Search) : <<include>>
+
   Admin --> (Search)
-  Admin -> (Act)
-  User --> (Reg) 
-  User --> (Ed) 
-  User -> (In) 
+  Admin --> (Act)
+  (Reg) <--  User
+  (Ed) <-- User  
+  (In) <- User
   User -> (Out) 
 #+end_src
 
@@ -983,6 +990,13 @@ storing form data.
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png
   title Use Cases for\n<b>Task  Management</b>
 
+  :User: <<Human>>
+  :Assignee: <<Human>>
+  :Admin:  <<Human>>
+
+  User <|-- Assignee
+  Assignee <|-- Admin
+
   usecase (Open new task) as (OpenTask)
   usecase (Edit task) as (EdTask)
   usecase (Add comment) as (AddCom)
@@ -993,16 +1007,30 @@ storing form data.
   usecase (Search tasklist) as (SearchTask)
   usecase (Take action on selected tasks) as (ActOnTask)
 
-  User --> (SearchTask)
-  User ----> (ActOnTask)
-  User ----> (OpenTask) 
-  User ---> (EdTask) 
-  User ----> (AddCom) 
-  User ---> (EdCom) 
-  User -> (AddAtt)
-  User -> (DelAtt)
-  User ---> (SearchLog)
+  (AddCom) ....> (SearchTask) : <<include>>
+  (EdCom) ....> (SearchTask) : <<include>>
+  (SearchTask) <..... (AddAtt) : <<include>>
+  (SearchTask) <..... (DelAtt): <<include>>
+  (ActOnTask) .....> (SearchTask) : <<include>>
+  (EdTask) ....> (SearchTask) : <<include>>
+
+  User -> (SearchTask)
+  (ActOnTask) <- Assignee  
+  (OpenTask) <- User
+  Assignee -> (EdTask)
+  (AddCom) <-- User
+  (EdCom) <-- User
+  (AddAtt) <-- User
+  (DelAtt) <--  User
+  User --> (SearchLog)
 #+end_src
+
+/note: when plantuml has difficulties to calculate a complex diagram/
+/or produces less than satisfactory output, try adding more slashes/
+/or points to the vertices (e.g. .....> or <----) and watch what/
+/happens./
+
+
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png]]
@@ -1018,13 +1046,18 @@ storing form data.
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png
   title Use Cases for\n<b>Project  Management</b>
 
+  :User: <<Human>>
+  :Admin:  <<Human>>
+
+  User <|-- Admin
+
   usecase (Create project) as (Crea)
   usecase (Edit project) as (Ed)
   usecase (Switch project) as (Swi)
 
   Admin --> (Crea)
   Admin --> (Ed)
-  User --> (Swi) 
+  User -> (Swi) 
 #+end_src
 
 #+results:

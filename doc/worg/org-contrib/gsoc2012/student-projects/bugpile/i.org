@@ -1063,11 +1063,6 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png]]
 
-
-** System Activities
-   :PROPERTIES:
-   :CUSTOM_ID: syst-activities
-   :END:
 ** Domain Class Model
    :PROPERTIES:
    :CUSTOM_ID: domain-class-model
@@ -1290,7 +1285,7 @@ since we want to keep things simple and our text-based drawing tool/
   --> "<<SA>>\nShow user search form"
   --> "<<UA>>\nDefine user search criteria"
   note right: <<scene>>\n<<input attributes>>\nusername, email, task \n<<button/link>>\nsearch
-  --> "<<SA>>\nShow queried users"
+  --> "<<SA>>\nSearch users ⋔"
   --> (*)
 #+end_src
 
@@ -1396,7 +1391,7 @@ since we want to keep things simple and our text-based drawing tool/
   --> "<<SA>>\nShow task search form"
   --> "<<UA>>\nDefine search criteria"
   note right: <<scene>>\n<<input attributes>>\nname, id, keyword \n<<button/link>>\nsearch
-  --> "<<SA>>\nShow queried tasks"
+  --> "<<SA>>\nSearch tasks ⋔"
   --> (*)
 #+end_src
 
@@ -1563,6 +1558,43 @@ since we want to keep things simple and our text-based drawing tool/
   --> (*)
 #+end_src
 
+
+** Complex System Activities
+   :PROPERTIES:
+   :CUSTOM_ID: syst-activities
+   :END:
+*** Modeling complex system activities
+    :PROPERTIES:
+    :CUSTOM_ID: model-compl-syst-act
+    :END:
+
+System activities that are sufficiently complex are marked as
+/subactivities/ with the =pitchfork= symbol ⋔ in the software oriented
+activitiy diagrams (=soa=). They are modeled separately in a stepwise
+refinement process by decomposing them into small atomar system
+activities and (maybe) other complex system activities, that are then
+decomposed into smaller activities themselves in another step until
+only simple atomar activities are left.
+
+
+*** Search Tasks
+    :PROPERTIES:
+    :CUSTOM_ID: search-tasks-syst-act-spec
+    :END:
+
+Search tasks and return a result set that fits a user query is the
+central complex system activity in a bugtracker. It is (indirectly)
+included as subactivity in many use cases.
+
+
+*** Search Users
+    :PROPERTIES:
+    :CUSTOM_ID: search-users-syst-act-spec
+    :END:
+
+In bugpile, querying users is a less important and less complex
+activity (compared to querying tasks), only performed by /admins/.
+
 * Software Architecture
   :PROPERTIES:
   :CUSTOM_ID: softw-arch
@@ -1571,6 +1603,106 @@ since we want to keep things simple and our text-based drawing tool/
    :PROPERTIES:
    :CUSTOM_ID: 5-layer-arch
    :END:
+
+The iOrg web-framework is based on a modified 5-layer architecture
+(modified, because the web-layer is further divided into /view/ and
+/controller/):
+
+|-------------------------|
+| iOrg Architecture       |
+|-------------------------|
+| Client                  |
+|-------------------------|
+| Web (View & Controller) |
+|-------------------------|
+| Logic (Model)           |
+|-------------------------|
+| Objects (Model)         |
+|-------------------------|
+| Persistence             |
+|-------------------------|
+
+The standard /client/ for an iOrg web-application is, not
+surprisingly, a web-browser, but typically power users that access the
+application directly via Emacs are considered too. Since iOrg is
+entirely based on text files, a dVCS in combination with the servers
+file system is used for /persistence/, version control and simple
+database functionality. 
+
+Programming an iOrg application therefore consists in designing and
+implementing the three middle layers /objects/, /logic/ and /web/.
+Combining objects and logic into the application /model/ and dividing
+the web-layer into a /view/ and a /controller/ component results in
+the well known MVC (Model-View-Controller) architecture for web
+applications. 
+
+The described architecture is platform independent. We adapt it to the
+file based iOrg system by defining a standard directory structure for
+iOrg projects with predefined directories that contain all the files
+that belong to a certain layer of the architecture. The directories
+are drawn as packages in the following graphical depiction, and
+actually serve the same purpose as packages in other programming
+environments. 
+
+#+srcname refined-arch-iorg
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png 
+    title iOrg Architecture
+  
+    package View_DIR {
+      package UseCase1_DIR {
+          package Scene1_UC1_FILE {}
+          package Scene2_UC1_FILE {}
+    }
+      package UseCase2_DIR {
+          package Scene1_UC2_FILE {} 
+          package Scene2_UC2_FILE {}
+      }
+  
+      package UseCaseIndependentComponents_DIR {
+          package Components_FILE {} 
+    }
+  }
+  
+    package Controller_DIR {
+          package Controller_UC1_FILE {}
+          package Controller_UC2_FILE {}
+          package UseCaseIndepCompController_FILE {}
+    }
+  
+    package Logic_DIR {
+          package Logic_UC1_FILE {}
+          package Logic_UC2_FILE {}
+          package UseCaseIndepCompLogic_FILE {}
+    }
+  
+    package Objects_DIR {
+          package Object1_FILE {}
+          package Object2_FILE {}
+          package Object3_FILE {}
+    }
+  
+
+  UseCase1_DIR +-- UseCase2_DIR
+  UseCase2_DIR +-- UseCaseIndependentComponents_DIR
+  View_DIR +-down- Controller_DIR
+  Controller_DIR +-down- Logic_DIR
+  Logic_DIR  +-down- Objects_DIR
+
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png]]
+
+
+An iOrg project therefore contains a /view/ directory with one
+subdirectory for each /use case/, and one .org file for each /scene/
+in the use case. Furthermore, it contains a /controller/ directory
+with one .el file for each use case, and a /logic/ directory with
+(optionally) one .el file for each use case. Each of these directories
+contains another file (or subdirectory in the case of /view/) for use
+case independent components. The application objects (one file per
+object) are stored in the /objects/ directory. 
+
 * Application Design
   :PROPERTIES:
   :CUSTOM_ID: appl-design
@@ -1579,6 +1711,85 @@ since we want to keep things simple and our text-based drawing tool/
    :PROPERTIES:
    :CUSTOM_ID: loc-ref-softw-arch
    :END:
+** The Transformation Rules
+   :PROPERTIES:
+   :CUSTOM_ID: transform-rules
+   :END:
+*** General considerations
+    :PROPERTIES:
+    :CUSTOM_ID: transform-general-consid
+    :END:
+Emacs Lisp is not an object-oriented programming language, and the
+whole Emacs environment and philosophy is based on functions, not on
+objects. However, we used object-oriented terminology throughout this
+tutorial. Why did we do that, and how can we map the object-oriented
+concepts and terms into the Emacs and Org-mode world? 
+
+Modeling a real world system in terms of objects is convenient,
+because the real world is composed of interacting and related objects
+(that's at least how humans perceive it). Since the object-oriented
+approach has enjoyed the status of a quasi industry standard in the
+last decades, there exist well established methodology one can rely on
+when modeling a web application in terms of classes and objects.
+
+However, the resulting artefacts of the object-oriented requirements
+analysis and software specification must be transformed into a
+software design that fits with the language and runtime environment
+the system will be implemented in. Some creativity and a lot of
+pragmatism is necessary to benefit from such a transformation without
+complicating things unnecessary.
+
+While the specific transformation rules will be described in the
+following subsections, the following statement holds in general for
+the iOrg framework:
+
+#+begin_quote
+Terminology from the object-oriented world is used in a very loose and
+broad sense in the iOrg framework. When talking about classes,
+objects, methods, inheritence etc, we do not talk about those well
+defined language constructs and concepts known from /Smalltalk/ and
+its successors, but rather about some artefacts from the Emacs and Org-mode
+world that might serve to implement some of the ideas associated with
+object-orientation. 
+#+end_quote
+
+*** Domain Class Model
+    :PROPERTIES:
+    :CUSTOM_ID: transform-dom-class-mod
+    :END:
+
+
+
+ 
+*** Software Oriented Activities (SOA)
+*** Complex System Activities
+**** Search Tasks
+    :PROPERTIES:
+    :CUSTOM_ID: search-tasks-syst-act-design
+    :END:
+
+Since bugpile uses a dVCS as database for its textfiles, a query for a
+task might include task name, commit (date or id), author, state of
+the task, and other information that can't be accessed simply by
+searching for the task file in the file system. The search
+facilities should be available independently from the frontend used,
+i.e. power users might use them from Emacs just as normal users from
+their web browser.  Therefore, bugpile should use the underlying dVCS
+to do most of the 'heavy lifting' in processing user queries and then
+prepare the result set according to the frontend used.   
+
+**** Search Users
+    :PROPERTIES:
+    :CUSTOM_ID: search-users-syst-act-design
+    :END:
+
+In contrast to tasks, users are relatively static entities in the bugpile
+system, thus it seems unnecessary to rely on the underlying dVCS to answer
+queries about users, Emacs and Org-mode functionality should
+sufficice. 
+
+*** Summary of Transformation Rules
+
 ** Class Model
    :PROPERTIES:
    :CUSTOM_ID: class-model

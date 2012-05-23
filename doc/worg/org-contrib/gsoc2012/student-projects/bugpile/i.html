@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-22 21:41:25 CEST"/>
+<meta name="generated" content="2012-05-24 01:30:36 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -76,13 +76,13 @@
 <li><a href="#use-case-txt">Use Cases in textual form</a></li>
 <li><a href="#use-cases-uml">Integrated UML Modelling of Use Cases and UI</a></li>
 <li><a href="#use-case-models">Use Case Models</a></li>
-<li><a href="#syst-activities">System Activities</a></li>
 <li><a href="#domain-class-model">Domain Class Model</a></li>
 </ul>
 </li>
 <li><a href="#softw-spec">Software Specification</a>
 <ul>
 <li><a href="#trans-req-into-spec">Transforming Requirements into Specifications</a></li>
+<li><a href="#syst-activities">Complex System Activities</a></li>
 </ul>
 </li>
 <li><a href="#softw-arch">Software Architecture</a>
@@ -93,6 +93,7 @@
 <li><a href="#appl-design">Application Design</a>
 <ul>
 <li><a href="#loc-ref-softw-arch">Locally Refining the Software Architecture</a></li>
+<li><a href="#transform-rules">The Transformation Rules</a></li>
 <li><a href="#class-model">Class Model</a></li>
 <li><a href="#refine-logic">Refining the Logic</a></li>
 </ul>
@@ -685,52 +686,7 @@ in the solution space, which can then be implemented.
 </table>
 
 
-</div>
 
-</div>
-
-<div id="outline-container-assoc-task-assignee-txt" class="outline-4">
-<h4 id="assoc-task-assignee-txt"><a name="sec-5-2-14" id="sec-5-2-14"></a>Associate tasks and assignees</h4>
-<div class="outline-text-4" id="text-assoc-task-assignee-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">associate tasks and assignees</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">admin is logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin synchronously searches the task and user (assignee) lists, selects one or more tasks and one or more assignees, and takes action 'associate tasks and assignees' on them.</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">selected tasks are flagged as assigned to selected assignees</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-dissoc-tasks-assignee-txt" class="outline-4">
-<h4 id="dissoc-tasks-assignee-txt"><a name="sec-5-2-15" id="sec-5-2-15"></a>Dissociate tasks and assignees</h4>
-<div class="outline-text-4" id="text-dissoc-tasks-assignee-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">dissociate assignees from tasks</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">selected tasks are flagged as assigned to selected assignees</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin synchronously searches the task and user (assignee) list, selects at least one task and one of its assigned assignees,  and takes action 'dissociate tasks and assignees' on them</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">selected tasks are not assigned to selected assignees anymore</td></tr>
-</tbody>
-</table>
 
 
 
@@ -739,7 +695,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-add-comment-txt" class="outline-4">
-<h4 id="add-comment-txt"><a name="sec-5-2-16" id="sec-5-2-16"></a>Add comment</h4>
+<h4 id="add-comment-txt"><a name="sec-5-2-14" id="sec-5-2-14"></a>Add comment</h4>
 <div class="outline-text-4" id="text-add-comment-txt">
 
 
@@ -763,7 +719,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-edit-comment-txt" class="outline-4">
-<h4 id="edit-comment-txt"><a name="sec-5-2-17" id="sec-5-2-17"></a>Edit comment</h4>
+<h4 id="edit-comment-txt"><a name="sec-5-2-15" id="sec-5-2-15"></a>Edit comment</h4>
 <div class="outline-text-4" id="text-edit-comment-txt">
 
 
@@ -787,7 +743,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-add-attachment-txt" class="outline-4">
-<h4 id="add-attachment-txt"><a name="sec-5-2-18" id="sec-5-2-18"></a>Add attachment</h4>
+<h4 id="add-attachment-txt"><a name="sec-5-2-16" id="sec-5-2-16"></a>Add attachment</h4>
 <div class="outline-text-4" id="text-add-attachment-txt">
 
 
@@ -811,7 +767,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-delete-attachment-txt" class="outline-4">
-<h4 id="delete-attachment-txt"><a name="sec-5-2-19" id="sec-5-2-19"></a>Delete attachment</h4>
+<h4 id="delete-attachment-txt"><a name="sec-5-2-17" id="sec-5-2-17"></a>Delete attachment</h4>
 <div class="outline-text-4" id="text-delete-attachment-txt">
 
 
@@ -835,7 +791,7 @@ in the solution space, which can then be implemented.
 </div>
 
 <div id="outline-container-search-event-log-txt" class="outline-4">
-<h4 id="search-event-log-txt"><a name="sec-5-2-20" id="sec-5-2-20"></a>Search event log</h4>
+<h4 id="search-event-log-txt"><a name="sec-5-2-18" id="sec-5-2-18"></a>Search event log</h4>
 <div class="outline-text-4" id="text-search-event-log-txt">
 
 
@@ -1184,7 +1140,6 @@ storing form data.
 <img src="../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png" />
 </p>
 
-
 </div>
 </div>
 
@@ -1208,22 +1163,54 @@ storing form data.
 <p>
 <img src="../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png" />
 </p>
-
-</div>
 </div>
 
 </div>
 
-<div id="outline-container-syst-activities" class="outline-3">
-<h3 id="syst-activities"><a name="sec-5-5" id="sec-5-5"></a>System Activities</h3>
-<div class="outline-text-3" id="text-syst-activities">
+<div id="outline-container-task-management-uc-model" class="outline-4">
+<h4 id="task-management-uc-model"><a name="sec-5-4-2" id="sec-5-4-2"></a>Task management</h4>
+<div class="outline-text-4" id="text-task-management-uc-model">
 
+
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png" />
+</p>
+<p>
+<i>note: when plantuml has difficulties to calculate a complex diagram</i>
+<i>or produces less than satisfactory output, try adding more slashes</i>
+<i>or points to the vertices (e.g. &hellip;..&gt; or &lt;-&mdash;) and watch what</i>
+<i>happens.</i>
+</p>
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png" />
+</p>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-project-management-uc-model" class="outline-4">
+<h4 id="project-management-uc-model"><a name="sec-5-4-3" id="sec-5-4-3"></a>Project management</h4>
+<div class="outline-text-4" id="text-project-management-uc-model">
+
+
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png" />
+</p>
+</div>
 </div>
 
 </div>
 
 <div id="outline-container-domain-class-model" class="outline-3">
-<h3 id="domain-class-model"><a name="sec-5-6" id="sec-5-6"></a>Domain Class Model</h3>
+<h3 id="domain-class-model"><a name="sec-5-5" id="sec-5-5"></a>Domain Class Model</h3>
 <div class="outline-text-3" id="text-domain-class-model">
 
 
@@ -1232,7 +1219,6 @@ storing form data.
 <p>
 <img src="../../../../images/gsoc/2012/bugpile/domain-class-uml.png"  alt="../../../../images/gsoc/2012/bugpile/domain-class-uml.png" />
 </p>
-
 </div>
 </div>
 
@@ -1586,6 +1572,62 @@ since we want to keep things simple and our text-based drawing tool/
 <p>
 <img src="../../../../images/gsoc/2012/bugpile/search-event-log-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/search-event-log-uml-soa.png" />
 </p>
+
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-syst-activities" class="outline-3">
+<h3 id="syst-activities"><a name="sec-6-2" id="sec-6-2"></a>Complex System Activities</h3>
+<div class="outline-text-3" id="text-syst-activities">
+
+
+</div>
+
+<div id="outline-container-model-compl-syst-act" class="outline-4">
+<h4 id="model-compl-syst-act"><a name="sec-6-2-1" id="sec-6-2-1"></a>Modeling complex system activities</h4>
+<div class="outline-text-4" id="text-model-compl-syst-act">
+
+
+<p>
+System activities that are sufficiently complex are marked as
+<i>subactivities</i> with the <code>pitchfork</code> symbol ⋔ in the software oriented
+activitiy diagrams (<code>soa</code>). They are modeled separately in a stepwise
+refinement process by decomposing them into small atomar system
+activities and (maybe) other complex system activities, that are then
+decomposed into smaller activities themselves in another step until
+only simple atomar activities are left.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-search-tasks-syst-act-spec" class="outline-4">
+<h4 id="search-tasks-syst-act-spec"><a name="sec-6-2-2" id="sec-6-2-2"></a>Search Tasks</h4>
+<div class="outline-text-4" id="text-search-tasks-syst-act-spec">
+
+
+<p>
+Search tasks and return a result set that fits a user query is the
+central complex system activity in a bugtracker. It is (indirectly)
+included as subactivity in many use cases.
+</p>
+
+</div>
+
+</div>
+
+<div id="outline-container-search-users-syst-act-spec" class="outline-4">
+<h4 id="search-users-syst-act-spec"><a name="sec-6-2-3" id="sec-6-2-3"></a>Search Users</h4>
+<div class="outline-text-4" id="text-search-users-syst-act-spec">
+
+
+<p>
+In bugpile, querying users is a less important and less complex
+activity (compared to querying tasks), only performed by <i>admins</i>.
+</p>
 </div>
 </div>
 </div>
@@ -1602,6 +1644,76 @@ since we want to keep things simple and our text-based drawing tool/
 <div id="outline-container-5-layer-arch" class="outline-3">
 <h3 id="5-layer-arch"><a name="sec-7-1" id="sec-7-1"></a>Modified 5-Layer Architecture</h3>
 <div class="outline-text-3" id="text-5-layer-arch">
+
+
+<p>
+The iOrg web-framework is based on a modified 5-layer architecture
+(modified, because the web-layer is further divided into <i>view</i> and
+<i>controller</i>):
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Client</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">Web (View &amp; Controller)</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">Logic (Model)</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">Objects (Model)</td></tr>
+</tbody>
+<tbody>
+<tr><td class="left">Persistence</td></tr>
+</tbody>
+</table>
+
+
+<p>
+The standard <i>client</i> for an iOrg web-application is, not
+surprisingly, a web-browser, but typically power users that access the
+application directly via Emacs are considered too. Since iOrg is
+entirely based on text files, a dVCS in combination with the servers
+file system is used for <i>persistence</i>, version control and simple
+database functionality. 
+</p>
+<p>
+Programming an iOrg application therefore consists in designing and
+implementing the three middle layers <i>objects</i>, <i>logic</i> and <i>web</i>.
+Combining objects and logic into the application <i>model</i> and dividing
+the web-layer into a <i>view</i> and a <i>controller</i> component results in
+the well known MVC (Model-View-Controller) architecture for web
+applications. 
+</p>
+<p>
+The described architecture is platform independent. We adapt it to the
+file based iOrg system by defining a standard directory structure for
+iOrg projects with predefined directories that contain all the files
+that belong to a certain layer of the architecture. The directories
+are drawn as packages in the following graphical depiction, and
+actually serve the same purpose as packages in other programming
+environments. 
+</p>
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png"  alt="../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png" />
+</p>
+
+<p>
+An iOrg project therefore contains a <i>view</i> directory with one
+subdirectory for each <i>Use Case</i>, and one .org file for each <i>scene</i>
+in the use case. Furthermore, it contains a <i>controller</i> directory
+with one .el file for each use case, and a <i>logic</i> directory with
+(optionally) one .el file for each use case. Each of these directories
+contains another file (or subdirectory in the case of <i>View</i>) for use
+case independent components. The application objects (one file per
+objects) are stored in the <i>objects</i> directory. 
+</p>
 
 </div>
 </div>
@@ -1623,8 +1735,128 @@ since we want to keep things simple and our text-based drawing tool/
 
 </div>
 
+<div id="outline-container-transform-rules" class="outline-3">
+<h3 id="transform-rules"><a name="sec-8-2" id="sec-8-2"></a>The Transformation Rules</h3>
+<div class="outline-text-3" id="text-transform-rules">
+
+
+</div>
+
+<div id="outline-container-transform-general-consid" class="outline-4">
+<h4 id="transform-general-consid"><a name="sec-8-2-1" id="sec-8-2-1"></a>General considerations</h4>
+<div class="outline-text-4" id="text-transform-general-consid">
+
+<p>Emacs Lisp is not an object-oriented programming language, and the
+whole Emacs environment and philosophy is based on functions, not on
+objects. However, we used object-oriented terminology throughout this
+tutorial. Why did we do that, and how can we map the object-oriented
+concepts and terms into the Emacs and Org-mode world? 
+</p>
+<p>
+Modeling a real world system in terms of objects is convenient,
+because the real world is composed of interacting and related objects
+(that's at least how humans perceive it). Since the object-oriented
+approach has enjoyed the status of a quasi industry standard in the
+last decades, there exist well established methodology one can rely on
+when modeling a web application in terms of classes and objects.
+</p>
+<p>
+However, the resulting artefacts of the object-oriented requirements
+analysis and software specification must be transformed into a
+software design that fits with the language and runtime environment
+the system will be implemented in. Some creativity and a lot of
+pragmatism is necessary to benefit from such a transformation without
+complicating things unnecessary.
+</p>
+<p>
+While the specific transformation rules will be described in the
+following subsections, the following statement holds in general for
+the iOrg framework:
+</p>
+<blockquote>
+
+<p>Terminology from the object-oriented world is used in a very loose and
+broad sense in the iOrg framework. When talking about classes,
+objects, methods, inheritence etc, we do not talk about those well
+defined language constructs and concepts known from <i>Smalltalk</i> and
+its successors, but rather about some artefacts from the Emacs and Org-mode
+world that might serve to implement some of the ideas associated with
+object-orientation. 
+</p>
+</blockquote>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-transform-dom-class-mod" class="outline-4">
+<h4 id="transform-dom-class-mod"><a name="sec-8-2-2" id="sec-8-2-2"></a>Domain Class Model</h4>
+<div class="outline-text-4" id="text-transform-dom-class-mod">
+
+
+
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8-2-3" class="outline-4">
+<h4 id="sec-8-2-3">Software Oriented Activities (SOA)</h4>
+<div class="outline-text-4" id="text-8-2-3">
+
+</div>
+
+</div>
+
+<div id="outline-container-8-2-4" class="outline-4">
+<h4 id="sec-8-2-4">Complex System Activities</h4>
+<div class="outline-text-4" id="text-8-2-4">
+
+<ul>
+<li id="search-tasks-syst-act-design"><a name="sec-8-2-4-1" id="sec-8-2-4-1"></a>Search Tasks<br/>
+
+<p>
+Since bugpile uses a dVCS as database for its textfiles, a query for a
+task might include task name, commit (date or id), author, state of
+the task, and other information that can't be accessed simply by
+searching for the task file in the file system. The search
+facilities should be available independently from the frontend used,
+i.e. power users might use them from Emacs just as normal users from
+their web browser.  Therefore, bugpile should use the underlying dVCS
+to do most of the 'heavy lifting' in processing user queries and then
+prepare the result set according to the frontend used.   
+</p>
+</li>
+</ul>
+<ul>
+<li id="search-users-syst-act-design"><a name="sec-8-2-4-2" id="sec-8-2-4-2"></a>Search Users<br/>
+
+<p>
+In contrast to tasks, users are relatively static entities in the bugpile
+system, thus it seems unnecessary to rely on the underlying dVCS to answer
+queries about users, Emacs and Org-mode functionality should
+sufficice. 
+</p>
+</li>
+</ul>
+</div>
+
+</div>
+
+<div id="outline-container-8-2-5" class="outline-4">
+<h4 id="sec-8-2-5">Summary of Transformation Rules</h4>
+<div class="outline-text-4" id="text-8-2-5">
+
+
+</div>
+</div>
+
+</div>
+
 <div id="outline-container-class-model" class="outline-3">
-<h3 id="class-model"><a name="sec-8-2" id="sec-8-2"></a>Class Model</h3>
+<h3 id="class-model"><a name="sec-8-3" id="sec-8-3"></a>Class Model</h3>
 <div class="outline-text-3" id="text-class-model">
 
 <p>Based on the assumption that an Org-mode file can be modeled as a kind
@@ -1645,7 +1877,7 @@ core.
 </div>
 
 <div id="outline-container-refine-logic" class="outline-3">
-<h3 id="refine-logic"><a name="sec-8-3" id="sec-8-3"></a>Refining the Logic</h3>
+<h3 id="refine-logic"><a name="sec-8-4" id="sec-8-4"></a>Refining the Logic</h3>
 <div class="outline-text-3" id="text-refine-logic">
 
 </div>
@@ -1671,7 +1903,7 @@ core.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-22 21:41:25 CEST</p>
+<p class="date">Date: 2012-05-24 01:30:36 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

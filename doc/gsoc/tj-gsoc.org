@@ -536,8 +536,11 @@ Deleted, is a special case of 'take action on selected task'
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
      :END:
-**** TODO [req-uc-mod] Task management
-     SCHEDULED: <2012-05-12 Sa>
+**** DONE [req-uc-mod] Task management
+     CLOSED: [2012-05-23 Mi 14:03] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-23 Mi 14:03]
+     :END:
 
 *** TODO System Activities
 **** TODO [req-syst-act-uml] Search

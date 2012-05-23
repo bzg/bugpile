@@ -369,32 +369,31 @@ in the solution space, which can then be implemented.
 | *alternative flow* | --                             |
 | *postcondition*    | modified task info stored in system |
 
-*** Associate tasks and assignees 
-    :PROPERTIES:
-    :CUSTOM_ID: assoc-task-assignee-txt
-    :END: 
+# *** Associate tasks and assignees 
+#     :PROPERTIES:
+#     :CUSTOM_ID: assoc-task-assignee-txt
+#     :END: 
 
-|                    | <30>                           |
-| *use case*         | associate tasks and assignees  |
-| *actors*           | admin                          |
-| *precondition*     | admin is logged in             |
-| *main flow*        | admin synchronously searches the task and user (assignee) lists, selects one or more tasks and one or more assignees, and takes action 'associate tasks and assignees' on them. |
-| *alternative flow* | --                             |
-| *postcondition*    | selected tasks are flagged as assigned to selected assignees |
+# |                    | <30>                           |
+# | *use case*         | associate tasks and assignees  |
+# | *actors*           | admin                          |
+# | *precondition*     | admin is logged in             |
+# | *main flow*        | admin synchronously searches the task and user (assignee) lists, selects one or more tasks and one or more assignees, and takes action 'associate tasks and assignees' on them. |
+# | *alternative flow* | --                             |
+# | *postcondition*    | selected tasks are flagged as assigned to selected assignees |
 
-*** Dissociate tasks and assignees
-    :PROPERTIES:
-    :CUSTOM_ID: dissoc-tasks-assignee-txt
-    :END: 
+# *** Dissociate tasks and assignees
+#     :PROPERTIES:
+#     :CUSTOM_ID: dissoc-tasks-assignee-txt
+#     :END: 
 
-|                    | <30>                           |
-| *use case*         | dissociate assignees from tasks |
-| *actors*           | admin                          |
-| *precondition*     | selected tasks are flagged as assigned to selected assignees |
-| *main flow*        | admin synchronously searches the task and user (assignee) list, selects at least one task and one of its assigned assignees,  and takes action 'dissociate tasks and assignees' on them |
-| *alternative flow* | --                             |
-| *postcondition*    | selected tasks are not assigned to selected assignees anymore |
-
+# |                    | <30>                           |
+# | *use case*         | dissociate assignees from tasks |
+# | *actors*           | admin                          |
+# | *precondition*     | selected tasks are flagged as assigned to selected assignees |
+# | *main flow*        | admin synchronously searches the task and user (assignee) list, selects at least one task and one of its assigned assignees,  and takes action 'dissociate tasks and assignees' on them |
+# | *alternative flow* | --                             |
+# | *postcondition*    | selected tasks are not assigned to selected assignees anymore |
 
 *** Add comment
     :PROPERTIES:
@@ -882,7 +881,6 @@ storing form data.
   title Edit comment <roa>
   note right: <<precondition>> user is logged in\n<<postcondition>> edited comment stored in system or comment deleted
   (*) --> "<<UC>>\nSearch tasks ⋔" 
-  --> "<<UA>>\nEdit comment"
   if "delete comment?                   " then
     --> [true] "<<UA>>\nDelete comment"
     note bottom: <<scene>>\n<<button/link>>\ndelete comment
@@ -943,7 +941,6 @@ storing form data.
 #+end_src
 
 
-
 ** Use Case Models
    :PROPERTIES:
    :CUSTOM_ID: use-case-models
@@ -963,15 +960,75 @@ storing form data.
   usecase (Edit user details) as (Ed)
   usecase (Login) as (In)
   usecase (Logout) as (Out)
+  usecase (Search users) as (Search)
+  usecase (Take action on selected user) as (Act)
 
+  Admin --> (Search)
+  Admin -> (Act)
   User --> (Reg) 
   User --> (Ed) 
-  User --> (In) 
-  User --> (Out) 
+  User -> (In) 
+  User -> (Out) 
 #+end_src
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png]]
+
+*** Task management
+    :PROPERTIES:
+    :CUSTOM_ID: task-management-uc-model
+    :END: 
+
+#+srcname task-management-uml-uc
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png
+  title Use Cases for\n<b>Task  Management</b>
+
+  usecase (Open new task) as (OpenTask)
+  usecase (Edit task) as (EdTask)
+  usecase (Add comment) as (AddCom)
+  usecase (Edit comment) as (EdCom)
+  usecase (Add attachment) as (AddAtt)
+  usecase (Delete attachment) as (DelAtt)
+  usecase (Search eventlog) as (SearchLog)
+  usecase (Search tasklist) as (SearchTask)
+  usecase (Take action on selected tasks) as (ActOnTask)
+
+  User --> (SearchTask)
+  User ----> (ActOnTask)
+  User ----> (OpenTask) 
+  User ---> (EdTask) 
+  User ----> (AddCom) 
+  User ---> (EdCom) 
+  User -> (AddAtt)
+  User -> (DelAtt)
+  User ---> (SearchLog)
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png]]
+
+
+
+*** Project management
+    :PROPERTIES:
+    :CUSTOM_ID: project-management-uc-model
+    :END: 
+
+#+srcname project-management-uml-uc
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png
+  title Use Cases for\n<b>Project  Management</b>
+
+  usecase (Create project) as (Crea)
+  usecase (Edit project) as (Ed)
+  usecase (Switch project) as (Swi)
+
+  Admin --> (Crea)
+  Admin --> (Ed)
+  User --> (Swi) 
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png]]
 
 
 ** System Activities
@@ -996,7 +1053,6 @@ storing form data.
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/domain-class-uml.png]]
-
 
 * Software Specification
   :PROPERTIES:
@@ -1401,13 +1457,21 @@ since we want to keep things simple and our text-based drawing tool/
   title Edit comment <soa>
   note right: <<precondition>> user is logged in\n<<postcondition>> edited comment stored in system or comment deleted
   (*) --> "<<UC>>\nSearch tasks ⋔" 
-  --> "<<UA>>\nEdit comment"
-  if "Modified comment valid?                                   " then
-      --> [  true] "<<SA>>\nStore modified comment"
-      -->  (*)
- else
-      ---> [  false] "<<UA>>\nEdit comment"
- endif
+  if "                                   delete comment?" then
+    --> [true] "<<UA>>\nDelete comment"
+    note bottom: <<scene>>\n<<button/link>>\ndelete comment
+  --> "<<SA>>\nFlag comment as deleted"
+    --> (*)
+  else
+    --> [false] "<<UA>>\nSubmit modified comment"
+        note bottom: <<scene>>\n<<text area>>\ncomment\n<<button/link>>\nsubmit
+         if "                                            Modified comment valid?" then
+             --> [  true] "<<SA>>\nStore modified comment"
+              -->  (*)
+         else
+             ---> [  false] "<<UA>>\nSubmit modified comment"
+         endif
+    endif
 #+end_src
 
 *** Add attachment

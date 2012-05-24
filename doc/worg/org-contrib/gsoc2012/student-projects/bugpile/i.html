@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-24 01:30:36 CEST"/>
+<meta name="generated" content="2012-05-24 16:11:54 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -1656,8 +1656,11 @@ The iOrg web-framework is based on a modified 5-layer architecture
 <colgroup><col class="left" />
 </colgroup>
 <thead>
-<tr><th scope="col" class="left">Client</th></tr>
+<tr><th scope="col" class="left">iOrg Architecture</th></tr>
 </thead>
+<tbody>
+<tr><td class="left">Client</td></tr>
+</tbody>
 <tbody>
 <tr><td class="left">Web (View &amp; Controller)</td></tr>
 </tbody>
@@ -1706,15 +1709,14 @@ environments.
 
 <p>
 An iOrg project therefore contains a <i>view</i> directory with one
-subdirectory for each <i>Use Case</i>, and one .org file for each <i>scene</i>
+subdirectory for each <i>use case</i>, and one .org file for each <i>scene</i>
 in the use case. Furthermore, it contains a <i>controller</i> directory
 with one .el file for each use case, and a <i>logic</i> directory with
 (optionally) one .el file for each use case. Each of these directories
-contains another file (or subdirectory in the case of <i>View</i>) for use
+contains another file (or subdirectory in the case of <i>view</i>) for use
 case independent components. The application objects (one file per
-objects) are stored in the <i>objects</i> directory. 
+object) are stored in the <i>objects</i> directory. 
 </p>
-
 </div>
 </div>
 
@@ -1777,7 +1779,7 @@ the iOrg framework:
 
 <p>Terminology from the object-oriented world is used in a very loose and
 broad sense in the iOrg framework. When talking about classes,
-objects, methods, inheritence etc, we do not talk about those well
+objects, methods, inheritance etc, we do not talk about those well
 defined language constructs and concepts known from <i>Smalltalk</i> and
 its successors, but rather about some artefacts from the Emacs and Org-mode
 world that might serve to implement some of the ideas associated with
@@ -1795,9 +1797,251 @@ object-orientation.
 <div class="outline-text-4" id="text-transform-dom-class-mod">
 
 
+<ul>
+<li id="class-obj-inherit"><a name="sec-8-2-2-1" id="sec-8-2-2-1"></a>Classes, Objects and Inheritance<br/>
+
+<p>
+The <i>domain class model</i> of the requirements analysis and the software
+specification phase is very similar to an <i>entity-relationship</i> model,
+because classes (entities) and their relationships are modeled (with
+attributes, but without methods).
+</p>
+<p> 
+What is a class and and what is an object in the context of the iOrg
+framework? How are the relationships between objects implemented?
+</p>
+<p>
+We define as a convention that each object (entitiy) is represented by
+one .org file in the <i>objects</i> directory. Relations with other objects
+are realized via attribute values, i.e. other objects can represent
+valid values of certain object attributes.
+</p>
+<p>
+To introduce classes and inheritance in this framework, we make use of
+the attribute inheritance of Org-mode:
+</p>
+<blockquote>
+
+<p>The outline structure of Org mode documents lends itself to an
+inheritance model of properties: if the parent in a tree has a certain
+property, the children can inherit this property.
+</p>
+</blockquote>
+
+
+<p>
+Thus, a class hierarchy is constructed by building an outline tree
+starting from the root class and promoting each subsequent subclass
+one level. The following function is used to <code>get</code> the properties:
+</p>
+<blockquote>
+
+<p>&ndash; Function: org-entry-get pom property &amp;optional inherit
+    Get value of PROPERTY for entry at point-or-marker POM.  By
+    default, this only looks at properties defined locally in the
+    entry.  If INHERIT is non-nil and the entry does not have the
+    property, then also check higher levels of the hierarchy.  If
+    INHERIT is the symbol `selective', use inheritance if and only if
+    the setting of `org-use-property-inheritance' selects PROPERTY for
+   inheritance.
+</p>
+</blockquote>
+
+
+<p>
+Property inheritance seems natural in this construct, but may slow
+things down:
+</p>
+<blockquote>
+
+<p>Org mode does not turn [attribute inheritance] on by default, because
+it can slow down property searches significantly and is often not
+needed. However, if you find inheritance useful, you can turn it on by
+setting the variable `org-use-property-inheritance'. It may be set to
+`t' to make all properties inherited from the parent, to a list of
+properties that should be inherited, or to a regular expression that
+matches inherited properties. If a property has the value `nil', this
+is interpreted as an explicit undefine of the property, so that
+inheritance search will stop at this value and return `nil'.
+</p>
+</blockquote>
+
+
+<p>
+Therefore, iOrg offers an alternative method for building outline
+trees with attribute inheritance (<i>speed inheritance</i>). It simply
+copies all the properties of the parent entries into the property
+drawer of the last node in the objects outline hierarchy, maintaining
+their order. 
+</p>
+</li>
+</ul>
+<ul>
+<li id="class-vs-attr"><a name="sec-8-2-2-2" id="sec-8-2-2-2"></a>Classes vs Attributes<br/>
+When designing a class hierarchy, it is often necessary to decide if
+the differences between two real-world classes should be modeled by
+inserting a discriminating attribute into one software class (e.g.
+attribute <code>color</code> in class <code>car</code>, with values white, green and black)
+or by specialing a general superclass into several subclasses (e.g.
+let subclasses <code>white-car</code>, <code>green-car</code> and <code>black-car</code> inherit from
+superclass <code>car</code>). 
+
+<p>
+While there are more sophisticated guidelines how to tackle this
+decision in the literature, we will restrict ourselves to common
+sense: "Does it make sense to introduce more (sub-) classes to
+discriminate between variations of an real-world object?"
+</p>
+<p>
+As an example, let us consider the user hierarchy of bugpile. There
+are three types of users, <i>user</i>, <i>assignee</i> and <i>admin</i>. Since a
+bugtracker should make it easy to participate in improving software,
+only minimal information is asked for in the registration process
+(name and email). Thus, the user types are different only in what they
+are allowed to do in the system, in their <i>permissions</i>.
+</p>
+<p>
+Following the example of well-established software systems, we don't
+hardcode the permissions into the users, but rather define <i>roles</i>
+with certain <i>permissions</i> and then assign the <i>users</i> to one or more
+roles.  
+</p>
+<p>
+The next graphic shows the relation between bugpile users in a
+very schematic way:
+</p>
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/bugpile-users.png"  alt="../../../../images/gsoc/2012/bugpile/bugpile-users.png" />
+</p>
+
+<p>
+This schematic relation between users could be translated into one of
+the following two class models:
+</p>
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-subclass.png"  alt="../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-subclass.png" />
+</p>
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-attr.png"  alt="../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-attr.png" />
+</p>
+
+<p>
+When using <i>subclassing</i>, we need three classes and one object for every user
+(instance). In iOrg, each class is simply represented by one .org file
+with one entry and an attribute drawer:
+</p>
 
 
 
+<pre class="src src-org"><span class="org-comment"># class user</span>
+<span class="org-org-level-1">* user</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">joe</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">joe@average.com</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+
+<pre class="src src-org"><span class="org-comment"># class assignee</span>
+ * assignee
+  <span class="org-org-code">: PROPERTIES:</span>
+  <span class="org-org-code">: super:    user</span>
+  <span class="org-org-code">: assigneePermissions_ALL: reopen_task edit_task close_task</span>
+  <span class="org-org-code">: assigneePermissions: edit_task</span>
+  <span class="org-org-code">: END:</span>
+</pre>
+
+
+
+<pre class="src src-org"><span class="org-comment"># class admin</span>
+<span class="org-org-level-1">* admin</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">assignee</span>
+  <span class="org-org-special-keyword">:adminPermissions_ALL:</span> <span class="org-org-property-value">create_project edit_project add_assignee assign_assignee</span>
+  <span class="org-org-special-keyword">:adminPermissions:</span> <span class="org-org-property-value">create_project</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+
+<p>
+If we want to instanciate a new <i>admin</i>, we have to create a new admin
+object. Each object is implemented as one .org file with as many
+entries as there are superclasses of the instanciated class. 
+</p>
+
+
+
+<pre class="src src-org"><span class="org-comment"># object admin henry</span>
+<span class="org-org-level-1">* user</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">henry</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">henry@special.com</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-2">** assignee</span>
+<span class="org-org-special-keyword">   :PROPERTIES:</span>
+   <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">user</span>
+   <span class="org-org-special-keyword">:assigneePermissions_ALL:</span> <span class="org-org-property-value">reopen_task edit_task close_task</span>
+   <span class="org-org-special-keyword">:assigneePermissions:</span> <span class="org-org-property-value">edit_task</span>
+<span class="org-org-special-keyword">   :END:</span>
+<span class="org-org-level-3">*** admin</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">assignee</span>
+  <span class="org-org-special-keyword">:adminPermissions_ALL:</span> <span class="org-org-property-value">create_project edit_project add_assignee assign_assignee</span>
+  <span class="org-org-special-keyword">:adminPermissions:</span> <span class="org-org-property-value">edit_project</span>
+  <span class="org-org-special-keyword">:adminPermissions+:</span> <span class="org-org-property-value">create_project</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+<p>
+One could say that the superclasses are 'injected' into the object
+file as hierarchical parent entries of the object entry. If attribute
+inheritance is turned on, all the attributes of the parent entries
+become attributes of the object entry too, i.e. the new admin Henry
+has a name, an email as well as the (assignee-) permission to edit
+tasks. Using <i>speed inheritance</i> to speed up the attribute search, we
+would simply move all the attributes from the parent entries into the
+attribute drawer of the object entry:
+</p>
+
+
+
+<pre class="src src-org"><span class="org-comment"># object admin henry (with 'speed-inheritance')</span>
+<span class="org-org-level-1">* user</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-2">** assignee</span>
+<span class="org-org-special-keyword">   :PROPERTIES:</span>
+   <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">user</span>
+<span class="org-org-special-keyword">   :END:</span>
+<span class="org-org-level-3">*** admin</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">assignee</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">henry</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">henry@special.com</span>
+  <span class="org-org-special-keyword">:assigneePermissions_ALL:</span> <span class="org-org-property-value">reopen_task edit_task close_task</span>
+  <span class="org-org-special-keyword">:assigneePermissions:</span> <span class="org-org-property-value">edit_task</span>
+  <span class="org-org-special-keyword">:adminPermissions_ALL:</span> <span class="org-org-property-value">create_project edit_project add_assignee assign_assignee</span>
+  <span class="org-org-special-keyword">:adminPermissions:</span> <span class="org-org-property-value">edit_project</span>
+  <span class="org-org-special-keyword">:adminPermissions+:</span> <span class="org-org-property-value">create_project</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+
+</li>
+</ul>
 </div>
 
 </div>
@@ -1872,7 +2116,9 @@ exist only on the conceptual level. The implementation in Emacs Lisp
 is based on functions and (e.g.) lists as data stores that are in no
 way encapsulated into formal classes that are part of the language
 core.
-</p></div>
+</p>
+
+</div>
 
 </div>
 
@@ -1903,7 +2149,7 @@ core.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-24 01:30:36 CEST</p>
+<p class="date">Date: 2012-05-24 16:11:54 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

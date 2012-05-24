@@ -1746,7 +1746,7 @@ the iOrg framework:
 #+begin_quote
 Terminology from the object-oriented world is used in a very loose and
 broad sense in the iOrg framework. When talking about classes,
-objects, methods, inheritence etc, we do not talk about those well
+objects, methods, inheritance etc, we do not talk about those well
 defined language constructs and concepts known from /Smalltalk/ and
 its successors, but rather about some artefacts from the Emacs and Org-mode
 world that might serve to implement some of the ideas associated with
@@ -1758,9 +1758,242 @@ object-orientation.
     :CUSTOM_ID: transform-dom-class-mod
     :END:
 
+**** Classes, Objects and Inheritance
+     :PROPERTIES:
+     :CUSTOM_ID: class-obj-inherit
+     :END:
 
-
+The /domain class model/ of the requirements analysis and the software
+specification phase is very similar to an /entity-relationship/ model,
+because classes (entities) and their relationships are modeled (with
+attributes, but without methods).
  
+What is a class and and what is an object in the context of the iOrg
+framework? How are the relationships between objects implemented?
+
+We define as a convention that each object (entitiy) is represented by
+one .org file in the /objects/ directory. Relations with other objects
+are realized via attribute values, i.e. other objects can represent
+valid values of certain object attributes.
+
+To introduce classes and inheritance in this framework, we make use of
+the attribute inheritance of Org-mode:
+
+#+begin_quote
+The outline structure of Org mode documents lends itself to an
+inheritance model of properties: if the parent in a tree has a certain
+property, the children can inherit this property.
+#+end_quote
+
+Thus, a class hierarchy is constructed by building an outline tree
+starting from the root class and promoting each subsequent subclass
+one level. The following function is used to =get= the properties:
+
+#+begin_quote
+ -- Function: org-entry-get pom property &optional inherit
+     Get value of PROPERTY for entry at point-or-marker POM.  By
+     default, this only looks at properties defined locally in the
+     entry.  If INHERIT is non-nil and the entry does not have the
+     property, then also check higher levels of the hierarchy.  If
+     INHERIT is the symbol `selective', use inheritance if and only if
+     the setting of `org-use-property-inheritance' selects PROPERTY for
+    inheritance.
+#+end_quote
+
+Property inheritance seems natural in this construct, but may slow
+things down:
+
+#+begin_quote
+Org mode does not turn [attribute inheritance] on by default, because
+it can slow down property searches significantly and is often not
+needed. However, if you find inheritance useful, you can turn it on by
+setting the variable `org-use-property-inheritance'. It may be set to
+`t' to make all properties inherited from the parent, to a list of
+properties that should be inherited, or to a regular expression that
+matches inherited properties. If a property has the value `nil', this
+is interpreted as an explicit undefine of the property, so that
+inheritance search will stop at this value and return `nil'.
+#+end_quote
+
+Therefore, iOrg offers an alternative method for building outline
+trees with attribute inheritance (/speed inheritance/). It simply
+copies all the properties of the parent entries into the property
+drawer of the last node in the objects outline hierarchy, maintaining
+their order. 
+
+**** Classes vs Attributes
+     :PROPERTIES:
+     :CUSTOM_ID: class-vs-attr
+     :END:
+When designing a class hierarchy, it is often necessary to decide if
+the differences between two real-world classes should be modeled by
+inserting a discriminating attribute into one software class (e.g.
+attribute =color= in class =car=, with values white, green and black)
+or by specialing a general superclass into several subclasses (e.g.
+let subclasses =white-car=, =green-car= and =black-car= inherit from
+superclass =car=). 
+
+While there are more sophisticated guidelines how to tackle this
+decision in the literature, we will restrict ourselves to common
+sense: "Does it make sense to introduce more (sub-) classes to
+discriminate between variations of an real-world object?"
+
+As an example, let us consider the user hierarchy of bugpile. There
+are three types of users, /user/, /assignee/ and /admin/. Since a
+bugtracker should make it easy to participate in improving software,
+only minimal information is asked for in the registration process
+(name and email). Thus, the user types are different only in what they
+are allowed to do in the system, in their /permissions/.
+
+Following the example of well-established software systems, we don't
+hardcode the permissions into the users, but rather define /roles/
+with certain /permissions/ and then assign the /users/ to one or more
+roles.  
+
+The next graphic shows the relation between bugpile users in a
+very schematic way:
+
+#+srcname bugpile-users
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users.png 
+  title \n<b>Bugpile Users</b>
+
+  :User: 
+  :Assignee: 
+  :Admin: 
+
+  User <|-down- Assignee
+  Assignee <|-down- Admin
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/bugpile-users.png]]
+
+
+This schematic relation between users could be translated into one of
+the following two class models:
+
+#+srcname bugpile-users-class-model-subclass
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-subclass.png 
+  title Bugpile Users (via Subclasses)
+  User : name\nemail
+  Assignee : assigneePermissions
+  Admin : adminPermissions
+  User <|-- Assignee
+  Assignee <|-- Admin
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-subclass.png]]
+
+#+srcname bugpile-users-class-model-attr
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-attr.png 
+  title Bugpile Users (via Attributes)
+  User : name\nemail
+  Role : name 
+  Permission : name
+  User "             0..*" -down- "1..*           " Role
+  Role "1..*" -left- "1..*" Permission
+#+end_src
+
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-attr.png]]
+
+
+When using /subclassing/, we need three classes and one object for every user
+(instance). In iOrg, each class is simply represented by one .org file
+with one entry and an attribute drawer:
+
+#+begin_src org :exports source
+  ,# class user
+  ,* user
+  ,  :PROPERTIES:
+  ,  :super:    root
+  ,  :name:     joe
+  ,  :email:    joe@average.com
+  ,  :END:
+#+end_src
+
+#+begin_src org :exports source
+  ,# class assignee
+  , * assignee
+  ,  : PROPERTIES:
+  ,  : super:    user
+  ,  : assigneePermissions_ALL: reopen_task edit_task close_task
+  ,  : assigneePermissions: edit_task
+  ,  : END:
+#+end_src
+
+#+begin_src org :exports source
+  ,# class admin
+  ,* admin
+  ,  :PROPERTIES:
+  ,  :super:    assignee
+  ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
+  ,  :adminPermissions: create_project
+  ,  :END:
+#+end_src
+
+
+If we want to instanciate a new /admin/, we have to create a new admin
+object. Each object is implemented as one .org file with as many
+entries as there are superclasses of the instanciated class. 
+
+#+begin_src org :exports source
+  ,# object admin henry
+  ,* user
+  ,  :PROPERTIES:
+  ,  :super:    root
+  ,  :name:     henry
+  ,  :email:    henry@special.com
+  ,  :END:
+  ,** assignee
+  ,   :PROPERTIES:
+  ,   :super:    user
+  ,   :assigneePermissions_ALL: reopen_task edit_task close_task
+  ,   :assigneePermissions: edit_task
+  ,   :END:
+  ,*** admin
+  ,  :PROPERTIES:
+  ,  :super:    assignee
+  ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
+  ,  :adminPermissions: edit_project
+  ,  :adminPermissions+: create_project
+  ,  :END:
+#+end_src
+
+One could say that the superclasses are 'injected' into the object
+file as hierarchical parent entries of the object entry. If attribute
+inheritance is turned on, all the attributes of the parent entries
+become attributes of the object entry too, i.e. the new admin Henry
+has a name, an email as well as the (assignee-) permission to edit
+tasks. Using /speed inheritance/ to speed up the attribute search, we
+would simply move all the attributes from the parent entries into the
+attribute drawer of the object entry:
+
+#+begin_src org :exports source
+  ,# object admin henry (with 'speed-inheritance')
+  ,* user
+  ,  :PROPERTIES:
+  ,  :super:    root
+  ,  :END:
+  ,** assignee
+  ,   :PROPERTIES:
+  ,   :super:    user
+  ,   :END:
+  ,*** admin
+  ,  :PROPERTIES:
+  ,  :super:    assignee
+  ,  :name:     henry
+  ,  :email:    henry@special.com
+  ,  :assigneePermissions_ALL: reopen_task edit_task close_task
+  ,  :assigneePermissions: edit_task
+  ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
+  ,  :adminPermissions: edit_project
+  ,  :adminPermissions+: create_project
+  ,  :END:
+#+end_src
+
+
 *** Software Oriented Activities (SOA)
 *** Complex System Activities
 **** Search Tasks
@@ -1807,6 +2040,8 @@ exist only on the conceptual level. The implementation in Emacs Lisp
 is based on functions and (e.g.) lists as data stores that are in no
 way encapsulated into formal classes that are part of the language
 core.
+
+
 ** Refining the Logic
    :PROPERTIES:
    :CUSTOM_ID: refine-logic

@@ -1072,11 +1072,16 @@ storing form data.
 #+srcname domain-class-uml
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/domain-class-uml.png 
   title Domain Class Model
-  User : username\nemail
-  Role : name 
-  Permission : name
+  User : name\nemail\nrole
+  Role : role_ALL
+  Permissions : <<role-permissions>>
+  Task : name\ntype\nid\ndate\nauthor\nproject\nstate
+  
   User "             0..*" -down- "1..*           " Role
   Role "1..*" -left- "1..*" Permission
+  User "             0..*" -down- "1..*           " Task
+  
+  
 #+end_src
 
 #+results:
@@ -2062,15 +2067,49 @@ objects. For our simple example, introducing a new attribute to
 discriminate between different types of user objects was a more
 natural solution. 
 
-/note: we use subclassing mostly to achieve attribute inheritance, we/
-/don't intend to establish class hierarchies based on specialisation/
-/and generalisation. a user is not a specialisation of a role, but it/
-/is convenient to declare 'role' as a superclass of 'user' to inherit the/
-/role_ALL definition./
-
+We use subclassing mostly to achieve attribute inheritance, not
+necessarily to establish class hierarchies based on specialisation and
+generalisation (like 'an admin IS a user'). A user is not (a
+specialisation of) a role, but nevertheless it is convenient to
+declare 'role' as a superclass of 'user' to inherit the role_ALL
+attribute definition.
 
 *** Software Oriented Activities (SOA)
+    :PROPERTIES:
+    :CUSTOM_ID: transform-rules-soa
+    :END:
+We used software oriented activity diagrams for integrated modeling of
+user activities and the related UI. Thus, these diagrams need to be
+transformed into the /controller/, /view/ and /logic/ component of the
+iOrg framework.
+
+Each activitiy diagram (use case) is transformed into one
+=<<use-case-name>>-controller.el= file in the /controller/ directory
+(e.g. =open-new-task-controller.el=). For each system activitiy in the
+SOA, one handler function is added to this controller file (e.g.
+=show-open-new-task-form-handler(...)= and
+=store-new-task-handler(...)=). 
+
+Each /scene/ in the SOA is translated into one
+=<<user-activity-name>>-scene.org= file in the use case subdirectory
+of the /view/ directory (e.g. =define-user-search-criteria-scene.org=
+in the /view/search-users/ directory). 
+
+ 
 *** Complex System Activities
+    :PROPERTIES:
+    :CUSTOM_ID: transform-complex-syst-act
+    :END:
+
+If there is complex logic involved in the a case (a system activity
+marked with the pitchfork symbol ⋔ as subactivity in a SOA) , a
+=<<use-case-name>>-logic.el= file is added to the /logic/ directory
+(e.g. =search-task-list-logic.el=). The 'atomic' system activities
+that constitute the complex system activitiy are translated into
+worker functions in this file (e.g. =search-task-worker(...)= and
+=prepare-result-list-worker(...)=).
+
+
 **** Search Tasks
     :PROPERTIES:
     :CUSTOM_ID: search-tasks-syst-act-design

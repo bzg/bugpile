@@ -1,4 +1,4 @@
-#+OPTIONS:    H:3 num:nil toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
+#+OPTIONS:    H:4 num:nil toc:3 \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
 #+STARTUP:    align fold nodlcheck oddeven lognotestate hideblocks
 #+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
 #+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
@@ -1908,8 +1908,8 @@ with one entry and an attribute drawer:
   ,* user
   ,  :PROPERTIES:
   ,  :super:    root
-  ,  :name:     joe
-  ,  :email:    joe@average.com
+  ,  :name:     <<name>>
+  ,  :email:    <<email>>
   ,  :END:
 #+end_src
 
@@ -1919,7 +1919,7 @@ with one entry and an attribute drawer:
   ,  : PROPERTIES:
   ,  : super:    user
   ,  : assigneePermissions_ALL: reopen_task edit_task close_task
-  ,  : assigneePermissions: edit_task
+  ,  : assigneePermissions: <<permission>>
   ,  : END:
 #+end_src
 
@@ -1929,14 +1929,13 @@ with one entry and an attribute drawer:
   ,  :PROPERTIES:
   ,  :super:    assignee
   ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
-  ,  :adminPermissions: create_project
+  ,  :adminPermissions: <<permission>>
   ,  :END:
 #+end_src
 
-
-If we want to instanciate a new /admin/, we have to create a new admin
+If we want to instantiate a new /admin/, we have to create a new admin
 object. Each object is implemented as one .org file with as many
-entries as there are superclasses of the instanciated class. 
+entries as there are superclasses of the instantiated class. 
 
 #+begin_src org :exports source
   ,# object admin henry
@@ -1992,6 +1991,82 @@ attribute drawer of the object entry:
   ,  :adminPermissions+: create_project
   ,  :END:
 #+end_src
+
+This is how inheritance and instantiation work in iOrg. But does it
+make sense to apply these concepts to the bugpile user hierarchy? We
+had to construct a somehow contrived example to demonstrate the
+implementation of classes and objects in iOrg. But really, in this
+case, a solution based on subclassing is much to complicated for the
+simple problem at hand. It seems more natural to simply introduce
+another attribute =role= in the /user/ class and discriminate the
+different user types by the value of this attribute. We define the
+class =role= that declares all possible roles in the system. Another
+class =permissions= assigns permissions to each of the roles.
+
+#+begin_src org :exports source
+  ,# class permissions
+  ,* permissions
+  ,  :PROPERTIES:
+  ,  :super:    root
+  ,  :user:     unpriviledged
+  ,  :assignee: close_task reopen_task edit_task self_assign_task
+  ,  :admin:    create_project edit_project search_user action_on_user assign_task
+  ,  :END:
+#+end_src
+
+#+begin_src org :exports source
+  ,# class role
+  ,* role
+  ,  :PROPERTIES:
+  ,  :super:    root
+  ,  :role_ALL: user assignee admin
+  ,  :END:
+#+end_src
+
+Then we add the =role= attribute to the =user= class. 
+
+#+begin_src org :exports source
+  ,# class user
+  ,* user
+  ,  :PROPERTIES:
+  ,  :super:    role
+  ,  :name:     <<name>>
+  ,  :email:    <<email>>
+  ,  :role:     <<role>>
+  ,  :END:
+#+end_src
+
+To instantiate user object 'Henry' with role /admin/ we only have
+to 'inject' one superclass =role= and assign the value
+'admin' to the attribute =role=. 
+
+#+begin_src org :exports source
+  ,# object admin henry
+  ,* role
+  ,  :PROPERTIES:
+  ,  :super:    root
+  ,  :role_ALL: user assignee admin
+  ,  :END:
+  ,** user
+  ,  :PROPERTIES:
+  ,  :super:    role
+  ,  :name:     henry
+  ,  :email:    henry@special.com
+  ,  :role:     admin
+  ,  :END:
+#+end_src
+
+In more complicated cases, subclassing can represent a convenient way
+to assure a consistent attribute definitions for related types of
+objects. For our simple example, introducing a new attribute to
+discriminate between different types of user objects was a more
+natural solution. 
+
+/note: we use subclassing mostly to achieve attribute inheritance, we/
+/don't intend to establish class hierarchies based on specialisation/
+/and generalisation. a user is not a specialisation of a role, but it/
+/is convenient to declare 'role' as a superclass of 'user' to inherit the/
+/role_ALL definition./
 
 
 *** Software Oriented Activities (SOA)

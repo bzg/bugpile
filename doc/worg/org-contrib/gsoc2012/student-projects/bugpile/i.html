@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-24 16:11:54 CEST"/>
+<meta name="generated" content="2012-05-25 02:38:19 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -66,23 +66,104 @@
 <li><a href="#ex-app">The Example Application</a>
 <ul>
 <li><a href="#bugpile">Bugpile</a></li>
-<li><a href="#bugtrackers">About Bugtrackers</a></li>
+<li><a href="#bugtrackers">About Bugtrackers</a>
+<ul>
+<li><a href="#bugtr-matter">Why bugtrackers matter</a></li>
+<li><a href="#elem-bug-report">Elements of a good bug report</a></li>
+</ul>
+</li>
 <li><a href="#free-bug-tracker">Popular free bugtrackers</a></li>
 </ul>
 </li>
 <li><a href="#req-analysis">Requirements Analysis</a>
 <ul>
 <li><a href="#real-world-vs-sw-world">Real World vs Software World</a></li>
-<li><a href="#use-case-txt">Use Cases in textual form</a></li>
-<li><a href="#use-cases-uml">Integrated UML Modelling of Use Cases and UI</a></li>
-<li><a href="#use-case-models">Use Case Models</a></li>
+<li><a href="#use-case-txt">Use Cases in textual form</a>
+<ul>
+<li><a href="#register-as-user-txt">Register as user</a></li>
+<li><a href="#edit-user-details-txt">Edit user details</a></li>
+<li><a href="#login-txt">Login</a></li>
+<li><a href="#logout-txt">Logout</a></li>
+<li><a href="#search-users-txt">Search users</a></li>
+<li><a href="#take-action-users-txt">Take action on selected users</a></li>
+<li><a href="#create-project-txt">Create project</a></li>
+<li><a href="#edit-project-txt">Edit project</a></li>
+<li><a href="#switch-project-txt">Switch project</a></li>
+<li><a href="#open-new-task-txt">Open new task</a></li>
+<li><a href="#search-task-list-txt">Search tasklist</a></li>
+<li><a href="#take-action-tasks-txt">Take action on selected tasks</a></li>
+<li><a href="#edit-task-txt">Edit task</a></li>
+<li><a href="#add-comment-txt">Add comment</a></li>
+<li><a href="#edit-comment-txt">Edit comment</a></li>
+<li><a href="#add-attachment-txt">Add attachment</a></li>
+<li><a href="#delete-attachment-txt">Delete attachment</a></li>
+<li><a href="#search-event-log-txt">Search event log</a></li>
+</ul>
+</li>
+<li><a href="#use-cases-uml">Integrated UML Modelling of Use Cases and UI</a>
+<ul>
+<li><a href="#req-oriented-act-uml">Requirements Oriented UML Activity Diagrams (ROA)</a></li>
+<li><a href="#register-as-user-uml-roa">Register as user</a></li>
+<li><a href="#edit-user-details-uml-roa">Edit user details</a></li>
+<li><a href="#login-uml-roa">Login</a></li>
+<li><a href="#logout-uml-roa">Logout</a></li>
+<li><a href="#search-users-uml-roa">Search users</a></li>
+<li><a href="#take-action-select-users-uml-roa">Take action on selected users</a></li>
+<li><a href="#create-project-uml-roa">Create project</a></li>
+<li><a href="#edit-project-uml-roa">Edit project</a></li>
+<li><a href="#switch-project-uml-roa">Switch project</a></li>
+<li><a href="#open-new-task-uml-roa">Open new task</a></li>
+<li><a href="#search-task-list-uml-roa">Search tasklist</a></li>
+<li><a href="#take-action-tasks-uml-roa">Take action on selected tasks</a></li>
+<li><a href="#edit-task-uml-roa">Edit task</a></li>
+<li><a href="#add-comment-uml-roa">Add comment</a></li>
+<li><a href="#edit-comment-uml-roa">Edit comment</a></li>
+<li><a href="#add-attachment-uml-roa">Add attachment</a></li>
+<li><a href="#delete-attachment-uml-roa">Delete attachment</a></li>
+<li><a href="#search-event-log-uml-roa">Search event log</a></li>
+</ul>
+</li>
+<li><a href="#use-case-models">Use Case Models</a>
+<ul>
+<li><a href="#user-management-uc-model">User management</a></li>
+<li><a href="#task-management-uc-model">Task management</a></li>
+<li><a href="#project-management-uc-model">Project management</a></li>
+</ul>
+</li>
 <li><a href="#domain-class-model">Domain Class Model</a></li>
 </ul>
 </li>
 <li><a href="#softw-spec">Software Specification</a>
 <ul>
-<li><a href="#trans-req-into-spec">Transforming Requirements into Specifications</a></li>
-<li><a href="#syst-activities">Complex System Activities</a></li>
+<li><a href="#trans-req-into-spec">Transforming Requirements into Specifications</a>
+<ul>
+<li><a href="#req-oriented-act-uml">Software Oriented UML Activity Diagrams (SOA)</a></li>
+<li><a href="#register-as-user-uml-soa">Register as user</a></li>
+<li><a href="#edit-user-details-uml-soa">Edit user details</a></li>
+<li><a href="#login-uml-soa">Login</a></li>
+<li><a href="#logout-uml-soa">Logout</a></li>
+<li><a href="#open-new-task-uml-soa">Open new task</a></li>
+<li><a href="#search-users-uml-soa">Search users</a></li>
+<li><a href="#take-action-select-users-uml-soa">Take action on selected users</a></li>
+<li><a href="#create-project-uml-soa">Create project</a></li>
+<li><a href="#edit-project-uml-soa">Edit project</a></li>
+<li><a href="#switch-project-uml-soa">Switch project</a></li>
+<li><a href="#search-task-list-uml-soa">Search tasklist</a></li>
+<li><a href="#take-action-tasks-uml-soa">Take action on selected tasks</a></li>
+<li><a href="#edit-task-uml-soa">Edit task</a></li>
+<li><a href="#add-comment-uml-soa">Add comment</a></li>
+<li><a href="#edit-comment-uml-soa">Edit comment</a></li>
+<li><a href="#add-attachment-uml-soa">Add attachment</a></li>
+<li><a href="#delete-attachment-uml-soa">Delete attachment</a></li>
+<li><a href="#search-event-log-uml-soa">Search event log</a></li>
+</ul>
+</li>
+<li><a href="#syst-activities">Complex System Activities</a>
+<ul>
+<li><a href="#model-compl-syst-act">Modeling complex system activities</a></li>
+<li><a href="#search-tasks-syst-act-spec">Search Tasks</a></li>
+<li><a href="#search-users-syst-act-spec">Search Users</a></li>
+</ul></li>
 </ul>
 </li>
 <li><a href="#softw-arch">Software Architecture</a>
@@ -93,7 +174,15 @@
 <li><a href="#appl-design">Application Design</a>
 <ul>
 <li><a href="#loc-ref-softw-arch">Locally Refining the Software Architecture</a></li>
-<li><a href="#transform-rules">The Transformation Rules</a></li>
+<li><a href="#transform-rules">The Transformation Rules</a>
+<ul>
+<li><a href="#transform-general-consid">General considerations</a></li>
+<li><a href="#transform-dom-class-mod">Domain Class Model</a></li>
+<li><a href="#sec-8-2-3">Software Oriented Activities (SOA)</a></li>
+<li><a href="#sec-8-2-4">Complex System Activities</a></li>
+<li><a href="#sec-8-2-5">Summary of Transformation Rules</a></li>
+</ul>
+</li>
 <li><a href="#class-model">Class Model</a></li>
 <li><a href="#refine-logic">Refining the Logic</a></li>
 </ul>
@@ -1797,8 +1886,13 @@ object-orientation.
 <div class="outline-text-4" id="text-transform-dom-class-mod">
 
 
-<ul>
-<li id="class-obj-inherit"><a name="sec-8-2-2-1" id="sec-8-2-2-1"></a>Classes, Objects and Inheritance<br/>
+
+</div>
+
+<div id="outline-container-class-obj-inherit" class="outline-5">
+<h5 id="class-obj-inherit"><a name="sec-8-2-2-1" id="sec-8-2-2-1"></a>Classes, Objects and Inheritance</h5>
+<div class="outline-text-5" id="text-class-obj-inherit">
+
 
 <p>
 The <i>domain class model</i> of the requirements analysis and the software
@@ -1874,18 +1968,22 @@ copies all the properties of the parent entries into the property
 drawer of the last node in the objects outline hierarchy, maintaining
 their order. 
 </p>
-</li>
-</ul>
-<ul>
-<li id="class-vs-attr"><a name="sec-8-2-2-2" id="sec-8-2-2-2"></a>Classes vs Attributes<br/>
-When designing a class hierarchy, it is often necessary to decide if
+</div>
+
+</div>
+
+<div id="outline-container-class-vs-attr" class="outline-5">
+<h5 id="class-vs-attr"><a name="sec-8-2-2-2" id="sec-8-2-2-2"></a>Classes vs Attributes</h5>
+<div class="outline-text-5" id="text-class-vs-attr">
+
+<p>When designing a class hierarchy, it is often necessary to decide if
 the differences between two real-world classes should be modeled by
 inserting a discriminating attribute into one software class (e.g.
 attribute <code>color</code> in class <code>car</code>, with values white, green and black)
 or by specialing a general superclass into several subclasses (e.g.
 let subclasses <code>white-car</code>, <code>green-car</code> and <code>black-car</code> inherit from
 superclass <code>car</code>). 
-
+</p>
 <p>
 While there are more sophisticated guidelines how to tackle this
 decision in the literature, we will restrict ourselves to common
@@ -1943,8 +2041,8 @@ with one entry and an attribute drawer:
 <span class="org-org-level-1">* user</span>
 <span class="org-org-special-keyword">  :PROPERTIES:</span>
   <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
-  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">joe</span>
-  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">joe@average.com</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">&lt;&lt;name&gt;&gt;</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">&lt;&lt;email&gt;&gt;</span>
 <span class="org-org-special-keyword">  :END:</span>
 </pre>
 
@@ -1955,7 +2053,7 @@ with one entry and an attribute drawer:
   <span class="org-org-code">: PROPERTIES:</span>
   <span class="org-org-code">: super:    user</span>
   <span class="org-org-code">: assigneePermissions_ALL: reopen_task edit_task close_task</span>
-  <span class="org-org-code">: assigneePermissions: edit_task</span>
+  <span class="org-org-code">: assigneePermissions: &lt;&lt;permission&gt;&gt;</span>
   <span class="org-org-code">: END:</span>
 </pre>
 
@@ -1966,16 +2064,15 @@ with one entry and an attribute drawer:
 <span class="org-org-special-keyword">  :PROPERTIES:</span>
   <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">assignee</span>
   <span class="org-org-special-keyword">:adminPermissions_ALL:</span> <span class="org-org-property-value">create_project edit_project add_assignee assign_assignee</span>
-  <span class="org-org-special-keyword">:adminPermissions:</span> <span class="org-org-property-value">create_project</span>
+  <span class="org-org-special-keyword">:adminPermissions:</span> <span class="org-org-property-value">&lt;&lt;permission&gt;&gt;</span>
 <span class="org-org-special-keyword">  :END:</span>
 </pre>
 
 
-
 <p>
-If we want to instanciate a new <i>admin</i>, we have to create a new admin
+If we want to instantiate a new <i>admin</i>, we have to create a new admin
 object. Each object is implemented as one .org file with as many
-entries as there are superclasses of the instanciated class. 
+entries as there are superclasses of the instantiated class. 
 </p>
 
 
@@ -2039,9 +2136,99 @@ attribute drawer of the object entry:
 </pre>
 
 
+<p>
+This is how inheritance and instantiation work in iOrg. But does it
+make sense to apply these concepts to the bugpile user hierarchy? We
+had to construct a somehow contrived example to demonstrate the
+implementation of classes and objects in iOrg. But really, in this
+case, a solution based on subclassing is much to complicated for the
+simple problem at hand. It seems more natural to simply introduce
+another attribute <code>role</code> in the <i>user</i> class and discriminate the
+different user types by the value of this attribute. We define the
+class <code>role</code> that declares all possible roles in the system. Another
+class <code>permissions</code> assigns permissions to each of the roles.
+</p>
 
-</li>
-</ul>
+
+
+<pre class="src src-org"><span class="org-comment"># class permissions</span>
+<span class="org-org-level-1">* permissions</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
+  <span class="org-org-special-keyword">:user:</span>     <span class="org-org-property-value">unpriviledged</span>
+  <span class="org-org-special-keyword">:assignee:</span> <span class="org-org-property-value">close_task reopen_task edit_task self_assign_task</span>
+  <span class="org-org-special-keyword">:admin:</span>    <span class="org-org-property-value">create_project edit_project search_user action_on_user assign_task</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+
+<pre class="src src-org"><span class="org-comment"># class role</span>
+<span class="org-org-level-1">* role</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
+  <span class="org-org-special-keyword">:role_ALL:</span> <span class="org-org-property-value">user assignee admin</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+<p>
+Then we add the <code>role</code> attribute to the <code>user</code> class. 
+</p>
+
+
+
+<pre class="src src-org"><span class="org-comment"># class user</span>
+<span class="org-org-level-1">* user</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">role</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">&lt;&lt;name&gt;&gt;</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">&lt;&lt;email&gt;&gt;</span>
+  <span class="org-org-special-keyword">:role:</span>     <span class="org-org-property-value">&lt;&lt;role&gt;&gt;</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+<p>
+To instantiate user object 'Henry' with role <i>admin</i> we only have
+to 'inject' one superclass <code>role</code> and assign the value
+'admin' to the attribute <code>role</code>. 
+</p>
+
+
+
+<pre class="src src-org"><span class="org-comment"># object admin henry</span>
+<span class="org-org-level-1">* role</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">root</span>
+  <span class="org-org-special-keyword">:role_ALL:</span> <span class="org-org-property-value">user assignee admin</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-2">** user</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">role</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">henry</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">henry@special.com</span>
+  <span class="org-org-special-keyword">:role:</span>     <span class="org-org-property-value">admin</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
+
+
+<p>
+In more complicated cases, subclassing can represent a convenient way
+to assure a consistent attribute definitions for related types of
+objects. For our simple example, introducing a new attribute to
+discriminate between different types of user objects was a more
+natural solution. 
+</p>
+<p>
+<i>note: we use subclassing mostly to achieve attribute inheritance, we</i>
+<i>don't intend to establish class hierarchies based on specialisation</i>
+<i>and generalisation. a user is not a specialisation of a role, but it</i>
+<i>is convenient to declare 'role' as a superclass of 'user' to inherit the</i>
+<i>role_ALL definition.</i>
+</p>
+
+</div>
 </div>
 
 </div>
@@ -2058,8 +2245,13 @@ attribute drawer of the object entry:
 <h4 id="sec-8-2-4">Complex System Activities</h4>
 <div class="outline-text-4" id="text-8-2-4">
 
-<ul>
-<li id="search-tasks-syst-act-design"><a name="sec-8-2-4-1" id="sec-8-2-4-1"></a>Search Tasks<br/>
+
+</div>
+
+<div id="outline-container-search-tasks-syst-act-design" class="outline-5">
+<h5 id="search-tasks-syst-act-design"><a name="sec-8-2-4-1" id="sec-8-2-4-1"></a>Search Tasks</h5>
+<div class="outline-text-5" id="text-search-tasks-syst-act-design">
+
 
 <p>
 Since bugpile uses a dVCS as database for its textfiles, a query for a
@@ -2072,10 +2264,14 @@ their web browser.  Therefore, bugpile should use the underlying dVCS
 to do most of the 'heavy lifting' in processing user queries and then
 prepare the result set according to the frontend used.   
 </p>
-</li>
-</ul>
-<ul>
-<li id="search-users-syst-act-design"><a name="sec-8-2-4-2" id="sec-8-2-4-2"></a>Search Users<br/>
+</div>
+
+</div>
+
+<div id="outline-container-search-users-syst-act-design" class="outline-5">
+<h5 id="search-users-syst-act-design"><a name="sec-8-2-4-2" id="sec-8-2-4-2"></a>Search Users</h5>
+<div class="outline-text-5" id="text-search-users-syst-act-design">
+
 
 <p>
 In contrast to tasks, users are relatively static entities in the bugpile
@@ -2083,8 +2279,7 @@ system, thus it seems unnecessary to rely on the underlying dVCS to answer
 queries about users, Emacs and Org-mode functionality should
 sufficice. 
 </p>
-</li>
-</ul>
+</div>
 </div>
 
 </div>
@@ -2149,7 +2344,7 @@ core.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-24 16:11:54 CEST</p>
+<p class="date">Date: 2012-05-25 02:38:19 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

@@ -2094,14 +2094,13 @@ Each /scene/ in the SOA is translated into one
 =<<user-activity-name>>-scene.org= file in the use case subdirectory
 of the /view/ directory (e.g. =define-user-search-criteria-scene.org=
 in the /view/search-users/ directory). 
-
  
 *** Complex System Activities
     :PROPERTIES:
     :CUSTOM_ID: transform-complex-syst-act
     :END:
 
-If there is complex logic involved in the a case (a system activity
+If there is complex logic involved in a case (a system activity
 marked with the pitchfork symbol ⋔ as subactivity in a SOA) , a
 =<<use-case-name>>-logic.el= file is added to the /logic/ directory
 (e.g. =search-task-list-logic.el=). The 'atomic' system activities
@@ -2109,6 +2108,21 @@ that constitute the complex system activitiy are translated into
 worker functions in this file (e.g. =search-task-worker(...)= and
 =prepare-result-list-worker(...)=).
 
+The /worker/ functions from the /logic/ component are independent of
+the client used, they represent basic application functionality needed
+when accesssing the application from a web-browser as well as directly
+from Emacs. The /handler/ functions from the /controller/ component
+are only used by the web-client, their sole razon d'etre is the
+handling of http requests. The application should still work without
+them, if accessed directly from Emacs. 
+
+Thus, /handler/ functions are a bit like managers - there are many of
+them and they need a lot of attention, but things still work without
+them (accesssing the application from Emacs). They don't do the real
+work, they just coordinate and manage things with regards to the
+web-clients. On the other hand, /worker/ functions are more like
+engineers, they do the hard work in the background, and without them
+the system does not work anymore.
 
 **** Search Tasks
     :PROPERTIES:
@@ -2136,6 +2150,50 @@ queries about users, Emacs and Org-mode functionality should
 sufficice. 
 
 *** Summary of Transformation Rules
+    :PROPERTIES:
+    :CUSTOM_ID: summary-transform-rules
+    :END:
+
+The following tables summarize the transformation rules that
+transform the results (artefacts) of the software specification into
+the software design. 
+
+Software oriented activities (SOAs) are transformed with the following
+rules:
+
+| Software Oriented Activity (SOA) | mapping => software design     |
+|--------------------------------+--------------------------------|
+| <30>                           | <30>                           |
+| use case (SOA diagram)         | /controller/USE-CASE-NAME-controller.el file |
+| use case (SOA diagram)         | /view/USE-CASE-NAME subdirectory |
+| use case with complex logic    | /logic/USE-CASE-NAME-logic.el file |
+| system activity (SA)           | SYSTEM-ACTIVITY-NAME-handler(...) function in controller file |
+| scene                          | USER-ACTIVITY-NAME-scene.org file in /view/USE-CASE-NAME subdirectory |
+| start-node use case (SOA diagram) | start-USE-CASE-NAME-handler(...) function in controller file |
+| end-node use case (SOA diagram) | end-USE-CASE-NAME-handler(...) function in controller file |
+
+Complex system activities are transformed with the following
+rule:  
+
+| Complex System Activity        | mapping => software design     |
+|--------------------------------+--------------------------------|
+| <30>                           | <30>                           |
+| 'atomic' system activity (SA)  | SYSTEM-ACTIVITY-NAME-worker(...) function in logic file     |
+
+
+The domain class model is transformed with the following
+rules: 
+
+| Domain Class Model             | mapping => software design     |
+|--------------------------------+--------------------------------|
+| <30>                           | <30>                           |
+| class                          | /objects/classes/CLASS-NAME-class.org file with one top-level entry '* CLASS-NAME' with one attribute drawer |
+| attribute                      | :attribute: DEFAULT-VALUE in the class attribute drawer |
+| (multiple) inheritance         | superclass name(s) as value(s) of the :super: attribute in the class property drawer |
+| composition                    | object name(s) as value(s) of a class attribute in the class attribute drawer |
+| object                         | /objects/CLASS-NAME-CUSTOM-ID-obj.org file |
+
+
 
 ** Class Model
    :PROPERTIES:

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-25 02:38:19 CEST"/>
+<meta name="generated" content="2012-05-26 18:56:14 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -52,125 +52,10 @@
 <h1 class="title">iOrg - interactive Org</h1>
 
 
-<p>
-<i>A framework for dynamic webprogramming with GNU Emacs Org-mode</i>
-</p>
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#intro">Introduction</a></li>
-<li><a href="#lang-tools">Languages and tools</a></li>
-<li><a href="#sec-3">Graphical depiction of the frameworks architecture</a></li>
-<li><a href="#ex-app">The Example Application</a>
-<ul>
-<li><a href="#bugpile">Bugpile</a></li>
-<li><a href="#bugtrackers">About Bugtrackers</a>
-<ul>
-<li><a href="#bugtr-matter">Why bugtrackers matter</a></li>
-<li><a href="#elem-bug-report">Elements of a good bug report</a></li>
-</ul>
-</li>
-<li><a href="#free-bug-tracker">Popular free bugtrackers</a></li>
-</ul>
-</li>
-<li><a href="#req-analysis">Requirements Analysis</a>
-<ul>
-<li><a href="#real-world-vs-sw-world">Real World vs Software World</a></li>
-<li><a href="#use-case-txt">Use Cases in textual form</a>
-<ul>
-<li><a href="#register-as-user-txt">Register as user</a></li>
-<li><a href="#edit-user-details-txt">Edit user details</a></li>
-<li><a href="#login-txt">Login</a></li>
-<li><a href="#logout-txt">Logout</a></li>
-<li><a href="#search-users-txt">Search users</a></li>
-<li><a href="#take-action-users-txt">Take action on selected users</a></li>
-<li><a href="#create-project-txt">Create project</a></li>
-<li><a href="#edit-project-txt">Edit project</a></li>
-<li><a href="#switch-project-txt">Switch project</a></li>
-<li><a href="#open-new-task-txt">Open new task</a></li>
-<li><a href="#search-task-list-txt">Search tasklist</a></li>
-<li><a href="#take-action-tasks-txt">Take action on selected tasks</a></li>
-<li><a href="#edit-task-txt">Edit task</a></li>
-<li><a href="#add-comment-txt">Add comment</a></li>
-<li><a href="#edit-comment-txt">Edit comment</a></li>
-<li><a href="#add-attachment-txt">Add attachment</a></li>
-<li><a href="#delete-attachment-txt">Delete attachment</a></li>
-<li><a href="#search-event-log-txt">Search event log</a></li>
-</ul>
-</li>
-<li><a href="#use-cases-uml">Integrated UML Modelling of Use Cases and UI</a>
-<ul>
-<li><a href="#req-oriented-act-uml">Requirements Oriented UML Activity Diagrams (ROA)</a></li>
-<li><a href="#register-as-user-uml-roa">Register as user</a></li>
-<li><a href="#edit-user-details-uml-roa">Edit user details</a></li>
-<li><a href="#login-uml-roa">Login</a></li>
-<li><a href="#logout-uml-roa">Logout</a></li>
-<li><a href="#search-users-uml-roa">Search users</a></li>
-<li><a href="#take-action-select-users-uml-roa">Take action on selected users</a></li>
-<li><a href="#create-project-uml-roa">Create project</a></li>
-<li><a href="#edit-project-uml-roa">Edit project</a></li>
-<li><a href="#switch-project-uml-roa">Switch project</a></li>
-<li><a href="#open-new-task-uml-roa">Open new task</a></li>
-<li><a href="#search-task-list-uml-roa">Search tasklist</a></li>
-<li><a href="#take-action-tasks-uml-roa">Take action on selected tasks</a></li>
-<li><a href="#edit-task-uml-roa">Edit task</a></li>
-<li><a href="#add-comment-uml-roa">Add comment</a></li>
-<li><a href="#edit-comment-uml-roa">Edit comment</a></li>
-<li><a href="#add-attachment-uml-roa">Add attachment</a></li>
-<li><a href="#delete-attachment-uml-roa">Delete attachment</a></li>
-<li><a href="#search-event-log-uml-roa">Search event log</a></li>
-</ul>
-</li>
-<li><a href="#use-case-models">Use Case Models</a>
-<ul>
-<li><a href="#user-management-uc-model">User management</a></li>
-<li><a href="#task-management-uc-model">Task management</a></li>
-<li><a href="#project-management-uc-model">Project management</a></li>
-</ul>
-</li>
-<li><a href="#domain-class-model">Domain Class Model</a></li>
-</ul>
-</li>
-<li><a href="#softw-spec">Software Specification</a>
-<ul>
-<li><a href="#trans-req-into-spec">Transforming Requirements into Specifications</a>
-<ul>
-<li><a href="#req-oriented-act-uml">Software Oriented UML Activity Diagrams (SOA)</a></li>
-<li><a href="#register-as-user-uml-soa">Register as user</a></li>
-<li><a href="#edit-user-details-uml-soa">Edit user details</a></li>
-<li><a href="#login-uml-soa">Login</a></li>
-<li><a href="#logout-uml-soa">Logout</a></li>
-<li><a href="#open-new-task-uml-soa">Open new task</a></li>
-<li><a href="#search-users-uml-soa">Search users</a></li>
-<li><a href="#take-action-select-users-uml-soa">Take action on selected users</a></li>
-<li><a href="#create-project-uml-soa">Create project</a></li>
-<li><a href="#edit-project-uml-soa">Edit project</a></li>
-<li><a href="#switch-project-uml-soa">Switch project</a></li>
-<li><a href="#search-task-list-uml-soa">Search tasklist</a></li>
-<li><a href="#take-action-tasks-uml-soa">Take action on selected tasks</a></li>
-<li><a href="#edit-task-uml-soa">Edit task</a></li>
-<li><a href="#add-comment-uml-soa">Add comment</a></li>
-<li><a href="#edit-comment-uml-soa">Edit comment</a></li>
-<li><a href="#add-attachment-uml-soa">Add attachment</a></li>
-<li><a href="#delete-attachment-uml-soa">Delete attachment</a></li>
-<li><a href="#search-event-log-uml-soa">Search event log</a></li>
-</ul>
-</li>
-<li><a href="#syst-activities">Complex System Activities</a>
-<ul>
-<li><a href="#model-compl-syst-act">Modeling complex system activities</a></li>
-<li><a href="#search-tasks-syst-act-spec">Search Tasks</a></li>
-<li><a href="#search-users-syst-act-spec">Search Users</a></li>
-</ul></li>
-</ul>
-</li>
-<li><a href="#softw-arch">Software Architecture</a>
-<ul>
-<li><a href="#5-layer-arch">Modified 5-Layer Architecture</a></li>
-</ul>
-</li>
 <li><a href="#appl-design">Application Design</a>
 <ul>
 <li><a href="#loc-ref-softw-arch">Locally Refining the Software Architecture</a></li>
@@ -178,1648 +63,28 @@
 <ul>
 <li><a href="#transform-general-consid">General considerations</a></li>
 <li><a href="#transform-dom-class-mod">Domain Class Model</a></li>
-<li><a href="#sec-8-2-3">Software Oriented Activities (SOA)</a></li>
-<li><a href="#sec-8-2-4">Complex System Activities</a></li>
-<li><a href="#sec-8-2-5">Summary of Transformation Rules</a></li>
+<li><a href="#transform-rules-soa">Software Oriented Activities (SOA)</a></li>
+<li><a href="#transform-complex-syst-act">Complex System Activities</a></li>
+<li><a href="#summary-transform-rules">Summary of Transformation Rules</a></li>
 </ul>
 </li>
 <li><a href="#class-model">Class Model</a></li>
 <li><a href="#refine-logic">Refining the Logic</a></li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
-<li><a href="#verification">Verification</a></li>
 </ul>
 </div>
-</div>
-
-<div id="outline-container-intro" class="outline-2">
-<h2 id="intro"><a name="sec-1" id="sec-1"></a>Introduction</h2>
-<div class="outline-text-2" id="text-intro">
-
-
-<p>
-iOrg is a pure Org-mode and Emacs web framework with
-persistence and versioning through dVCs. It aims at extending
-Org-modes static webpublishing capacities with dynamcic components
-(like html forms and buttons that allow user interaction) and database
-functionality (storing and querying state). 
-</p>
-<p>
-The web framework abstracts away all of the boilerplate required for
-its <a href="#sec-2">components</a> to work together, allowing application builders the
-freedom to focus on the logic of their particular applications.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-lang-tools" class="outline-2">
-<h2 id="lang-tools"><a name="sec-2" id="sec-2"></a>Languages and tools</h2>
-<div class="outline-text-2" id="text-lang-tools">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left">Emacs Lisp</td><td class="left">server side</td></tr>
-<tr><td class="left">Java Script</td><td class="left">client side</td></tr>
-<tr><td class="left">Elnode</td><td class="left">web server, handles get and post requests</td></tr>
-<tr><td class="left">Org-mode</td><td class="left">content storage both database and marked up text</td></tr>
-<tr><td class="left">DVCS</td><td class="left">data persistence and versioning</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3">Graphical depiction of the frameworks architecture</h2>
-<div class="outline-text-2" id="text-3">
-
-<pre class="example">
-                                                                        Server
-                                                 +-------------------------------------------------------+
-       Client Browser                            |                                                       |
-    +-------------------+                        |  +-------------------+                                |
-    |  Static HTML      |     full pages         |  |   Emacs / Elisp   |   +---------------+  +-------+ |
-    |   Content         | &lt;-----------------+    |  +-------------------+   | Content in    |  |  DVCS | |
-    |                   |       HTML        |    |  |          +------+ |   | flat files    |==|       | |
-    |    +--------------+                   +----+--+----------| Org  |-+--&gt;| on file       |==|       | |
-    |    | inter-mixed  |                        |  | +------+=|      |&lt;+---| system        |==|       | |
-    |    | interactive  |                        |  | |elnode|=+------+ |   |               |==|       | |
-    |    | JS forms,    |  JS requests get/post  |  | |      |          |   |               |  |       | |
-    |    | buttons,     | -----------------------+--+&gt;|      |          |   +---------------+  +-------+ |
-    |    | etc...       |  form data &amp; json      |  | +--+---+     |    |                          ^     |
-    |    |              |                        |  +----+---------+----+                          |     |
-    +----+--------------+                        |       |         |        commit changes         |     |
-               ^                                 |       |         +-------------------------------+     |
-               |           responses             |       |             checkout previous versions        |
-               +---------------------------------+-------+                                               |
-                       json or raw HTML          |                                                       |
-                                                 +-------------------------------------------------------+
-</pre>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-ex-app" class="outline-2">
-<h2 id="ex-app"><a name="sec-4" id="sec-4"></a>The Example Application</h2>
-<div class="outline-text-2" id="text-ex-app">
-
-
-</div>
-
-<div id="outline-container-bugpile" class="outline-3">
-<h3 id="bugpile"><a name="sec-4-1" id="sec-4-1"></a>Bugpile</h3>
-<div class="outline-text-3" id="text-bugpile">
-
-<p>A bug tracker (bugpile) is used as an example application for iOrg
-which provides an interactive web interface and bug reports stored in
-Org-mode files. A 'lightweight&ndash;version' of a systematic software
-engineering approach is used for the development of bugpile, that can
-be used as a guide for developing web applications with iOrg.
-</p></div>
-
-</div>
-
-<div id="outline-container-bugtrackers" class="outline-3">
-<h3 id="bugtrackers"><a name="sec-4-2" id="sec-4-2"></a>About Bugtrackers</h3>
-<div class="outline-text-3" id="text-bugtrackers">
-
-
-</div>
-
-<div id="outline-container-bugtr-matter" class="outline-4">
-<h4 id="bugtr-matter"><a name="sec-4-2-1" id="sec-4-2-1"></a>Why bugtrackers matter</h4>
-<div class="outline-text-4" id="text-bugtr-matter">
-
-
-<p>
-The following quote from <a href="http://www.joelonsoftware.com/articles/fog0000000043.html">Joel Spolsky</a> emphases the importance of
-bugtrackers for good software development:
-</p>
-<blockquote>
-
-<pre class="example">
-Do you have a bug database?
-
-I don't care what you say. If you are developing code, even on a team
-of one, without an organized database listing all known bugs in the
-code, you are going to ship low quality code. Lots of programmers
-think they can hold the bug list in their heads. Nonsense. I can't
-remember more than two or three bugs at a time, and the next morning,
-or in the rush of shipping, they are forgotten. You absolutely have to
-keep track of bugs formally.
-
-Bug databases can be complicated or simple. A minimal useful bug
-database must include the following data for every bug:
-
-  - complete steps to reproduce the bug
-  - expected behavior
-  - observed (buggy) behavior
-  - who it's assigned to
-  - whether it has been fixed or not
-
-If the complexity of bug tracking software is the only thing stopping
-you from tracking your bugs, just make a simple 5 column table with
-these crucial fields and start using it.
-</pre>
-
-
-</blockquote>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-elem-bug-report" class="outline-4">
-<h4 id="elem-bug-report"><a name="sec-4-2-2" id="sec-4-2-2"></a>Elements of a good bug report</h4>
-<div class="outline-text-4" id="text-elem-bug-report">
-
-
-<p>
-Again citing <a href="http://www.joelonsoftware.com/articles/fog0000000029.html">Joel Spolsky</a>, here are the three fundamental elements of
-a good bug report:
-</p>
-<blockquote>
-
-<pre class="example">
-It's pretty easy to remember the rule for a good bug report. Every
-good bug report needs exactly three things.
-
- 1. Steps to reproduce,
- 2. What you expected to see, and
- 3. What you saw instead.
-</pre>
-
-
-</blockquote>
-
-
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-free-bug-tracker" class="outline-3">
-<h3 id="free-bug-tracker"><a name="sec-4-3" id="sec-4-3"></a>Popular free bugtrackers</h3>
-<div class="outline-text-3" id="text-free-bug-tracker">
-
-<p>From the many free bugtrackers available, two have been of special
-importance as inspiration and reference for the bugpile project:
-</p>
-<dl>
-<dt>bugzilla</dt><dd>a feature-rich, established and well documented
-              <a href="http://www.bugzilla.org/">bugtracker</a>.
-</dd>
-<dt>flyspray</dt><dd>an uncomplicated, web-based <a href="http://flyspray.org/">bug tracking system</a>, used
-              by ArchLinux.
-</dd>
-</dl>
-
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-req-analysis" class="outline-2">
-<h2 id="req-analysis"><a name="sec-5" id="sec-5"></a>Requirements Analysis</h2>
-<div class="outline-text-2" id="text-req-analysis">
-
-
-</div>
-
-<div id="outline-container-real-world-vs-sw-world" class="outline-3">
-<h3 id="real-world-vs-sw-world"><a name="sec-5-1" id="sec-5-1"></a>Real World vs Software World</h3>
-<div class="outline-text-3" id="text-real-world-vs-sw-world">
-
-<p>When applying an software-engineering like approach to (web)
-application programming, it is important to be aware of the
-distinction between the problem domain (in the real world) and the
-solution domain (in the software world). The <i>requirements analysis</i>
-is all about the real world and the users point of view. Even when
-doing a one man project with only imaginary users that can't be
-interviewed, the programmer should try to take on the role of a user
-in this phase. The following phases (<i>specification</i> and <i>design</i>)
-transform the real-world model of the <i>analysis</i> into a software model
-in the solution space, which can then be implemented.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-use-case-txt" class="outline-3">
-<h3 id="use-case-txt"><a name="sec-5-2" id="sec-5-2"></a>Use Cases in textual form</h3>
-<div class="outline-text-3" id="text-use-case-txt">
-
-
-
-</div>
-
-<div id="outline-container-register-as-user-txt" class="outline-4">
-<h4 id="register-as-user-txt"><a name="sec-5-2-1" id="sec-5-2-1"></a>Register as user</h4>
-<div class="outline-text-4" id="text-register-as-user-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">register as user</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects the 'registration' option and enters 'username' (that might be a real name) and 'email'</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">user authentication data permanently stored in the system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-user-details-txt" class="outline-4">
-<h4 id="edit-user-details-txt"><a name="sec-5-2-2" id="sec-5-2-2"></a>Edit user details</h4>
-<div class="outline-text-4" id="text-edit-user-details-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">edit user details</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'edit user details' option, modifies some information, and stores the modified information</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">user selects the 'edit user details' option first, and then the 'delete user' option</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">user deleted or valid authentication data stored in the system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-login-txt" class="outline-4">
-<h4 id="login-txt"><a name="sec-5-2-3" id="sec-5-2-3"></a>Login</h4>
-<div class="outline-text-4" id="text-login-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">login</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is registered</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects the 'log in' option and enters his credentials</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">user is logged in</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-logout-txt" class="outline-4">
-<h4 id="logout-txt"><a name="sec-5-2-4" id="sec-5-2-4"></a>Logout</h4>
-<div class="outline-text-4" id="text-logout-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">logout</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'logout' option</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">user is logged out</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-search-users-txt" class="outline-4">
-<h4 id="search-users-txt"><a name="sec-5-2-5" id="sec-5-2-5"></a>Search users</h4>
-<div class="outline-text-4" id="text-search-users-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">search users</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">admin is logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin selects 'search users' option</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">admin sees registered users</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-take-action-users-txt" class="outline-4">
-<h4 id="take-action-users-txt"><a name="sec-5-2-6" id="sec-5-2-6"></a>Take action on selected users</h4>
-<div class="outline-text-4" id="text-take-action-users-txt">
-
-
-<p>
-<i>e.g.:</i>
-</p><ul>
-<li><i>add user(s) to assignees</i>
-</li>
-<li><i>remove user(s) from assignees</i>
-</li>
-<li><i>delete user(s)</i>
-</li>
-<li><i>edit user details</i>
-</li>
-</ul>
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">take action on selected users</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">admin is logged in and at least one user registered</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin selects users and the action to perform on them</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">action was applied to selected user(s)</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-create-project-txt" class="outline-4">
-<h4 id="create-project-txt"><a name="sec-5-2-7" id="sec-5-2-7"></a>Create project</h4>
-<div class="outline-text-4" id="text-create-project-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">create project</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">admin is logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin selects 'create project' option and submits project information</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">new project is stored in the system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-project-txt" class="outline-4">
-<h4 id="edit-project-txt"><a name="sec-5-2-8" id="sec-5-2-8"></a>Edit project</h4>
-<div class="outline-text-4" id="text-edit-project-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">edit project</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">admin is logged in, project exists</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin selects 'edit project' option, selects one project, and submits the modified project information</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">admin marks selected project as deleted</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">modified project info stored in the system OR project deleted</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-switch-project-txt" class="outline-4">
-<h4 id="switch-project-txt"><a name="sec-5-2-9" id="sec-5-2-9"></a>Switch project</h4>
-<div class="outline-text-4" id="text-switch-project-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">switch project</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects the 'switch project' option and selects a different project</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">a different project is the current project</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-open-new-task-txt" class="outline-4">
-<h4 id="open-new-task-txt"><a name="sec-5-2-10" id="sec-5-2-10"></a>Open new task</h4>
-<div class="outline-text-4" id="text-open-new-task-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">open new task</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'open new task' option and submits task information.</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">task stored in system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-search-task-list-txt" class="outline-4">
-<h4 id="search-task-list-txt"><a name="sec-5-2-11" id="sec-5-2-11"></a>Search tasklist</h4>
-<div class="outline-text-4" id="text-search-task-list-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">search tasklist</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">at least one task in system</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'search tasklist' option and submits search criteria</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left"></td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-take-action-tasks-txt" class="outline-4">
-<h4 id="take-action-tasks-txt"><a name="sec-5-2-12" id="sec-5-2-12"></a>Take action on selected tasks</h4>
-<div class="outline-text-4" id="text-take-action-tasks-txt">
-
-
-<p>
-<i>e.g.:</i>
-</p><ul>
-<li><i>add (remove) yourself (as user) to (from) notification list</i>
-</li>
-<li><i>add (remove) reminder</i>
-</li>
-<li><i>close task</i>
-</li>
-<li><i>re-open closed task</i>
-</li>
-<li><i>assign yourself (as assignee) to the task(s)</i> 
-</li>
-<li><i>edit task</i>
-</li>
-<li><i>associate related tasks</i>
-</li>
-<li><i>dissociate related tasks</i>
-</li>
-<li><i>associate  tasks and assignees</i>
-</li>
-<li><i>dissociate tasks and assignees</i>
-</li>
-</ul>
-
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">take action on selected tasks</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user has necessary permissions</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user select tasks and the action to perform on them</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">action performed on selected tasks</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-task-txt" class="outline-4">
-<h4 id="edit-task-txt"><a name="sec-5-2-13" id="sec-5-2-13"></a>Edit task</h4>
-<div class="outline-text-4" id="text-edit-task-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">edit task</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">admin or assignee</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">adminf or assignee logged in</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">admin or assignee searches the tasklist, selects a task, takes action 'edit' on the selected task, and finally submits the modified task info</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">modified task info stored in system</td></tr>
-</tbody>
-</table>
-
-
-
-
-
-
-</div>
-
-</div>
-
-<div id="outline-container-add-comment-txt" class="outline-4">
-<h4 id="add-comment-txt"><a name="sec-5-2-14" id="sec-5-2-14"></a>Add comment</h4>
-<div class="outline-text-4" id="text-add-comment-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">add comment</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in and views a task</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user submits a comment to the current task</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">comment stored in system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-comment-txt" class="outline-4">
-<h4 id="edit-comment-txt"><a name="sec-5-2-15" id="sec-5-2-15"></a>Edit comment</h4>
-<div class="outline-text-4" id="text-edit-comment-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">edit comment</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in and views a task with comments AND has necessary permissions</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'edit comment' option and submits edited text</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">user selects 'edit comment' option and deletes comment</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">edited comment stored in system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-add-attachment-txt" class="outline-4">
-<h4 id="add-attachment-txt"><a name="sec-5-2-16" id="sec-5-2-16"></a>Add attachment</h4>
-<div class="outline-text-4" id="text-add-attachment-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">add attachment</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in, views a task, and has the necessary permissions</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'add attachment' option and submits the selected file</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">selected file stored in the system and attached to task</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-delete-attachment-txt" class="outline-4">
-<h4 id="delete-attachment-txt"><a name="sec-5-2-17" id="sec-5-2-17"></a>Delete attachment</h4>
-<div class="outline-text-4" id="text-delete-attachment-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">delete attachment</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">user is logged in, views a task with attachments, and has the necessary permissions</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user flags attachment as deleted and submits flag</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">attachment flagged as deleted in system</td></tr>
-</tbody>
-</table>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-search-event-log-txt" class="outline-4">
-<h4 id="search-event-log-txt"><a name="sec-5-2-18" id="sec-5-2-18"></a>Search event log</h4>
-<div class="outline-text-4" id="text-search-event-log-txt">
-
-
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left"><b>use case</b></td><td class="left">search event log</td></tr>
-<tr><td class="left"><b>actors</b></td><td class="left">user</td></tr>
-<tr><td class="left"><b>precondition</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>main flow</b></td><td class="left">user selects 'search event log' option</td></tr>
-<tr><td class="left"><b>alternative flow</b></td><td class="left">&ndash;</td></tr>
-<tr><td class="left"><b>postcondition</b></td><td class="left">&ndash;</td></tr>
-</tbody>
-</table>
-
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-use-cases-uml" class="outline-3">
-<h3 id="use-cases-uml"><a name="sec-5-3" id="sec-5-3"></a>Integrated UML Modelling of Use Cases and UI</h3>
-<div class="outline-text-3" id="text-use-cases-uml">
-
-
-
-</div>
-
-<div id="outline-container-req-oriented-act-uml" class="outline-4">
-<h4 id="req-oriented-act-uml"><a name="sec-5-3-1" id="sec-5-3-1"></a>Requirements Oriented UML Activity Diagrams (ROA)</h4>
-<div class="outline-text-4" id="text-req-oriented-act-uml">
-
-
-<p>
-UML activity diagrams are well suited for modelling complex activities
-with several alternative flows. Based on the <a href="#sec-5-2">textual descriptions</a> we
-develop one diagram for each use case. While the meaning of the
-diagrams should be self-explanatory (in fact, their main <i>razon d'etre</i> is easy communication with non-technical users), there are
-some abbreviations and symbols that require explanation:
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left">&lt;roa&gt;</td><td class="left">requirements oriented activity</td></tr>
-<tr><td class="left"><a name="UA" class="target">UA</a></td><td class="left">User Activity</td></tr>
-<tr><td class="left"><a name="UD" class="target">UD</a></td><td class="left">User Decision</td></tr>
-<tr><td class="left"><a name="SA" class="target">SA</a></td><td class="left">(complex) System Activity</td></tr>
-<tr><td class="left"><a name="SD" class="target">SD</a></td><td class="left">System Decision</td></tr>
-<tr><td class="left"><a name="UC" class="target">UC</a></td><td class="left">Use Case</td></tr>
-<tr><td class="left"><b>⋔</b></td><td class="left">(pitchfork) sub-activity</td></tr>
-<tr><td class="left"><a name="scene" class="target">scene</a></td><td class="left">basic elements of web UI</td></tr>
-</tbody>
-</table>
-
-
-
-<p>
-Each <i>activity</i> has one startpoint and one or several endpoints. Each
-<i>user activity</i> is associated with a <i>scene</i>. Other <i>use cases</i> that
-are included in the use case modelled, as well as complex <i>system activities</i>, are marked as subactivities with a pitchfork (⋔). Only
-complex system activities are considered, not simple stuff like
-storing form data. 
-</p>
-<p>
-<i>note: use 'C-x 8 RET pitchfork' (type 'pit' then TAB for completion) to</i>
-<i>enter the ⋔ character with Emacs (⋔ is used to mark subactivities)</i>
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-register-as-user-uml-roa" class="outline-4">
-<h4 id="register-as-user-uml-roa"><a name="sec-5-3-2" id="sec-5-3-2"></a>Register as user</h4>
-<div class="outline-text-4" id="text-register-as-user-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/register-as-user-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/register-as-user-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-user-details-uml-roa" class="outline-4">
-<h4 id="edit-user-details-uml-roa"><a name="sec-5-3-3" id="sec-5-3-3"></a>Edit user details</h4>
-<div class="outline-text-4" id="text-edit-user-details-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-login-uml-roa" class="outline-4">
-<h4 id="login-uml-roa"><a name="sec-5-3-4" id="sec-5-3-4"></a>Login</h4>
-<div class="outline-text-4" id="text-login-uml-roa">
-
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/login-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/login-uml-roa.png" />
-</p>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-logout-uml-roa" class="outline-4">
-<h4 id="logout-uml-roa"><a name="sec-5-3-5" id="sec-5-3-5"></a>Logout</h4>
-<div class="outline-text-4" id="text-logout-uml-roa">
-
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/logout-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/logout-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-search-users-uml-roa" class="outline-4">
-<h4 id="search-users-uml-roa"><a name="sec-5-3-6" id="sec-5-3-6"></a>Search users</h4>
-<div class="outline-text-4" id="text-search-users-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/search-users-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/search-users-uml-roa.png" />
-</p>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-take-action-select-users-uml-roa" class="outline-4">
-<h4 id="take-action-select-users-uml-roa"><a name="sec-5-3-7" id="sec-5-3-7"></a>Take action on selected users</h4>
-<div class="outline-text-4" id="text-take-action-select-users-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-create-project-uml-roa" class="outline-4">
-<h4 id="create-project-uml-roa"><a name="sec-5-3-8" id="sec-5-3-8"></a>Create project</h4>
-<div class="outline-text-4" id="text-create-project-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/create-project-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/create-project-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-project-uml-roa" class="outline-4">
-<h4 id="edit-project-uml-roa"><a name="sec-5-3-9" id="sec-5-3-9"></a>Edit project</h4>
-<div class="outline-text-4" id="text-edit-project-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-project-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-project-uml-roa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-switch-project-uml-roa" class="outline-4">
-<h4 id="switch-project-uml-roa"><a name="sec-5-3-10" id="sec-5-3-10"></a>Switch project</h4>
-<div class="outline-text-4" id="text-switch-project-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/switch-project-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/switch-project-uml-roa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-open-new-task-uml-roa" class="outline-4">
-<h4 id="open-new-task-uml-roa"><a name="sec-5-3-11" id="sec-5-3-11"></a>Open new task</h4>
-<div class="outline-text-4" id="text-open-new-task-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png" />
-</p>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-search-task-list-uml-roa" class="outline-4">
-<h4 id="search-task-list-uml-roa"><a name="sec-5-3-12" id="sec-5-3-12"></a>Search tasklist</h4>
-<div class="outline-text-4" id="text-search-task-list-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/search-tasklist-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/search-tasklist-uml-roa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-take-action-tasks-uml-roa" class="outline-4">
-<h4 id="take-action-tasks-uml-roa"><a name="sec-5-3-13" id="sec-5-3-13"></a>Take action on selected tasks</h4>
-<div class="outline-text-4" id="text-take-action-tasks-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-task-uml-roa" class="outline-4">
-<h4 id="edit-task-uml-roa"><a name="sec-5-3-14" id="sec-5-3-14"></a>Edit task</h4>
-<div class="outline-text-4" id="text-edit-task-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-task-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-task-uml-roa.png" />
-</p>
-
-
-
-
-
-
-</div>
-
-</div>
-
-<div id="outline-container-add-comment-uml-roa" class="outline-4">
-<h4 id="add-comment-uml-roa"><a name="sec-5-3-15" id="sec-5-3-15"></a>Add comment</h4>
-<div class="outline-text-4" id="text-add-comment-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/add-comment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/add-comment-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-comment-uml-roa" class="outline-4">
-<h4 id="edit-comment-uml-roa"><a name="sec-5-3-16" id="sec-5-3-16"></a>Edit comment</h4>
-<div class="outline-text-4" id="text-edit-comment-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-comment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-comment-uml-roa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-add-attachment-uml-roa" class="outline-4">
-<h4 id="add-attachment-uml-roa"><a name="sec-5-3-17" id="sec-5-3-17"></a>Add attachment</h4>
-<div class="outline-text-4" id="text-add-attachment-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/add-attachment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/add-attachment-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-delete-attachment-uml-roa" class="outline-4">
-<h4 id="delete-attachment-uml-roa"><a name="sec-5-3-18" id="sec-5-3-18"></a>Delete attachment</h4>
-<div class="outline-text-4" id="text-delete-attachment-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/delete-attachment-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/delete-attachment-uml-roa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-search-event-log-uml-roa" class="outline-4">
-<h4 id="search-event-log-uml-roa"><a name="sec-5-3-19" id="sec-5-3-19"></a>Search event log</h4>
-<div class="outline-text-4" id="text-search-event-log-uml-roa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png"  alt="../../../../images/gsoc/2012/bugpile/search-event-log-uml-roa.png" />
-</p>
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-use-case-models" class="outline-3">
-<h3 id="use-case-models"><a name="sec-5-4" id="sec-5-4"></a>Use Case Models</h3>
-<div class="outline-text-3" id="text-use-case-models">
-
-
-
-</div>
-
-<div id="outline-container-user-management-uc-model" class="outline-4">
-<h4 id="user-management-uc-model"><a name="sec-5-4-1" id="sec-5-4-1"></a>User management</h4>
-<div class="outline-text-4" id="text-user-management-uc-model">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/user-management-uml-uc.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-task-management-uc-model" class="outline-4">
-<h4 id="task-management-uc-model"><a name="sec-5-4-2" id="sec-5-4-2"></a>Task management</h4>
-<div class="outline-text-4" id="text-task-management-uc-model">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png" />
-</p>
-<p>
-<i>note: when plantuml has difficulties to calculate a complex diagram</i>
-<i>or produces less than satisfactory output, try adding more slashes</i>
-<i>or points to the vertices (e.g. &hellip;..&gt; or &lt;-&mdash;) and watch what</i>
-<i>happens.</i>
-</p>
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png" />
-</p>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-project-management-uc-model" class="outline-4">
-<h4 id="project-management-uc-model"><a name="sec-5-4-3" id="sec-5-4-3"></a>Project management</h4>
-<div class="outline-text-4" id="text-project-management-uc-model">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/project-management-uml-uc.png" />
-</p>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-domain-class-model" class="outline-3">
-<h3 id="domain-class-model"><a name="sec-5-5" id="sec-5-5"></a>Domain Class Model</h3>
-<div class="outline-text-3" id="text-domain-class-model">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/domain-class-uml.png"  alt="../../../../images/gsoc/2012/bugpile/domain-class-uml.png" />
-</p>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-softw-spec" class="outline-2">
-<h2 id="softw-spec"><a name="sec-6" id="sec-6"></a>Software Specification</h2>
-<div class="outline-text-2" id="text-softw-spec">
-
-
-</div>
-
-<div id="outline-container-trans-req-into-spec" class="outline-3">
-<h3 id="trans-req-into-spec"><a name="sec-6-1" id="sec-6-1"></a>Transforming Requirements into Specifications</h3>
-<div class="outline-text-3" id="text-trans-req-into-spec">
-
-
-</div>
-
-<div id="outline-container-req-oriented-act-uml" class="outline-4">
-<h4 id="req-oriented-act-uml"><a name="sec-6-1-1" id="sec-6-1-1"></a>Software Oriented UML Activity Diagrams (SOA)</h4>
-<div class="outline-text-4" id="text-req-oriented-act-uml">
-
-
-<p>
-We used UML activity diagrams in the requirements analysis to model
-the real world system from the user's point of view. Now, the
-<a href="#sec-6-1-1">requirements oriented activitiy diagrams (roa)</a> have to be transformed
-into a software specification that forms the basis for the design of a
-software system. We call the tranformed diagrams <i>software oriented</i>
-<i>activity diagrams</i>. The transformation rule is easy and the whole
-transformation process might well be implemented as a non-interactive
-function:
-</p>
-<blockquote>
-
-<p><b>Transformation Rule</b>
-</p>
-<p>
-Each edge from a vertex with a user action has its endpoint in a
-vertex with a system action. 
-</p>
-</blockquote>
-
-
-<p>
-This reflects the typical behaviour of interactive systems, where
-every user action is followed by a system reaction. The reason to not
-include these <i>system (re-)action vertices</i> in the activity diagrams
-from the start is to keep the diagrams simple and focussed on the
-user's point of view. After all, the requirement analysis is about
-communicating with non-technical end users (or, in one-man-projects,
-about the programmer taking on the role of the non-technical end
-user).
-</p>
-<p>
-For convenience, we repeat the explanation of abbreviations and
-symbols used in the <i>activity diagrams</i> here, but there is really only
-one new abbreviation involved: <i>&lt;soa&gt;</i> for <i>software oriented activity</i>: 
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" /><col class="left" />
-</colgroup>
-<tbody>
-<tr><td class="left">&lt;soa&gt;</td><td class="left">software oriented activity</td></tr>
-<tr><td class="left"><a name="UA" class="target">UA</a></td><td class="left">User Activity</td></tr>
-<tr><td class="left"><a name="UD" class="target">UD</a></td><td class="left">User Decision</td></tr>
-<tr><td class="left"><a name="SA" class="target">SA</a></td><td class="left">(complex) System Activity</td></tr>
-<tr><td class="left"><a name="SD" class="target">SD</a></td><td class="left">System Decision</td></tr>
-<tr><td class="left"><a name="UC" class="target">UC</a></td><td class="left">Use Case</td></tr>
-<tr><td class="left"><b>⋔</b></td><td class="left">(pitchfork) sub-activity</td></tr>
-<tr><td class="left"><a name="scene" class="target">scene</a></td><td class="left">basic elements of web UI</td></tr>
-</tbody>
-</table>
-
-
-
-<p>
-note: we make no attempt to conform to <a href="http://www.omg.org/spec/">formal uml specifications</a>
-since we want to keep things simple and our text-based drawing tool/
-<a href="http://plantuml.sourceforge.net/">PlantUML</a> does have its limitations.
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-register-as-user-uml-soa" class="outline-4">
-<h4 id="register-as-user-uml-soa"><a name="sec-6-1-2" id="sec-6-1-2"></a>Register as user</h4>
-<div class="outline-text-4" id="text-register-as-user-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/register-as-user-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/register-as-user-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-edit-user-details-uml-soa" class="outline-4">
-<h4 id="edit-user-details-uml-soa"><a name="sec-6-1-3" id="sec-6-1-3"></a>Edit user details</h4>
-<div class="outline-text-4" id="text-edit-user-details-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-user-details-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-user-details-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-login-uml-soa" class="outline-4">
-<h4 id="login-uml-soa"><a name="sec-6-1-4" id="sec-6-1-4"></a>Login</h4>
-<div class="outline-text-4" id="text-login-uml-soa">
-
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/login-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/login-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-logout-uml-soa" class="outline-4">
-<h4 id="logout-uml-soa"><a name="sec-6-1-5" id="sec-6-1-5"></a>Logout</h4>
-<div class="outline-text-4" id="text-logout-uml-soa">
-
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/logout-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/logout-uml-soa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-open-new-task-uml-soa" class="outline-4">
-<h4 id="open-new-task-uml-soa"><a name="sec-6-1-6" id="sec-6-1-6"></a>Open new task</h4>
-<div class="outline-text-4" id="text-open-new-task-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png" />
-</p>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-search-users-uml-soa" class="outline-4">
-<h4 id="search-users-uml-soa"><a name="sec-6-1-7" id="sec-6-1-7"></a>Search users</h4>
-<div class="outline-text-4" id="text-search-users-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/search-users-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/search-users-uml-soa.png" />
-</p>
-
-
-</div>
-
-</div>
-
-<div id="outline-container-take-action-select-users-uml-soa" class="outline-4">
-<h4 id="take-action-select-users-uml-soa"><a name="sec-6-1-8" id="sec-6-1-8"></a>Take action on selected users</h4>
-<div class="outline-text-4" id="text-take-action-select-users-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-soa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-create-project-uml-soa" class="outline-4">
-<h4 id="create-project-uml-soa"><a name="sec-6-1-9" id="sec-6-1-9"></a>Create project</h4>
-<div class="outline-text-4" id="text-create-project-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/create-project-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/create-project-uml-soa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-project-uml-soa" class="outline-4">
-<h4 id="edit-project-uml-soa"><a name="sec-6-1-10" id="sec-6-1-10"></a>Edit project</h4>
-<div class="outline-text-4" id="text-edit-project-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-project-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-project-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-switch-project-uml-soa" class="outline-4">
-<h4 id="switch-project-uml-soa"><a name="sec-6-1-11" id="sec-6-1-11"></a>Switch project</h4>
-<div class="outline-text-4" id="text-switch-project-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/switch-project-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/switch-project-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-search-task-list-uml-soa" class="outline-4">
-<h4 id="search-task-list-uml-soa"><a name="sec-6-1-12" id="sec-6-1-12"></a>Search tasklist</h4>
-<div class="outline-text-4" id="text-search-task-list-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/search-tasklist-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/search-tasklist-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-take-action-tasks-uml-soa" class="outline-4">
-<h4 id="take-action-tasks-uml-soa"><a name="sec-6-1-13" id="sec-6-1-13"></a>Take action on selected tasks</h4>
-<div class="outline-text-4" id="text-take-action-tasks-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/take-action-select-tasks-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-edit-task-uml-soa" class="outline-4">
-<h4 id="edit-task-uml-soa"><a name="sec-6-1-14" id="sec-6-1-14"></a>Edit task</h4>
-<div class="outline-text-4" id="text-edit-task-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-task-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-task-uml-soa.png" />
-</p>
-
-
-
-
-
-
-</div>
-
-</div>
-
-<div id="outline-container-add-comment-uml-soa" class="outline-4">
-<h4 id="add-comment-uml-soa"><a name="sec-6-1-15" id="sec-6-1-15"></a>Add comment</h4>
-<div class="outline-text-4" id="text-add-comment-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/add-comment-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/add-comment-uml-soa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-edit-comment-uml-soa" class="outline-4">
-<h4 id="edit-comment-uml-soa"><a name="sec-6-1-16" id="sec-6-1-16"></a>Edit comment</h4>
-<div class="outline-text-4" id="text-edit-comment-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/edit-comment-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/edit-comment-uml-soa.png" />
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-add-attachment-uml-soa" class="outline-4">
-<h4 id="add-attachment-uml-soa"><a name="sec-6-1-17" id="sec-6-1-17"></a>Add attachment</h4>
-<div class="outline-text-4" id="text-add-attachment-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/add-attachment-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/add-attachment-uml-soa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-delete-attachment-uml-soa" class="outline-4">
-<h4 id="delete-attachment-uml-soa"><a name="sec-6-1-18" id="sec-6-1-18"></a>Delete attachment</h4>
-<div class="outline-text-4" id="text-delete-attachment-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/delete-attachment-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/delete-attachment-uml-soa.png" />
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-search-event-log-uml-soa" class="outline-4">
-<h4 id="search-event-log-uml-soa"><a name="sec-6-1-19" id="sec-6-1-19"></a>Search event log</h4>
-<div class="outline-text-4" id="text-search-event-log-uml-soa">
-
-
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/search-event-log-uml-soa.png"  alt="../../../../images/gsoc/2012/bugpile/search-event-log-uml-soa.png" />
-</p>
-
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-syst-activities" class="outline-3">
-<h3 id="syst-activities"><a name="sec-6-2" id="sec-6-2"></a>Complex System Activities</h3>
-<div class="outline-text-3" id="text-syst-activities">
-
-
-</div>
-
-<div id="outline-container-model-compl-syst-act" class="outline-4">
-<h4 id="model-compl-syst-act"><a name="sec-6-2-1" id="sec-6-2-1"></a>Modeling complex system activities</h4>
-<div class="outline-text-4" id="text-model-compl-syst-act">
-
-
-<p>
-System activities that are sufficiently complex are marked as
-<i>subactivities</i> with the <code>pitchfork</code> symbol ⋔ in the software oriented
-activitiy diagrams (<code>soa</code>). They are modeled separately in a stepwise
-refinement process by decomposing them into small atomar system
-activities and (maybe) other complex system activities, that are then
-decomposed into smaller activities themselves in another step until
-only simple atomar activities are left.
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-search-tasks-syst-act-spec" class="outline-4">
-<h4 id="search-tasks-syst-act-spec"><a name="sec-6-2-2" id="sec-6-2-2"></a>Search Tasks</h4>
-<div class="outline-text-4" id="text-search-tasks-syst-act-spec">
-
-
-<p>
-Search tasks and return a result set that fits a user query is the
-central complex system activity in a bugtracker. It is (indirectly)
-included as subactivity in many use cases.
-</p>
-
-</div>
-
-</div>
-
-<div id="outline-container-search-users-syst-act-spec" class="outline-4">
-<h4 id="search-users-syst-act-spec"><a name="sec-6-2-3" id="sec-6-2-3"></a>Search Users</h4>
-<div class="outline-text-4" id="text-search-users-syst-act-spec">
-
-
-<p>
-In bugpile, querying users is a less important and less complex
-activity (compared to querying tasks), only performed by <i>admins</i>.
-</p>
-</div>
-</div>
-</div>
-
-</div>
-
-<div id="outline-container-softw-arch" class="outline-2">
-<h2 id="softw-arch"><a name="sec-7" id="sec-7"></a>Software Architecture</h2>
-<div class="outline-text-2" id="text-softw-arch">
-
-
-</div>
-
-<div id="outline-container-5-layer-arch" class="outline-3">
-<h3 id="5-layer-arch"><a name="sec-7-1" id="sec-7-1"></a>Modified 5-Layer Architecture</h3>
-<div class="outline-text-3" id="text-5-layer-arch">
-
-
-<p>
-The iOrg web-framework is based on a modified 5-layer architecture
-(modified, because the web-layer is further divided into <i>view</i> and
-<i>controller</i>):
-</p>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
-<caption></caption>
-<colgroup><col class="left" />
-</colgroup>
-<thead>
-<tr><th scope="col" class="left">iOrg Architecture</th></tr>
-</thead>
-<tbody>
-<tr><td class="left">Client</td></tr>
-</tbody>
-<tbody>
-<tr><td class="left">Web (View &amp; Controller)</td></tr>
-</tbody>
-<tbody>
-<tr><td class="left">Logic (Model)</td></tr>
-</tbody>
-<tbody>
-<tr><td class="left">Objects (Model)</td></tr>
-</tbody>
-<tbody>
-<tr><td class="left">Persistence</td></tr>
-</tbody>
-</table>
-
-
-<p>
-The standard <i>client</i> for an iOrg web-application is, not
-surprisingly, a web-browser, but typically power users that access the
-application directly via Emacs are considered too. Since iOrg is
-entirely based on text files, a dVCS in combination with the servers
-file system is used for <i>persistence</i>, version control and simple
-database functionality. 
-</p>
-<p>
-Programming an iOrg application therefore consists in designing and
-implementing the three middle layers <i>objects</i>, <i>logic</i> and <i>web</i>.
-Combining objects and logic into the application <i>model</i> and dividing
-the web-layer into a <i>view</i> and a <i>controller</i> component results in
-the well known MVC (Model-View-Controller) architecture for web
-applications. 
-</p>
-<p>
-The described architecture is platform independent. We adapt it to the
-file based iOrg system by defining a standard directory structure for
-iOrg projects with predefined directories that contain all the files
-that belong to a certain layer of the architecture. The directories
-are drawn as packages in the following graphical depiction, and
-actually serve the same purpose as packages in other programming
-environments. 
-</p>
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png"  alt="../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png" />
-</p>
-
-<p>
-An iOrg project therefore contains a <i>view</i> directory with one
-subdirectory for each <i>use case</i>, and one .org file for each <i>scene</i>
-in the use case. Furthermore, it contains a <i>controller</i> directory
-with one .el file for each use case, and a <i>logic</i> directory with
-(optionally) one .el file for each use case. Each of these directories
-contains another file (or subdirectory in the case of <i>view</i>) for use
-case independent components. The application objects (one file per
-object) are stored in the <i>objects</i> directory. 
-</p>
-</div>
-</div>
-
 </div>
 
 <div id="outline-container-appl-design" class="outline-2">
-<h2 id="appl-design"><a name="sec-8" id="sec-8"></a>Application Design</h2>
+<h2 id="appl-design"><a name="sec-1" id="sec-1"></a>Application Design</h2>
 <div class="outline-text-2" id="text-appl-design">
 
 
 </div>
 
 <div id="outline-container-loc-ref-softw-arch" class="outline-3">
-<h3 id="loc-ref-softw-arch"><a name="sec-8-1" id="sec-8-1"></a>Locally Refining the Software Architecture</h3>
+<h3 id="loc-ref-softw-arch"><a name="sec-1-1" id="sec-1-1"></a>Locally Refining the Software Architecture</h3>
 <div class="outline-text-3" id="text-loc-ref-softw-arch">
 
 </div>
@@ -1827,14 +92,14 @@ object) are stored in the <i>objects</i> directory.
 </div>
 
 <div id="outline-container-transform-rules" class="outline-3">
-<h3 id="transform-rules"><a name="sec-8-2" id="sec-8-2"></a>The Transformation Rules</h3>
+<h3 id="transform-rules"><a name="sec-1-2" id="sec-1-2"></a>The Transformation Rules</h3>
 <div class="outline-text-3" id="text-transform-rules">
 
 
 </div>
 
 <div id="outline-container-transform-general-consid" class="outline-4">
-<h4 id="transform-general-consid"><a name="sec-8-2-1" id="sec-8-2-1"></a>General considerations</h4>
+<h4 id="transform-general-consid"><a name="sec-1-2-1" id="sec-1-2-1"></a>General considerations</h4>
 <div class="outline-text-4" id="text-transform-general-consid">
 
 <p>Emacs Lisp is not an object-oriented programming language, and the
@@ -1882,7 +147,7 @@ object-orientation.
 </div>
 
 <div id="outline-container-transform-dom-class-mod" class="outline-4">
-<h4 id="transform-dom-class-mod"><a name="sec-8-2-2" id="sec-8-2-2"></a>Domain Class Model</h4>
+<h4 id="transform-dom-class-mod"><a name="sec-1-2-2" id="sec-1-2-2"></a>Domain Class Model</h4>
 <div class="outline-text-4" id="text-transform-dom-class-mod">
 
 
@@ -1890,7 +155,7 @@ object-orientation.
 </div>
 
 <div id="outline-container-class-obj-inherit" class="outline-5">
-<h5 id="class-obj-inherit"><a name="sec-8-2-2-1" id="sec-8-2-2-1"></a>Classes, Objects and Inheritance</h5>
+<h5 id="class-obj-inherit"><a name="sec-1-2-2-1" id="sec-1-2-2-1"></a>Classes, Objects and Inheritance</h5>
 <div class="outline-text-5" id="text-class-obj-inherit">
 
 
@@ -1973,7 +238,7 @@ their order.
 </div>
 
 <div id="outline-container-class-vs-attr" class="outline-5">
-<h5 id="class-vs-attr"><a name="sec-8-2-2-2" id="sec-8-2-2-2"></a>Classes vs Attributes</h5>
+<h5 id="class-vs-attr"><a name="sec-1-2-2-2" id="sec-1-2-2-2"></a>Classes vs Attributes</h5>
 <div class="outline-text-5" id="text-class-vs-attr">
 
 <p>When designing a class hierarchy, it is often necessary to decide if
@@ -2221,35 +486,82 @@ discriminate between different types of user objects was a more
 natural solution. 
 </p>
 <p>
-<i>note: we use subclassing mostly to achieve attribute inheritance, we</i>
-<i>don't intend to establish class hierarchies based on specialisation</i>
-<i>and generalisation. a user is not a specialisation of a role, but it</i>
-<i>is convenient to declare 'role' as a superclass of 'user' to inherit the</i>
-<i>role_ALL definition.</i>
+We use subclassing mostly to achieve attribute inheritance, not
+necessarily to establish class hierarchies based on specialisation and
+generalisation (like 'an admin IS a user'). A user is not (a
+specialisation of) a role, but nevertheless it is convenient to
+declare 'role' as a superclass of 'user' to inherit the role_ALL
+attribute definition.
 </p>
-
 </div>
 </div>
 
 </div>
 
-<div id="outline-container-8-2-3" class="outline-4">
-<h4 id="sec-8-2-3">Software Oriented Activities (SOA)</h4>
-<div class="outline-text-4" id="text-8-2-3">
+<div id="outline-container-transform-rules-soa" class="outline-4">
+<h4 id="transform-rules-soa"><a name="sec-1-2-3" id="sec-1-2-3"></a>Software Oriented Activities (SOA)</h4>
+<div class="outline-text-4" id="text-transform-rules-soa">
 
+<p>We used software oriented activity diagrams for integrated modeling of
+user activities and the related UI. Thus, these diagrams need to be
+transformed into the <i>controller</i>, <i>view</i> and <i>logic</i> component of the
+iOrg framework.
+</p>
+<p>
+Each activitiy diagram (use case) is transformed into one
+<code>&lt;&lt;use-case-name&gt;&gt;-controller.el</code> file in the <i>controller</i> directory
+(e.g. <code>open-new-task-controller.el</code>). For each system activitiy in the
+SOA, one handler function is added to this controller file (e.g.
+<code>show-open-new-task-form-handler(...)</code> and
+<code>store-new-task-handler(...)</code>). 
+</p>
+<p>
+Each <i>scene</i> in the SOA is translated into one
+<code>&lt;&lt;user-activity-name&gt;&gt;-scene.org</code> file in the use case subdirectory
+of the <i>view</i> directory (e.g. <code>define-user-search-criteria-scene.org</code>
+in the <i>view/search-users</i> directory). 
+</p>
 </div>
 
 </div>
 
-<div id="outline-container-8-2-4" class="outline-4">
-<h4 id="sec-8-2-4">Complex System Activities</h4>
-<div class="outline-text-4" id="text-8-2-4">
+<div id="outline-container-transform-complex-syst-act" class="outline-4">
+<h4 id="transform-complex-syst-act"><a name="sec-1-2-4" id="sec-1-2-4"></a>Complex System Activities</h4>
+<div class="outline-text-4" id="text-transform-complex-syst-act">
 
+
+<p>
+If there is complex logic involved in a case (a system activity
+marked with the pitchfork symbol ⋔ as subactivity in a SOA) , a
+<code>&lt;&lt;use-case-name&gt;&gt;-logic.el</code> file is added to the <i>logic</i> directory
+(e.g. <code>search-task-list-logic.el</code>). The 'atomic' system activities
+that constitute the complex system activitiy are translated into
+worker functions in this file (e.g. <code>search-task-worker(...)</code> and
+<code>prepare-result-list-worker(...)</code>).
+</p>
+<p>
+The <i>worker</i> functions from the <i>logic</i> component are independent of
+the client used, they represent basic application functionality needed
+when accesssing the application from a web-browser as well as directly
+from Emacs. The <i>handler</i> functions from the <i>controller</i> component
+are only used by the web-client, their sole razon d'etre is the
+handling of http requests. The application should still work without
+them, if accessed directly from Emacs. 
+</p>
+<p>
+Thus, <i>handler</i> functions are a bit like managers - there are many of
+them and they need a lot of attention, but things still work without
+them (accesssing the application from Emacs). They don't do the real
+work, they just coordinate and manage things with regards to the
+web-clients. On the other hand, <i>worker</i> functions are more like
+engineers, they do the hard work in the background, and without them
+the system does not work anymore.
+</p>
 
 </div>
 
 <div id="outline-container-search-tasks-syst-act-design" class="outline-5">
-<h5 id="search-tasks-syst-act-design"><a name="sec-8-2-4-1" id="sec-8-2-4-1"></a>Search Tasks</h5>
+<h5 id="search-tasks-syst-act-design"><a name="sec-1-2-4-1" id="sec-1-2-4-1"></a>Search Tasks</h5>
 <div class="outline-text-5" id="text-search-tasks-syst-act-design">
 
 
@@ -2269,7 +581,7 @@ prepare the result set according to the frontend used.
 </div>
 
 <div id="outline-container-search-users-syst-act-design" class="outline-5">
-<h5 id="search-users-syst-act-design"><a name="sec-8-2-4-2" id="sec-8-2-4-2"></a>Search Users</h5>
+<h5 id="search-users-syst-act-design"><a name="sec-1-2-4-2" id="sec-1-2-4-2"></a>Search Users</h5>
 <div class="outline-text-5" id="text-search-users-syst-act-design">
 
 
@@ -2284,9 +596,78 @@ sufficice.
 
 </div>
 
-<div id="outline-container-8-2-5" class="outline-4">
-<h4 id="sec-8-2-5">Summary of Transformation Rules</h4>
-<div class="outline-text-4" id="text-8-2-5">
+<div id="outline-container-summary-transform-rules" class="outline-4">
+<h4 id="summary-transform-rules"><a name="sec-1-2-5" id="sec-1-2-5"></a>Summary of Transformation Rules</h4>
+<div class="outline-text-4" id="text-summary-transform-rules">
+
+
+<p>
+The following tables summarize the transformation rules that
+transform the results (artefacts) of the software specification into
+the software design. 
+</p>
+<p>
+Software oriented activities (SOAs) are transformed with the following
+rules:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Software Oriented Activity (SOA)</th><th scope="col" class="left">mapping =&gt; software design</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">use case (SOA diagram)</td><td class="left">/controller/USE-CASE-NAME-controller.el file</td></tr>
+<tr><td class="left">use case (SOA diagram)</td><td class="left">/view/USE-CASE-NAME subdirectory</td></tr>
+<tr><td class="left">use case with complex logic</td><td class="left">/logic/USE-CASE-NAME-logic.el file</td></tr>
+<tr><td class="left">system activity (SA)</td><td class="left">SYSTEM-ACTIVITY-NAME-handler(&hellip;) function in controller file</td></tr>
+<tr><td class="left">scene</td><td class="left">USER-ACTIVITY-NAME-scene.org file in /view/USE-CASE-NAME subdirectory</td></tr>
+<tr><td class="left">start-node use case (SOA diagram)</td><td class="left">start-USE-CASE-NAME-handler(&hellip;) function in controller file</td></tr>
+<tr><td class="left">end-node use case (SOA diagram)</td><td class="left">end-USE-CASE-NAME-handler(&hellip;) function in controller file</td></tr>
+</tbody>
+</table>
+
+
+<p>
+Complex system activities are transformed with the following
+rule:  
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Complex System Activity</th><th scope="col" class="left">mapping =&gt; software design</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">'atomic' system activity (SA)</td><td class="left">SYSTEM-ACTIVITY-NAME-worker(&hellip;) function in logic file</td></tr>
+</tbody>
+</table>
+
+
+
+<p>
+The domain class model is transformed with the following
+rules: 
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Domain Class Model</th><th scope="col" class="left">mapping =&gt; software design</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">class</td><td class="left">/objects/classes/CLASS-NAME-class.org file with one top-level entry '* CLASS-NAME' with one attribute drawer</td></tr>
+<tr><td class="left">attribute</td><td class="left">:attribute: DEFAULT-VALUE in the class attribute drawer</td></tr>
+<tr><td class="left">(multiple) inheritance</td><td class="left">superclass name(s) as value(s) of the :super: attribute in the class property drawer</td></tr>
+<tr><td class="left">composition</td><td class="left">object name(s) as value(s) of a class attribute in the class attribute drawer</td></tr>
+<tr><td class="left">object</td><td class="left">/objects/CLASS-NAME-CUSTOM-ID-obj.org file</td></tr>
+</tbody>
+</table>
+
+
 
 
 </div>
@@ -2295,7 +676,7 @@ sufficice.
 </div>
 
 <div id="outline-container-class-model" class="outline-3">
-<h3 id="class-model"><a name="sec-8-3" id="sec-8-3"></a>Class Model</h3>
+<h3 id="class-model"><a name="sec-1-3" id="sec-1-3"></a>Class Model</h3>
 <div class="outline-text-3" id="text-class-model">
 
 <p>Based on the assumption that an Org-mode file can be modeled as a kind
@@ -2318,33 +699,16 @@ core.
 </div>
 
 <div id="outline-container-refine-logic" class="outline-3">
-<h3 id="refine-logic"><a name="sec-8-4" id="sec-8-4"></a>Refining the Logic</h3>
+<h3 id="refine-logic"><a name="sec-1-4" id="sec-1-4"></a>Refining the Logic</h3>
 <div class="outline-text-3" id="text-refine-logic">
 
 </div>
-</div>
-
-</div>
-
-<div id="outline-container-implementation" class="outline-2">
-<h2 id="implementation"><a name="sec-9" id="sec-9"></a>Implementation</h2>
-<div class="outline-text-2" id="text-implementation">
-
-</div>
-
-</div>
-
-<div id="outline-container-verification" class="outline-2">
-<h2 id="verification"><a name="sec-10" id="sec-10"></a>Verification</h2>
-<div class="outline-text-2" id="text-verification">
-
-
 </div>
 </div>
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-25 02:38:19 CEST</p>
+<p class="date">Date: 2012-05-26 18:56:14 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

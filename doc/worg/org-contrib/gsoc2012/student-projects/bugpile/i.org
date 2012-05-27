@@ -1068,6 +1068,29 @@ storing form data.
    :CUSTOM_ID: domain-class-model
    :exports: both
    :END:
+*** Classes vs Attributes
+     :PROPERTIES:
+     :CUSTOM_ID: class-vs-attr
+     :END:
+When designing a class hierarchy, it is often necessary to decide if
+the differences between two real-world classes should be modeled by
+inserting a discriminating attribute into one software class (e.g.
+attribute =color= in class =car=, with values white, green and black)
+or by specialing a general superclass into several subclasses (e.g.
+let subclasses =van=, =four-wheel= and =cabriolet=, each with a new
+subset of attributes, inherit from superclass =car=).
+
+While there are more sophisticated guidelines how to tackle this
+decision in the literature, we will restrict ourselves to common
+sense: "Does it make sense to introduce more (sub-) classes to
+differentiate between variations of an real-world object?". In many
+cases, the introduction of a new discriminating attribute will
+suffice. 
+
+*** Bugpile Domain Class Model
+    :PROPERTIES:
+    :CUSTOM_ID: bugpile-dom-class-model
+    :END:
 
 #+srcname domain-class-uml
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/domain-class-uml.png 
@@ -1716,6 +1739,14 @@ object) are stored in the /objects/ directory.
    :PROPERTIES:
    :CUSTOM_ID: loc-ref-softw-arch
    :END:
+
+Once the software architecture is defined, application design is only
+about locally refining the architecture. Therefore, the
+transformations described in the following subsections do not alter
+the architecture anymore, but rather map the artefacts from the
+software specification to (locally refined) components of the
+architecture.
+
 ** The Transformation Rules
    :PROPERTIES:
    :CUSTOM_ID: transform-rules
@@ -1776,87 +1807,81 @@ attributes, but without methods).
 What is a class and and what is an object in the context of the iOrg
 framework? How are the relationships between objects implemented?
 
-We define as a convention that each object (entitiy) is represented by
-one .org file in the /objects/ directory. Relations with other objects
-are realized via attribute values, i.e. other objects can represent
-valid values of certain object attributes.
+We define as a convention that each class is represented by one
+=/objects/classes/<<class-name>>-class.org= file. New objects of the
+class are instantiated as top-level entries in a
+=/objects/<<class-name>>-obj.org= file by collecting all attributes
+(except the obligatory :super: attribute) of the class and all of its
+superclasses, inserting them into the objects attribute drawer, and
+assigning new values to them.
 
-To introduce classes and inheritance in this framework, we make use of
-the attribute inheritance of Org-mode:
+Relations with other objects (other than inheritance) are realized via
+attribute values, i.e. other objects can represent valid values of
+certain object attributes.
 
-#+begin_quote
-The outline structure of Org mode documents lends itself to an
-inheritance model of properties: if the parent in a tree has a certain
-property, the children can inherit this property.
-#+end_quote
+# To introduce classes and inheritance in the iOrg framework, we make
+# use of the attribute inheritance of Org-mode:
 
-Thus, a class hierarchy is constructed by building an outline tree
-starting from the root class and promoting each subsequent subclass
-one level. The following function is used to =get= the properties:
+# #+begin_quote
+# The outline structure of Org mode documents lends itself to an
+# inheritance model of properties: if the parent in a tree has a certain
+# property, the children can inherit this property.
+# #+end_quote
 
-#+begin_quote
- -- Function: org-entry-get pom property &optional inherit
-     Get value of PROPERTY for entry at point-or-marker POM.  By
-     default, this only looks at properties defined locally in the
-     entry.  If INHERIT is non-nil and the entry does not have the
-     property, then also check higher levels of the hierarchy.  If
-     INHERIT is the symbol `selective', use inheritance if and only if
-     the setting of `org-use-property-inheritance' selects PROPERTY for
-    inheritance.
-#+end_quote
+# Thus, a class hierarchy is constructed by building an outline tree
+# starting from the root class and promoting each subsequent subclass
+# one level. The following function is used to =get= the properties:
 
-Property inheritance seems natural in this construct, but may slow
-things down:
+# #+begin_quote
+#  -- Function: org-entry-get pom property &optional inherit
+#      Get value of PROPERTY for entry at point-or-marker POM.  By
+#      default, this only looks at properties defined locally in the
+#      entry.  If INHERIT is non-nil and the entry does not have the
+#      property, then also check higher levels of the hierarchy.  If
+#      INHERIT is the symbol `selective', use inheritance if and only if
+#      the setting of `org-use-property-inheritance' selects PROPERTY for
+#     inheritance.
+# #+end_quote
 
-#+begin_quote
-Org mode does not turn [attribute inheritance] on by default, because
-it can slow down property searches significantly and is often not
-needed. However, if you find inheritance useful, you can turn it on by
-setting the variable `org-use-property-inheritance'. It may be set to
-`t' to make all properties inherited from the parent, to a list of
-properties that should be inherited, or to a regular expression that
-matches inherited properties. If a property has the value `nil', this
-is interpreted as an explicit undefine of the property, so that
-inheritance search will stop at this value and return `nil'.
-#+end_quote
+# Attribute inheritance makes it possible to set attribute values at the
+# class level and let all instantiated objects inherit the same value.
+# However, it may slow down property searches:
 
-Therefore, iOrg offers an alternative method for building outline
-trees with attribute inheritance (/speed inheritance/). It simply
-copies all the properties of the parent entries into the property
-drawer of the last node in the objects outline hierarchy, maintaining
-their order. 
+# #+begin_quote
+# Org mode does not turn [attribute inheritance] on by default, because
+# it can slow down property searches significantly and is often not
+# needed. However, if you find inheritance useful, you can turn it on by
+# setting the variable `org-use-property-inheritance'. It may be set to
+# `t' to make all properties inherited from the parent, to a list of
+# properties that should be inherited, or to a regular expression that
+# matches inherited properties. If a property has the value `nil', this
+# is interpreted as an explicit undefine of the property, so that
+# inheritance search will stop at this value and return `nil'.
+# #+end_quote
 
-**** Classes vs Attributes
-     :PROPERTIES:
-     :CUSTOM_ID: class-vs-attr
-     :END:
-When designing a class hierarchy, it is often necessary to decide if
-the differences between two real-world classes should be modeled by
-inserting a discriminating attribute into one software class (e.g.
-attribute =color= in class =car=, with values white, green and black)
-or by specialing a general superclass into several subclasses (e.g.
-let subclasses =white-car=, =green-car= and =black-car= inherit from
-superclass =car=). 
+# Therefore, iOrg offers an alternative method for building outline
+# trees with attribute inheritance (/speed inheritance/). It simply
+# copies all the properties of the parent entries into the property
+# drawer of the object prototype entry (the last node in the outline
+# hierarchy of a new class), maintaining their order. 
 
-While there are more sophisticated guidelines how to tackle this
-decision in the literature, we will restrict ourselves to common
-sense: "Does it make sense to introduce more (sub-) classes to
-discriminate between variations of an real-world object?"
+As an example for the iOrg object system, let us consider the user
+hierarchy of bugpile. There are three types of users, /user/,
+/assignee/ and /admin/. Since a bugtracker should make it easy to
+participate in improving software, only minimal information is asked
+for in the registration process (nickname and email). But for the sake
+of this example, lets assume we want to know the public-key of each
+assignee and additionally the full name and postal adress of each
+admin.
 
-As an example, let us consider the user hierarchy of bugpile. There
-are three types of users, /user/, /assignee/ and /admin/. Since a
-bugtracker should make it easy to participate in improving software,
-only minimal information is asked for in the registration process
-(name and email). Thus, the user types are different only in what they
-are allowed to do in the system, in their /permissions/.
+Furthermore, the three user types should differ in what they are
+allowed to do in the system, i.e. in their permissions. Following
+the example of well-established software systems, we don't hardcode
+the permissions into the users, but rather define /roles/ with certain
+permissions and then assign the /users/ to one or more roles.
 
-Following the example of well-established software systems, we don't
-hardcode the permissions into the users, but rather define /roles/
-with certain /permissions/ and then assign the /users/ to one or more
-roles.  
-
-The next graphic shows the relation between bugpile users in a
-very schematic way:
+The next graphic shows the inheritance relation between bugpile users
+in a very schematic way:
 
 #+srcname bugpile-users
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users.png 
@@ -1874,205 +1899,274 @@ very schematic way:
 [[file:../../../../images/gsoc/2012/bugpile/bugpile-users.png]]
 
 
-This schematic relation between users could be translated into one of
-the following two class models:
+This schematic relation between users can be translated into the
+following class model:
 
-#+srcname bugpile-users-class-model-subclass
-#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-subclass.png 
-  title Bugpile Users (via Subclasses)
-  User : name\nemail
-  Assignee : assigneePermissions
-  Admin : adminPermissions
+#+srcname bugpile-users-example-class-model
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-example-class-model.png 
+  title Bugpile Users 
+  User : nickname\nemail\nroles
+  Assignee : public-key
+  Admin : surname\nname\nstreet\nhouse-number\npostal-code\ncity\ncountry
   User <|-- Assignee
   Assignee <|-- Admin
 #+end_src
+ 
+The relationship between users, roles and permissions can be modeled
+like this: 
 
-#+results:
-[[file:../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-subclass.png]]
-
-#+srcname bugpile-users-class-model-attr
-#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-attr.png 
-  title Bugpile Users (via Attributes)
-  User : name\nemail
-  Role : name 
-  Permission : name
+#+srcname bugpile-users-roles-class-model
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-roles-class-model.png 
+  title Bugpile Users & Roles
+  User : nickname\nemail\nroles
+  Role : name\npermissions
+  Permission : name\nallowed
   User "             0..*" -down- "1..*           " Role
   Role "1..*" -left- "1..*" Permission
 #+end_src
 
-#+results:
-[[file:../../../../images/gsoc/2012/bugpile/bugpile-users-class-model-attr.png]]
 
-
-When using /subclassing/, we need three classes and one object for every user
-(instance). In iOrg, each class is simply represented by one .org file
-with one entry and an attribute drawer:
+To transform these class diagrams into Org files we need one
+=/objects/classes/<<class-name>>-class.org= file for each class:
 
 #+begin_src org :exports source
-  ,# class user
+  ,# class /objects/classes/user-class.org
   ,* user
   ,  :PROPERTIES:
   ,  :super:    root
-  ,  :name:     <<name>>
-  ,  :email:    <<email>>
+  ,  :nickname:     nil
+  ,  :email:    nil
+  ,  :roles:    nil
   ,  :END:
 #+end_src
 
 #+begin_src org :exports source
-  ,# class assignee
+  ,# class /objects/classes/assignee-class.org
   , * assignee
-  ,  : PROPERTIES:
-  ,  : super:    user
-  ,  : assigneePermissions_ALL: reopen_task edit_task close_task
-  ,  : assigneePermissions: <<permission>>
-  ,  : END:
+  ,  :PROPERTIES:
+  ,  :super:    user
+  ,  :public-key: nil
+  ,  :END:
 #+end_src
 
 #+begin_src org :exports source
-  ,# class admin
+  ,# class /objects/classes/admin-class.org
   ,* admin
   ,  :PROPERTIES:
   ,  :super:    assignee
-  ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
-  ,  :adminPermissions: <<permission>>
-  ,  :END:
-#+end_src
-
-If we want to instantiate a new /admin/, we have to create a new admin
-object. Each object is implemented as one .org file with as many
-entries as there are superclasses of the instantiated class. 
-
-#+begin_src org :exports source
-  ,# object admin henry
-  ,* user
-  ,  :PROPERTIES:
-  ,  :super:    root
-  ,  :name:     henry
-  ,  :email:    henry@special.com
-  ,  :END:
-  ,** assignee
-  ,   :PROPERTIES:
-  ,   :super:    user
-  ,   :assigneePermissions_ALL: reopen_task edit_task close_task
-  ,   :assigneePermissions: edit_task
-  ,   :END:
-  ,*** admin
-  ,  :PROPERTIES:
-  ,  :super:    assignee
-  ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
-  ,  :adminPermissions: edit_project
-  ,  :adminPermissions+: create_project
-  ,  :END:
-#+end_src
-
-One could say that the superclasses are 'injected' into the object
-file as hierarchical parent entries of the object entry. If attribute
-inheritance is turned on, all the attributes of the parent entries
-become attributes of the object entry too, i.e. the new admin Henry
-has a name, an email as well as the (assignee-) permission to edit
-tasks. Using /speed inheritance/ to speed up the attribute search, we
-would simply move all the attributes from the parent entries into the
-attribute drawer of the object entry:
-
-#+begin_src org :exports source
-  ,# object admin henry (with 'speed-inheritance')
-  ,* user
-  ,  :PROPERTIES:
-  ,  :super:    root
-  ,  :END:
-  ,** assignee
-  ,   :PROPERTIES:
-  ,   :super:    user
-  ,   :END:
-  ,*** admin
-  ,  :PROPERTIES:
-  ,  :super:    assignee
-  ,  :name:     henry
-  ,  :email:    henry@special.com
-  ,  :assigneePermissions_ALL: reopen_task edit_task close_task
-  ,  :assigneePermissions: edit_task
-  ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
-  ,  :adminPermissions: edit_project
-  ,  :adminPermissions+: create_project
-  ,  :END:
-#+end_src
-
-This is how inheritance and instantiation work in iOrg. But does it
-make sense to apply these concepts to the bugpile user hierarchy? We
-had to construct a somehow contrived example to demonstrate the
-implementation of classes and objects in iOrg. But really, in this
-case, a solution based on subclassing is much to complicated for the
-simple problem at hand. It seems more natural to simply introduce
-another attribute =role= in the /user/ class and discriminate the
-different user types by the value of this attribute. We define the
-class =role= that declares all possible roles in the system. Another
-class =permissions= assigns permissions to each of the roles.
-
-#+begin_src org :exports source
-  ,# class permissions
-  ,* permissions
-  ,  :PROPERTIES:
-  ,  :super:    root
-  ,  :user:     unpriviledged
-  ,  :assignee: close_task reopen_task edit_task self_assign_task
-  ,  :admin:    create_project edit_project search_user action_on_user assign_task
+  ,  :surname:  nil
+  ,  :name:     nil
+  ,  :street:   nil
+  ,  :house-number: nil
+  ,  :postal-code: nil
+  ,  :city:     nil
+  ,  :country:  nil
   ,  :END:
 #+end_src
 
 #+begin_src org :exports source
-  ,# class role
+  ,# class /objects/classes/role-class.org
   ,* role
   ,  :PROPERTIES:
   ,  :super:    root
-  ,  :role_ALL: user assignee admin
+  ,  :name:     nil
+  ,  :permissions: nil
   ,  :END:
 #+end_src
 
-Then we add the =role= attribute to the =user= class. 
 
 #+begin_src org :exports source
-  ,# class user
+  ,# class /objects/classes/permission-class.org
+  ,* permission
+  ,  :PROPERTIES:
+  ,  :super:    user
+  ,  :name:     nil
+  ,  :allowed:  nil
+  ,  :END:
+#+end_src
+
+
+If we want to instantiate object of these classes, we have to create a
+=/objects/<<class-name>>-obj.org= file for each of the classes and add
+one top-level entry for every newly instantiated object:
+
+#+begin_src org :exports source
+  ,# object /objects/user-obj.org
   ,* user
   ,  :PROPERTIES:
-  ,  :super:    role
-  ,  :name:     <<name>>
-  ,  :email:    <<email>>
-  ,  :role:     <<role>>
+  ,  :nickname:     henry
+  ,  :email:    henry@special.com
+  ,  :roles:    user
   ,  :END:
+  ,* user
+  ,  :PROPERTIES:
+  ,  :nickname:     harry
+  ,  :email:    harry@royal.com
+  ,  :roles:    user
+  ,  :END:
+  
 #+end_src
-
-To instantiate user object 'Henry' with role /admin/ we only have
-to 'inject' one superclass =role= and assign the value
-'admin' to the attribute =role=. 
 
 #+begin_src org :exports source
-  ,# object admin henry
-  ,* role
+  ,# object /objects/assignee-obj.org
+  ,* assignee
   ,  :PROPERTIES:
-  ,  :super:    root
-  ,  :role_ALL: user assignee admin
+  ,  :nickname:     joe
+  ,  :email:    joe@average.com
+  ,  :roles:    assignee
+  ,  :public-key: 42A17BR55
   ,  :END:
-  ,** user
+  ,* assignee
   ,  :PROPERTIES:
-  ,  :super:    role
-  ,  :name:     henry
-  ,  :email:    henry@special.com
-  ,  :role:     admin
+  ,  :nickname:     john
+  ,  :email:    joe@handsome.com
+  ,  :roles:    assignee
+  ,  :public-key: 43G8529FA
   ,  :END:
 #+end_src
 
-In more complicated cases, subclassing can represent a convenient way
-to assure a consistent attribute definitions for related types of
-objects. For our simple example, introducing a new attribute to
-discriminate between different types of user objects was a more
-natural solution. 
 
-We use subclassing mostly to achieve attribute inheritance, not
-necessarily to establish class hierarchies based on specialisation and
-generalisation (like 'an admin IS a user'). A user is not (a
-specialisation of) a role, but nevertheless it is convenient to
-declare 'role' as a superclass of 'user' to inherit the role_ALL
-attribute definition.
+#+begin_src org :exports source
+  ,# object /objects/admin-obj.org
+  ,* admin
+  ,  :PROPERTIES:
+  ,  :nickname:     bob13
+  ,  :email:    bob@system.com
+  ,  :roles:    admin
+  ,  :public-key: 826AFAF35FGA
+  ,  :surname:  bob
+  ,  :name:     smith
+  ,  :street:   flowerstreet
+  ,  :house-number: 12
+  ,  :postal-code: 1200
+  ,  :city:     fresno
+  ,  :country:  usa
+  ,  :END:
+  
+  ,* admin
+  ,  :PROPERTIES:
+  ,  :nickname:    hans369
+  ,  :email:    hans@admin.com
+  ,  :roles:    admin
+  ,  :public-key: SF351AGAG
+  ,  :surname:  hans
+  ,  :name:     schmidt
+  ,  :street:   hansastrasse
+  ,  :house-number: 33
+  ,  :postal-code: 12456
+  ,  :city:     berlin
+  ,  :country:  germany
+  ,  :END:
+  
+#+end_src
+
+
+One could say that the superclass attributes are 'injected' into each
+objects attribute drawer. 
+
+# Using /speed inheritance/ to speed up the attribute search, we
+# would simply move all the attributes from the parent entries into the
+# attribute drawer of the object entry:
+
+# #+begin_src org :exports source
+#   ,# object admin henry (with 'speed-inheritance')
+#   ,* user
+#   ,  :PROPERTIES:
+#   ,  :super:    root
+#   ,  :END:
+#   ,** assignee
+#   ,   :PROPERTIES:
+#   ,   :super:    user
+#   ,   :END:
+#   ,*** admin
+#   ,  :PROPERTIES:
+#   ,  :super:    assignee
+#   ,  :name:     henry
+#   ,  :email:    henry@special.com
+#   ,  :assigneePermissions_ALL: reopen_task edit_task close_task
+#   ,  :assigneePermissions: edit_task
+#   ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
+#   ,  :adminPermissions: edit_project
+#   ,  :adminPermissions+: create_project
+#   ,  :END:
+# #+end_src
+
+# This is how inheritance and instantiation work in iOrg. But does it
+# make sense to apply these concepts to the bugpile user hierarchy? We
+# had to construct a somehow contrived example to demonstrate the
+# implementation of classes and objects in iOrg. But really, in this
+# case, a solution based on subclassing is too complicated for the
+# simple problem at hand. It seems more natural to simply introduce
+# another attribute =role= in the /user/ class and discriminate the
+# different user types by the value of this attribute. We define the
+# class =role= that declares all possible roles in the system. Another
+# class =permissions= assigns permissions to each of the roles.
+
+# #+begin_src org :exports source
+#   ,# class permissions
+#   ,* permissions
+#   ,  :PROPERTIES:
+#   ,  :super:    root
+#   ,  :user:     unpriviledged
+#   ,  :assignee: close_task reopen_task edit_task self_assign_task
+#   ,  :admin:    create_project edit_project search_user action_on_user assign_task
+#   ,  :END:
+# #+end_src
+
+# #+begin_src org :exports source
+#   ,# class role
+#   ,* role
+#   ,  :PROPERTIES:
+#   ,  :super:    root
+#   ,  :role_ALL: user assignee admin
+#   ,  :END:
+# #+end_src
+
+# Then we add the =role= attribute to the =user= class. 
+
+# #+begin_src org :exports source
+#   ,# class user
+#   ,* user
+#   ,  :PROPERTIES:
+#   ,  :super:    role
+#   ,  :name:     <<name>>
+#   ,  :email:    <<email>>
+#   ,  :role:     <<role>>
+#   ,  :END:
+# #+end_src
+
+# To instantiate user object 'Henry' with role /admin/ we only have
+# to 'inject' one superclass =role= and assign the value
+# 'admin' to the attribute =role=. 
+
+# #+begin_src org :exports source
+#   ,# object admin henry
+#   ,* role
+#   ,  :PROPERTIES:
+#   ,  :super:    root
+#   ,  :role_ALL: user assignee admin
+#   ,  :END:
+#   ,** user
+#   ,  :PROPERTIES:
+#   ,  :super:    role
+#   ,  :name:     henry
+#   ,  :email:    henry@special.com
+#   ,  :role:     admin
+#   ,  :END:
+# #+end_src
+
+# In more complicated cases, subclassing can represent a convenient way
+# to assure a consistent attribute definitions for related types of
+# objects. For our simple example, introducing a new attribute to
+# discriminate between different types of user objects was a more
+# natural solution. 
+
+# We use subclassing mostly to achieve attribute inheritance, not
+# necessarily to establish class hierarchies based on specialisation and
+# generalisation (like 'an admin IS a user'). A user is not (a
+# specialisation of) a role, but nevertheless it is convenient to
+# declare 'role' as a superclass of 'user' to inherit the role_ALL
+# attribute definition.
 
 *** Software Oriented Activities (SOA)
     :PROPERTIES:

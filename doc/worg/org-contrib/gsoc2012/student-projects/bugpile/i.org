@@ -1025,16 +1025,14 @@ storing form data.
   User --> (SearchLog)
 #+end_src
 
+#+results:
+[[file:../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png]]
+
+
 /note: when plantuml has difficulties to calculate a complex diagram/
 /or produces less than satisfactory output, try adding more slashes/
 /or points to the vertices (e.g. .....> or <----) and watch what/
 /happens./
-
-
-
-#+results:
-[[file:../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png]]
-
 
 
 *** Project management
@@ -1410,7 +1408,7 @@ since we want to keep things simple and our text-based drawing tool/
     :CUSTOM_ID: search-task-list-uml-soa
     :END: 
 
-#+srcname search-tasklist--uml-soa
+#+srcname search-tasklist-uml-soa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-tasklist-uml-soa.png 
   title Search tasklist <soa>
   note right: <<precondition>>at least one task in system<<postcondition>>--
@@ -1614,6 +1612,16 @@ Search tasks and return a result set that fits a user query is the
 central complex system activity in a bugtracker. It is (indirectly)
 included as subactivity in many use cases.
 
+#+srcname search-tasks-uml-csa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-tasks-uml-csa.png 
+  title Search tasks <csa>
+  note right: <<precondition>>--<<postcondition>>--
+  (*) --> "<<SA>>\nSystem activity 1"
+  --> "<<SA>>\nSystem activity 2"
+  --> "<<SA>>\nSystem activity 3"
+  --> "<<SA>>\nComplex system activiy ⋔"
+  --> (*)
+#+end_src
 
 *** Search Users
     :PROPERTIES:
@@ -1622,6 +1630,17 @@ included as subactivity in many use cases.
 
 In bugpile, querying users is a less important and less complex
 activity (compared to querying tasks), only performed by /admins/.
+
+#+srcname search-users-uml-csa
+#+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/search-users-uml-csa.png 
+  title Search users <csa>
+  note right: <<precondition>>--<<postcondition>>--
+  (*) --> "<<SA>>\nSystem activity 1"
+  --> "<<SA>>\nSystem activity 2"
+  --> "<<SA>>\nSystem activity 3"
+  --> (*)
+#+end_src
+
 
 * Software Architecture
   :PROPERTIES:
@@ -1661,7 +1680,7 @@ Programming an iOrg application therefore consists in designing and
 implementing the three middle layers /objects/, /logic/ and /web/.
 Combining objects and logic into the application /model/ and dividing
 the web-layer into a /view/ and a /controller/ component results in
-the well known MVC (Model-View-Controller) architecture for web
+the well known MVC (Model-View-Controller) pattern for web
 applications. 
 
 The described architecture is platform independent. We adapt it to the
@@ -1675,7 +1694,8 @@ environments.
 #+srcname refined-arch-iorg
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png 
     title iOrg Architecture
-  
+ 
+   package Project_DIR {
     package View_DIR {
       package UseCase1_DIR {
           package Scene1_UC1_FILE {}
@@ -1706,16 +1726,27 @@ environments.
     package Objects_DIR {
           package Object1_FILE {}
           package Object2_FILE {}
-          package Object3_FILE {}
+          package Classes_DIR {
+              package Class1_FILE {}
+              package Class2_FILE {}
+          }
     }
-  
+}  
 
-  UseCase1_DIR +-- UseCase2_DIR
-  UseCase2_DIR +-- UseCaseIndependentComponents_DIR
-  View_DIR +-down- Controller_DIR
-  Controller_DIR +-down- Logic_DIR
-  Logic_DIR  +-down- Objects_DIR
-
+  UseCase1_DIR +-down- UseCase2_DIR
+  UseCase2_DIR +-down- UseCaseIndependentComponents_DIR
+  View_DIR +-down--- Controller_DIR
+  Controller_DIR +-left----------- Logic_DIR
+  Logic_DIR  +-left------ Objects_DIR
+  Logic_UC1_FILE +-down- Logic_UC2_FILE
+  Logic_UC2_FILE +-down- UseCaseIndepCompLogic_FILE
+  Scene1_UC1_FILE +-down- Scene2_UC1_FILE
+  Scene1_UC2_FILE +-down- Scene2_UC2_FILE
+  Controller_UC1_FILE +-down- Controller_UC2_FILE
+  Controller_UC2_FILE +-down- UseCaseIndepCompController_FILE
+  Object1_FILE +-down- Object2_FILE
+  Object2_FILE +-down- Classes_DIR
+  Class1_FILE +-down- Class2_FILE
 #+end_src
 
 #+results:
@@ -1728,8 +1759,10 @@ in the use case. Furthermore, it contains a /controller/ directory
 with one .el file for each use case, and a /logic/ directory with
 (optionally) one .el file for each use case. Each of these directories
 contains another file (or subdirectory in the case of /view/) for use
-case independent components. The application objects (one file per
-object) are stored in the /objects/ directory. 
+case independent components. The application objects (one file for all
+objects of the same class) are stored in the /objects/ directory, the
+classes (one file for each class) in the /objects/classes/
+subdirectory. 
 
 * Application Design
   :PROPERTIES:
@@ -1747,11 +1780,29 @@ the architecture anymore, but rather map the artefacts from the
 software specification to (locally refined) components of the
 architecture.
 
+** Implementation Skeletons as Design Artefacts
+   :PROPERTIES:
+   :CUSTOM_ID: impl-skel-as-design-artefacts
+   :END:
+
+Since the iOrg framework only reuses some of the ideas of
+object-orientation, but is not really based on an object-oriented
+programming language and environment, we cannot produce an application
+class model as final UML output of the software design phase (that is
+then implemented in an object-oriented language). Therefore we skip
+this last step of UML modeling and transform the UML diagrams of the
+software specification directly into implementation skeletons, i.e.
+into .el (and .org files) with all function signatures (and outline tree
+entries) needed to implement the application. The implementation phase
+then mainly consists in writing the bodies of the Emacs Lisp functions
+(as well as helper functions) that read and manipulate the Org files
+of the application.
+
 ** The Transformation Rules
    :PROPERTIES:
    :CUSTOM_ID: transform-rules
    :END:
-*** General considerations
+*** General Considerations
     :PROPERTIES:
     :CUSTOM_ID: transform-general-consid
     :END:
@@ -1789,7 +1840,7 @@ world that might serve to implement some of the ideas associated with
 object-orientation. 
 #+end_quote
 
-*** Domain Class Model
+*** Transforming the Domain Class Model
     :PROPERTIES:
     :CUSTOM_ID: transform-dom-class-mod
     :END:
@@ -1819,52 +1870,6 @@ Relations with other objects (other than inheritance) are realized via
 attribute values, i.e. other objects can represent valid values of
 certain object attributes.
 
-# To introduce classes and inheritance in the iOrg framework, we make
-# use of the attribute inheritance of Org-mode:
-
-# #+begin_quote
-# The outline structure of Org mode documents lends itself to an
-# inheritance model of properties: if the parent in a tree has a certain
-# property, the children can inherit this property.
-# #+end_quote
-
-# Thus, a class hierarchy is constructed by building an outline tree
-# starting from the root class and promoting each subsequent subclass
-# one level. The following function is used to =get= the properties:
-
-# #+begin_quote
-#  -- Function: org-entry-get pom property &optional inherit
-#      Get value of PROPERTY for entry at point-or-marker POM.  By
-#      default, this only looks at properties defined locally in the
-#      entry.  If INHERIT is non-nil and the entry does not have the
-#      property, then also check higher levels of the hierarchy.  If
-#      INHERIT is the symbol `selective', use inheritance if and only if
-#      the setting of `org-use-property-inheritance' selects PROPERTY for
-#     inheritance.
-# #+end_quote
-
-# Attribute inheritance makes it possible to set attribute values at the
-# class level and let all instantiated objects inherit the same value.
-# However, it may slow down property searches:
-
-# #+begin_quote
-# Org mode does not turn [attribute inheritance] on by default, because
-# it can slow down property searches significantly and is often not
-# needed. However, if you find inheritance useful, you can turn it on by
-# setting the variable `org-use-property-inheritance'. It may be set to
-# `t' to make all properties inherited from the parent, to a list of
-# properties that should be inherited, or to a regular expression that
-# matches inherited properties. If a property has the value `nil', this
-# is interpreted as an explicit undefine of the property, so that
-# inheritance search will stop at this value and return `nil'.
-# #+end_quote
-
-# Therefore, iOrg offers an alternative method for building outline
-# trees with attribute inheritance (/speed inheritance/). It simply
-# copies all the properties of the parent entries into the property
-# drawer of the object prototype entry (the last node in the outline
-# hierarchy of a new class), maintaining their order. 
-
 As an example for the iOrg object system, let us consider the user
 hierarchy of bugpile. There are three types of users, /user/,
 /assignee/ and /admin/. Since a bugtracker should make it easy to
@@ -1877,8 +1882,8 @@ admin.
 Furthermore, the three user types should differ in what they are
 allowed to do in the system, i.e. in their permissions. Following
 the example of well-established software systems, we don't hardcode
-the permissions into the users, but rather define /roles/ with certain
-permissions and then assign the /users/ to one or more roles.
+the permissions into the users, but rather define /roles/ with
+certain /permissions/ and then assign the /users/ to one or more roles.
 
 The next graphic shows the inheritance relation between bugpile users
 in a very schematic way:
@@ -1918,8 +1923,8 @@ like this:
 #+srcname bugpile-users-roles-class-model
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/bugpile-users-roles-class-model.png 
   title Bugpile Users & Roles
-  User : nickname\nemail\nroles
-  Role : name\npermissions
+  User : nickname\nemail
+  Role : name
   Permission : name\nallowed
   User "             0..*" -down- "1..*           " Role
   Role "1..*" -left- "1..*" Permission
@@ -1979,16 +1984,18 @@ To transform these class diagrams into Org files we need one
   ,# class /objects/classes/permission-class.org
   ,* permission
   ,  :PROPERTIES:
-  ,  :super:    user
+  ,  :super:   root
   ,  :name:     nil
   ,  :allowed:  nil
   ,  :END:
 #+end_src
 
 
-If we want to instantiate object of these classes, we have to create a
-=/objects/<<class-name>>-obj.org= file for each of the classes and add
-one top-level entry for every newly instantiated object:
+If we want to instantiate objects of these classes, we have to create a
+=/objects/<<class-name>>-obj.org= file for each of them and add
+one top-level entry for every newly instantiated object. The object
+attributes are collected from the instantiated class itself and all
+its superclasses. 
 
 #+begin_src org :exports source
   ,# object /objects/user-obj.org
@@ -2004,7 +2011,6 @@ one top-level entry for every newly instantiated object:
   ,  :email:    harry@royal.com
   ,  :roles:    user
   ,  :END:
-  
 #+end_src
 
 #+begin_src org :exports source
@@ -2019,7 +2025,7 @@ one top-level entry for every newly instantiated object:
   ,* assignee
   ,  :PROPERTIES:
   ,  :nickname:     john
-  ,  :email:    joe@handsome.com
+  ,  :email:    john@handsome.com
   ,  :roles:    assignee
   ,  :public-key: 43G8529FA
   ,  :END:
@@ -2042,7 +2048,6 @@ one top-level entry for every newly instantiated object:
   ,  :city:     fresno
   ,  :country:  usa
   ,  :END:
-  
   ,* admin
   ,  :PROPERTIES:
   ,  :nickname:    hans369
@@ -2060,115 +2065,51 @@ one top-level entry for every newly instantiated object:
   
 #+end_src
 
+#+begin_src org :exports source
+  ,# object /objects/role-obj.org
+  ,* role
+  ,  :PROPERTIES:
+  ,  :name:     user
+  ,  :permissions: rest
+  ,  :END:
+  ,* role
+  ,  :PROPERTIES:
+  ,  :name:    assignee
+  ,  :permissions: tasks 
+  ,  :END:
+  ,* role
+  ,  :PROPERTIES:
+  ,  :name:     admin
+  ,  :permissions: tasks projects users
+  ,  :END:
+#+end_src
 
-One could say that the superclass attributes are 'injected' into each
-objects attribute drawer. 
 
-# Using /speed inheritance/ to speed up the attribute search, we
-# would simply move all the attributes from the parent entries into the
-# attribute drawer of the object entry:
+#+begin_src org :exports source
+  ,# object /objects/permission-obj.org
+  ,* permission
+  ,  :PROPERTIES:
+  ,  :name:     rest
+  ,  :allowed: unpriviledged
+  ,  :END:
+  ,* permission
+  ,  :PROPERTIES:
+  ,  :name:     tasks
+  ,  :allowed:  open-new-task take-action-on-selected-tasks edit-task
+  ,  :END:
+  ,* permission
+  ,  :PROPERTIES:
+  ,  :name:     projects
+  ,  :allowed: create-project edit-project
+  ,  :END:
+  ,* permission
+  ,  :PROPERTIES:
+  ,  :name:     users
+  ,  :allowed:  search-users take-action-on-selected-users
+  ,  :END:
+#+end_src
 
-# #+begin_src org :exports source
-#   ,# object admin henry (with 'speed-inheritance')
-#   ,* user
-#   ,  :PROPERTIES:
-#   ,  :super:    root
-#   ,  :END:
-#   ,** assignee
-#   ,   :PROPERTIES:
-#   ,   :super:    user
-#   ,   :END:
-#   ,*** admin
-#   ,  :PROPERTIES:
-#   ,  :super:    assignee
-#   ,  :name:     henry
-#   ,  :email:    henry@special.com
-#   ,  :assigneePermissions_ALL: reopen_task edit_task close_task
-#   ,  :assigneePermissions: edit_task
-#   ,  :adminPermissions_ALL: create_project edit_project add_assignee assign_assignee
-#   ,  :adminPermissions: edit_project
-#   ,  :adminPermissions+: create_project
-#   ,  :END:
-# #+end_src
-
-# This is how inheritance and instantiation work in iOrg. But does it
-# make sense to apply these concepts to the bugpile user hierarchy? We
-# had to construct a somehow contrived example to demonstrate the
-# implementation of classes and objects in iOrg. But really, in this
-# case, a solution based on subclassing is too complicated for the
-# simple problem at hand. It seems more natural to simply introduce
-# another attribute =role= in the /user/ class and discriminate the
-# different user types by the value of this attribute. We define the
-# class =role= that declares all possible roles in the system. Another
-# class =permissions= assigns permissions to each of the roles.
-
-# #+begin_src org :exports source
-#   ,# class permissions
-#   ,* permissions
-#   ,  :PROPERTIES:
-#   ,  :super:    root
-#   ,  :user:     unpriviledged
-#   ,  :assignee: close_task reopen_task edit_task self_assign_task
-#   ,  :admin:    create_project edit_project search_user action_on_user assign_task
-#   ,  :END:
-# #+end_src
-
-# #+begin_src org :exports source
-#   ,# class role
-#   ,* role
-#   ,  :PROPERTIES:
-#   ,  :super:    root
-#   ,  :role_ALL: user assignee admin
-#   ,  :END:
-# #+end_src
-
-# Then we add the =role= attribute to the =user= class. 
-
-# #+begin_src org :exports source
-#   ,# class user
-#   ,* user
-#   ,  :PROPERTIES:
-#   ,  :super:    role
-#   ,  :name:     <<name>>
-#   ,  :email:    <<email>>
-#   ,  :role:     <<role>>
-#   ,  :END:
-# #+end_src
-
-# To instantiate user object 'Henry' with role /admin/ we only have
-# to 'inject' one superclass =role= and assign the value
-# 'admin' to the attribute =role=. 
-
-# #+begin_src org :exports source
-#   ,# object admin henry
-#   ,* role
-#   ,  :PROPERTIES:
-#   ,  :super:    root
-#   ,  :role_ALL: user assignee admin
-#   ,  :END:
-#   ,** user
-#   ,  :PROPERTIES:
-#   ,  :super:    role
-#   ,  :name:     henry
-#   ,  :email:    henry@special.com
-#   ,  :role:     admin
-#   ,  :END:
-# #+end_src
-
-# In more complicated cases, subclassing can represent a convenient way
-# to assure a consistent attribute definitions for related types of
-# objects. For our simple example, introducing a new attribute to
-# discriminate between different types of user objects was a more
-# natural solution. 
-
-# We use subclassing mostly to achieve attribute inheritance, not
-# necessarily to establish class hierarchies based on specialisation and
-# generalisation (like 'an admin IS a user'). A user is not (a
-# specialisation of) a role, but nevertheless it is convenient to
-# declare 'role' as a superclass of 'user' to inherit the role_ALL
-# attribute definition.
-
-*** Software Oriented Activities (SOA)
+*** Transforming Software Oriented Activities (SOA)
     :PROPERTIES:
     :CUSTOM_ID: transform-rules-soa
     :END:
@@ -2189,13 +2130,13 @@ Each /scene/ in the SOA is translated into one
 of the /view/ directory (e.g. =define-user-search-criteria-scene.org=
 in the /view/search-users/ directory). 
  
-*** Complex System Activities
+*** Transforming Complex System Activities
     :PROPERTIES:
     :CUSTOM_ID: transform-complex-syst-act
     :END:
 
-If there is complex logic involved in a case (a system activity
-marked with the pitchfork symbol ⋔ as subactivity in a SOA) , a
+If there is complex logic involved in a use case (a system activity
+marked with the pitchfork symbol ⋔ as subactivity in a SOA), a
 =<<use-case-name>>-logic.el= file is added to the /logic/ directory
 (e.g. =search-task-list-logic.el=). The 'atomic' system activities
 that constitute the complex system activitiy are translated into
@@ -2218,30 +2159,31 @@ web-clients. On the other hand, /worker/ functions are more like
 engineers, they do the hard work in the background, and without them
 the system does not work anymore.
 
-**** Search Tasks
-    :PROPERTIES:
-    :CUSTOM_ID: search-tasks-syst-act-design
-    :END:
+# **** Search Tasks
+#     :PROPERTIES:
+#     :CUSTOM_ID: search-tasks-syst-act-design
+#     :END:
 
-Since bugpile uses a dVCS as database for its textfiles, a query for a
-task might include task name, commit (date or id), author, state of
-the task, and other information that can't be accessed simply by
-searching for the task file in the file system. The search
-facilities should be available independently from the frontend used,
-i.e. power users might use them from Emacs just as normal users from
-their web browser.  Therefore, bugpile should use the underlying dVCS
-to do most of the 'heavy lifting' in processing user queries and then
-prepare the result set according to the frontend used.   
+# Since bugpile uses a dVCS as database for its textfiles, a query for a
+# task might include task name, commit (date or id), author, state of
+# the task, and other information that can't be accessed simply by
+# searching for the task file in the file system. The search
+# facilities should be available independently from the frontend used,
+# i.e. power users might use them from Emacs just as normal users from
+# their web browser.  Therefore, bugpile should use the underlying dVCS
+# to do most of the 'heavy lifting' in processing user queries and then
+# prepare the result set according to the frontend used.   
 
-**** Search Users
-    :PROPERTIES:
-    :CUSTOM_ID: search-users-syst-act-design
-    :END:
+# **** Search Users
+#     :PROPERTIES:
+#     :CUSTOM_ID: search-users-syst-act-design
+#     :END:
 
-In contrast to tasks, users are relatively static entities in the bugpile
-system, thus it seems unnecessary to rely on the underlying dVCS to answer
-queries about users, Emacs and Org-mode functionality should
-sufficice. 
+# In contrast to tasks, users are relatively static entities in the bugpile
+# system, thus it seems unnecessary to rely on the underlying dVCS to answer
+# queries about users, Emacs and Org-mode functionality should
+# sufficice. 
+
 
 *** Summary of Transformation Rules
     :PROPERTIES:
@@ -2284,38 +2226,66 @@ rules:
 | class                          | /objects/classes/CLASS-NAME-class.org file with one top-level entry '* CLASS-NAME' with one attribute drawer |
 | attribute                      | :attribute: DEFAULT-VALUE in the class attribute drawer |
 | (multiple) inheritance         | superclass name(s) as value(s) of the :super: attribute in the class property drawer |
-| composition                    | object name(s) as value(s) of a class attribute in the class attribute drawer |
-| object                         | /objects/CLASS-NAME-CUSTOM-ID-obj.org file |
+| composition                    | object name(s) as value(s) of another objects attribute in the attribute drawer |
+| object                         | /objects/CLASS-NAME-obj.org file with one top-level entry for each instantiated object of CLASS-NAME |
 
+*** Programming the Transformations
+    :PROPERTIES:
+    :CUSTOM_ID: programming-transformations
+    :END:
 
+The transformation of the software specification UML diagrams into the
+.org and .el files of the software design can easily be done manually.
+But the fact that our UML drawing tool /plantuml/ is text based enables
+us to parse the source code of our UML diagrams. Since the
+transformation rules are well defined and operational, we can program
+the transformation process and avoid a lot of tedious manual work. 
 
-** Class Model
-   :PROPERTIES:
-   :CUSTOM_ID: class-model
-   :END:
-Based on the assumption that an Org-mode file can be modeled as a kind
-of class hierarchy with inheritance and instantiation, a class model
-can be developed for the application. With the file itself (loosly)
-interpreted as a kind of abstract root class that can not be
-instantiated but has global attributes, and the tree nodes (loosly)
-interpreted as class definitions that can be instantiated (several
-nodes of the same type at the same tree level) and inherited from
-(subnodes), object-oriented design techniques can be applied to
-Org-mode files. Of course the similarities only go so far, and do
-exist only on the conceptual level. The implementation in Emacs Lisp
-is based on functions and (e.g.) lists as data stores that are in no
-way encapsulated into formal classes that are part of the language
-core.
+Of course, the automatic transformation only works if the source code
+of the plantuml diagrams strictly adheres to the conventions and
+abbreviations used in this tutorial.
 
-
-** Refining the Logic
-   :PROPERTIES:
-   :CUSTOM_ID: refine-logic
-   :END:
 * Implementation
-  :PROPERTIES:
-  :CUSTOM_ID: implementation
-  :END:
+   :PROPERTIES:
+   :CUSTOM_ID: implementation
+   :END:
+** Implementing the Worker Functions
+   :PROPERTIES:
+   :CUSTOM_ID: impl-worker-funct
+   :END:
+** Implementing the Handler Functions
+   :PROPERTIES:
+   :CUSTOM_ID: impl-handler-funct
+   :END:
+*** URL-Map and Dispatcher
+    :PROPERTIES:
+    :CUSTOM_ID: url-map-dispatcher
+    :END:
+The applications url-map and dispatcher-handler can be produced
+programmatically. 
+
+*** Initializing and Finishing Uses Cases
+    :PROPERTIES:
+    :CUSTOM_ID: init-and-finish-use-cases
+    :END:
+
+At the start and at the end of each use case special =start= and =end=
+functions are called that initialize the use case, check the pre- and
+postconditions, and clean up if necessary. 
+
+*** Handling Http-Requests
+    :PROPERTIES:
+    :CUSTOM_ID: handling-http-requests
+    :END:
+
+The core duty of /handler/ functions is the handling of http-requests
+from the web-client. 
+ 
+** Implementing the View Files
+   :PROPERTIES:
+   :CUSTOM_ID: impl-view-files
+   :END:
+
 * Verification
   :PROPERTIES:
   :CUSTOM_ID: verification

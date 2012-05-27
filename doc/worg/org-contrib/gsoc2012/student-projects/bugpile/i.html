@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-27 04:24:58 CEST"/>
+<meta name="generated" content="2012-05-27 18:28:51 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -178,20 +178,31 @@
 <li><a href="#appl-design">Application Design</a>
 <ul>
 <li><a href="#loc-ref-softw-arch">Locally Refining the Software Architecture</a></li>
+<li><a href="#impl-skel-as-design-artefacts">Implementation Skeletons as Design Artefacts</a></li>
 <li><a href="#transform-rules">The Transformation Rules</a>
 <ul>
-<li><a href="#transform-general-consid">General considerations</a></li>
-<li><a href="#transform-dom-class-mod">Domain Class Model</a></li>
-<li><a href="#transform-rules-soa">Software Oriented Activities (SOA)</a></li>
-<li><a href="#transform-complex-syst-act">Complex System Activities</a></li>
+<li><a href="#transform-general-consid">General Considerations</a></li>
+<li><a href="#transform-dom-class-mod">Transforming the Domain Class Model</a></li>
+<li><a href="#transform-rules-soa">Transforming Software Oriented Activities (SOA)</a></li>
+<li><a href="#transform-complex-syst-act">Transforming Complex System Activities</a></li>
 <li><a href="#summary-transform-rules">Summary of Transformation Rules</a></li>
+<li><a href="#programming-transformations">Programming the Transformations</a></li>
+</ul></li>
 </ul>
 </li>
-<li><a href="#class-model">Class Model</a></li>
-<li><a href="#refine-logic">Refining the Logic</a></li>
+<li><a href="#implementation">Implementation</a>
+<ul>
+<li><a href="#impl-worker-funct">Implementing the Worker Functions</a></li>
+<li><a href="#impl-handler-funct">Implementing the Handler Functions</a>
+<ul>
+<li><a href="#url-map-dispatcher">URL-Map and Dispatcher</a></li>
+<li><a href="#init-and-finish-use-cases">Initializing and Finishing Uses Cases</a></li>
+<li><a href="#handling-http-requests">Handling Http-Requests</a></li>
 </ul>
 </li>
-<li><a href="#implementation">Implementation</a></li>
+<li><a href="#impl-view-files">Implementing the View Files</a></li>
+</ul>
+</li>
 <li><a href="#verification">Verification</a></li>
 </ul>
 </div>
@@ -1270,18 +1281,13 @@ storing form data.
 <p>
 <img src="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png" />
 </p>
+
 <p>
 <i>note: when plantuml has difficulties to calculate a complex diagram</i>
 <i>or produces less than satisfactory output, try adding more slashes</i>
 <i>or points to the vertices (e.g. &hellip;..&gt; or &lt;-&mdash;) and watch what</i>
 <i>happens.</i>
 </p>
-
-
-<p>
-<img src="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png"  alt="../../../../images/gsoc/2012/bugpile/task-management-uml-uc.png" />
-</p>
-
 
 </div>
 
@@ -1740,6 +1746,10 @@ central complex system activity in a bugtracker. It is (indirectly)
 included as subactivity in many use cases.
 </p>
 
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/search-tasks-uml-csa.png"  alt="../../../../images/gsoc/2012/bugpile/search-tasks-uml-csa.png" />
+</p>
 </div>
 
 </div>
@@ -1753,6 +1763,12 @@ included as subactivity in many use cases.
 In bugpile, querying users is a less important and less complex
 activity (compared to querying tasks), only performed by <i>admins</i>.
 </p>
+
+
+<p>
+<img src="../../../../images/gsoc/2012/bugpile/search-users-uml-csa.png"  alt="../../../../images/gsoc/2012/bugpile/search-users-uml-csa.png" />
+</p>
+
 </div>
 </div>
 </div>
@@ -1814,7 +1830,7 @@ Programming an iOrg application therefore consists in designing and
 implementing the three middle layers <i>objects</i>, <i>logic</i> and <i>web</i>.
 Combining objects and logic into the application <i>model</i> and dividing
 the web-layer into a <i>view</i> and a <i>controller</i> component results in
-the well known MVC (Model-View-Controller) architecture for web
+the well known MVC (Model-View-Controller) pattern for web
 applications. 
 </p>
 <p>
@@ -1839,8 +1855,10 @@ in the use case. Furthermore, it contains a <i>controller</i> directory
 with one .el file for each use case, and a <i>logic</i> directory with
 (optionally) one .el file for each use case. Each of these directories
 contains another file (or subdirectory in the case of <i>view</i>) for use
-case independent components. The application objects (one file per
-object) are stored in the <i>objects</i> directory. 
+case independent components. The application objects (one file for all
+objects of the same class) are stored in the <i>objects</i> directory, the
+classes (one file for each class) in the <i>objects/classes</i>
+subdirectory. 
 </p>
 </div>
 </div>
@@ -1871,15 +1889,38 @@ architecture.
 
 </div>
 
+<div id="outline-container-impl-skel-as-design-artefacts" class="outline-3">
+<h3 id="impl-skel-as-design-artefacts"><a name="sec-8-2" id="sec-8-2"></a>Implementation Skeletons as Design Artefacts</h3>
+<div class="outline-text-3" id="text-impl-skel-as-design-artefacts">
+
+
+<p>
+Since the iOrg framework only reuses some of the ideas of
+object-orientation, but is not really based on an object-oriented
+programming language and environment, we cannot produce an application
+class model as final UML output of the software design phase (that is
+then implemented in an object-oriented language). Therefore we skip
+this last step of UML modeling and transform the UML diagrams of the
+software specification directly into implementation skeletons, i.e.
+into .el (and .org files) with all function signatures (and outline tree
+entries) needed to implement the application. The implementation phase
+then mainly consists in writing the bodies of the Emacs Lisp functions
+(as well as helper functions) that read and manipulate the Org files
+of the application.
+</p>
+</div>
+
+</div>
+
 <div id="outline-container-transform-rules" class="outline-3">
-<h3 id="transform-rules"><a name="sec-8-2" id="sec-8-2"></a>The Transformation Rules</h3>
+<h3 id="transform-rules"><a name="sec-8-3" id="sec-8-3"></a>The Transformation Rules</h3>
 <div class="outline-text-3" id="text-transform-rules">
 
 
 </div>
 
 <div id="outline-container-transform-general-consid" class="outline-4">
-<h4 id="transform-general-consid"><a name="sec-8-2-1" id="sec-8-2-1"></a>General considerations</h4>
+<h4 id="transform-general-consid"><a name="sec-8-3-1" id="sec-8-3-1"></a>General Considerations</h4>
 <div class="outline-text-4" id="text-transform-general-consid">
 
 <p>Emacs Lisp is not an object-oriented programming language, and the
@@ -1927,7 +1968,7 @@ object-orientation.
 </div>
 
 <div id="outline-container-transform-dom-class-mod" class="outline-4">
-<h4 id="transform-dom-class-mod"><a name="sec-8-2-2" id="sec-8-2-2"></a>Domain Class Model</h4>
+<h4 id="transform-dom-class-mod"><a name="sec-8-3-2" id="sec-8-3-2"></a>Transforming the Domain Class Model</h4>
 <div class="outline-text-4" id="text-transform-dom-class-mod">
 
 
@@ -1935,7 +1976,7 @@ object-orientation.
 </div>
 
 <div id="outline-container-class-obj-inherit" class="outline-5">
-<h5 id="class-obj-inherit"><a name="sec-8-2-2-1" id="sec-8-2-2-1"></a>Classes, Objects and Inheritance</h5>
+<h5 id="class-obj-inherit"><a name="sec-8-3-2-1" id="sec-8-3-2-1"></a>Classes, Objects and Inheritance</h5>
 <div class="outline-text-5" id="text-class-obj-inherit">
 
 
@@ -1963,13 +2004,6 @@ Relations with other objects (other than inheritance) are realized via
 attribute values, i.e. other objects can represent valid values of
 certain object attributes.
 </p>
-
-
-
-
-
-
-
 <p>
 As an example for the iOrg object system, let us consider the user
 hierarchy of bugpile. There are three types of users, <i>user</i>,
@@ -1984,8 +2018,8 @@ admin.
 Furthermore, the three user types should differ in what they are
 allowed to do in the system, i.e. in their permissions. Following
 the example of well-established software systems, we don't hardcode
-the permissions into the users, but rather define <i>roles</i> with certain
-permissions and then assign the <i>users</i> to one or more roles.
+the permissions into the users, but rather define <i>roles</i> with
+certain <i>permissions</i> and then assign the <i>users</i> to one or more roles.
 </p>
 <p>
 The next graphic shows the inheritance relation between bugpile users
@@ -2077,7 +2111,7 @@ To transform these class diagrams into Org files we need one
 <pre class="src src-org"><span class="org-comment"># class /objects/classes/permission-class.org</span>
 <span class="org-org-level-1">* permission</span>
 <span class="org-org-special-keyword">  :PROPERTIES:</span>
-  <span class="org-org-special-keyword">:super:</span>    <span class="org-org-property-value">user</span>
+  <span class="org-org-special-keyword">:super:</span>   <span class="org-org-property-value">root</span>
   <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">nil</span>
   <span class="org-org-special-keyword">:allowed:</span>  <span class="org-org-property-value">nil</span>
 <span class="org-org-special-keyword">  :END:</span>
@@ -2086,21 +2120,12 @@ To transform these class diagrams into Org files we need one
 
 
 <p>
-If we want to instantiate object of these classes, we have to create a
-<code>/objects/&lt;&lt;class-name&gt;&gt;-obj.org</code> file for each of the classes and add
-one top-level entry for every newly instantiated object:
+If we want to instantiate objects of these classes, we have to create a
+<code>/objects/&lt;&lt;class-name&gt;&gt;-obj.org</code> file for each of them and add
+one top-level entry for every newly instantiated object. The object
+attributes are collected from the instantiated class itself and all
+its superclasses. 
 </p>
-
-
-
-<pre class="src src-org"><span class="org-comment"># object /objects/user-obj.org</span>
-<span class="org-org-level-1">* user</span>
-<span class="org-org-special-keyword">  :PROPERTIES:</span>
-  <span class="org-org-special-keyword">:nickname:</span>     <span class="org-org-property-value">henry</span>
-  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">henry@special.com</span>
-  <span class="org-org-special-keyword">:roles:</span>    <span class="org-org-property-value">user</span>
-<span class="org-org-special-keyword">  :END:</span>
-</pre>
 
 
 
@@ -2117,7 +2142,6 @@ one top-level entry for every newly instantiated object:
   <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">harry@royal.com</span>
   <span class="org-org-special-keyword">:roles:</span>    <span class="org-org-property-value">user</span>
 <span class="org-org-special-keyword">  :END:</span>
-
 </pre>
 
 
@@ -2133,7 +2157,7 @@ one top-level entry for every newly instantiated object:
 <span class="org-org-level-1">* assignee</span>
 <span class="org-org-special-keyword">  :PROPERTIES:</span>
   <span class="org-org-special-keyword">:nickname:</span>     <span class="org-org-property-value">john</span>
-  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">joe@handsome.com</span>
+  <span class="org-org-special-keyword">:email:</span>    <span class="org-org-property-value">john@handsome.com</span>
   <span class="org-org-special-keyword">:roles:</span>    <span class="org-org-property-value">assignee</span>
   <span class="org-org-special-keyword">:public-key:</span> <span class="org-org-property-value">43G8529FA</span>
 <span class="org-org-special-keyword">  :END:</span>
@@ -2157,7 +2181,6 @@ one top-level entry for every newly instantiated object:
   <span class="org-org-special-keyword">:city:</span>     <span class="org-org-property-value">fresno</span>
   <span class="org-org-special-keyword">:country:</span>  <span class="org-org-property-value">usa</span>
 <span class="org-org-special-keyword">  :END:</span>
-
 <span class="org-org-level-1">* admin</span>
 <span class="org-org-special-keyword">  :PROPERTIES:</span>
   <span class="org-org-special-keyword">:nickname:</span>    <span class="org-org-property-value">hans369</span>
@@ -2177,23 +2200,49 @@ one top-level entry for every newly instantiated object:
 
 
 
-<p>
-One could say that the superclass attributes are 'injected' into each
-objects attribute drawer. 
-</p>
+<pre class="src src-org"><span class="org-comment"># object /objects/role-obj.org</span>
+<span class="org-org-level-1">* role</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">user</span>
+  <span class="org-org-special-keyword">:permissions:</span> <span class="org-org-property-value">rest</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-1">* role</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>    <span class="org-org-property-value">assignee</span>
+  <span class="org-org-special-keyword">:permissions:</span> <span class="org-org-property-value">tasks </span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-1">* role</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">admin</span>
+  <span class="org-org-special-keyword">:permissions:</span> <span class="org-org-property-value">tasks projects users</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
 
 
 
 
-
-
-<p>
-<a name="name" id="name"></a>
-<a name="email" id="email"></a>
-<a name="role" id="role"></a>
-</p>
-
-
+<pre class="src src-org"><span class="org-comment"># object /objects/permission-obj.org</span>
+<span class="org-org-level-1">* permission</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">rest</span>
+  <span class="org-org-special-keyword">:allowed:</span> <span class="org-org-property-value">unpriviledged</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-1">* permission</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">tasks</span>
+  <span class="org-org-special-keyword">:allowed:</span>  <span class="org-org-property-value">open-new-task take-action-on-selected-tasks edit-task</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-1">* permission</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">projects</span>
+  <span class="org-org-special-keyword">:allowed:</span> <span class="org-org-property-value">create-project edit-project</span>
+<span class="org-org-special-keyword">  :END:</span>
+<span class="org-org-level-1">* permission</span>
+<span class="org-org-special-keyword">  :PROPERTIES:</span>
+  <span class="org-org-special-keyword">:name:</span>     <span class="org-org-property-value">users</span>
+  <span class="org-org-special-keyword">:allowed:</span>  <span class="org-org-property-value">search-users take-action-on-selected-users</span>
+<span class="org-org-special-keyword">  :END:</span>
+</pre>
 
 
 </div>
@@ -2202,7 +2251,7 @@ objects attribute drawer.
 </div>
 
 <div id="outline-container-transform-rules-soa" class="outline-4">
-<h4 id="transform-rules-soa"><a name="sec-8-2-3" id="sec-8-2-3"></a>Software Oriented Activities (SOA)</h4>
+<h4 id="transform-rules-soa"><a name="sec-8-3-3" id="sec-8-3-3"></a>Transforming Software Oriented Activities (SOA)</h4>
 <div class="outline-text-4" id="text-transform-rules-soa">
 
 <p>We used software oriented activity diagrams for integrated modeling of
@@ -2229,13 +2278,13 @@ in the <i>view/search-users</i> directory).
 </div>
 
 <div id="outline-container-transform-complex-syst-act" class="outline-4">
-<h4 id="transform-complex-syst-act"><a name="sec-8-2-4" id="sec-8-2-4"></a>Complex System Activities</h4>
+<h4 id="transform-complex-syst-act"><a name="sec-8-3-4" id="sec-8-3-4"></a>Transforming Complex System Activities</h4>
 <div class="outline-text-4" id="text-transform-complex-syst-act">
 
 
 <p>
-If there is complex logic involved in a case (a system activity
-marked with the pitchfork symbol ⋔ as subactivity in a SOA) , a
+If there is complex logic involved in a use case (a system activity
+marked with the pitchfork symbol ⋔ as subactivity in a SOA), a
 <code>&lt;&lt;use-case-name&gt;&gt;-logic.el</code> file is added to the <i>logic</i> directory
 (e.g. <code>search-task-list-logic.el</code>). The 'atomic' system activities
 that constitute the complex system activitiy are translated into
@@ -2261,46 +2310,16 @@ engineers, they do the hard work in the background, and without them
 the system does not work anymore.
 </p>
 
-</div>
-
-<div id="outline-container-search-tasks-syst-act-design" class="outline-5">
-<h5 id="search-tasks-syst-act-design"><a name="sec-8-2-4-1" id="sec-8-2-4-1"></a>Search Tasks</h5>
-<div class="outline-text-5" id="text-search-tasks-syst-act-design">
 
 
-<p>
-Since bugpile uses a dVCS as database for its textfiles, a query for a
-task might include task name, commit (date or id), author, state of
-the task, and other information that can't be accessed simply by
-searching for the task file in the file system. The search
-facilities should be available independently from the frontend used,
-i.e. power users might use them from Emacs just as normal users from
-their web browser.  Therefore, bugpile should use the underlying dVCS
-to do most of the 'heavy lifting' in processing user queries and then
-prepare the result set according to the frontend used.   
-</p>
-</div>
-
-</div>
-
-<div id="outline-container-search-users-syst-act-design" class="outline-5">
-<h5 id="search-users-syst-act-design"><a name="sec-8-2-4-2" id="sec-8-2-4-2"></a>Search Users</h5>
-<div class="outline-text-5" id="text-search-users-syst-act-design">
 
 
-<p>
-In contrast to tasks, users are relatively static entities in the bugpile
-system, thus it seems unnecessary to rely on the underlying dVCS to answer
-queries about users, Emacs and Org-mode functionality should
-sufficice. 
-</p>
-</div>
 </div>
 
 </div>
 
 <div id="outline-container-summary-transform-rules" class="outline-4">
-<h4 id="summary-transform-rules"><a name="sec-8-2-5" id="sec-8-2-5"></a>Summary of Transformation Rules</h4>
+<h4 id="summary-transform-rules"><a name="sec-8-3-5" id="sec-8-3-5"></a>Summary of Transformation Rules</h4>
 <div class="outline-text-4" id="text-summary-transform-rules">
 
 
@@ -2365,46 +2384,35 @@ rules:
 <tr><td class="left">class</td><td class="left">/objects/classes/CLASS-NAME-class.org file with one top-level entry '* CLASS-NAME' with one attribute drawer</td></tr>
 <tr><td class="left">attribute</td><td class="left">:attribute: DEFAULT-VALUE in the class attribute drawer</td></tr>
 <tr><td class="left">(multiple) inheritance</td><td class="left">superclass name(s) as value(s) of the :super: attribute in the class property drawer</td></tr>
-<tr><td class="left">composition</td><td class="left">object name(s) as value(s) of a class attribute in the class attribute drawer</td></tr>
-<tr><td class="left">object</td><td class="left">/objects/CLASS-NAME-CUSTOM-ID-obj.org file</td></tr>
+<tr><td class="left">composition</td><td class="left">object name(s) as value(s) of another objects attribute in the attribute drawer</td></tr>
+<tr><td class="left">object</td><td class="left">/objects/CLASS-NAME-obj.org file with one top-level entry for each instantiated object of CLASS-NAME</td></tr>
 </tbody>
 </table>
 
 
-
-
-</div>
 </div>
 
 </div>
 
-<div id="outline-container-class-model" class="outline-3">
-<h3 id="class-model"><a name="sec-8-3" id="sec-8-3"></a>Class Model</h3>
-<div class="outline-text-3" id="text-class-model">
+<div id="outline-container-programming-transformations" class="outline-4">
+<h4 id="programming-transformations"><a name="sec-8-3-6" id="sec-8-3-6"></a>Programming the Transformations</h4>
+<div class="outline-text-4" id="text-programming-transformations">
 
-<p>Based on the assumption that an Org-mode file can be modeled as a kind
-of class hierarchy with inheritance and instantiation, a class model
-can be developed for the application. With the file itself (loosly)
-interpreted as a kind of abstract root class that can not be
-instantiated but has global attributes, and the tree nodes (loosly)
-interpreted as class definitions that can be instantiated (several
-nodes of the same type at the same tree level) and inherited from
-(subnodes), object-oriented design techniques can be applied to
-Org-mode files. Of course the similarities only go so far, and do
-exist only on the conceptual level. The implementation in Emacs Lisp
-is based on functions and (e.g.) lists as data stores that are in no
-way encapsulated into formal classes that are part of the language
-core.
+
+<p>
+The transformation of the software specification UML diagrams into the
+.org and .el files of the software design can easily be done manually.
+But the fact that our UML drawing tool <i>plantuml</i> is text based enables
+us to parse the source code of our UML diagrams. Since the
+transformation rules are well defined and operational, we can program
+the transformation process and avoid a lot of tedious manual work. 
 </p>
-
+<p>
+Of course, the automatic transformation only works if the source code
+of the plantuml diagrams strictly adheres to the conventions and
+abbreviations used in this tutorial.
+</p>
 </div>
-
-</div>
-
-<div id="outline-container-refine-logic" class="outline-3">
-<h3 id="refine-logic"><a name="sec-8-4" id="sec-8-4"></a>Refining the Logic</h3>
-<div class="outline-text-3" id="text-refine-logic">
-
 </div>
 </div>
 
@@ -2414,6 +2422,69 @@ core.
 <h2 id="implementation"><a name="sec-9" id="sec-9"></a>Implementation</h2>
 <div class="outline-text-2" id="text-implementation">
 
+
+</div>
+
+<div id="outline-container-impl-worker-funct" class="outline-3">
+<h3 id="impl-worker-funct"><a name="sec-9-1" id="sec-9-1"></a>Implementing the Worker Functions</h3>
+<div class="outline-text-3" id="text-impl-worker-funct">
+
+</div>
+
+</div>
+
+<div id="outline-container-impl-handler-funct" class="outline-3">
+<h3 id="impl-handler-funct"><a name="sec-9-2" id="sec-9-2"></a>Implementing the Handler Functions</h3>
+<div class="outline-text-3" id="text-impl-handler-funct">
+
+
+</div>
+
+<div id="outline-container-url-map-dispatcher" class="outline-4">
+<h4 id="url-map-dispatcher"><a name="sec-9-2-1" id="sec-9-2-1"></a>URL-Map and Dispatcher</h4>
+<div class="outline-text-4" id="text-url-map-dispatcher">
+
+<p>The applications url-map and dispatcher-handler can be produced
+programmatically. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-init-and-finish-use-cases" class="outline-4">
+<h4 id="init-and-finish-use-cases"><a name="sec-9-2-2" id="sec-9-2-2"></a>Initializing and Finishing Uses Cases</h4>
+<div class="outline-text-4" id="text-init-and-finish-use-cases">
+
+
+<p>
+At the start and at the end of each use case special <code>start</code> and <code>end</code>
+functions are called that initialize the use case, check the pre- and
+postconditions, and clean up if necessary. 
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-handling-http-requests" class="outline-4">
+<h4 id="handling-http-requests"><a name="sec-9-2-3" id="sec-9-2-3"></a>Handling Http-Requests</h4>
+<div class="outline-text-4" id="text-handling-http-requests">
+
+
+<p>
+The core duty of <i>handler</i> functions is the handling of http-requests
+from the web-client. 
+</p>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-impl-view-files" class="outline-3">
+<h3 id="impl-view-files"><a name="sec-9-3" id="sec-9-3"></a>Implementing the View Files</h3>
+<div class="outline-text-3" id="text-impl-view-files">
+
+
+</div>
 </div>
 
 </div>
@@ -2428,7 +2499,7 @@ core.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-27 04:24:58 CEST</p>
+<p class="date">Date: 2012-05-27 18:28:51 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="iOrg - interactive Org"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-05-27 18:28:51 CEST"/>
+<meta name="generated" content="2012-05-28 02:30:34 CEST"/>
 <meta name="author" content="Thorsten Jolitz"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -1429,9 +1429,12 @@ one new abbreviation involved: <i>&lt;soa&gt;</i> for <i>software oriented activ
 
 
 <p>
-note: we make no attempt to conform to <a href="http://www.omg.org/spec/">formal uml specifications</a>
-since we want to keep things simple and our text-based drawing tool/
-<a href="http://plantuml.sourceforge.net/">PlantUML</a> does have its limitations.
+<i>note: we make no attempt to conform to</i> <a href="http://www.omg.org/spec/">formal uml specifications</a>
+<i>since we want to keep things simple and our text-based drawing tool</i>
+<a href="http://plantuml.sourceforge.net/">PlantUML</a> <i>does have its limitations when it comes to draw exactly the</i>
+<i>diagram you want. On the other hand, UML source code as plain text</i>
+<i>turns out to be a huge advantage when attempting to programmatically</i>
+<i>transform UML diagrams into source code skeletons.</i>
 </p>
 </div>
 
@@ -1730,6 +1733,22 @@ activities and (maybe) other complex system activities, that are then
 decomposed into smaller activities themselves in another step until
 only simple atomar activities are left.
 </p>
+<p>
+The following symbols are used when modeling complex system activities:
+</p>
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption></caption>
+<colgroup><col class="left" /><col class="left" />
+</colgroup>
+<tbody>
+<tr><td class="left">&lt;csa&gt;</td><td class="left">Complex System Activity</td></tr>
+<tr><td class="left"><a name="SA" class="target">SA</a></td><td class="left">(complex) System Activity</td></tr>
+<tr><td class="left"><a name="SD" class="target">SD</a></td><td class="left">System Decision</td></tr>
+<tr><td class="left"><b>⋔</b></td><td class="left">(pitchfork) sub-activity</td></tr>
+</tbody>
+</table>
+
+
 
 </div>
 
@@ -2499,7 +2518,7 @@ from the web-client.
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-05-27 18:28:51 CEST</p>
+<p class="date">Date: 2012-05-28 02:30:34 CEST</p>
 <p class="author">Author: Thorsten Jolitz</p>
 <p class="creator">Org version 7.8.03 with Emacs version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

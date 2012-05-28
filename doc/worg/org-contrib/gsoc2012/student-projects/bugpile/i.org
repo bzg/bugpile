@@ -1162,9 +1162,12 @@ activity/:
 | <<scene>> | basic elements of web UI   |
 
 
-note: we make no attempt to conform to [[http://www.omg.org/spec/][formal uml specifications]]
-since we want to keep things simple and our text-based drawing tool/
-[[http://plantuml.sourceforge.net/][PlantUML]] does have its limitations.
+/note: we make no attempt to conform to/ [[http://www.omg.org/spec/][formal uml specifications]]
+/since we want to keep things simple and our text-based drawing tool/
+[[http://plantuml.sourceforge.net/][PlantUML]] /does have its limitations when it comes to draw exactly the/
+/diagram you want. On the other hand, UML source code as plain text/
+/turns out to be a huge advantage when attempting to programmatically/
+/transform UML diagrams into source code skeletons./
 
 *** Register as user
     :PROPERTIES:
@@ -1602,6 +1605,13 @@ activities and (maybe) other complex system activities, that are then
 decomposed into smaller activities themselves in another step until
 only simple atomar activities are left.
 
+The following symbols are used when modeling complex system activities:
+
+| <csa>  | Complex System Activity   |
+| <<SA>> | (complex) System Activity |
+| <<SD>> | System Decision           |
+| *⋔*    | (pitchfork) sub-activity  |
+
 
 *** Search Tasks
     :PROPERTIES:
@@ -1619,7 +1629,7 @@ included as subactivity in many use cases.
   (*) --> "<<SA>>\nSystem activity 1"
   --> "<<SA>>\nSystem activity 2"
   --> "<<SA>>\nSystem activity 3"
-  --> "<<SA>>\nComplex system activiy ⋔"
+  --> "<<SA>>\nComplex system activity ⋔"
   --> (*)
 #+end_src
 
@@ -2214,7 +2224,7 @@ rule:
 | Complex System Activity        | mapping => software design     |
 |--------------------------------+--------------------------------|
 | <30>                           | <30>                           |
-| 'atomic' system activity (SA)  | SYSTEM-ACTIVITY-NAME-worker(...) function in logic file     |
+| 'atomic' system activity (SA)  | SYSTEM-ACTIVITY-NAME-worker(...) function in logic file |
 
 
 The domain class model is transformed with the following

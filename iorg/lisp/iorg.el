@@ -92,6 +92,26 @@
 
 ;; (declare-function iorg-xyz-uvw-abc "iorg-xyz" ())
 
+
+;;;; Variables
+
+(defvar iorg-plantuml-diagram-type-repexp
+(concat "<\\(soa\\|csa\\|dcm\\)>")
+  "Regexp used to identify plantuml diagramtypes from the plantuml 'titel' line in the Org-mode source block")
+  
+;; (defvar org-babel-src-block-regexp
+;;   (concat
+;;    ;; (1) indentation                 (2) lang
+;;    "^\\([ \t]*\\)#\\+begin_src[ \t]+\\([^ \f\t\n\r\v]+\\)[ \t]*"
+;;    ;; (3) switches
+;;    "\\([^\":\n]*\"[^\"\n*]*\"[^\":\n]*\\|[^\":\n]*\\)"
+;;    ;; (4) header arguments
+;;    "\\([^\n]*\\)\n"
+;;    ;; (5) body
+;;    "\\([^\000]*?\n\\)?[ \t]*#\\+end_src")
+;;   "Regexp used to identify code blocks.")
+
+
 ;;;; Customization variables
 
 (defgroup iorg nil
@@ -408,6 +428,36 @@
       () ;check dir structure, tangle ob files, export org files
     (message "Not a valid directory name")))
     
+;;; PlantUML transformation
+
+(defun iorg-plantuml-to-code (&optional file)
+  "Transform all PlantUML source blocks in Org-file FILE into Org-mode files (with entries) and Emacs Lisp files (with functions and variables), following the transformation rules of the iOrg framework."
+  (with-current-buffer
+      (if (and file (file-exists-p file))
+          (find-file-existing file)
+        (current-buffer))
+    (case-fold-search t)
+    (save-excursion
+      (save-restriction
+        (widen)
+        (org-goto-line 1)
+           (while (not (eobp))
+             (if (not (looking-at org-babel-src-block-regexp))
+                 (forward-line)
+               (while (not (eolp))
+                 (if (not (looking-at "plantuml"))
+                     (forward-word)
+                   (forward-line)
+                   (while (not (looking-at "#+end_src"))
+                     
+                     
+                                           
+                   
+                   
+
+                 
+               )))))
+
 
 ;; ...
 ;; Key bindings

@@ -1,0 +1,21 @@
+# -*- mode:org -*-
+#+Options: ^:nil
+# #+CATEGORY: bugpile
+
+* Dates
+Taken from [[http://www.google-melange.com/gsoc/homepage/google/gsoc2012][here]].
+** Preparation <2012-04-24 Tue>--<2012-05-21 Mon>
+- Work out use cases
+- Put together a schedule for the summer
+- Agree on communication patterns for the summer
+- Familiarize with tools, read manuals, get everything installed and working
+
+** Begin Coding <2012-05-21 Mon>
+** Coding <2012-05-22 Tue>--<2012-07-09 Mon>
+** Mid-Term evaluations <2012-07-09 Mon>--<2012-07-13 Fri>
+** Coding <2012-07-14 Sat>--<2012-08-13 Mon>
+** Stop Coding <2012-08-13 Mon>
+** Final evaluations <2012-08-20 Mon>--<2012-08-24 Fri>
+** Final results announced <2012-08-27 Mon>
+** Submit copy of the code to Google <2012-08-31 Fri>
+** Mentor Summit <2012-10-19 Fri>--<2012-10-21 Sun>

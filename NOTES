@@ -5,6 +5,16 @@
 A collection of working notes.
 
 * Notes
+** Torvalds on bug trackers
+http://yarchive.net/comp/linux/bug_tracking.html
+
+#+begin_quote
+The thing is, bugzilla is totally broken because it's designed to help
+track bugs, but it's *not* designed to actually handle the much harder
+problem, which is to actually get the *right* developers to be aware
+of the *right* bugs!
+#+end_quote
+
 ** suggestion for auth issues
 From =#emacs= WRT: how we can handle authentication issues moving forward.
 : 10:44 < nicferrier> _schulte_: I think you should ignore the auth issues and just use a 

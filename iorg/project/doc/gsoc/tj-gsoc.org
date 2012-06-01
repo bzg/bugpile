@@ -1,0 +1,811 @@
+# -*- mode:org -*-
+#+Options: ^:nil
+##+CATEGORY: bugpile
+
+* Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
+
+** TODO Bugpile Requirements Analysis
+*** TODO Use Cases in textual form
+    :LOGBOOK:
+    CLOCK: [2012-05-03 Do 18:27]--[2012-05-03 Do 18:30] =>  0:03
+    CLOCK: [2012-05-03 Do 18:25]--[2012-05-03 Do 18:26] =>  0:01
+    CLOCK: [2012-05-03 Do 18:16]--[2012-05-03 Do 18:18] =>  0:02
+    :END:
+
+**** DONE [req-uc-txt] Register as user
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+**** DONE [req-uc-txt] Edit user details
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** DONE [req-uc-txt] Login
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** DONE [req-uc-txt] Logout
+     CLOSED: [2012-05-02 Mi 21:13]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:13]
+     :END:
+
+**** DONE [req-uc-txt] Add user to assignees
+     CLOSED: [2012-05-03 Do 18:00] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:00]
+     CLOCK: [2012-05-03 Do 17:24]--[2012-05-03 Do 17:59] =>  0:35
+     :END:
+Deleted, is special case of search users and take actions on selected
+users. 
+**** DONE [req-uc-txt] Remove user from assignees
+     CLOSED: [2012-05-03 Do 18:16] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:16]
+     CLOCK: [2012-05-03 Do 17:59]--[2012-05-03 Do 18:16] =>  0:17
+     :END:
+
+Deleted, is special case of search users and take actions on selected
+users. 
+
+**** DONE [req-uc-txt] Add user to notification list
+     CLOSED: [2012-05-03 Do 18:25] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:25]
+     CLOCK: [2012-05-03 Do 18:18]--[2012-05-03 Do 18:25] =>  0:07
+     :END:
+Deleted, is a special case of 'take action on selected task'
+
+**** DONE [req-uc-txt] Remove user from notification list
+     CLOSED: [2012-05-03 Do 18:25] SCHEDULED: <2012-05-03 Do>
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:25]
+Deleted, is a special case of 'take action on selected task'
+
+**** DONE [req-uc-txt] Add reminder
+     CLOSED: [2012-05-03 Do 18:26] SCHEDULED: <2012-05-03 Do>
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:26]
+Deleted, is a special case of 'take action on selected task'
+
+**** DONE [req-uc-txt] Remove reminder
+     CLOSED: [2012-05-03 Do 18:27] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-03 Do 18:27]
+     CLOCK: [2012-05-03 Do 18:26]--[2012-05-03 Do 18:27] =>  0:01
+     :END:
+
+Deleted, is a special case of 'take action on selected task'
+
+**** TODO create bug report
+     SCHEDULED: <2012-05-11 Fri>
+**** TODO change meta-data of bug report
+     SCHEDULED: <2012-05-11 Fri>
+meta-data could include
+- type
+  - bug
+  - feature request
+  - refactoring
+- state
+  - unconfirmed
+  - confirmed
+  - open
+  - close
+  - assigned
+  - superseded
+  - etc...
+- priority
+  - low
+  - medium
+  - high
+  - breaking
+  - etc...
+
+**** TODO change text of bug report
+     SCHEDULED: <2012-05-11 Fri>
+This would be the actual textual notes, which would presumably live in
+the body of an Org-mode headline.
+
+**** TODO associate bug report with commit in version control repository
+     SCHEDULED: <2012-05-11 Fri>
+*** TODO Integrated UML Modelling of Use Cases and UI
+    :LOGBOOK:
+    CLOCK: [2012-05-05 Sa 20:07]--[2012-05-06 So 11:46] => 15:39
+    :END:
+
+**** DONE [req-uc-uml] Register as user
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+**** DONE [req-uc-uml] Edit user details
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+**** DONE [req-uc-uml] Login
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+**** DONE [req-uc-uml] Logout
+     CLOSED: [2012-05-02 Mi 21:18]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-02 Mi 21:18]
+     :END:
+
+**** DONE [req-uc-uml] Search users
+     CLOSED: [2012-05-05 Sa 19:17] SCHEDULED: <2012-05-05 Sa>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-05 Sa 19:17]
+     - State "TODO"       from "DONE"       [2012-05-05 Sa 16:43]
+     - State "DONE"       from ""           [2012-05-05 Sa 16:43]
+     :END:
+**** DONE [req-uc-uml] Take action on selected users
+     CLOSED: [2012-05-05 Sa 20:07] SCHEDULED: <2012-05-05 Sa>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-05-05 Sa 20:07]
+     CLOCK: [2012-05-05 Sa 19:18]--[2012-05-05 Sa 20:07] =>  0:49
+     :END:
+**** CANCELLED [req-uc-uml] Add user to assignees                 :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:43] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:43] \\
+       use case deleted, is special case of 'search user/ take action on
+       selected user'.
+     :END:
+
+**** CANCELLED [req-uc-uml] Remove user from assignees            :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:44] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:44] \\
+       use case deleted, is special case of 'search user/ take action on
+       selected user'.
+     :END:
+
+**** CANCELLED [req-uc-uml] Add user to notification list         :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
+
+**** CANCELLED [req-uc-uml] Remove user from notification list    :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
+
+**** CANCELLED [req-uc-uml] Add reminder                          :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
+
+**** CANCELLED [req-uc-uml] Remove reminder                       :CANCELLED:
+     CLOSED: [2012-05-05 Sa 16:47] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:47] \\
+       use case deleted, is special case of 'search task/ take action on
+       selected task.
+     :END:
+
+
+*** TODO Use Case Models
+**** NEXT User management
+     SCHEDULED: <2012-05-06 So>
+
+** TODO Bugpile Software Specification
+*** TODO Transforming Requirements into Specifications
+**** TODO Integrated UML Modelling of Use Cases and UI
+     :LOGBOOK:
+     CLOCK: [2012-05-05 Sa 16:37]--[2012-05-05 Sa 19:18] =>  2:41
+     :END:
+******* DONE [spec-uc-uml] Register as user
+        CLOSED: [2012-05-05 Sa 15:34] SCHEDULED: <2012-05-03 Do>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-05 Sa 15:34]
+        CLOCK: [2012-05-05 Sa 13:43]--[2012-05-05 Sa 15:34] =>  1:51
+        :END:
+******* DONE [spec-uc-uml] Edit user details
+        CLOSED: [2012-05-05 Sa 16:14] SCHEDULED: <2012-05-03 Do>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-05 Sa 16:14]
+        CLOCK: [2012-05-05 Sa 15:34]--[2012-05-05 Sa 16:14] =>  0:40
+        :END:
+
+******* DONE [spec-uc-uml] Login
+        CLOSED: [2012-05-05 Sa 16:25] SCHEDULED: <2012-05-03 Do>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-05 Sa 16:25]
+        CLOCK: [2012-05-05 Sa 16:14]--[2012-05-05 Sa 16:25] =>  0:11
+        :END:
+
+******* DONE [spec-uc-uml] Logout
+        CLOSED: [2012-05-05 Sa 16:37] SCHEDULED: <2012-05-03 Do>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-05 Sa 16:37]
+        CLOCK: [2012-05-05 Sa 16:25]--[2012-05-05 Sa 16:37] =>  0:12
+        :END:
+******* DONE [spec-uc-uml] Search users
+        CLOSED: [2012-05-06 So 19:30] SCHEDULED: <2012-05-05 Sa>
+        :LOGBOOK:
+        - State "DONE"       from "TODO"       [2012-05-06 So 19:30]
+        - State "TODO"       from "DONE"       [2012-05-05 Sa 16:43]
+        - State "DONE"       from ""           [2012-05-05 Sa 16:43]
+        :END:
+******* DONE [spec-uc-uml] Take action on selected users
+        CLOSED: [2012-05-06 So 19:45] SCHEDULED: <2012-05-05 Sa>
+        :LOGBOOK:
+        - State "DONE"       from "NEXT"       [2012-05-06 So 19:45]
+        CLOCK: [2012-05-06 So 19:30]--[2012-05-06 So 19:45] =>  0:15
+        :END:
+******* CANCELLED [spec-uc-uml] Add user to assignees             :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:50] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:50] \\
+          use case deleted, is special case of 'search user/ take action on
+          selected user.
+        :END:
+
+******* CANCELLED [spec-uc-uml] Remove user from assignees        :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:51] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:51] \\
+          use case deleted, is special case of 'search user/ take action on
+          selected user'.
+        :END:
+
+******* CANCELLED [spec-uc-uml] Add user to notification list     :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
+
+******* CANCELLED [spec-uc-uml] Remove user from notification list :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
+
+******* CANCELLED [spec-uc-uml] Add reminder                      :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
+
+******* CANCELLED [spec-uc-uml] Remove reminder                   :CANCELLED:
+        CLOSED: [2012-05-05 Sa 16:49] SCHEDULED: <2012-05-04 Fr>
+        :LOGBOOK:
+        - State "CANCELLED"  from "TODO"       [2012-05-05 Sa 16:49] \\
+          use case deleted, is special case of 'search task/ take action on
+          selected task'.
+        :END:
+
+** TODO iOrg
+*** TODO Figure out Authentication
+**** CANCELED [iorg-req-authent] Analyse 'basic http authentication'
+     SCHEDULED: <2012-05-04 Fr>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:27] \\
+       nope, this is not as convenience as cookies
+**** CANCELED [iorg-req-authent] Analyse 'OAuth'
+     SCHEDULED: <2012-05-05 Sa>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       nicferrier is handling this, we can let him do the implementation
+**** TODO [iorg-req-authent] Try authentication prototype
+     SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+This should be a simple cookie system.  For now we can just keep a
+server-side list of usernames and passwords.  The authentication
+process will be as follows.
+
+1. user sends username and password to the server.  For now we warn
+   users not to user sensitive passwords, as they'll be transferred
+   and stored in plain text.  These limitations are easily fixed later
+   by running elnode behind an apache https server, and storing only
+   hashes of passwords locally
+
+2. server checks that username and password are in the system,
+   generates a cookie which is associated with the user and sent to
+   the client
+
+3. client stores the cookie, and includes it in all future connections
+   to the system
+
+*** CANCELED Figure out Sessions
+    - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:30] \\
+      not needed, for now we'll just use a simple cookie-based system
+**** CANCELED [iorg-req-sessions] Analyse 'connect' (node.js framework)
+     SCHEDULED: <2012-05-03 Do>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       not part of this project
+**** CANCELED [iorg-req-sessions] Analyse 'express' (node.js framework)
+     SCHEDULED: <2012-05-03 Do>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       not part of this project
+*** TODO Figure out object-orientation
+**** TODO [iorg-req-obj-orient] Define (abstract) class/entitiy and object [analogies] in iOrg
+     SCHEDULED: <2012-05-06 So>
+**** TODO [iorg-req-obj-orient] Define inheritence in iOrg
+     SCHEDULED: <2012-05-06 So>
+**** TODO [iorg-req-obj-orient] Define composition in iOrg
+     SCHEDULED: <2012-05-06 So>
+**** TODO [iorg-req-obj-orient] Try class/entitiy prototype
+     SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+
+
+* Community bonding [madrid]  <2012-05-10 Do>--<2012-05-20 So>
+
+** TODO Bugpile Requirements Analysis
+*** TODO Use Cases in textual form
+
+**** DONE [req-uc-txt] Create project
+     CLOSED: [2012-05-21 Mo 14:46] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 14:46]
+     :END:
+
+**** DONE [req-uc-txt] Delete project
+     CLOSED: [2012-05-21 Mo 15:07] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 15:07]
+     :END:
+
+**** DONE [req-uc-txt] Switch project
+     CLOSED: [2012-05-21 Mo 15:12] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 15:12]
+     :END:
+
+**** DONE [req-uc-txt] Open new task
+     CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-10 Do 11:21]
+     :END:
+
+**** DONE [req-uc-txt] Re-open task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-txt] Edit task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-txt] Close task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-txt] Add related task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-txt] Remove related task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-txt] Assign task
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-txt] Add comment
+     CLOSED: [2012-05-21 Mo 22:25] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:25]
+     :END:
+
+**** DONE [req-uc-txt] Edit comment
+     CLOSED: [2012-05-21 Mo 22:25] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:25]
+     :END:
+
+**** CANCELLED [req-uc-txt] Delete comment                        :CANCELLED:
+     CLOSED: [2012-05-21 Mo 22:25] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-21 Mo 22:25] \\
+       merged with other use case
+     :END:
+
+**** DONE [req-uc-txt] Add attachment
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:26]
+     :END:
+
+**** DONE [req-uc-txt] Delete attachment
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:26]
+     :END:
+
+**** CANCELLED [req-uc-txt] Attach a file                         :CANCELLED:
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-21 Mo 22:26] \\
+       same as add attachment
+     :END:
+
+**** DONE [req-uc-txt] Search tasklist
+     CLOSED: [2012-05-21 Mo 22:26] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:26]
+     :END:
+
+**** DONE [req-uc-txt] Take action on selected tasks
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+**** DONE [req-uc-txt] Search event log
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+*** TODO Integrated UML Modelling of Use Cases and UI
+
+**** DONE [req-uc-uml] Create project
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+**** DONE [req-uc-uml] Delete project
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+**** DONE [req-uc-uml] Switch project
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+**** DONE [req-uc-uml] Open new task
+     CLOSED: [2012-05-10 Do 11:21] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     :END:
+
+**** DONE [req-uc-uml] Re-open task
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+**** DONE [req-uc-uml] Edit task
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+**** DONE [req-uc-uml] Close task
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+**** DONE [req-uc-uml] Add related task
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+**** DONE [req-uc-uml] Remove related task
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+**** DONE [req-uc-uml] Assign task
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-11 Fr>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+**** DONE [req-uc-uml] Add comment
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+**** DONE [req-uc-uml] Edit comment
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
+     :END:
+
+**** CANCELLED [req-uc-uml] Delete comment                        :CANCELLED:
+     CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-05-21 Mo 22:27] \\
+       merged with edit comment
+     :END:
+
+**** DONE [req-uc-uml] Add attachment
+     CLOSED: [2012-05-21 Mo 22:28] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-21 Mo 22:28]
+     :END:
+
+**** DONE [req-uc-uml] Delete attachment
+     CLOSED: [2012-05-22 Di 12:58] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:58]
+     :END:
+
+**** DONE [req-uc-uml] Attach a file
+     CLOSED: [2012-05-22 Di 12:58] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:58]
+     :END:
+
+**** DONE [req-uc-uml] Search tasklist
+     CLOSED: [2012-05-22 Di 12:58] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:58]
+     :END:
+
+**** DONE [req-uc-uml] Take action on selected tasks
+     CLOSED: [2012-05-22 Di 12:58] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:58]
+     :END:
+
+**** DONE [req-uc-uml] Search event log
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-10 Do>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+
+
+*** TODO Use Case Models
+
+**** DONE [req-uc-mod] User management
+     CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
+     :END:
+**** DONE [req-uc-mod] Task management
+     CLOSED: [2012-05-23 Mi 14:03] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-05-23 Mi 14:03]
+     :END:
+
+*** TODO System Activities
+**** TODO [req-syst-act-uml] Search
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO [req-syst-act-uml] Report
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO [req-syst-act-uml] Notificate
+     SCHEDULED: <2012-05-12 Sa>
+**** TODO [req-syst-act-uml] Remind
+     SCHEDULED: <2012-05-12 Sa>
+
+*** TODO Domain Class Model
+**** TODO [req-dom-class-mod-uml] Class Model of Requirements Analysis
+     SCHEDULED: <2012-05-12 Sa>
+
+** TODO Bugpile Software Specification
+*** TODO Transforming Requirements into Specifications
+**** TODO Integrated UML Modelling of Use Cases and UI
+***** DONE [spec-uc-uml] Create project
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Delete project
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Switch project
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Open new task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Re-open task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Edit task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Close task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "DONE"       [2012-05-22 Di 15:26]
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Add related task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Remove related task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Assign task
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Add comment
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Edit comment
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Delete comment
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Add attachment
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Delete attachment
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Attach a file
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Search tasklist
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Take action on selected tasks
+      CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:26]
+      :END:
+
+***** DONE [spec-uc-uml] Search event log
+      CLOSED: [2012-05-22 Di 15:27] SCHEDULED: <2012-05-13 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-05-22 Di 15:27]
+      :END:
+
+**** TODO System Activities
+***** TODO [spec-syst-act-uml] Search
+      SCHEDULED: <2012-05-14 Mo>
+***** TODO [spec-syst-act-uml] Report
+      SCHEDULED: <2012-05-14 Mo>
+***** TODO [spec-syst-act-uml] Notificate
+      SCHEDULED: <2012-05-14 Mo>
+***** TODO [spec-syst-act-uml] Remind
+      SCHEDULED: <2012-05-14 Mo>
+
+** TODO iOrg
+*** TODO Authentication
+**** TODO [iorg-impl-auth] Implement basic authentication
+     SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+**** TODO [iorg-impl-auth] Implement OAuth authentication
+     SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+
+
+* Coding [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
+** TODO Bugpile Software Architecture
+*** TODO Modified 5-Layer Architecture
+**** TODO [sw-arch-bp] Textual description
+     SCHEDULED: <2012-05-21 Mo>
+**** TODO [sw-arch-bp] Graphical depiction
+     SCHEDULED: <2012-05-21 Mo>
+** TODO Bugpile Application Design
+*** TODO Locally Refining the Software Architecture
+**** TODO Class Model of Application Design
+***** TODO [design-class-model] Adapt the domain class model
+      SCHEDULED: <2012-05-21 Mo>
+***** TODO [design-class-model] Transform uml scenes into =views=
+      SCHEDULED: <2012-05-22 Di>--<2012-05-23 Mi>
+***** TODO [design-class-model] Transform uml activities  into =actions=
+      SCHEDULED: <2012-05-24 Do>--<2012-05-25 Fr>
+***** TODO [design-class-model] Transform uml system actions into =beans=
+      SCHEDULED: <2012-05-26 Sa>--<2012-05-27 So>
+**** TODO Refining the Logic
+***** TODO [design-refine-logic] Complete the bean functions signatures
+      SCHEDULED: <2012-05-28 Mo>
+***** TODO [design-refine-logic] Add operations to entities.
+      SCHEDULED: <2012-05-29 Di>
+***** TODO [design-refine-logic] Write uml interaction models (if necesary)
+      SCHEDULED: <2012-05-30 Mi>
+***** TODO [design-refine-logic] Decide about asynchrous beans
+      SCHEDULED: <2012-05-30 Mi>
+
+** TODO iOrg
+*** TODO Sessions
+**** TODO [iorg-impl-sessions] (partially) Implement 'connect' (node.js)
+     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+**** TODO [iorg-impl-sessions] (partially) Implement 'express' (node.js)
+     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+*** TODO Classes/Entities
+**** TODO [iorg-design-persist] Design persistence system
+     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+
+* Coding [berlin] <2012-05-31 Do>--<2012-07-08 So>
+** Bugpile Implementation
+
+
+* Evaluating (mid-term) [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
+** GSoC mid-term evalution 
+
+
+* Coding [berlin] <2012-07-14 Sa>--<2012-08-12 So>
+** Bugpile Implementation
+** Bugpile Verification
+
+
+* Cleaning up [berlin] <2012-08-13 Mo>--<2012-08-19 So>
+** Clean code
+** Clean documentation
+
+* Evaluating (final) [berlin] <2012-08-20 Mo>--<2012-08-24 Fr>
+** GSoC Final evaluation
+
+

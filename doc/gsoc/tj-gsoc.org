@@ -5,8 +5,10 @@
 * Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
 
 ** TODO Bugpile Requirements Analysis
-*** TODO Use Cases in textual form
+*** DONE Use Cases in textual form
+    CLOSED: [2012-06-01 Fr 16:54]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 16:54]
     CLOCK: [2012-05-03 Do 18:27]--[2012-05-03 Do 18:30] =>  0:03
     CLOCK: [2012-05-03 Do 18:25]--[2012-05-03 Do 18:26] =>  0:01
     CLOCK: [2012-05-03 Do 18:16]--[2012-05-03 Do 18:18] =>  0:02
@@ -80,6 +82,7 @@ Deleted, is a special case of 'take action on selected task'
 
 Deleted, is a special case of 'take action on selected task'
 
+*** TODO Design Bugreport
 **** TODO create bug report
      SCHEDULED: <2012-05-11 Fri>
 **** TODO change meta-data of bug report
@@ -111,8 +114,10 @@ the body of an Org-mode headline.
 
 **** TODO associate bug report with commit in version control repository
      SCHEDULED: <2012-05-11 Fri>
-*** TODO Integrated UML Modelling of Use Cases and UI
+*** DONE Integrated UML Modelling of Use Cases and UI
+    CLOSED: [2012-06-01 Fr 16:53]
     :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 16:53]
     CLOCK: [2012-05-05 Sa 20:07]--[2012-05-06 So 11:46] => 15:39
     :END:
 
@@ -201,14 +206,43 @@ the body of an Org-mode headline.
      :END:
 
 
-*** TODO Use Case Models
-**** NEXT User management
-     SCHEDULED: <2012-05-06 So>
-
-** TODO Bugpile Software Specification
-*** TODO Transforming Requirements into Specifications
-**** TODO Integrated UML Modelling of Use Cases and UI
+*** DONE Use Case Models
+    CLOSED: [2012-06-01 Fr 18:31]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:31]
+    :END:
+**** DONE Task management
+     CLOSED: [2012-06-01 Fr 16:55]
      :LOGBOOK:
+     - State "DONE"       from ""           [2012-06-01 Fr 16:55]
+     :END:
+     [2012-06-01 Fr 16:55]
+**** DONE Project management
+     CLOSED: [2012-06-01 Fr 18:31]
+     :LOGBOOK:
+     - State "DONE"       from ""           [2012-06-01 Fr 18:31]
+     :END:
+     [2012-06-01 Fr 16:55]
+**** DONE User management
+     CLOSED: [2012-06-01 Fr 16:55] SCHEDULED: <2012-05-06 So>
+     :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-06-01 Fr 16:55]
+     :END:
+
+** DONE Bugpile Software Specification
+   CLOSED: [2012-06-01 Fr 18:33]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 18:33]
+   :END:
+*** DONE Transforming Requirements into Specifications
+    CLOSED: [2012-06-01 Fr 18:33]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:33]
+    :END:
+**** DONE Integrated UML Modelling of Use Cases and UI
+     CLOSED: [2012-06-01 Fr 18:32]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:32]
      CLOCK: [2012-05-05 Sa 16:37]--[2012-05-05 Sa 19:18] =>  2:41
      :END:
 ******* DONE [spec-uc-uml] Register as user
@@ -338,21 +372,41 @@ process will be as follows.
      SCHEDULED: <2012-05-03 Do>
      - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
        not part of this project
-*** TODO Figure out object-orientation
-**** TODO [iorg-req-obj-orient] Define (abstract) class/entitiy and object [analogies] in iOrg
-     SCHEDULED: <2012-05-06 So>
-**** TODO [iorg-req-obj-orient] Define inheritence in iOrg
-     SCHEDULED: <2012-05-06 So>
-**** TODO [iorg-req-obj-orient] Define composition in iOrg
-     SCHEDULED: <2012-05-06 So>
-**** TODO [iorg-req-obj-orient] Try class/entitiy prototype
-     SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+*** DONE Figure out object-orientation
+    CLOSED: [2012-06-01 Fr 18:34]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:34]
+    :END:
+**** DONE [iorg-req-obj-orient] Define (abstract) class/entitiy and object [analogies] in iOrg
+     CLOSED: [2012-06-01 Fr 18:34] SCHEDULED: <2012-05-06 So>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:34]
+     :END:
+**** DONE [iorg-req-obj-orient] Define inheritence in iOrg
+     CLOSED: [2012-06-01 Fr 18:34] SCHEDULED: <2012-05-06 So>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:34]
+     :END:
+**** DONE [iorg-req-obj-orient] Define composition in iOrg
+     CLOSED: [2012-06-01 Fr 18:34] SCHEDULED: <2012-05-06 So>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:34]
+     :END:
+**** DONE [iorg-req-obj-orient] Try class/entitiy prototype
+     CLOSED: [2012-06-01 Fr 18:34] SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:34]
+     :END:
 
 
 * Community bonding [madrid]  <2012-05-10 Do>--<2012-05-20 So>
 
 ** TODO Bugpile Requirements Analysis
-*** TODO Use Cases in textual form
+*** DONE Use Cases in textual form
+    CLOSED: [2012-06-01 Fr 18:39]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:39]
+    :END:
 
 **** DONE [req-uc-txt] Create project
      CLOSED: [2012-05-21 Mo 14:46] SCHEDULED: <2012-05-10 Do>
@@ -470,7 +524,11 @@ process will be as follows.
      - State "DONE"       from "TODO"       [2012-05-21 Mo 22:27]
      :END:
 
-*** TODO Integrated UML Modelling of Use Cases and UI
+*** DONE Integrated UML Modelling of Use Cases and UI
+    CLOSED: [2012-06-01 Fr 18:39]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:39]
+    :END:
 
 **** DONE [req-uc-uml] Create project
      CLOSED: [2012-05-21 Mo 22:27] SCHEDULED: <2012-05-10 Do>
@@ -587,7 +645,11 @@ process will be as follows.
      :END:
 
 
-*** TODO Use Case Models
+*** DONE Use Case Models
+    CLOSED: [2012-06-01 Fr 18:39]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:39]
+    :END:
 
 **** DONE [req-uc-mod] User management
      CLOSED: [2012-05-22 Di 12:59] SCHEDULED: <2012-05-12 Sa>
@@ -616,7 +678,11 @@ process will be as follows.
 
 ** TODO Bugpile Software Specification
 *** TODO Transforming Requirements into Specifications
-**** TODO Integrated UML Modelling of Use Cases and UI
+**** DONE Integrated UML Modelling of Use Cases and UI
+     CLOSED: [2012-06-01 Fr 18:40]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:40]
+     :END:
 ***** DONE [spec-uc-uml] Create project
       CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
       :LOGBOOK:
@@ -746,47 +812,109 @@ process will be as follows.
 *** TODO Authentication
 **** TODO [iorg-impl-auth] Implement basic authentication
      SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
-**** TODO [iorg-impl-auth] Implement OAuth authentication
-     SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+**** CANCELLED [iorg-impl-auth] Implement OAuth authentication    :CANCELLED:
+     CLOSED: [2012-06-01 Fr 18:42] SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:42] \\
+       not part of project
+     :END:
 
 
 * Coding [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
-** TODO Bugpile Software Architecture
-*** TODO Modified 5-Layer Architecture
-**** TODO [sw-arch-bp] Textual description
-     SCHEDULED: <2012-05-21 Mo>
-**** TODO [sw-arch-bp] Graphical depiction
-     SCHEDULED: <2012-05-21 Mo>
+** DONE Bugpile Software Architecture
+   CLOSED: [2012-06-01 Fr 19:01]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 19:01]
+   :END:
+*** DONE Modified 5-Layer Architecture
+    CLOSED: [2012-06-01 Fr 19:00]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 19:00]
+    :END:
+**** DONE [sw-arch-bp] Textual description
+     CLOSED: [2012-06-01 Fr 19:00] SCHEDULED: <2012-05-21 Mo>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 19:00]
+     :END:
+**** DONE [sw-arch-bp] Graphical depiction
+     CLOSED: [2012-06-01 Fr 19:00] SCHEDULED: <2012-05-21 Mo>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 19:00]
+     :END:
 ** TODO Bugpile Application Design
 *** TODO Locally Refining the Software Architecture
-**** TODO Class Model of Application Design
-***** TODO [design-class-model] Adapt the domain class model
-      SCHEDULED: <2012-05-21 Mo>
-***** TODO [design-class-model] Transform uml scenes into =views=
-      SCHEDULED: <2012-05-22 Di>--<2012-05-23 Mi>
-***** TODO [design-class-model] Transform uml activities  into =actions=
-      SCHEDULED: <2012-05-24 Do>--<2012-05-25 Fr>
-***** TODO [design-class-model] Transform uml system actions into =beans=
-      SCHEDULED: <2012-05-26 Sa>--<2012-05-27 So>
+**** DONE Class Model of Application Design
+     CLOSED: [2012-06-01 Fr 18:44]
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:44]
+     :END:
+***** DONE [design-class-model] Adapt the domain class model
+      CLOSED: [2012-06-01 Fr 18:44] SCHEDULED: <2012-05-21 Mo>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:44]
+      :END:
+***** DONE [design-class-model] Transform uml scenes into =views=
+      CLOSED: [2012-06-01 Fr 18:43] SCHEDULED: <2012-05-22 Di>--<2012-05-23 Mi>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:43]
+      :END:
+***** DONE [design-class-model] Transform uml activities  into =actions=
+      CLOSED: [2012-06-01 Fr 18:43] SCHEDULED: <2012-05-24 Do>--<2012-05-25 Fr>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:43]
+      :END:
+***** DONE [design-class-model] Transform uml system actions into =beans=
+      CLOSED: [2012-06-01 Fr 18:43] SCHEDULED: <2012-05-26 Sa>--<2012-05-27 So>
+      :LOGBOOK:
+      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:43]
+      :END:
 **** TODO Refining the Logic
-***** TODO [design-refine-logic] Complete the bean functions signatures
+***** TODO [design-refine-logic] Complete the worker functions signatures
       SCHEDULED: <2012-05-28 Mo>
-***** TODO [design-refine-logic] Add operations to entities.
+***** TODO [design-refine-logic] Add methods to classes (if necessary).
       SCHEDULED: <2012-05-29 Di>
 ***** TODO [design-refine-logic] Write uml interaction models (if necesary)
       SCHEDULED: <2012-05-30 Mi>
-***** TODO [design-refine-logic] Decide about asynchrous beans
-      SCHEDULED: <2012-05-30 Mi>
+***** CANCELLED [design-refine-logic] Decide about asynchrous beans :CANCELLED:
+      CLOSED: [2012-06-01 Fr 18:46] SCHEDULED: <2012-05-30 Mi>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:46] \\
+        elnode enables asynchronous processing anyway
+      :END:
 
-** TODO iOrg
-*** TODO Sessions
-**** TODO [iorg-impl-sessions] (partially) Implement 'connect' (node.js)
-     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
-**** TODO [iorg-impl-sessions] (partially) Implement 'express' (node.js)
-     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
-*** TODO Classes/Entities
-**** TODO [iorg-design-persist] Design persistence system
-     SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+** DONE iOrg
+   CLOSED: [2012-06-01 Fr 18:49]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 18:49]
+   :END:
+*** CANCELLED Sessions                                            :CANCELLED:
+    CLOSED: [2012-06-01 Fr 18:48]
+    :LOGBOOK:
+    - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:48] \\
+      not part of this project
+    :END:
+**** CANCELLED [iorg-impl-sessions] (partially) Implement 'connect' (node.js) :CANCELLED:
+     CLOSED: [2012-06-01 Fr 18:48] SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:48] \\
+       not part of this project
+     :END:
+**** CANCELLED [iorg-impl-sessions] (partially) Implement 'express' (node.js) :CANCELLED:
+     CLOSED: [2012-06-01 Fr 18:47] SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:47] \\
+       not part of this project
+     :END:
+*** DONE Classes/Entities
+    CLOSED: [2012-06-01 Fr 18:47]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 18:47]
+    :END:
+**** DONE [iorg-design-persist] Design persistence system
+     CLOSED: [2012-06-01 Fr 18:47] SCHEDULED: <2012-05-21 Mo>--<2012-05-30 Mi>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-01 Fr 18:47]
+     :END:
 
 * Coding [berlin] <2012-05-31 Do>--<2012-07-08 So>
 ** Bugpile Implementation

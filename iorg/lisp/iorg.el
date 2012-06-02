@@ -261,6 +261,21 @@ iOrg project directory structure, nil otherwise."
       ((not (member "view" dir-files)))))))
 
 ;;; Modified or new Emacs functionality
+<<<<<<< HEAD
+=======
+
+(defmacro iorg-in-file (file &rest body)
+  "Execute BODY in a buffer visiting FILE.
+    If no buffer exists visiting FILE then open FILE in a new buffer."
+  `(save-window-excursion
+     (condition-case nil
+         (with-temp-buffer (find-file ,file) ,@body)
+       (error (message "iorg: there has been an error")))))
+
+; (iorg-in-file "/tmp/something.org" (message "in %s" (current-buffer)))
+
+
+>>>>>>> todo list updated in tj-gsoc.org, Erics iorg-in-file macro added to iorg.el
 (defun iorg--pwd ()
   "Return the (normalized) directory part of the function `pwd'."
   (expand-file-name

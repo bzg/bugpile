@@ -4,7 +4,11 @@
 
 * Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
 
-** TODO Bugpile Requirements Analysis
+** DONE Bugpile Requirements Analysis
+   CLOSED: [2012-06-01 Fr 21:07]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 21:07]
+   :END:
 *** DONE Use Cases in textual form
     CLOSED: [2012-06-01 Fr 16:54]
     :LOGBOOK:
@@ -82,38 +86,6 @@ Deleted, is a special case of 'take action on selected task'
 
 Deleted, is a special case of 'take action on selected task'
 
-*** TODO Design Bugreport
-**** TODO create bug report
-     SCHEDULED: <2012-05-11 Fri>
-**** TODO change meta-data of bug report
-     SCHEDULED: <2012-05-11 Fri>
-meta-data could include
-- type
-  - bug
-  - feature request
-  - refactoring
-- state
-  - unconfirmed
-  - confirmed
-  - open
-  - close
-  - assigned
-  - superseded
-  - etc...
-- priority
-  - low
-  - medium
-  - high
-  - breaking
-  - etc...
-
-**** TODO change text of bug report
-     SCHEDULED: <2012-05-11 Fri>
-This would be the actual textual notes, which would presumably live in
-the body of an Org-mode headline.
-
-**** TODO associate bug report with commit in version control repository
-     SCHEDULED: <2012-05-11 Fri>
 *** DONE Integrated UML Modelling of Use Cases and UI
     CLOSED: [2012-06-01 Fr 16:53]
     :LOGBOOK:
@@ -204,7 +176,6 @@ the body of an Org-mode headline.
        use case deleted, is special case of 'search task/ take action on
        selected task.
      :END:
-
 
 *** DONE Use Case Models
     CLOSED: [2012-06-01 Fr 18:31]
@@ -332,35 +303,11 @@ the body of an Org-mode headline.
           selected task'.
         :END:
 
-** TODO iOrg
-*** TODO Figure out Authentication
-**** CANCELED [iorg-req-authent] Analyse 'basic http authentication'
-     SCHEDULED: <2012-05-04 Fr>
-     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:27] \\
-       nope, this is not as convenience as cookies
-**** CANCELED [iorg-req-authent] Analyse 'OAuth'
-     SCHEDULED: <2012-05-05 Sa>
-     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
-       nicferrier is handling this, we can let him do the implementation
-**** TODO [iorg-req-authent] Try authentication prototype
-     SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
-This should be a simple cookie system.  For now we can just keep a
-server-side list of usernames and passwords.  The authentication
-process will be as follows.
-
-1. user sends username and password to the server.  For now we warn
-   users not to user sensitive passwords, as they'll be transferred
-   and stored in plain text.  These limitations are easily fixed later
-   by running elnode behind an apache https server, and storing only
-   hashes of passwords locally
-
-2. server checks that username and password are in the system,
-   generates a cookie which is associated with the user and sent to
-   the client
-
-3. client stores the cookie, and includes it in all future connections
-   to the system
-
+** DONE iOrg
+   CLOSED: [2012-06-01 Fr 21:06]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 21:06]
+   :END:
 *** CANCELED Figure out Sessions
     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:30] \\
       not needed, for now we'll just use a simple cookie-based system
@@ -398,10 +345,13 @@ process will be as follows.
      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:34]
      :END:
 
-
 * Community bonding [madrid]  <2012-05-10 Do>--<2012-05-20 So>
 
-** TODO Bugpile Requirements Analysis
+** DONE Bugpile Requirements Analysis
+   CLOSED: [2012-06-01 Fr 21:05]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 21:05]
+   :END:
 *** DONE Use Cases in textual form
     CLOSED: [2012-06-01 Fr 18:39]
     :LOGBOOK:
@@ -644,6 +594,36 @@ process will be as follows.
      - State "DONE"       from "TODO"       [2012-05-22 Di 12:59]
      :END:
 
+*** CANCELLED System Activities                                   :CANCELLED:
+    CLOSED: [2012-06-01 Fr 21:32]
+    :LOGBOOK:
+    - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:32] \\
+      obsolete
+    :END:
+**** CANCELLED [req-syst-act-uml] Search                          :CANCELLED:
+     CLOSED: [2012-06-01 Fr 21:32] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:32] \\
+       obsolete
+     :END:
+**** CANCELLED [req-syst-act-uml] Report                          :CANCELLED:
+     CLOSED: [2012-06-01 Fr 21:32] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:32] \\
+       obsolete
+     :END:
+**** CANCELLED [req-syst-act-uml] Notificate                      :CANCELLED:
+     CLOSED: [2012-06-01 Fr 21:32] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:32] \\
+       obsolete
+     :END:
+**** CANCELLED [req-syst-act-uml] Remind                          :CANCELLED:
+     CLOSED: [2012-06-01 Fr 21:31] SCHEDULED: <2012-05-12 Sa>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:31] \\
+       obsolete
+     :END:
 
 *** DONE Use Case Models
     CLOSED: [2012-06-01 Fr 18:39]
@@ -662,27 +642,46 @@ process will be as follows.
      - State "DONE"       from "TODO"       [2012-05-23 Mi 14:03]
      :END:
 
-*** TODO System Activities
-**** TODO [req-syst-act-uml] Search
-     SCHEDULED: <2012-05-12 Sa>
-**** TODO [req-syst-act-uml] Report
-     SCHEDULED: <2012-05-12 Sa>
-**** TODO [req-syst-act-uml] Notificate
-     SCHEDULED: <2012-05-12 Sa>
-**** TODO [req-syst-act-uml] Remind
-     SCHEDULED: <2012-05-12 Sa>
-
-*** TODO Domain Class Model
-**** TODO [req-dom-class-mod-uml] Class Model of Requirements Analysis
-     SCHEDULED: <2012-05-12 Sa>
-
-** TODO Bugpile Software Specification
-*** TODO Transforming Requirements into Specifications
+** DONE Bugpile Software Specification
+   CLOSED: [2012-06-01 Fr 20:44]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 20:44]
+   :END:
+*** DONE Transforming Requirements into Specifications
+    CLOSED: [2012-06-01 Fr 20:44]
+    :LOGBOOK:
+    - State "DONE"       from "TODO"       [2012-06-01 Fr 20:44]
+    :END:
 **** DONE Integrated UML Modelling of Use Cases and UI
      CLOSED: [2012-06-01 Fr 18:40]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:40]
      :END:
+***** CANCELLED [spec-syst-act-uml] Search                        :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:11] SCHEDULED: <2012-05-14 Mo>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:11] \\
+        obsolete
+      :END:
+***** CANCELLED [spec-syst-act-uml] Report                        :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:12] SCHEDULED: <2012-05-14 Mo>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:12] \\
+        obsolete
+      :END:
+***** CANCELLED [spec-syst-act-uml] Notificate                    :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:12] SCHEDULED: <2012-05-14 Mo>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:12] \\
+        obsolete
+      :END:
+***** CANCELLED [spec-syst-act-uml] Remind                        :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:12] SCHEDULED: <2012-05-14 Mo>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:12] \\
+        obsolete
+      :END:
+
 ***** DONE [spec-uc-uml] Create project
       CLOSED: [2012-05-22 Di 15:26] SCHEDULED: <2012-05-13 So>
       :LOGBOOK:
@@ -798,28 +797,6 @@ process will be as follows.
       - State "DONE"       from "TODO"       [2012-05-22 Di 15:27]
       :END:
 
-**** TODO System Activities
-***** TODO [spec-syst-act-uml] Search
-      SCHEDULED: <2012-05-14 Mo>
-***** TODO [spec-syst-act-uml] Report
-      SCHEDULED: <2012-05-14 Mo>
-***** TODO [spec-syst-act-uml] Notificate
-      SCHEDULED: <2012-05-14 Mo>
-***** TODO [spec-syst-act-uml] Remind
-      SCHEDULED: <2012-05-14 Mo>
-
-** TODO iOrg
-*** TODO Authentication
-**** TODO [iorg-impl-auth] Implement basic authentication
-     SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
-**** CANCELLED [iorg-impl-auth] Implement OAuth authentication    :CANCELLED:
-     CLOSED: [2012-06-01 Fr 18:42] SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
-     :LOGBOOK:
-     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:42] \\
-       not part of project
-     :END:
-
-
 * Coding [madrid] <2012-05-21 Mo>--<2012-05-30 Mi>
 ** DONE Bugpile Software Architecture
    CLOSED: [2012-06-01 Fr 19:01]
@@ -841,9 +818,82 @@ process will be as follows.
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-06-01 Fr 19:00]
      :END:
-** TODO Bugpile Application Design
-*** TODO Locally Refining the Software Architecture
-**** DONE Class Model of Application Design
+** DONE Bugpile Application Design
+   CLOSED: [2012-06-01 Fr 20:40]
+   :LOGBOOK:
+   - State "DONE"       from "TODO"       [2012-06-01 Fr 20:40]
+   :END:
+*** CANCELLED Figure out Authentication                           :CANCELLED:
+    CLOSED: [2012-06-01 Fr 21:41]
+    :LOGBOOK:
+    - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:41] \\
+      obsolete or duplicate
+    :END:
+**** CANCELED [iorg-req-authent] Analyse 'basic http authentication'
+     SCHEDULED: <2012-05-04 Fr>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:27] \\
+       nope, this is not as convenience as cookies
+**** CANCELED [iorg-req-authent] Analyse 'OAuth'
+     SCHEDULED: <2012-05-05 Sa>
+     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
+       nicferrier is handling this, we can let him do the implementation
+**** CANCELLED [iorg-req-authent] Try authentication prototype    :CANCELLED:
+     CLOSED: [2012-06-01 Fr 21:41] SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:41] \\
+       duplicate
+     :END:
+This should be a simple cookie system.  For now we can just keep a
+server-side list of usernames and passwords.  The authentication
+process will be as follows.
+
+1. user sends username and password to the server.  For now we warn
+   users not to user sensitive passwords, as they'll be transferred
+   and stored in plain text.  These limitations are easily fixed later
+   by running elnode behind an apache https server, and storing only
+   hashes of passwords locally
+
+2. server checks that username and password are in the system,
+   generates a cookie which is associated with the user and sent to
+   the client
+
+3. client stores the cookie, and includes it in all future connections
+   to the system
+
+*** CANCELLED Refining the Logic                                  :CANCELLED:
+     CLOSED: [2012-06-01 Fr 21:17]
+     :LOGBOOK:
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:17] \\
+       obsolete
+     :END:
+***** CANCELLED [design-refine-logic] Complete the worker functions signatures :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:17] SCHEDULED: <2012-05-28 Mo>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:17] \\
+        too detailistic
+      :END:
+***** CANCELLED [design-refine-logic] Add methods to classes (if necessary). :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:15] SCHEDULED: <2012-05-29 Di>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:15] \\
+        obsolete - classes are pure persistence and storage entities, they do
+        not have methods. org-mode functionality is used (and maybe extendet)
+        to work with classes.
+      :END:
+***** CANCELLED [design-refine-logic] Write uml interaction models (if necesary) :CANCELLED:
+      CLOSED: [2012-06-01 Fr 21:14] SCHEDULED: <2012-05-30 Mi>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:14] \\
+        too much uml
+      :END:
+***** CANCELLED [design-refine-logic] Decide about asynchrous beans :CANCELLED:
+      CLOSED: [2012-06-01 Fr 18:46] SCHEDULED: <2012-05-30 Mi>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:46] \\
+        elnode enables asynchronous processing anyway
+      :END:
+
+*** DONE Class Model of Application Design
      CLOSED: [2012-06-01 Fr 18:44]
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:44]
@@ -867,19 +917,6 @@ process will be as follows.
       CLOSED: [2012-06-01 Fr 18:43] SCHEDULED: <2012-05-26 Sa>--<2012-05-27 So>
       :LOGBOOK:
       - State "DONE"       from "TODO"       [2012-06-01 Fr 18:43]
-      :END:
-**** TODO Refining the Logic
-***** TODO [design-refine-logic] Complete the worker functions signatures
-      SCHEDULED: <2012-05-28 Mo>
-***** TODO [design-refine-logic] Add methods to classes (if necessary).
-      SCHEDULED: <2012-05-29 Di>
-***** TODO [design-refine-logic] Write uml interaction models (if necesary)
-      SCHEDULED: <2012-05-30 Mi>
-***** CANCELLED [design-refine-logic] Decide about asynchrous beans :CANCELLED:
-      CLOSED: [2012-06-01 Fr 18:46] SCHEDULED: <2012-05-30 Mi>
-      :LOGBOOK:
-      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:46] \\
-        elnode enables asynchronous processing anyway
       :END:
 
 ** DONE iOrg
@@ -916,8 +953,59 @@ process will be as follows.
      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:47]
      :END:
 
+
+
+
 * Coding [berlin] <2012-05-31 Do>--<2012-07-08 So>
+** Bugpile Design
+*** TODO Design Bugreport
+**** TODO create bug report
+     SCHEDULED: <2012-06-03 So>
+**** TODO change meta-data of bug report
+     SCHEDULED: <2012-06-03 So>
+meta-data could include
+- type
+  - bug
+  - feature request
+  - refactoring
+- state
+  - unconfirmed
+  - confirmed
+  - open
+  - close
+  - assigned
+  - superseded
+  - etc...
+- priority
+  - low
+  - medium
+  - high
+  - breaking
+  - etc...
+**** TODO change text of bug report
+     SCHEDULED: <2012-06-03 So>
+This would be the actual textual notes, which would presumably live in
+the body of an Org-mode headline.
+**** TODO associate bug report with commit in version control repository
+     SCHEDULED: <2012-06-11 Mo>
+*** TODO Domain Class Model
+**** NEXT [req-dom-class-mod-uml] Class Model of Requirements Analysis
+     SCHEDULED: <2012-06-02 Sa>
+*** TODO iOrg Authentication
+***** TODO [iorg-impl-auth] Implement basic authentication
+      SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
+***** CANCELLED [iorg-impl-auth] Implement OAuth authentication   :CANCELLED:
+      CLOSED: [2012-06-01 Fr 18:42] SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
+      :LOGBOOK:
+      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:42] \\
+        not part of project
+      :END:
+
 ** Bugpile Implementation
+
+
+
+
 
 
 * Evaluating (mid-term) [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>

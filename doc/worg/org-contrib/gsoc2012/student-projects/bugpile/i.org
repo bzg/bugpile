@@ -47,7 +47,6 @@ freedom to focus on the logic of their particular applications.
   :PROPERTIES:
   :CUSTOM_ID: lang-tools
   :END:
-
 | Emacs Lisp  | server side                                      |
 | Java Script | client side                                      |
 | Elnode      | web server, handles get and post requests        |
@@ -89,6 +88,7 @@ which provides an interactive web interface and bug reports stored in
 Org-mode files. A 'lightweight--version' of a systematic software
 engineering approach is used for the development of bugpile, that can
 be used as a guide for developing web applications with iOrg.
+
 ** About Bugtrackers
    :PROPERTIES:
    :CUSTOM_ID: bugtrackers
@@ -154,6 +154,7 @@ importance as inspiration and reference for the bugpile project:
 
 - bugzilla :: a feature-rich, established and well documented
               [[http://www.bugzilla.org/][bugtracker]].
+
 - flyspray :: an uncomplicated, web-based [[http://flyspray.org/][bug tracking system]], used
               by ArchLinux.
 
@@ -161,6 +162,7 @@ importance as inspiration and reference for the bugpile project:
   :PROPERTIES:
   :CUSTOM_ID: req-analysis
   :END:
+
 ** Real World vs Software World
    :PROPERTIES:
    :CUSTOM_ID: real-world-vs-sw-world
@@ -566,7 +568,6 @@ some abbreviations and symbols that require explanation:
 | *⋔*       | (pitchfork) sub-activity       |
 | <<scene>> | basic elements of web UI       |
 
-
 Each /activity/ has one startpoint and one or several endpoints. Each
 /user activity/ is associated with a /scene/. Other /use cases/ that
 are included in the use case modelled, as well as complex /system
@@ -600,7 +601,6 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/register-as-user-uml-roa.png]]
 
-
 *** Edit user details
     :PROPERTIES:
     :CUSTOM_ID: edit-user-details-uml-roa
@@ -626,12 +626,10 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/edit-user-details-uml-roa.png]]
 
-
 *** Login
     :PROPERTIES:
     :CUSTOM_ID: login-uml-roa
     :END: 
-
 
 #+srcname login-uml-roa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/login-uml-roa.png 
@@ -649,13 +647,10 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/login-uml-roa.png]]
 
-
-
 *** Logout
     :PROPERTIES:
     :CUSTOM_ID: logout-uml-roa
     :END: 
-
 
 #+srcname logout-uml-roa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/logout-uml-roa.png 
@@ -668,7 +663,6 @@ storing form data.
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/logout-uml-roa.png]]
-
 
 *** Search users
     :PROPERTIES:
@@ -689,8 +683,6 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/search-users-uml-roa.png]]
 
-
-
 *** Take action on selected users
     :PROPERTIES:
     :CUSTOM_ID: take-action-select-users-uml-roa
@@ -709,7 +701,6 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-roa.png]]
 
-
 *** Create project
     :PROPERTIES:
     :CUSTOM_ID: create-project-uml-roa
@@ -725,7 +716,6 @@ storing form data.
   note right: <<scene>>\n<<input attributes>>\nname\n<<button/link>>\nsubmit
   --> (*)
 #+end_src
-
 
 *** Edit project
     :PROPERTIES:
@@ -778,8 +768,6 @@ storing form data.
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/open-new-task-uml-roa.png]]
 
-
-
 *** Search tasklist
     :PROPERTIES:
     :CUSTOM_ID: search-task-list-uml-roa
@@ -811,7 +799,6 @@ storing form data.
   --> (*)
 #+end_src
 
-
 *** Edit task
     :PROPERTIES:
     :CUSTOM_ID: edit-task-uml-roa
@@ -826,7 +813,6 @@ storing form data.
   note right: <<scene>>\n<<button/link>>>>\nsubmit
   --> (*)
 #+end_src
-
 
 # *** Associate tasks and assignees 
 #     :PROPERTIES:
@@ -854,7 +840,6 @@ storing form data.
 # # | *alternative flow* | --                             |
 # # | *postcondition*    | selected tasks are not assigned to selected assignees anymore |
 
-
 *** Add comment
     :PROPERTIES:
     :CUSTOM_ID: add-comment-uml-roa
@@ -869,7 +854,6 @@ storing form data.
   note right: <<scene>>\n<<textarea>>\ncomment\n<<button/link>>>>\nsubmit
   --> (*)
 #+end_src
-
 
 *** Edit comment
     :PROPERTIES:
@@ -907,7 +891,6 @@ storing form data.
   --> (*)
 #+end_src
 
-
 *** Delete attachment
     :PROPERTIES:
     :CUSTOM_ID: delete-attachment-uml-roa
@@ -922,7 +905,6 @@ storing form data.
   note right: <<scene>>\n<<button/link>>>>\ndelete
   --> (*)
 #+end_src
-
 
 *** Search event log 
     :PROPERTIES:
@@ -939,7 +921,6 @@ storing form data.
   note right: <<scene>>\n<<input attributes>>\nname, date, type \n<<button/link>>\nsearch
   --> (*)
 #+end_src
-
 
 ** Use Case Models
    :PROPERTIES:
@@ -1033,7 +1014,6 @@ storing form data.
 /or produces less than satisfactory output, try adding more slashes/
 /or points to the vertices (e.g. .....> or <----) and watch what/
 /happens./
-
 
 *** Project management
     :PROPERTIES:
@@ -1258,7 +1238,6 @@ activity/:
     :CUSTOM_ID: logout-uml-soa
     :END: 
 
-
 #+srcname logout-uml-soa
 #+begin_src plantuml :file ../../../../images/gsoc/2012/bugpile/logout-uml-soa.png 
   title Logout <soa>
@@ -1271,7 +1250,6 @@ activity/:
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/logout-uml-soa.png]]
-
 
 *** Open new task
     :PROPERTIES:
@@ -1298,8 +1276,6 @@ activity/:
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/open-new-task-uml-soa.png]]
 
-
-
 *** Search users
     :PROPERTIES:
     :CUSTOM_ID: search-users-uml-soa
@@ -1321,8 +1297,6 @@ activity/:
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/search-users-uml-soa.png]]
 
-
-
 *** Take action on selected users
     :PROPERTIES:
     :CUSTOM_ID: take-action-select-users-uml-soa
@@ -1341,7 +1315,6 @@ activity/:
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/take-action-select-users-uml-soa.png]]
-
 
 *** Create project
     :PROPERTIES:
@@ -1364,7 +1337,6 @@ activity/:
       ---> [  false] "<<UA>>\nSubmit project information"
  endif
 #+end_src
-
 
 *** Edit project
     :PROPERTIES:
@@ -1482,7 +1454,6 @@ activity/:
 # # | *alternative flow* | --                             |
 # # | *postcondition*    | selected tasks are not assigned to selected assignees anymore |
 
-
 *** Add comment
     :PROPERTIES:
     :CUSTOM_ID: add-comment-uml-soa
@@ -1502,7 +1473,6 @@ activity/:
       ---> [  false] "<<UA>>\nSubmit comment"
  endif
 #+end_src
-
 
 *** Edit comment
     :PROPERTIES:
@@ -1551,7 +1521,6 @@ activity/:
  endif
 #+end_src
 
-
 *** Delete attachment
     :PROPERTIES:
     :CUSTOM_ID: delete-attachment-uml-soa
@@ -1567,7 +1536,6 @@ activity/:
   --> "<<SA>>\nDelete attachment"
   --> (*)
 #+end_src
-
 
 *** Search event log 
     :PROPERTIES:
@@ -1586,7 +1554,6 @@ activity/:
   --> "<<SA>>\nShow queried log entries"
   --> (*)
 #+end_src
-
 
 ** Complex System Activities
    :PROPERTIES:
@@ -1611,7 +1578,6 @@ The following symbols are used when modeling complex system activities:
 | <<SA>> | (complex) System Activity |
 | <<SD>> | System Decision           |
 | *⋔*    | (pitchfork) sub-activity  |
-
 
 *** Search Tasks
     :PROPERTIES:
@@ -1651,7 +1617,6 @@ activity (compared to querying tasks), only performed by /admins/.
   --> (*)
 #+end_src
 
-
 * Software Architecture
   :PROPERTIES:
   :CUSTOM_ID: softw-arch
@@ -1665,7 +1630,6 @@ The iOrg web-framework is based on a modified 5-layer architecture
 (modified, because the web-layer is further divided into /view/ and
 /controller/):
 
-|-------------------------|
 | iOrg Architecture       |
 |-------------------------|
 | Client                  |
@@ -1761,7 +1725,6 @@ environments.
 
 #+results:
 [[file:../../../../images/gsoc/2012/bugpile/refined-arch-iorg.png]]
-
 
 An iOrg project therefore contains a /view/ directory with one
 subdirectory for each /use case/, and one .org file for each /scene/
@@ -2193,7 +2156,6 @@ the system does not work anymore.
 # system, thus it seems unnecessary to rely on the underlying dVCS to answer
 # queries about users, Emacs and Org-mode functionality should
 # sufficice. 
-
 
 *** Summary of Transformation Rules
     :PROPERTIES:

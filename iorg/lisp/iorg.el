@@ -263,6 +263,17 @@
 
 ;;; Modified or new Emacs functionality
 
+(defmacro iorg-in-file (file &rest body)
+  "Execute BODY in a buffer visiting FILE.
+    If no buffer exists visiting FILE then open FILE in a new buffer."
+  `(save-window-excursion
+     (condition-case nil
+         (with-temp-buffer (find-file ,file) ,@body)
+       (error (message "iorg: there has been an error")))))
+
+; (iorg-in-file "/tmp/something.org" (message "in %s" (current-buffer)))
+
+
 (defun iorg--pwd ()
   "Return the (normalized) directory part of the function `pwd'."
   (expand-file-name

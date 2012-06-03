@@ -2,6 +2,9 @@
 #+Options: ^:nil
 ##+CATEGORY: bugpile
 
+* GSoC Project Evaluation
+** TODO update org mailing-list <2012-06-04 Mo 10:00 +1w>
+** TODO status mail mentors <2012-06-07 Do 10:00 +1w>
 * Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
 
 ** DONE Bugpile Requirements Analysis
@@ -1001,12 +1004,14 @@ the body of an Org-mode headline.
         not part of project
       :END:
 
+*** TODO Application Design
+**** TODO polish design
+     DEADLINE: <2012-06-11 Mo>
+**** TODO finish (programmatical) transformations
+     DEADLINE: <2012-06-11 Mo>
 ** Bugpile Implementation
-
-
-
-
-
+*** TODO Implement simple.el
+    DEADLINE: <2012-06-11 Mo>
 
 * Evaluating (mid-term) [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
 ** GSoC mid-term evalution 

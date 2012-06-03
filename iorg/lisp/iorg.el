@@ -5,8 +5,7 @@
 ;; [not yet: Free Software Foundation, Inc.]
 ;;
 ;; Author: Thorsten Jolitz <tjolitz at gmail dot com>
-;; Co-Author: Eric Schulte  <... at...dot...>
-;; Co-Author: Nic Ferrier  <... at...dot...>
+;; Co-Author: Eric Schulte <eric dot schulte at gmx dot com>
 ;; Keywords: web-applications, interactive, Org-mode, elnode, dvcs
 ;; Homepage:
 ;; http://orgmode.org/worg/org-contrib/gsoc2012/student-projects/bugpile/i.org
@@ -94,7 +93,6 @@
 
 
 ;;;; Variables
-
 (defvar iorg-plantuml-diagram-type-repexp
 (concat "<\\(soa\\|csa\\|dcm\\)>")
   "Regexp used to identify plantuml diagramtypes from the

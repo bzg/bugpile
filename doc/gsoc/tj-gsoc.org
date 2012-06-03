@@ -314,12 +314,18 @@ Deleted, is a special case of 'take action on selected task'
 *** CANCELED Figure out Sessions
     - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:30] \\
       not needed, for now we'll just use a simple cookie-based system
-**** CANCELED [iorg-req-sessions] Analyse 'connect' (node.js framework)
-     SCHEDULED: <2012-05-03 Do>
+**** DONE CANCELED [iorg-req-sessions] Analyse 'connect' (node.js framework)
+     CLOSED: [2012-06-03 So 09:18] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from ""           [2012-06-03 So 09:18]
+     :END:
      - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
        not part of this project
-**** CANCELED [iorg-req-sessions] Analyse 'express' (node.js framework)
-     SCHEDULED: <2012-05-03 Do>
+**** DONE CANCELED [iorg-req-sessions] Analyse 'express' (node.js framework)
+     CLOSED: [2012-06-03 So 09:18] SCHEDULED: <2012-05-03 Do>
+     :LOGBOOK:
+     - State "DONE"       from ""           [2012-06-03 So 09:18]
+     :END:
      - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
        not part of this project
 *** DONE Figure out object-orientation
@@ -832,36 +838,20 @@ Deleted, is a special case of 'take action on selected task'
     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:41] \\
       obsolete or duplicate
     :END:
-**** CANCELED [iorg-req-authent] Analyse 'basic http authentication'
-     SCHEDULED: <2012-05-04 Fr>
+**** DONE CANCELED [iorg-req-authent] Analyse 'basic http authentication'
+     CLOSED: [2012-06-03 So 09:18] SCHEDULED: <2012-05-04 Fr>
+     :LOGBOOK:
+     - State "DONE"       from ""           [2012-06-03 So 09:18]
+     :END:
      - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:27] \\
        nope, this is not as convenience as cookies
-**** CANCELED [iorg-req-authent] Analyse 'OAuth'
-     SCHEDULED: <2012-05-05 Sa>
+**** DONE CANCELED [iorg-req-authent] Analyse 'OAuth'
+     CLOSED: [2012-06-03 So 09:18] SCHEDULED: <2012-05-05 Sa>
+     :LOGBOOK:
+     - State "DONE"       from ""           [2012-06-03 So 09:18]
+     :END:
      - State "CANCELED"   from "TODO"       [2012-05-07 Mon 12:26] \\
        nicferrier is handling this, we can let him do the implementation
-**** CANCELLED [iorg-req-authent] Try authentication prototype    :CANCELLED:
-     CLOSED: [2012-06-01 Fr 21:41] SCHEDULED: <2012-05-07 Mo>--<2012-05-09 Mi>
-     :LOGBOOK:
-     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:41] \\
-       duplicate
-     :END:
-This should be a simple cookie system.  For now we can just keep a
-server-side list of usernames and passwords.  The authentication
-process will be as follows.
-
-1. user sends username and password to the server.  For now we warn
-   users not to user sensitive passwords, as they'll be transferred
-   and stored in plain text.  These limitations are easily fixed later
-   by running elnode behind an apache https server, and storing only
-   hashes of passwords locally
-
-2. server checks that username and password are in the system,
-   generates a cookie which is associated with the user and sent to
-   the client
-
-3. client stores the cookie, and includes it in all future connections
-   to the system
 
 *** CANCELLED Refining the Logic                                  :CANCELLED:
      CLOSED: [2012-06-01 Fr 21:17]
@@ -995,6 +985,30 @@ the body of an Org-mode headline.
 **** NEXT [req-dom-class-mod-uml] Class Model of Requirements Analysis
      SCHEDULED: <2012-06-02 Sa>
 *** TODO iOrg Authentication
+***** TODO [iorg-req-authent] Try authentication prototype
+     SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
+     :LOGBOOK:
+     - State "TODO"       from "CANCELLED"  [2012-06-03 So 09:14]
+     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:41] \\
+       duplicate
+     :END:
+This should be a simple cookie system.  For now we can just keep a
+server-side list of usernames and passwords.  The authentication
+process will be as follows.
+
+1. user sends username and password to the server.  For now we warn
+   users not to user sensitive passwords, as they'll be transferred
+   and stored in plain text.  These limitations are easily fixed later
+   by running elnode behind an apache https server, and storing only
+   hashes of passwords locally
+
+2. server checks that username and password are in the system,
+   generates a cookie which is associated with the user and sent to
+   the client
+
+3. client stores the cookie, and includes it in all future connections
+   to the system
+
 ***** TODO [iorg-impl-auth] Implement basic authentication
       SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
 ***** CANCELLED [iorg-impl-auth] Implement OAuth authentication   :CANCELLED:

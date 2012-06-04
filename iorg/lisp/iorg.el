@@ -89,8 +89,10 @@
 
 ;; (unless (fboundp 'xyz) (defalias 'xyz 'uvw))
 
-;; (declare-function iorg-xyz-uvw-abc "iorg-xyz" ())
-
+;;;; Declare functions
+(declare-function org-check-for-org-mode "org-agenda" nil)
+(declare-function org-entry-is-todo-p "org" nil)
+(declare-function org-get-todo-state "org" nil)
 
 ;;;; Variables
 (defvar iorg-plantuml-diagram-type-repexp

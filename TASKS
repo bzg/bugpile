@@ -948,6 +948,31 @@ Deleted, is a special case of 'take action on selected task'
 ** Bugpile Implementation
 *** TODO Implement simple.el
     DEADLINE: <2012-06-11 Mo>
+**** TODO Serve simple.org to html using elnode and org-export
+     DEADLINE: <2012-06-05 Tue>
+
+**** TODO Add a JS form and button to the html export of simple.org
+     DEADLINE: <2012-06-05 Tue>
+- use the html exporter from org-export for export
+- use a filter (see comments in org-export) to add the form/button to
+  the final html output
+
+**** TODO Write an elnode handler to handle the form POST response
+     DEADLINE: <2012-06-06 Wed>
+This should update the contents of simple.org and serve the new page
+as a response.
+
+**** TODO Change a TODO state using the web interface
+     DEADLINE: <2012-06-06 Wed>
+
+**** TODO Change a property using the web interface
+     DEADLINE: <2012-06-07 Thu>
+
+**** TODO Change a tag using the web interface
+     DEADLINE: <2012-06-07 Thu>
+
+**** TODO Change headline body text using the web interface
+     DEADLINE: <2012-06-08 Fri>
 
 ** Bugpile Design
 *** TODO Design Bugreport

@@ -94,7 +94,7 @@
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
 
-;;;; Variables 
+;;;; Variables
 (defvar iorg-plantuml-diagram-type-repexp
 (concat "<\\(soa\\|csa\\|dcm\\)>")
   "Regexp used to identify plantuml diagramtypes from the

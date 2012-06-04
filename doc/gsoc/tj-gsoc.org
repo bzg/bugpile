@@ -6,7 +6,6 @@
 ** TODO update org mailing-list <2012-06-04 Mo 10:00 +1w>
 ** TODO status mail mentors <2012-06-07 Do 10:00 +1w>
 * Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
-
 ** DONE Bugpile Requirements Analysis
    CLOSED: [2012-06-01 Fr 21:07]
    :LOGBOOK:
@@ -355,7 +354,6 @@ Deleted, is a special case of 'take action on selected task'
      :END:
 
 * Community bonding [madrid]  <2012-05-10 Do>--<2012-05-20 So>
-
 ** DONE Bugpile Requirements Analysis
    CLOSED: [2012-06-01 Fr 21:05]
    :LOGBOOK:
@@ -946,14 +944,16 @@ Deleted, is a special case of 'take action on selected task'
      - State "DONE"       from "TODO"       [2012-06-01 Fr 18:47]
      :END:
 
-
-
-
 * Coding [berlin] <2012-05-31 Do>--<2012-07-08 So>
+** Bugpile Implementation
+*** TODO Implement simple.el
+    DEADLINE: <2012-06-11 Mo>
+
 ** Bugpile Design
 *** TODO Design Bugreport
 **** TODO create bug report
      SCHEDULED: <2012-06-03 So>
+
 **** TODO change meta-data of bug report
      SCHEDULED: <2012-06-03 So>
 meta-data could include
@@ -975,17 +975,26 @@ meta-data could include
   - high
   - breaking
   - etc...
+
 **** TODO change text of bug report
      SCHEDULED: <2012-06-03 So>
 This would be the actual textual notes, which would presumably live in
 the body of an Org-mode headline.
+
 **** TODO associate bug report with commit in version control repository
      SCHEDULED: <2012-06-11 Mo>
-*** TODO Domain Class Model
+
+*** Domain Class Model
 **** NEXT [req-dom-class-mod-uml] Class Model of Requirements Analysis
      SCHEDULED: <2012-06-02 Sa>
-*** TODO iOrg Authentication
-***** TODO [iorg-req-authent] Try authentication prototype
+
+*** iOrg Authentication
+I think Nic Ferrier is working on an authentication system for elnode,
+so hopefully if we save this until the end of the summer he will do
+all of the heavy lifting for us.  For that reason I'm removing the
+TODO from this headline for now.
+
+***** [iorg-req-authent] Try authentication prototype
      SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
      :LOGBOOK:
      - State "TODO"       from "CANCELLED"  [2012-06-03 So 09:14]
@@ -1009,8 +1018,9 @@ process will be as follows.
 3. client stores the cookie, and includes it in all future connections
    to the system
 
-***** TODO [iorg-impl-auth] Implement basic authentication
+***** [iorg-impl-auth] Implement basic authentication
       SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
+
 ***** CANCELLED [iorg-impl-auth] Implement OAuth authentication   :CANCELLED:
       CLOSED: [2012-06-01 Fr 18:42] SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
       :LOGBOOK:
@@ -1021,26 +1031,17 @@ process will be as follows.
 *** TODO Application Design
 **** TODO polish design
      DEADLINE: <2012-06-11 Mo>
+
 **** TODO finish (programmatical) transformations
      DEADLINE: <2012-06-11 Mo>
-** Bugpile Implementation
-*** TODO Implement simple.el
-    DEADLINE: <2012-06-11 Mo>
 
 * Evaluating (mid-term) [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
 ** GSoC mid-term evalution 
-
-
 * Coding [berlin] <2012-07-14 Sa>--<2012-08-12 So>
 ** Bugpile Implementation
 ** Bugpile Verification
-
-
 * Cleaning up [berlin] <2012-08-13 Mo>--<2012-08-19 So>
 ** Clean code
 ** Clean documentation
-
 * Evaluating (final) [berlin] <2012-08-20 Mo>--<2012-08-24 Fr>
 ** GSoC Final evaluation
-
-

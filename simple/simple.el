@@ -1,4 +1,4 @@
-m;;; simple.el -- iorg proof of concept
+;;; simple.el -- iorg proof of concept
 (require 'org)
 (require 'elnode)
 (require 'org-export)

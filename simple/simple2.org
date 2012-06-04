@@ -1,0 +1,60 @@
+#+Title: A simple example Org-mode file
+
+* TODO First top level heading                                          :bar:
+  :PROPERTIES:
+  :iorg-property: foo
+  :END:
+
+** NEXT First child of first entry                                     :note:
+  :PROPERTIES:
+  :iorg-property: book
+  :END:
+
+This heading has five components.  Lets see if we can edit all five
+through the web interface.
+1. task state, currently this is =TODO= lets change it to =DONE=.
+2. a property, try to change the =iorg-property= from =foo= to =bar=.
+3. tag, change the tag from =bar= to =foo=.
+4. heading text, allow the heading text to be edited through the web interface.
+5. body text, allow this text to be edited through the web interface
+
+The five items listed about should be in rough order of difficulty.
+So lets work through them in order.  The simplest should be changing
+the task state.  We can start with a simple button on the final html
+page next to the headline, the text of this button can be "finish",
+and pressing it will change the TODO state in this Org-mode file on
+the server to DONE.  The implementation should look like this...
+- add a function to the `org-export-html-final-hook' which will scan
+  through the resulting HTML and will add the html/JS necessary to
+  include this button on the final web page.
+- start an elnode server and add two different handlers, one will
+  serve up this web page (with the above hook), and the second will
+  handle the form data returned by the "finish" button.
+- the second handler will use the `org-todo' function to change the
+  actual state of the heading.
+
+Once this is working we should have a much better idea of what is
+required to make this process work end-to-end.  With luck we may have
+some initial functionality by the end of next week (some number of the
+above 5 parts being editable).
+
+Lets keep all of the code implementing this in file:simple.el, once it
+is written we can see what it look like and decide how to better
+organize it into a directory structure which we'll want to keep for
+the remainder of the iorg project.
+
+I've stubbed out a few functions in file:simple.el, add new functions
+as they are needed.
+
+* TODO Second top level heading                                         :ces:
+  :PROPERTIES:
+  :iorg-property: sec
+  :END:
+
+** DONE First child of second entry                                     :lab:
+   :PROPERTIES:
+   :iorg-property: top
+   :END:
+
+Some more headlines, not to complicate things, but to be able to
+recognize the patterns in the exported html file.

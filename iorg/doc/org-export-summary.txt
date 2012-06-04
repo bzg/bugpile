@@ -1,0 +1,279 @@
+;;; org-export.el --- Generic Export Engine For Org
+
+;; Copyright (C) 2012  Free Software Foundation, Inc.
+
+;; Author: Nicolas Goaziou <n.goaziou at gmail dot com>
+;; Keywords: outlines, hypermedia, calendar, wp
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+;;
+;; This library implements a generic export engine for Org, built on
+;; its syntactical parser: Org Elements.
+;;
+;; Besides that parser, the generic exporter is made of three distinct
+;; parts:
+;;
+;; - The communication channel consists in a property list, which is
+;;   created and updated during the process.  Its use is to offer
+;;   every piece of information, would it be about initial environment
+;;   or contextual data, all in a single place.  The exhaustive list
+;;   of properties is given in "The Communication Channel" section of
+;;   this file.
+;;
+;; - The transcoder walks the parse tree, ignores or treat as plain
+;;   text elements and objects according to export options, and
+;;   eventually calls back-end specific functions to do the real
+;;   transcoding, concatenating their return value along the way.
+;;
+;; - The filter system is activated at the very beginning and the very
+;;   end of the export process, and each time an element or an object
+;;   has been converted.  It is the entry point to fine-tune standard
+;;   output from back-end transcoders.
+;;
+;; The core function is `org-export-as'.  It returns the transcoded
+;; buffer as a string.
+;;
+;; In order to derive an exporter out of this generic implementation,
+;; one can define a transcode function for each element or object.
+;; Such function should return a string for the corresponding element,
+;; without any trailing space, or nil.  It must accept three
+;; arguments:
+;; 1. the element or object itself,
+;; 2. its contents, or nil when it isn't recursive,
+;; 3. the property list used as a communication channel.
+;;
+;; If no such function is found, that element or object type will
+;; simply be ignored, along with any separating blank line.  The same
+;; will happen if the function returns the nil value.  If that
+;; function returns the empty string, the type will be ignored, but
+;; the blank lines will be kept.
+;;
+;; Contents, when not nil, are stripped from any global indentation
+;; (although the relative one is preserved).  They also always end
+;; with a single newline character.
+;;
+;; These functions must follow a strict naming convention:
+;; `org-BACKEND-TYPE' where, obviously, BACKEND is the name of the
+;; export back-end and TYPE the type of the element or object handled.
+;;
+;; Moreover, two additional functions can be defined.  On the one
+;; hand, `org-BACKEND-template' returns the final transcoded string,
+;; and can be used to add a preamble and a postamble to document's
+;; body.  It must accept two arguments: the transcoded string and the
+;; property list containing export options.  On the other hand,
+;; `org-BACKEND-plain-text', when defined, is to be called on every
+;; text not recognized as an element or an object.  It must accept two
+;; arguments: the text string and the information channel.
+;;
+;; Any back-end can define its own variables.  Among them, those
+;; customizables should belong to the `org-export-BACKEND' group.
+;; Also, a special variable, `org-BACKEND-option-alist', allows to
+;; define buffer keywords and "#+options:" items specific to that
+;; back-end.  See `org-export-option-alist' for supported defaults and
+;; syntax.
+;;
+;; Tools for common tasks across back-ends are implemented in the
+;; penultimate part of this file.  A dispatcher for standard back-ends
+;; is provided in the last one.
+
+
+186 matches for "(def" in buffer: org-export.el
+    110:(defconst org-export-max-depth 19
+    113:(defconst org-export-option-alist
+    174:(defconst org-export-special-keywords
+    181:(defconst org-export-filters-alist
+    249:(defconst org-export-default-inline-image-rule
+    273:(defgroup org-export nil
+    278:(defgroup org-export-general nil
+    283:(defcustom org-export-with-archived-trees 'headline
+    299:(defcustom org-export-with-author t
+    306:(defcustom org-export-with-clocks nil
+    313:(defcustom org-export-with-creator 'comment
+    326:(defcustom org-export-creator-string
+    334:(defcustom org-export-with-drawers t
+    350:(defcustom org-export-with-email nil
+    357:(defcustom org-export-with-emphasize t
+    368:(defcustom org-export-exclude-tags '("noexport")
+    380:(defcustom org-export-with-fixed-width t
+    386:  : (while (defc cnt)
+    395:(defcustom org-export-with-footnotes t
+    402:(defcustom org-export-headline-levels 3
+    413:(defcustom org-export-default-language "en"
+    420:(defcustom org-export-preserve-breaks nil
+    430:(defcustom org-export-with-entities t
+    444:(defcustom org-export-with-planning nil
+    451:(defcustom org-export-with-priority nil
+    461:(defcustom org-export-with-section-numbers t
+    472:(defcustom org-export-select-tags '("export")
+    485:(defcustom org-export-with-special-strings t
+    502:(defcustom org-export-with-sub-superscripts t
+    531:(defcustom org-export-with-toc t
+    549:(defcustom org-export-with-tables t
+    561:(defcustom org-export-with-tags t
+    576:(defcustom org-export-with-tasks t
+    593:(defcustom org-export-time-stamp-file t
+    602:(defcustom org-export-with-timestamps t
+    618:(defcustom org-export-with-todo-keywords t
+    624:(defcustom org-export-allow-BIND 'confirm
+    634:(defcustom org-export-snippet-translation-alist nil
+    648:(defcustom org-export-coding-system nil
+    653:(defcustom org-export-copy-to-kill-ring t
+    658:(defcustom org-export-initial-scope 'buffer
+    666:(defcustom org-export-show-temporary-export-buffer t
+    676:(defcustom org-export-dispatch-use-expert-ui nil
+    956:(defun org-export-get-environment (&optional backend subtreep ext-plist)
+    990:(defun org-export-parse-option-keyword (options &optional backend)
+   1019:(defun org-export-get-subtree-options ()
+   1046:(defun org-export-get-inbuffer-options (&optional backend files)
+   1174:(defun org-export-get-buffer-attributes ()
+   1200:(defun org-export-get-global-options (&optional backend)
+   1219:(defun org-export-store-footnote-definitions (info)
+   1244:	(let ((def (org-footnote-at-definition-p)))
+   1260:(defvar org-export-allow-BIND-local nil)
+   1261:(defun org-export-confirm-letbind ()
+   1272:(defun org-export-install-letbind-maybe ()
+   1302:(defun org-export-collect-tree-properties (data info)
+   1345:  (let ((defs (plist-get info :footnote-definition-alist)))
+   1366:(defun org-export-get-min-level (data options)
+   1384:(defun org-export-collect-headline-numbering (data options)
+   1408:(defun org-export-populate-ignore-list (data options)
+   1440:(defun org-export--selected-trees (data info)
+   1467:(defun org-export--skip-p (blob options select-tags)
+   1547:(defun org-export-transcoder (blob info)
+   1557:(defun org-export-data (data info)
+   1647:(defun org-export-interpret-p (blob info)
+   1671:(defsubst org-export-expand (blob contents)
+   1679:(defun org-export-ignore-element (element info)
+   1726:(defvar org-export-before-parsing-hook nil
+   1736:(defvar org-export-filter-parse-tree-functions nil
+   1743:(defvar org-export-filter-final-output-functions nil
+   1750:(defvar org-export-filter-plain-text-functions nil
+   1760:(defvar org-export-filter-center-block-functions nil
+   1766:(defvar org-export-filter-clock-functions nil
+   1772:(defvar org-export-filter-drawer-functions nil
+   1778:(defvar org-export-filter-dynamic-block-functions nil
+   1784:(defvar org-export-filter-headline-functions nil
+   1790:(defvar org-export-filter-inlinetask-functions nil
+   1796:(defvar org-export-filter-plain-list-functions nil
+   1802:(defvar org-export-filter-item-functions nil
+   1808:(defvar org-export-filter-comment-functions nil
+   1814:(defvar org-export-filter-comment-block-functions nil
+   1820:(defvar org-export-filter-example-block-functions nil
+   1826:(defvar org-export-filter-export-block-functions nil
+   1832:(defvar org-export-filter-fixed-width-functions nil
+   1838:(defvar org-export-filter-footnote-definition-functions nil
+   1844:(defvar org-export-filter-horizontal-rule-functions nil
+   1850:(defvar org-export-filter-keyword-functions nil
+   1856:(defvar org-export-filter-latex-environment-functions nil
+   1862:(defvar org-export-filter-babel-call-functions nil
+   1868:(defvar org-export-filter-paragraph-functions nil
+   1874:(defvar org-export-filter-planning-functions nil
+   1880:(defvar org-export-filter-property-drawer-functions nil
+   1886:(defvar org-export-filter-quote-block-functions nil
+   1893:(defvar org-export-filter-quote-section-functions nil
+   1899:(defvar org-export-filter-section-functions nil
+   1905:(defvar org-export-filter-special-block-functions nil
+   1911:(defvar org-export-filter-src-block-functions nil
+   1917:(defvar org-export-filter-table-functions nil
+   1923:(defvar org-export-filter-table-cell-functions nil
+   1929:(defvar org-export-filter-table-row-functions nil
+   1935:(defvar org-export-filter-verse-block-functions nil
+   1944:(defvar org-export-filter-bold-functions nil
+   1950:(defvar org-export-filter-code-functions nil
+   1956:(defvar org-export-filter-entity-functions nil
+   1962:(defvar org-export-filter-export-snippet-functions nil
+   1968:(defvar org-export-filter-footnote-reference-functions nil
+   1974:(defvar org-export-filter-inline-babel-call-functions nil
+   1980:(defvar org-export-filter-inline-src-block-functions nil
+   1986:(defvar org-export-filter-italic-functions nil
+   1992:(defvar org-export-filter-latex-fragment-functions nil
+   1998:(defvar org-export-filter-line-break-functions nil
+   2004:(defvar org-export-filter-link-functions nil
+   2010:(defvar org-export-filter-macro-functions nil
+   2016:(defvar org-export-filter-radio-target-functions nil
+   2022:(defvar org-export-filter-statistics-cookie-functions nil
+   2028:(defvar org-export-filter-strike-through-functions nil
+   2034:(defvar org-export-filter-subscript-functions nil
+   2040:(defvar org-export-filter-superscript-functions nil
+   2046:(defvar org-export-filter-target-functions nil
+   2052:(defvar org-export-filter-timestamp-functions nil
+   2058:(defvar org-export-filter-underline-functions nil
+   2064:(defvar org-export-filter-verbatim-functions nil
+   2070:(defun org-export-filter-apply-functions (filters value info)
+   2080:(defun org-export-install-filters (info)
+   2135:(defun org-export-as
+   2220:(defun org-export-to-buffer
+   2243:(defun org-export-to-file
+   2268:(defun org-export-output-file-name (extension &optional subtreep pub-dir)
+   2315:(defmacro org-export-with-current-buffer-copy (&rest body)
+   2343:(def-edebug-spec org-export-with-current-buffer-copy (body))
+   2345:(defun org-export-expand-include-keyword (&optional included dir)
+   2428:(defun org-export-prepare-file-contents (file &optional lines ind minlevel)
+   2519:(defun org-export-snippet-backend (export-snippet)
+   2544:(defun org-export-collect-footnote-definitions (data info)
+   2562:		 (let ((def (org-export-get-footnote-definition fn info)))
+   2577:(defun org-export-footnote-first-reference-p (footnote-reference info)
+   2609:(defun org-export-get-footnote-definition (footnote-reference info)
+   2616:(defun org-export-get-footnote-number (footnote info)
+   2676:(defun org-export-get-relative-level (headline info)
+   2682:(defun org-export-low-level-p (headline info)
+   2697:(defun org-export-get-headline-number (headline info)
+   2702:(defun org-export-numbered-headline-p (headline info)
+   2709:(defun org-export-number-to-roman (n)
+   2725:(defun org-export-first-sibling-p (headline info)
+   2731:(defun org-export-last-sibling-p (headline info)
+   2760:(defun org-export-solidify-link-text (s)
+   2765:(defun org-export-get-coderef-format (path desc)
+   2774:(defun org-export-inline-image-p (link &optional rules)
+   2798:(defun org-export-resolve-fuzzy-link (link info)
+   2867:(defun org-export-resolve-id-link (link info)
+   2883:(defun org-export-resolve-coderef (ref info)
+   2916:(defun org-export-expand-macro (macro info)
+   2944:(defun org-export-get-ordinal (element info &optional types predicate)
+   3028:(defun org-export-get-loc (element info)
+   3057:(defun org-export-unravel-code (element)
+   3108:(defun org-export-format-code (code fun &optional num-lines ref-alist)
+   3137:(defun org-export-format-code-default (element info)
+   3201:(defun org-export-table-has-special-column-p (table)
+   3222:(defun org-export-table-has-header-p (table info)
+   3240:(defun org-export-table-row-is-special-p (table-row info)
+   3276:(defun org-export-table-row-group (table-row info)
+   3298:(defun org-export-table-cell-width (table-cell info)
+   3333:(defun org-export-table-cell-alignment (table-cell info)
+   3392:(defun org-export-table-cell-borders (table-cell info)
+   3482:(defun org-export-table-cell-starts-colgroup-p (table-cell info)
+   3494:(defun org-export-table-cell-ends-colgroup-p (table-cell info)
+   3504:(defun org-export-table-row-starts-rowgroup-p (table-row info)
+   3513:(defun org-export-table-row-ends-rowgroup-p (table-row info)
+   3522:(defun org-export-table-row-starts-header-p (table-row info)
+   3530:(defun org-export-table-row-ends-header-p (table-row info)
+   3538:(defun org-export-table-dimensions (table info)
+   3559:(defun org-export-table-cell-address (table-cell info)
+   3593:(defun org-export-get-table-cell-at (address table info)
+   3631:(defun org-export-collect-headlines (info &optional n)
+   3649:(defun org-export-collect-elements (type info &optional predicate)
+   3671:(defun org-export-collect-tables (info)
+   3680:(defun org-export-collect-figures (info predicate)
+   3695:(defun org-export-collect-listings (info)
+   3719:(defun org-export-get-genealogy (blob info)
+   3751:(defun org-export-get-parent (blob info)
+   3757:(defun org-export-get-parent-headline (blob info)
+   3767:(defun org-export-get-parent-paragraph (object info)
+   3777:(defun org-export-get-parent-table (object info)
+   3787:(defun org-export-get-previous-element (blob info)
+   3797:(defun org-export-get-next-element (blob info)
+   3816:(defun org-export-dispatch ()
+   3904:(defun org-export-dispatch-ui (options expertp)

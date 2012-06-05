@@ -81,3 +81,5 @@
            (file-name-sans-extension
             (file-name-nondirectory org-file))
            ".html") simple-dir ))))))
+
+(provide 'simple)

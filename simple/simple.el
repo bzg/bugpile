@@ -41,7 +41,7 @@
   (with-temp-buffer 
     (insert transc-str)
     (goto-char (point-min))
-    (while (re-search-forward iorg-html-postprocess-todo-regexp)
+    (while (re-search-forward iorg-html-postprocess-todo-regexp nil t)
       (re-search-forward iorg-html-postprocess-begin-txt-regexp)
       (re-search-backward "<div")
       (insert
@@ -49,7 +49,7 @@
 <!-- Formularelemente und andere Elemente innerhalb des
 Formulars -->
 </form>"))
-    (buffer-string))))
+    (buffer-substring-no-properties (point-min) (point-max)))))
 
 (defun iorg-launch (port)
   "Launch the elnode server which will serve and edit simple.org."

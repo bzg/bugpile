@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+<head>
+<title>A simple example Org-mode file</title>
+
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
+<meta name="title" content="A simple example Org-mode file"/>
+<meta name="generator" content="Org-mode"/>
+<meta name="generated" content="2012-06-05 13:19:27 CEST"/>
+<meta name="author" content="Thorsten Jolitz"/>
+<meta name="description" content="nil"/>
+<meta name="keywords" content="nil"/>
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script><script type="text/javascript" src="http://orgmode.org/mathjax/MathJax.js">
+<!--/*--><![CDATA[/*><!--*/
+    MathJax.Hub.Config({
+        // Only one of the two following lines, depending on user settings
+        // First allows browser-native MathML display, second forces HTML/CSS
+        //  config: ["MMLorHTML.js"], jax: ["input/TeX"],
+            jax: ["input/TeX", "output/HTML-CSS"],
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js",
+                     "TeX/noUndefined.js"],
+        tex2jax: {
+            inlineMath: [ ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"], ["\\begin{displaymath}","\\end{displaymath}"] ],
+            skipTags: ["script","noscript","style","textarea","pre","code"],
+            ignoreClass: "tex2jax_ignore",
+            processEscapes: false,
+            processEnvironments: true,
+            preview: "TeX"
+        },
+        showProcessingMessages: true,
+        displayAlign: "center",
+        displayIndent: "2em",
+
+        "HTML-CSS": {
+             scale: 100,
+             availableFonts: ["STIX","TeX"],
+             preferredFont: "TeX",
+             webFont: "TeX",
+             imageFont: "TeX",
+             showMathMenu: true,
+        },
+        MMLorHTML: {
+             prefer: {
+                 MSIE:    "MML",
+                 Firefox: "MML",
+                 Opera:   "HTML",
+                 other:   "HTML"
+             }
+        }
+    });
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">A simple example Org-mode file</h1>
+
+<div id="outline-container-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> This file has a top level heading&nbsp;&nbsp;&nbsp;<span class="tag"><span class="bar">bar</span></span></h2>
+<form action="URI" method="Methode" enctype="MIME-Typ">
+<!-- Formularelemente und andere Elemente innerhalb des
+Formulars -->
+</form><div class="outline-text-2" id="text-1">
+
+
+<p>
+This heading has five components.  Lets see if we can edit all five
+through the web interface.
+</p>
+<ol>
+<li>task state, currently this is <code>TODO</code> lets change it to <code>DONE</code>.
+</li>
+<li>a property, try to change the <code>iorg-property</code> from <code>foo</code> to <code>bar</code>.
+</li>
+<li>tag, change the tag from <code>bar</code> to <code>foo</code>.
+</li>
+<li>heading text, allow the heading text to be edited through the web interface.
+</li>
+<li>body text, allow this text to be edited through the web interface
+</li>
+</ol>
+
+
+<p>
+The five items listed about should be in rough order of difficulty.
+So lets work through them in order.  The simplest should be changing
+the task state.  We can start with a simple button on the final html
+page next to the headline, the text of this button can be "finish",
+and pressing it will change the TODO state in this Org-mode file on
+the server to DONE.  The implementation should look like this&hellip;
+</p>
+<ul>
+<li>add a function to the `org-export-html-final-hook' which will scan
+through the resulting HTML and will add the html/JS necessary to
+include this button on the final web page.
+</li>
+<li>start an elnode server and add two different handlers, one will
+serve up this web page (with the above hook), and the second will
+handle the form data returned by the "finish" button.
+</li>
+<li>the second handler will use the `org-todo' function to change the
+actual state of the heading.
+</li>
+</ul>
+
+
+<p>
+Once this is working we should have a much better idea of what is
+required to make this process work end-to-end.  With luck we may have
+some initial functionality by the end of next week (some number of the
+above 5 parts being editable).
+</p>
+
+
+<p>
+Lets keep all of the code implementing this in <a href="file://simple.el">file://simple.el</a>, once it
+is written we can see what it look like and decide how to better
+organize it into a directory structure which we'll want to keep for
+the remainder of the iorg project.
+</p>
+
+
+<p>
+I've stubbed out a few functions in <a href="file://simple.el">file://simple.el</a>, add new functions
+as they are needed.
+</p>
+</div>
+</div>
+
+</div>
+<div id="postamble">
+<p class="date"> Date: 2012-06-05 13:19:27 CEST </p> 
+<p class="author"> Author : Thorsten Jolitz</p>
+<p class="creator"> Generated by Org mode 7.8.09 in Emacs 24.0.93.1. </p><a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
+
+</div>
+</body>
+</html>

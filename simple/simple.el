@@ -71,15 +71,12 @@
   "Export ORG-FILE to html and return the expanded filename"
   (if (not (file-exists-p (expand-file-name org-file simple-dir)))
       (error "File doesn't exist")
-    (with-current-buffer
-        (find-file (expand-file-name org-file simple-dir))
-      (org-export-to-file
-       'e-html
-       (expand-file-name
-        (concat
-         (file-name-sans-extension
-          (file-name-nondirectory org-file))
-         ".html") simple-dir )))))
-    
-    
-
+    (save-window-excursion
+      (with-current-buffer (find-file (expand-file-name org-file simple-dir))
+        (org-export-to-file
+         'e-html
+         (expand-file-name
+          (concat
+           (file-name-sans-extension
+            (file-name-nondirectory org-file))
+           ".html") simple-dir ))))))

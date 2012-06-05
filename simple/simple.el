@@ -55,7 +55,6 @@
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
-  (elnode-http-start httpcon 200 '("Content-Type" . "text/html"))
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
 (defun iorg-change-state-handler (httpcon)

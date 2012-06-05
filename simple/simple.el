@@ -3,6 +3,7 @@
 (require 'elnode)
 (require 'org-export)
 (require 'org-agenda)
+(require 'util)
 
 ;;;; Declare functions
 (declare-function org-entry-is-todo-p "org" nil)

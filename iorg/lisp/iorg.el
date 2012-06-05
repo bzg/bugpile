@@ -94,7 +94,11 @@
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
 
+<<<<<<< HEAD
 ;;;; Variables 
+=======
+;;;; Variables
+>>>>>>> added summary of org-export and a few declared functions in iorg.el
 (defvar iorg-plantuml-diagram-type-repexp
 (concat "<\\(soa\\|csa\\|dcm\\)>")
   "Regexp used to identify plantuml diagramtypes from the

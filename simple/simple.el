@@ -45,15 +45,15 @@
       (re-search-forward iorg-html-postprocess-begin-txt-regexp)
       (re-search-backward "<div")
       (insert
-       "<form action=\"URI\" method=\"Methode\" enctype=\"MIME-Typ\">
-<!-- Formularelemente und andere Elemente innerhalb des
-Formulars -->
-</form>"))
+          "<form action=\"http://localhost:8028/todo/\">
+                  <input type=\"submit\" value=\" Finish \">
+          </form>"))
     (buffer-substring-no-properties (point-min) (point-max)))))
 
 (defun iorg-launch (port)
   "Launch the elnode server which will serve and edit simple.org."
   ;; TODO: (1) elnode serving simple.org to html
+  
   )
 
 (defun iorg-change-state (file headline new-state)

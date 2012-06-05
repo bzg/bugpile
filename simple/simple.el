@@ -42,9 +42,11 @@
             (re-search-forward iorg-html-postprocess-todo-regexp nil t)
             (re-search-forward iorg-html-postprocess-begin-txt-regexp nil t))
       (goto-char (match-beginning 0))
-      (insert (concat "<form action=\"http://localhost:8028/todo/\">"
-                      "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
-                      "</form>")))
+      (insert
+       (concat
+        "<form action=\"http://localhost:8028/todo/\">"
+        "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
+        "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defun iorg-launch (port)

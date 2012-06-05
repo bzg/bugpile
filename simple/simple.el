@@ -3,25 +3,12 @@
 (require 'elnode)
 (require 'org-export)
 
-
 ;;;; Declare functions
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
 
-;; ;; obsolete - old exporter
-;; (add-hook 'org-export-html-final-hook 'iorg-html-postprocess)
-
-
-;; (defvar org-export-filter-final-output-functions nil
-;;   "List of functions applied to the transcoded string.
-;; Each filter is called with three arguments: the full transcoded
-;; string, the back-end, as a symbol, and the communication channel,
-;; as a plist.  It must return a string that will be used as the
-;; final export output.")
-
 (add-to-list 'org-export-filter-final-output-functions
              'iorg-html-postprocess)
-
 
 (defvar iorg-html-postprocess-begin-txt-regexp
   "<div class=\"outline-text.*\">"
@@ -30,7 +17,6 @@
 (defvar iorg-html-postprocess-todo-regexp
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
-
 
 (defun iorg-html-postprocess (str back chan)
   "Add buttons to HTML export to make headlines editable."

@@ -2,10 +2,12 @@
 (require 'org)
 (require 'elnode)
 (require 'org-export)
+(require 'org-agenda)
 
 ;;;; Declare functions
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
+(declare-function org-check-for-org-mode "org-agenda" nil)
 
 (add-to-list 'org-export-filter-final-output-functions
              'iorg-html-postprocess)
@@ -18,6 +20,17 @@
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
 
+(defconst simple-dir "~/git/bugpile/simple/"
+  "The project directory of the 'simple' app in canonical form")
+
+(defconst simple-urls
+  '(("$" . iorg-initialize-simple-handler)
+    ("todo/.*$" . iorg-change-state-handler)))
+
+(defun simple-dispatcher-handler (httpcon)
+  "Dispatch requests to the 'simple' app"
+  (elnode-dispatcher httpcon simple-urls))
+
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
@@ -29,17 +42,42 @@
             (re-search-forward iorg-html-postprocess-begin-txt-regexp nil t))
       (goto-char (match-beginning 0))
       (insert (concat "<form action=\"http://localhost:8028/todo/\">"
-                      "  <input type=\"submit\" value=\" Finish \">"
+                      "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
                       "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defun iorg-launch (port)
   "Launch the elnode server which will serve and edit simple.org."
   ;; TODO: (1) elnode serving simple.org to html
-  
-  )
+  (interactive "nPort number: ")
+  (elnode-start 'iorg-initialize-simple-handler
+                :port (number-to-string port) :host "localhost"))
 
-(defun iorg-change-state (file headline new-state)
+(defun iorg-initialize-simple-handler (httpcon)
+  "Serves the start-page of the 'simple' app"
+  (elnode-http-start httpcon 200 '("Content-Type" . "text/html"))
+  (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
+
+(defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
-  )
+  (let ((params (elnode-http-params httpcon))) 
+  ; (message "These are the http-params: \n %s" 
+           ))
+
+(defun iorg--org-to-html (org-file)
+  "Export ORG-FILE to html and return the expanded filename"
+  (if (not (file-exists-p (expand-file-name org-file simple-dir)))
+      (error "File doesn't exist")
+    (with-current-buffer
+        (find-file (expand-file-name org-file simple-dir))
+      (org-export-to-file
+       'e-html
+       (expand-file-name
+        (concat
+         (file-name-sans-extension
+          (file-name-nondirectory org-file))
+         ".html") simple-dir )))))
+    
+    
+

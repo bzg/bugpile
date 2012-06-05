@@ -18,26 +18,20 @@
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
 
-(defun iorg-html-postprocess (str back chan)
+(defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
-  (let ((transc-str str)
-        (back-end back)
-        (comm-chan chan))
   (with-temp-buffer 
     (insert transc-str)
     (goto-char (point-min))
-    (while
-        (and
-         (re-search-forward iorg-html-postprocess-todo-regexp nil t)
-         (re-search-forward iorg-html-postprocess-begin-txt-regexp nil t))
+    (while (and
+            (re-search-forward iorg-html-postprocess-todo-regexp nil t)
+            (re-search-forward iorg-html-postprocess-begin-txt-regexp nil t))
       (goto-char (match-beginning 0))
-      (insert
-       "<form action=\"http://localhost:8028/todo/\">
-                      <input type=\"submit\" value=\" Finish \">
-              </form>"))
-    (buffer-substring-no-properties (point-min) (point-max)))))
-
+      (insert (concat "<form action=\"http://localhost:8028/todo/\">"
+                      "  <input type=\"submit\" value=\" Finish \">"
+                      "</form>")))
+    (buffer-substring-no-properties (point-min) (point-max))))
 
 (defun iorg-launch (port)
   "Launch the elnode server which will serve and edit simple.org."

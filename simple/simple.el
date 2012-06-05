@@ -54,7 +54,7 @@
   ;; TODO: (1) elnode serving simple.org to html
   (interactive "nPort number: ")
   (elnode-start 'iorg-initialize-simple-handler
-                :port (number-to-string port) :host "localhost"))
+                :port port :host "localhost"))
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"

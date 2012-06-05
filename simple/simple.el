@@ -41,14 +41,17 @@
   (with-temp-buffer 
     (insert transc-str)
     (goto-char (point-min))
-    (while (re-search-forward iorg-html-postprocess-todo-regexp nil t)
-      (re-search-forward iorg-html-postprocess-begin-txt-regexp)
-      (re-search-backward "<div")
+    (while
+        (and
+         (re-search-forward iorg-html-postprocess-todo-regexp nil t)
+         (re-search-forward iorg-html-postprocess-begin-txt-regexp nil t))
+      (goto-char (match-beginning 0))
       (insert
-          "<form action=\"http://localhost:8028/todo/\">
-                  <input type=\"submit\" value=\" Finish \">
-          </form>"))
+       "<form action=\"http://localhost:8028/todo/\">
+                      <input type=\"submit\" value=\" Finish \">
+              </form>"))
     (buffer-substring-no-properties (point-min) (point-max)))))
+
 
 (defun iorg-launch (port)
   "Launch the elnode server which will serve and edit simple.org."

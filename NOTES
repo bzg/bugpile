@@ -124,3 +124,63 @@ crucial to us.
 
 
 
+
+** HTML
+*** Buttons
+
+button
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+|  Bedeutung   |Erzeugt einen Klick-Button - siehe Seite Beschreibung.                                                                   |
+|--------------+-------------------------------------------------------------------------------------------------------------------------|
+|HTML-Varianten|Erlaubt in den Varianten Seite Strict, Transitional, Frameset                                                            |
+|--------------+-------------------------------------------------------------------------------------------------------------------------|
+|Elternelemente|Darf innerhalb der folgenden HTML-Elemente vorkommen:                                                                    |
+|              |[Block-Elemente] | [Inline-Elemente] (außer button)                                                                      |
+|--------------+-------------------------------------------------------------------------------------------------------------------------|
+|              |Darf #PCDATA und folgende andere HTML-Elemente enthalten:                                                                |
+| Kindelemente |abbr | acronym | address | applet | b | basefont | bdo | big | blockquote | br | center | cite | code | dfn | dl | dir | |
+|              |div | em | font | h1-6 | hr | i | img | kbd | map | menu | noframes | noscript | object | ol | p | pre | q | samp |      |
+|              |script | small | span | strong | sub | sup | table | tt | ul | var                                                       |
+|--------------+-------------------------------------------------------------------------------------------------------------------------|
+|  Attribute   |siehe Seite Attribute                                                                                                    |
++----------------------------------------------------------------------------------------------------------------------------------------+
+
+
+button
+
++----------------------------------------------------------------------------------------------------------------------------------------+
+|  Bedeutung   |Erzeugt einen Klick-Button - siehe Seite Beschreibung.                                                                   |
+|--------------+-------------------------------------------------------------------------------------------------------------------------|
+|   Attribut   |  Wert   |           HTML-Varianten           |erforderlich?|                         Bedeutung                          |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|accesskey     |#CDATA   |Erlaubt in den Varianten Seite      |nein         |bestimmt ein einzelnes Zeichen als Hotkey für den           |
+|              |         |Strict, Transitional, Frameset      |             |Tastaturzugriff auf den Button                              |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|              |disabled |Erlaubt in den Varianten Seite      |             |                                                            |
+|disabled      |(leeres  |Strict, Transitional, Frameset      |nein         |bestimmt, dass der Button nicht betätigt werden kann        |
+|              |Attribut)|                                    |             |                                                            |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|name          |#CDATA   |Erlaubt in den Varianten Seite      |nein         |bestimmt einen Namen für den Button                         |
+|              |         |Strict, Transitional, Frameset      |             |                                                            |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|onblur        |#CDATA   |Erlaubt in den Varianten Seite      |nein         |beim Verlassen des verweis-sensitiven Bereichs...           |
+|              |         |Strict, Transitional, Frameset      |             |(Script-Code)                                               |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|onfocus       |#CDATA   |Erlaubt in den Varianten Seite      |nein         |wenn verweis-sensitiver Bereich den Fokus hat...            |
+|              |         |Strict, Transitional, Frameset      |             |(Script-Code)                                               |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|tabindex      |[Zahl]   |Erlaubt in den Varianten Seite      |nein         |bestimmt die Tabulator-Reihenfolge für Buttons durch Angabe |
+|              |         |Strict, Transitional, Frameset      |             |einer Zahl                                                  |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|              |button | |Erlaubt in den Varianten Seite      |nein         |                                                            |
+|type          |submit | |Strict, Transitional, Frameset      |(Default:    |bestimmt den Typ des Buttons                                |
+|              |reset    |                                    |submit)      |                                                            |
+|--------------+---------+------------------------------------+-------------+------------------------------------------------------------|
+|value         |#CDATA   |Erlaubt in den Varianten Seite      |nein         |bestimmt den Absendewert des Buttons                        |
+|              |         |Strict, Transitional, Frameset      |             |                                                            |
+|----------------------------------------------------------------------------------------------------------------------------------------|
+|[Universalattribute]                                                                                                                    |
+|----------------------------------------------------------------------------------------------------------------------------------------|
+|Abhängigkeiten|siehe Seite Elemente                                                                                                     |
++----------------------------------------------------------------------------------------------------------------------------------------+

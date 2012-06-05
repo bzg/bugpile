@@ -20,7 +20,8 @@
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
 
-(defconst simple-dir "~/git/bugpile/simple/"
+(defconst simple-dir
+  (file-name-directory (or load-file-name (buffer-file-name)))
   "The project directory of the 'simple' app in canonical form")
 
 (defconst simple-urls

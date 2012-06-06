@@ -2,6 +2,7 @@
 (require 'org)
 (require 'elnode)
 (require 'org-export)
+(require 'org-e-html)
 (require 'org-agenda)
 (require 'util)
 

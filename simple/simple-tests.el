@@ -14,5 +14,5 @@
     ;; ensure that the output file exists
     (should (file-exists-p output-file))
     ;; ensure that the output file is not empty
-    (should (> 0 (while-visiting-file output-file
+    (should (< 0 (while-visiting-file output-file
                    (- (point-max) (point-min)))))))

@@ -4,7 +4,7 @@
 
 A collection of working notes.
 
-* Notes
+* General Notes
 ** Torvalds on bug trackers
 http://yarchive.net/comp/linux/bug_tracking.html
 
@@ -123,8 +123,6 @@ crucial to us.
 
 
 
-
-
 ** HTML
 *** Buttons
 
@@ -184,3 +182,60 @@ button
 |----------------------------------------------------------------------------------------------------------------------------------------|
 |Abhängigkeiten|siehe Seite Elemente                                                                                                     |
 +----------------------------------------------------------------------------------------------------------------------------------------+
+
+* Programming Notes 'tj'
+** 2012-06-06
+Action: 
+- open simple.org
+- M-x iorg-launch
+- open webbrower at http://localhost:8032
+
+=> NOT FOUND
+
+The culprit for not serving the pages is here:
+
+L 563 in elnode.el 
+elnode--filter(..)
+,--------------------------
+| (funcall handler process)
+`--------------------------
+
+handler is simple-dispatcher-handler and is a function. Its called
+with a process, but in the docs, all handlers get 'httpcon'. Therefore
+process=httpcon? 
+
+Errors: 
+,------------------------------------------------------
+| 20120606174401:
+| filter: calling handler on *elnode-webserver-proc*<3>
+| <127.0.0.1:33375>
+| 
+| 20120606174628:
+| elnode--sentinel connection broken by for process
+| *elnode-webserver-proc*<3> <127.0.0.1:33375>
+| 
+| 20120606174628:
+| Elnode connection dropped *elnode-webserver-proc*<3>
+| <127.0.0.1:33375>
+`------------------------------------------------------
+
+Backtrace:
+
+,-----------------------------------------------------------------------
+| If FUNCTION-404 is non-nil then it is called when no regexp is
+| matched." 
+| (elnode-normalize-path httpcon (lambda (httpcon) (let
+| ((pathinfo (elnode-http-pathinfo httpcon))) (elnode--dispatch-proc
+| httpcon pathinfo url-mapping-table function-404))))) 4)
+| 
+| elnode-dispatcher(#<process *elnode-webserver-proc*<3>
+| <127.0.0.1:33392>> (("^$" . iorg-initialize-simple-handler) ("^todo/$"
+| . iorg-change-state-handler)) :function-404 t) 
+| (progn
+| (elnode-log-access "simple" httpcon) (elnode-dispatcher httpcon
+| simple-urls :function-404 (elnode-send-404 httpcon)))
+| 
+| simple-dispatcher-handler(#<process *elnode-webserver-proc*<3>
+| <127.0.0.1:33392>>) funcall(simple-dispatcher-handler #<process
+| *elnode-webserver-proc*<3> <127.0.0.1:33392>>)
+`-----------------------------------------------------------------------

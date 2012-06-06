@@ -26,12 +26,12 @@
   "The project directory of the 'simple' app in canonical form")
 
 (defconst simple-urls
-  '(("$" . iorg-initialize-simple-handler)
-    ("todo/.*$" . iorg-change-state-handler)))
+  '(("^$"      . iorg-initialize-simple-handler)
+    ("^todo/$" . iorg-change-state-handler)))
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
-  (elnode-dispatcher httpcon simple-urls))
+  (elnode-dispatcher httpcon simple-urls iorg-404-handler))
 
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
@@ -64,9 +64,9 @@
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
-  (let ((params (elnode-http-params httpcon))) 
-  ; (message "These are the http-params: \n %s" 
-           ))
+  (message "entering `iorg-change-state-handler'")
+  (let ((params (elnode-http-params httpcon)))
+    (message "These are the http-params: \n %s" params)))
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"
@@ -81,5 +81,10 @@
            (file-name-sans-extension
             (file-name-nondirectory org-file))
            ".html") simple-dir ))))))
+
+(defun iorg-404-handler (httpcon)
+  ;; TODO: This should probably actually serve a 404 page rather than
+  ;;       throwing an error
+  (error "iorg: 404 handler invoked"))
 
 (provide 'simple)

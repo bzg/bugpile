@@ -46,7 +46,7 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8028/todo/\">"
+        "<form action=\"http://localhost:8029/todo/\">"
         "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
@@ -60,13 +60,13 @@
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
-  (elnode-log-access "*iorg-log*" httpcon)
+  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
-  (elnode-log-access "*iorg-log*" httpcon)
+  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
   (message "entering `iorg-change-state-handler'")
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)))
@@ -88,7 +88,7 @@
 (defun iorg-404-handler (httpcon)
   ;; TODO: This should probably actually serve a 404 page rather than
   ;;       throwing an error
-  (elnode-log-access "*iorg-log*" httpcon)
+  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
   (error "iorg: 404 handler invoked"))
 
 (provide 'simple)

@@ -2,6 +2,20 @@
 (require 'simple)
 (require 'util)
 
+(ert-deftest iorg-util-assoc-proc ()
+  (should (tree-equal
+           (assoc-proc #'evenp '((1 . :foo) (2 . :baz) (4 . :qux)))
+           '(2 . :baz))))
+
+(ert-deftest iorg-util-assoc-re ()
+  (should (tree-equal
+           (assoc-re "outline-[[:digit:]]-[[:digit:]]"
+                     '((foo . bar)
+                       (outline . baz)
+                       (outline-2-4 . qux)
+                       (qux . quxx)))
+           '(outline-2-4 . qux))))
+
 (ert-deftest iorg-org-to-html-creates-output-file-if-doesnt-exist ()
   (let ((input-file "simple.org")
         (output-file "simple.html"))

@@ -56,7 +56,7 @@
   "Launch the elnode server which will serve and edit simple.org."
   ;; TODO: (1) elnode serving simple.org to html
   (interactive "nPort number: ")
-  (elnode-start 'iorg-initialize-simple-handler
+  (elnode-start 'simple-dispatcher-handler
                 :port port :host "localhost"))
 
 (defun iorg-initialize-simple-handler (httpcon)

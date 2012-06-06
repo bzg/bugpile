@@ -31,7 +31,7 @@
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
-  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
+  (elnode-log-access "simple" httpcon)
   (elnode-dispatcher httpcon simple-urls iorg-404-handler))
 
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
@@ -60,13 +60,13 @@
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
-  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
+  (elnode-log-access "simple" httpcon)
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
-  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
+  (elnode-log-access "simple" httpcon)
   (message "entering `iorg-change-state-handler'")
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)))
@@ -88,7 +88,7 @@
 (defun iorg-404-handler (httpcon)
   ;; TODO: This should probably actually serve a 404 page rather than
   ;;       throwing an error
-  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
+  (elnode-log-access "simple" httpcon)
   (error "iorg: 404 handler invoked"))
 
 (provide 'simple)

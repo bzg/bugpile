@@ -31,7 +31,7 @@
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
-  (elnode-log-access "*iorg-log*" httpcon)
+  (elnode-log-access (get-buffer-create "*iorg-log*") httpcon)
   (elnode-dispatcher httpcon simple-urls iorg-404-handler))
 
 (defun iorg-html-postprocess (transc-str back-end comm-chan)

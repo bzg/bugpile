@@ -33,8 +33,8 @@
   "Dispatch requests to the 'simple' app"
   (progn
     (elnode-log-access "simple" httpcon)
-    (elnode-dispatcher
-     httpcon simple-urls :function-404 (elnode-send-404 httpcon))))  
+    (elnode-dispatcher httpcon simple-urls
+       :function-404 (elnode-send-404 httpcon))))  
 
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."

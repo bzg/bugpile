@@ -26,8 +26,8 @@
   "The project directory of the 'simple' app in canonical form")
 
 (defconst simple-urls
-  '(("^$"      . iorg-initialize-simple-handler)
-    ("^todo/$" . iorg-change-state-handler)))
+  '(("$"      . iorg-initialize-simple-handler)
+    ("todo/$" . iorg-change-state-handler)))
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
@@ -47,7 +47,7 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8029/todo/\">"
+        "<form action=\"http://localhost:8030/todo/\">"
         "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))

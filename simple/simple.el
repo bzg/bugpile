@@ -31,10 +31,8 @@
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
-  (progn
-    (elnode-log-access "simple" httpcon)
-    (elnode-dispatcher httpcon simple-urls
-       :function-404 (elnode-send-404 httpcon))))  
+  (elnode-log-access "simple" httpcon)
+  (elnode-dispatcher httpcon simple-urls))
 
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
@@ -63,18 +61,14 @@
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
-  (progn
-    (elnode-log-access "simple" httpcon)
-    (elnode-send-file httpcon (iorg--org-to-html "simple.org"))))
+  (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
-  (progn
-    (elnode-log-access "simple" httpcon)
-    (message "entering `iorg-change-state-handler'")
-    (let ((params (elnode-http-params httpcon)))
-      (message "These are the http-params: \n %s" params))))
+  (message "entering `iorg-change-state-handler'")
+  (let ((params (elnode-http-params httpcon)))
+    (message "These are the http-params: \n %s" params)))
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"

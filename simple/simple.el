@@ -48,7 +48,7 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8031/todo/\">"
+        "<form action=\"http://localhost:8032/todo/\">"
         "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
@@ -57,8 +57,9 @@
   "Launch the elnode server which will serve and edit simple.org."
   ;; TODO: (1) elnode serving simple.org to html
   (interactive "nPort number: ")
-  (elnode-start 'simple-dispatcher-handler
-                :port port :host "localhost"))
+  (elnode-start
+   'simple-dispatcher-handler
+   :port port :host "localhost"))
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"

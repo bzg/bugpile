@@ -47,8 +47,8 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8032/todo/\">"
-        "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
+        "<form action=\"http://localhost:8033/todo/\">"
+        "  <input type=\"submit\" value=\" Finish \" name=\"outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
@@ -67,9 +67,13 @@
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
-  (message "entering `iorg-change-state-handler'")
+  (message "entering `iorg-change-state-handler'")  
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)))
+
+(defun iorg--get-outline-level (params)
+  "Return level of outline-tree encoded in http-params"
+  )
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"

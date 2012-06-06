@@ -183,6 +183,683 @@ button
 |Abhängigkeiten|siehe Seite Elemente                                                                                                     |
 +----------------------------------------------------------------------------------------------------------------------------------------+
 
+
+** Org-export
+*** API
+186 matches for "(def" in buffer: org-export.el
+    110:(defconst org-export-max-depth 19
+    113:(defconst org-export-option-alist
+    174:(defconst org-export-special-keywords
+    181:(defconst org-export-filters-alist
+    249:(defconst org-export-default-inline-image-rule
+    273:(defgroup org-export nil
+    278:(defgroup org-export-general nil
+    283:(defcustom org-export-with-archived-trees 'headline
+    299:(defcustom org-export-with-author t
+    306:(defcustom org-export-with-clocks nil
+    313:(defcustom org-export-with-creator 'comment
+    326:(defcustom org-export-creator-string
+    334:(defcustom org-export-with-drawers t
+    350:(defcustom org-export-with-email nil
+    357:(defcustom org-export-with-emphasize t
+    368:(defcustom org-export-exclude-tags '("noexport")
+    380:(defcustom org-export-with-fixed-width t
+    386:  : (while (defc cnt)
+    395:(defcustom org-export-with-footnotes t
+    402:(defcustom org-export-headline-levels 3
+    413:(defcustom org-export-default-language "en"
+    420:(defcustom org-export-preserve-breaks nil
+    430:(defcustom org-export-with-entities t
+    444:(defcustom org-export-with-planning nil
+    451:(defcustom org-export-with-priority nil
+    461:(defcustom org-export-with-section-numbers t
+    472:(defcustom org-export-select-tags '("export")
+    485:(defcustom org-export-with-special-strings t
+    502:(defcustom org-export-with-sub-superscripts t
+    531:(defcustom org-export-with-toc t
+    549:(defcustom org-export-with-tables t
+    561:(defcustom org-export-with-tags t
+    576:(defcustom org-export-with-tasks t
+    593:(defcustom org-export-time-stamp-file t
+    602:(defcustom org-export-with-timestamps t
+    618:(defcustom org-export-with-todo-keywords t
+    624:(defcustom org-export-allow-BIND 'confirm
+    634:(defcustom org-export-snippet-translation-alist nil
+    648:(defcustom org-export-coding-system nil
+    653:(defcustom org-export-copy-to-kill-ring t
+    658:(defcustom org-export-initial-scope 'buffer
+    666:(defcustom org-export-show-temporary-export-buffer t
+    676:(defcustom org-export-dispatch-use-expert-ui nil
+    956:(defun org-export-get-environment (&optional backend subtreep ext-plist)
+    990:(defun org-export-parse-option-keyword (options &optional backend)
+   1019:(defun org-export-get-subtree-options ()
+   1046:(defun org-export-get-inbuffer-options (&optional backend files)
+   1174:(defun org-export-get-buffer-attributes ()
+   1200:(defun org-export-get-global-options (&optional backend)
+   1219:(defun org-export-store-footnote-definitions (info)
+   1244:	(let ((def (org-footnote-at-definition-p)))
+   1260:(defvar org-export-allow-BIND-local nil)
+   1261:(defun org-export-confirm-letbind ()
+   1272:(defun org-export-install-letbind-maybe ()
+   1302:(defun org-export-collect-tree-properties (data info)
+   1345:  (let ((defs (plist-get info :footnote-definition-alist)))
+   1366:(defun org-export-get-min-level (data options)
+   1384:(defun org-export-collect-headline-numbering (data options)
+   1408:(defun org-export-populate-ignore-list (data options)
+   1440:(defun org-export--selected-trees (data info)
+   1467:(defun org-export--skip-p (blob options select-tags)
+   1547:(defun org-export-transcoder (blob info)
+   1557:(defun org-export-data (data info)
+   1647:(defun org-export-interpret-p (blob info)
+   1671:(defsubst org-export-expand (blob contents)
+   1679:(defun org-export-ignore-element (element info)
+   1726:(defvar org-export-before-parsing-hook nil
+   1736:(defvar org-export-filter-parse-tree-functions nil
+   1743:(defvar org-export-filter-final-output-functions nil
+   1750:(defvar org-export-filter-plain-text-functions nil
+   1760:(defvar org-export-filter-center-block-functions nil
+   1766:(defvar org-export-filter-clock-functions nil
+   1772:(defvar org-export-filter-drawer-functions nil
+   1778:(defvar org-export-filter-dynamic-block-functions nil
+   1784:(defvar org-export-filter-headline-functions nil
+   1790:(defvar org-export-filter-inlinetask-functions nil
+   1796:(defvar org-export-filter-plain-list-functions nil
+   1802:(defvar org-export-filter-item-functions nil
+   1808:(defvar org-export-filter-comment-functions nil
+   1814:(defvar org-export-filter-comment-block-functions nil
+   1820:(defvar org-export-filter-example-block-functions nil
+   1826:(defvar org-export-filter-export-block-functions nil
+   1832:(defvar org-export-filter-fixed-width-functions nil
+   1838:(defvar org-export-filter-footnote-definition-functions nil
+   1844:(defvar org-export-filter-horizontal-rule-functions nil
+   1850:(defvar org-export-filter-keyword-functions nil
+   1856:(defvar org-export-filter-latex-environment-functions nil
+   1862:(defvar org-export-filter-babel-call-functions nil
+   1868:(defvar org-export-filter-paragraph-functions nil
+   1874:(defvar org-export-filter-planning-functions nil
+   1880:(defvar org-export-filter-property-drawer-functions nil
+   1886:(defvar org-export-filter-quote-block-functions nil
+   1893:(defvar org-export-filter-quote-section-functions nil
+   1899:(defvar org-export-filter-section-functions nil
+   1905:(defvar org-export-filter-special-block-functions nil
+   1911:(defvar org-export-filter-src-block-functions nil
+   1917:(defvar org-export-filter-table-functions nil
+   1923:(defvar org-export-filter-table-cell-functions nil
+   1929:(defvar org-export-filter-table-row-functions nil
+   1935:(defvar org-export-filter-verse-block-functions nil
+   1944:(defvar org-export-filter-bold-functions nil
+   1950:(defvar org-export-filter-code-functions nil
+   1956:(defvar org-export-filter-entity-functions nil
+   1962:(defvar org-export-filter-export-snippet-functions nil
+   1968:(defvar org-export-filter-footnote-reference-functions nil
+   1974:(defvar org-export-filter-inline-babel-call-functions nil
+   1980:(defvar org-export-filter-inline-src-block-functions nil
+   1986:(defvar org-export-filter-italic-functions nil
+   1992:(defvar org-export-filter-latex-fragment-functions nil
+   1998:(defvar org-export-filter-line-break-functions nil
+   2004:(defvar org-export-filter-link-functions nil
+   2010:(defvar org-export-filter-macro-functions nil
+   2016:(defvar org-export-filter-radio-target-functions nil
+   2022:(defvar org-export-filter-statistics-cookie-functions nil
+   2028:(defvar org-export-filter-strike-through-functions nil
+   2034:(defvar org-export-filter-subscript-functions nil
+   2040:(defvar org-export-filter-superscript-functions nil
+   2046:(defvar org-export-filter-target-functions nil
+   2052:(defvar org-export-filter-timestamp-functions nil
+   2058:(defvar org-export-filter-underline-functions nil
+   2064:(defvar org-export-filter-verbatim-functions nil
+   2070:(defun org-export-filter-apply-functions (filters value info)
+   2080:(defun org-export-install-filters (info)
+   2135:(defun org-export-as
+   2220:(defun org-export-to-buffer
+   2243:(defun org-export-to-file
+   2268:(defun org-export-output-file-name (extension &optional subtreep pub-dir)
+   2315:(defmacro org-export-with-current-buffer-copy (&rest body)
+   2343:(def-edebug-spec org-export-with-current-buffer-copy (body))
+   2345:(defun org-export-expand-include-keyword (&optional included dir)
+   2428:(defun org-export-prepare-file-contents (file &optional lines ind minlevel)
+   2519:(defun org-export-snippet-backend (export-snippet)
+   2544:(defun org-export-collect-footnote-definitions (data info)
+   2562:		 (let ((def (org-export-get-footnote-definition fn info)))
+   2577:(defun org-export-footnote-first-reference-p (footnote-reference info)
+   2609:(defun org-export-get-footnote-definition (footnote-reference info)
+   2616:(defun org-export-get-footnote-number (footnote info)
+   2676:(defun org-export-get-relative-level (headline info)
+   2682:(defun org-export-low-level-p (headline info)
+   2697:(defun org-export-get-headline-number (headline info)
+   2702:(defun org-export-numbered-headline-p (headline info)
+   2709:(defun org-export-number-to-roman (n)
+   2725:(defun org-export-first-sibling-p (headline info)
+   2731:(defun org-export-last-sibling-p (headline info)
+   2760:(defun org-export-solidify-link-text (s)
+   2765:(defun org-export-get-coderef-format (path desc)
+   2774:(defun org-export-inline-image-p (link &optional rules)
+   2798:(defun org-export-resolve-fuzzy-link (link info)
+   2867:(defun org-export-resolve-id-link (link info)
+   2883:(defun org-export-resolve-coderef (ref info)
+   2916:(defun org-export-expand-macro (macro info)
+   2944:(defun org-export-get-ordinal (element info &optional types predicate)
+   3028:(defun org-export-get-loc (element info)
+   3057:(defun org-export-unravel-code (element)
+   3108:(defun org-export-format-code (code fun &optional num-lines ref-alist)
+   3137:(defun org-export-format-code-default (element info)
+   3201:(defun org-export-table-has-special-column-p (table)
+   3222:(defun org-export-table-has-header-p (table info)
+   3240:(defun org-export-table-row-is-special-p (table-row info)
+   3276:(defun org-export-table-row-group (table-row info)
+   3298:(defun org-export-table-cell-width (table-cell info)
+   3333:(defun org-export-table-cell-alignment (table-cell info)
+   3392:(defun org-export-table-cell-borders (table-cell info)
+   3482:(defun org-export-table-cell-starts-colgroup-p (table-cell info)
+   3494:(defun org-export-table-cell-ends-colgroup-p (table-cell info)
+   3504:(defun org-export-table-row-starts-rowgroup-p (table-row info)
+   3513:(defun org-export-table-row-ends-rowgroup-p (table-row info)
+   3522:(defun org-export-table-row-starts-header-p (table-row info)
+   3530:(defun org-export-table-row-ends-header-p (table-row info)
+   3538:(defun org-export-table-dimensions (table info)
+   3559:(defun org-export-table-cell-address (table-cell info)
+   3593:(defun org-export-get-table-cell-at (address table info)
+   3631:(defun org-export-collect-headlines (info &optional n)
+   3649:(defun org-export-collect-elements (type info &optional predicate)
+   3671:(defun org-export-collect-tables (info)
+   3680:(defun org-export-collect-figures (info predicate)
+   3695:(defun org-export-collect-listings (info)
+   3719:(defun org-export-get-genealogy (blob info)
+   3751:(defun org-export-get-parent (blob info)
+   3757:(defun org-export-get-parent-headline (blob info)
+   3767:(defun org-export-get-parent-paragraph (object info)
+   3777:(defun org-export-get-parent-table (object info)
+   3787:(defun org-export-get-previous-element (blob info)
+   3797:(defun org-export-get-next-element (blob info)
+   3816:(defun org-export-dispatch ()
+   3904:(defun org-export-dispatch-ui (options expertp)
+
+** Org-e-html
+165 matches for "(def" in buffer: org-e-html.el
+     49:(defvar org-element-string-restrictions)
+     50:(defvar org-element-object-restrictions)
+     92:(defconst org-e-html-option-alist
+    139:(defconst org-e-html-cvt-link-fn
+    150:(defvar org-e-html-format-table-no-css)
+    151:(defvar htmlize-buffer-places)  ; from htmlize.el
+    152:(defvar body-only) ; dynamically scoped into this.
+    158:(defgroup org-export-e-html nil
+    165:(defcustom org-e-html-pretty-output nil
+    173:(defcustom org-e-html-extension "html"
+    178:(defcustom org-e-html-xml-declaration
+    193:;; (defcustom org-e-html-coding-system nil
+    198:(defvar org-e-html-content-div "content"
+    204:(defcustom org-e-html-divs '("preamble" "content" "postamble")
+    218:(defconst org-e-html-style-default
+    274:(defcustom org-e-html-style-include-default t
+    284:(defcustom org-e-html-style ""
+    316:(defcustom org-e-html-style-extra ""
+    327:(defcustom org-e-html-mathjax-options
+    363:(defcustom org-e-html-style-include-scripts t
+    370:(defconst org-e-html-scripts
+    398:(defcustom org-e-html-mathjax-template
+    447:(defcustom org-e-html-preamble t
+    465:(defcustom org-e-html-preamble-format '(("en" ""))
+    478:(defcustom org-e-html-home/up-format
+    494:(defcustom org-e-html-postamble 'auto
+    515:(defcustom org-e-html-postamble-format
+    534:(defcustom org-e-html-validation-link
+    544:(defcustom org-e-html-protect-char-alist
+    553:(defconst org-e-html-special-string-regexps
+    563:(defcustom org-e-html-todo-kwd-class-prefix ""
+    575:(defcustom org-e-html-tag-class-prefix ""
+    591:(defcustom org-e-html-inline-images 'maybe
+    602:(defcustom org-e-html-inline-image-extensions
+    622:(defcustom org-e-html-footnotes-section "<div id=\"footnotes\">
+    635:(defcustom org-e-html-footnote-format "<sup>%s</sup>"
+    641:(defcustom org-e-html-footnote-separator "<sup>, </sup>"
+    671:(defgroup org-export-e-htmlize nil
+    676:(defcustom org-export-e-htmlize-output-type 'inline-css
+    695:(defcustom org-export-e-htmlize-css-font-prefix "org-"
+    700:(defcustom org-export-e-htmlized-org-css-url nil
+    717:(defcustom org-e-html-table-tag
+    725:(defcustom org-e-html-table-header-tags '("<th scope=\"%s\"%s>" . "</th>")
+    735:(defcustom org-e-html-table-data-tags '("<td%s>" . "</td>")
+    744:(defcustom org-e-html-table-row-tags '("<tr>" . "</tr>")
+    771:(defcustom org-e-html-table-align-individual-fields t
+    779:(defcustom org-e-html-table-use-header-tags-for-first-column nil
+    793:(defcustom org-e-html-toplevel-hlevel 2
+    810:(defcustom org-e-html-link-org-files-as-html t
+    831:(defcustom org-e-html-date-format
+    839:(defcustom org-e-html-format-headline-function nil
+    854:\(defun org-e-html-format-headline \(todo todo-type priority text tags)
+    868:(defcustom org-e-html-text-markup-alist
+    891:(defcustom org-e-html-footnote-separator "<sup>, </sup>"
+    899:(defcustom org-e-html-active-timestamp-format "\\textit{%s}"
+    904:(defcustom org-e-html-inactive-timestamp-format "\\textit{%s}"
+    909:(defcustom org-e-html-diary-timestamp-format "\\textit{%s}"
+    917:(defcustom org-e-html-inline-image-rules
+    938:(defcustom org-e-html-table-caption-above t
+    946:(defcustom org-e-html-format-drawer-function nil
+    958:\(defun org-e-html-format-drawer-default \(name contents\)
+    967:(defcustom org-e-html-format-inlinetask-function nil
+    983:\(defun org-e-html-format-inlinetask \(todo type priority name tags contents\)
+   1009:(defcustom org-e-html-quotes
+   1047:(defun org-e-html-cvt-org-as-html (opt-plist type path)
+   1063:(defun org-e-html-format-org-link (opt-plist type-1 path fragment desc attr
+   1140:(defun org-e-html-format-inline-image (src &optional
+   1164:(defun org-e-html-bibliography ()
+   1184:(defun org-e-html-format-table (lines olines)
+   1188:(defun org-e-html-splice-attributes (tag attributes)
+   1204:(defun org-export-splice-style (style extra)
+   1214:(defun org-export-e-htmlize-region-for-paste (beg end)
+   1228:(defun org-export-e-htmlize-generate-css ()
+   1262:(defun org-e-html-make-string (n string)
+   1265:(defun org-e-html-toc-text (toc-entries)
+   1288:(defun* org-e-html-format-toc-headline
+   1300:(defun org-e-html-toc (depth info)
+   1324:;; (defun org-e-html-format-line (line)
+   1329:(defun org-e-html-fix-class-name (kwd) 	; audit callers of this function
+   1337:(defun org-e-html-format-footnote-reference (n def refcnt)
+   1344:(defun org-e-html-format-footnotes-section (section-name definitions)
+   1348:(defun org-e-html-format-footnote-definition (fn)
+   1349:  (let ((n (car fn)) (def (cdr fn)))
+   1357:(defun org-e-html-footnote-section (info)
+   1376:(defun org-e-html-format-date (info)
+   1388:(defun org-e-html--caption/label-string (caption label info)
+   1417:(defun org-e-html--find-verb-separator (s)
+   1425:(defun org-e-html--quotation-marks (text info)
+   1439:(defun org-e-html--wrap-label (element output)
+   1453:(defun org-e-html-meta-info (info)
+   1477:(defun org-e-html-style (info)
+   1486:(defun org-e-html-mathjax-config (info)
+   1517:(defun org-e-html-preamble (info)
+   1553:(defun org-e-html-postamble (info)
+   1618:(defun org-e-html-template (contents info)
+   1700:(defun org-e-html--todo (todo)
+   1709:(defun org-e-html--tags (tags)
+   1722:(defun* org-e-html-format-headline
+   1736:(defun org-e-html-fontify-code (code lang)
+   1777:(defun org-e-html-do-format-code
+   1808:(defun org-e-html-format-code (element info)
+   1832:(defun org-e-html-bold (bold contents info)
+   1842:(defun org-e-html-center-block (center-block contents info)
+   1853:(defun org-e-html-clock (clock contents info)
+   1870:(defun org-e-html-code (code contents info)
+   1890:(defun org-e-html-drawer (drawer contents info)
+   1906:(defun org-e-html-dynamic-block (dynamic-block contents info)
+   1915:(defun org-e-html-entity (entity contents info)
+   1924:(defun org-e-html-example-block (example-block contents info)
+   1954:(defun org-e-html-export-snippet (export-snippet contents info)
+   1963:(defun org-e-html-export-block (export-block contents info)
+   1972:(defun org-e-html-fixed-width (fixed-width contents info)
+   1990:(defun org-e-html-footnote-reference (footnote-reference contents info)
+   2016:(defun org-e-html-format-headline--wrap (headline info
+   2053:(defun org-e-html-headline (headline contents info)
+   2118:(defun org-e-html-horizontal-rule (horizontal-rule contents info)
+   2134:(defun org-e-html-inline-src-block (inline-src-block contents info)
+   2146:(defun org-e-html-format-section (text class &optional id)
+   2150:(defun org-e-html-inlinetask (inlinetask contents info)
+   2177:(defun org-e-html-italic (italic contents info)
+   2186:(defun org-e-html-checkbox (checkbox)
+   2192:(defun org-e-html-format-list-item (contents type checkbox
+   2218:(defun org-e-html-item (item contents info)
+   2234:(defun org-e-html-keyword (keyword contents info)
+   2263:(defun org-e-html-format-latex (latex-frag processing-type)
+   2276:(defun org-e-html-latex-environment (latex-environment contents info)
+   2305:(defun org-e-html-latex-fragment (latex-fragment contents info)
+   2324:(defun org-e-html-line-break (line-break contents info)
+   2332:(defun org-e-html-link--inline-image (link desc info)
+   2362:(defvar org-e-html-standalone-image-predicate)
+   2363:(defun org-e-html-standalone-image-p (element info &optional predicate)
+   2408:(defun org-e-html-link (link desc info)
+   2521:(defun org-e-html-macro (macro contents info)
+   2530:(defun org-e-html-paragraph (paragraph contents info)
+   2553:(defun org-e-html-begin-plain-list (type &optional arg1)
+   2562:(defun org-e-html-end-plain-list (type)
+   2568:(defun org-e-html-plain-list (plain-list contents info)
+   2584:(defun org-e-html-convert-special-strings (string)
+   2594:(defun org-e-html-encode-plain-text (s)
+   2605:(defun org-e-html-plain-text (text info)
+   2643:(defun org-e-html-planning (planning contents info)
+   2671:(defun org-e-html-property-drawer (property-drawer contents info)
+   2682:(defun org-e-html-quote-block (quote-block contents info)
+   2692:(defun org-e-html-quote-section (quote-section contents info)
+   2702:(defun org-e-html-section (section contents info) ; FIXME
+   2722:(defun org-e-html-radio-target (radio-target text info)
+   2733:(defun org-e-html-special-block (special-block contents info)
+   2745:(defun org-e-html-src-block (src-block contents info)
+   2779:(defun org-e-html-statistics-cookie (statistics-cookie contents info)
+   2788:(defun org-e-html-strike-through (strike-through contents info)
+   2798:(defun org-e-html-subscript (subscript contents info)
+   2807:(defun org-e-html-superscript (superscript contents info)
+   2816:(defun org-e-html-table-cell (table-cell contents info)
+   2845:(defun org-e-html-table-row (table-row contents info)
+   2878:(defun org-e-html-table-first-row-data-cells (table info)
+   2889:(defun org-e-html-table--table.el-table (table info)
+   2904:(defun org-e-html-table (table contents info)
+   2959:(defun org-e-html-target (target contents info)
+   2970:(defun org-e-html-timestamp (timestamp contents info)
+   2981:(defun org-e-html-underline (underline contents info)
+   2991:(defun org-e-html-verbatim (verbatim contents info)
+   3001:(defun org-e-html-verse-block (verse-block contents info)
+   3028:(defconst org-e-html-filters-alist
+   3036:(defun org-e-html-final-function (contents backend info)
+   3047:(defun org-e-html-export-to-html
+
+** Org-element
+*** Introduction
+Location: http://article.gmane.org/gmane.emacs.orgmode/49416              
+Picon
+From: Nicolas Goaziou <n.goaziou <at> gmail.com>
+Subject: [ANN] Org Elements in contrib
+Newsgroups: gmane.emacs.orgmode
+Date: 2011-11-21 18:50:29 GMT (28 weeks, 2 days, 4 hours and 6 minutes
+ago)
+
+Hello,
+
+I've added org-element.el in contrib directory. It is a complete parser
+and interpreter for Org syntax.
+
+While it was written to be extensible, it is also an attempt to
+normalize current syntax and provide guidance for its evolution.
+
+Org syntax can be divided into three categories: "Greater elements",
+"Elements" and "Objects".
+
+An object can be defined anywhere on a line. It may span over more than
+a line but never contains a blank one. Objects belong to the following
+types: `emphasis', `entity', `export-snippet', `footnote-reference',
+`inline-babel-call', `inline-src-block', `latex-fragment', `line-break',
+`link', `macro', `radio-target', `statistics-cookie', `subscript',
+`superscript', `target', `time-stamp' and `verbatim'.
+
+An element always starts and ends at the beginning of a line. The only
+element's type containing objects is called a `paragraph'. Other types
+are: `comment', `comment-block', `example-block', `export-block',
+`fixed-width', `horizontal-rule', `keyword', `latex-environment',
+`babel-call', `property-drawer', `quote-section', `src-block', `table'
+and `verse-block'.
+
+Elements containing paragraphs are called greater elements. Concerned
+types are: `center-block', `drawer', `dynamic-block',
+`footnote-definition', `headline', `inlinetask', `item', `plain-list',
+`quote-block' and `special-block'.
+
+Greater elements (excepted `headline' and `item' types) and elements
+(excepted `keyword', `babel-call', and `property-drawer' types) can have
+a fixed set of keywords as attributes. Those are called "affiliated
+keywords", to distinguish them from others keywords, which are
+full-fledged elements. In particular, the "name" affiliated keyword
+allows to label almost any element in an Org buffer.
+
+Notwithstanding affiliated keywords, each greater element, element and
+object has a fixed set of properties attached to it. Among them, three
+are shared by all types: `:begin' and `:end', which refer to the
+beginning and ending buffer positions of the considered element or
+object, and `:post-blank', which holds the number of blank lines, or
+white spaces, at its end.
+
+Some elements also have special properties whose value can hold objects
+themselves (i.e. an item tag, an headline name, a table cell). Such
+values are called "secondary strings".
+
+Lisp-wise, an element or an object can be represented as a list. It
+follows the pattern (TYPE PROPERTIES CONTENTS), where: TYPE is a symbol
+describing the Org element or object. PROPERTIES is the property list
+attached to it. See docstring of appropriate parsing function to get an
+exhaustive list. CONTENTS is a list of elements, objects or raw strings
+contained in the current element or object, when applicable.
+
+An Org buffer is a nested list of such elements and objects, whose type
+is `org-data' and properties is nil.
+
+The first part of this file implements a parser and an interpreter for
+each type of Org syntax.
+
+The next two parts introduce two accessors and a function retrieving the
+smallest element containing point (respectively
+`org-element-get-property', `org-element-get-contents' and
+`org-element-at-point').
+
+The following part creates a fully recursive buffer parser. It also
+provides a tool to map a function to elements or objects matching some
+criteria in the parse tree. Functions of interest are
+`org-element-parse-buffer', `org-element-map' and, to a lesser extent,
+`org-element-parse-secondary-string'.
+
+The penultimate part is the cradle of an interpreter for the obtained
+parse tree: `org-element-interpret-data' (and its relative,
+`org-element-interpret-secondary').
+
+The library ends by furnishing a set of interactive tools for element's
+navigation and manipulation.
+
+More specifically, that last part includes some tools like
+`org-element-forward', `org-element-backward',
+`org-element-drag-forward', `org-element-drag-backward',
+`org-element-mark-element', `org-element-up',
+`org-element-unindent-buffer'... 
+
+For the impatient (well, not quite as you're still reading this), you
+can evaluate the following examples in an Org buffer :
+
+                       (org-element-parse-buffer)
+                  (org-element-parse-buffer 'headline)
+           (org-element-parse-buffer 'headline 'visible-only)
+
+Also, the following code will parse the buffer, interpret the parsed
+tree, and create a canonical copy of it (no indentation, lowercased
+blocks, standard keywords):
+
+#+begin_src org
+(let ((out (org-element-interpret-data (org-element-parse-buffer))))
+  (switch-to-buffer (get-buffer-create "*Bijectivep*"))
+  (erase-buffer)
+  (insert out)
+  (goto-char (point-min))
+  (org-mode))
+#+end_src
+
+Beside allowing to add keywords like "#+name:", "#+caption:" or
+"#+attr_latex:" to almost any Org element, it also introduces two less
+noticable changes:
+
+  1. "#+label:" keywords are deprecated in favor of "#+name:". Though,
+     for now, "label" is still considered as a synonym of "name".
+
+  2. Protected HTML snippets (like @<b>) are no longer supported, as
+     they were too specific.
+
+     Instead, a general mechanism to inline back-end specific commands
+     is created. Thus, the HTML back-end will see "<b>some text<\b>"
+     while the LaTeX one will only see "some text" if the buffer
+     contains:
+
+                     @html{<b>}some text <at> html{<\b>}
+
+     Syntax is heavier, but a configurable variable allows to define
+     shortcuts, allowing to reduce it to, for example, @h{<b>}. No
+     shortcut is provided by default.
+
+     Also, the syntax is experimental, and may change if proven to be
+     inadequate.
+
+I will commit a generic exporter built on top of Elements, along with
+a LaTeX back-end, in a couple of days.
+
+Feedback is welcome.
+
+Regards,
+
+-- 
+Nicolas Goaziou
+
+*** API
+165 matches for "(def" in buffer: org-element.el
+    152:(defun org-element-center-block-parser ()
+    181:(defun org-element-center-block-interpreter (center-block contents)
+    189:(defun org-element-drawer-parser ()
+    220:(defun org-element-drawer-interpreter (drawer contents)
+    230:(defun org-element-dynamic-block-parser ()
+    264:(defun org-element-dynamic-block-interpreter (dynamic-block contents)
+    276:(defun org-element-footnote-definition-parser ()
+    311:(defun org-element-footnote-definition-interpreter (footnote-definition contents)
+    321:(defun org-element-headline-parser (&optional raw-secondary-p)
+    425:(defun org-element-headline-interpreter (headline contents)
+    474:(defun org-element-inlinetask-parser (&optional raw-secondary-p)
+    552:(defun org-element-inlinetask-interpreter (inlinetask contents)
+    593:(defun org-element-item-parser (struct &optional raw-secondary-p)
+    663:(defun org-element-item-interpreter (item contents)
+    703:(defun org-element-plain-list-parser (&optional structure)
+    742:(defun org-element-plain-list-interpreter (plain-list contents)
+    750:(defun org-element-quote-block-parser ()
+    778:(defun org-element-quote-block-interpreter (quote-block contents)
+    786:(defun org-element-section-parser ()
+    812:(defun org-element-section-interpreter (section contents)
+    820:(defun org-element-special-block-parser ()
+    852:(defun org-element-special-block-interpreter (special-block contents)
+    876:(defun org-element-babel-call-parser ()
+    896:(defun org-element-babel-call-interpreter (babel-call contents)
+    911:(defun org-element-clock-parser ()
+    940:(defun org-element-clock-interpreter (clock contents)
+    955:(defun org-element-comment-parser ()
+    994:(defun org-element-comment-interpreter (comment contents)
+   1004:(defun org-element-comment-block-parser ()
+   1033:(defun org-element-comment-block-interpreter (comment-block contents)
+   1042:(defun org-element-example-block-parser ()
+   1099:(defun org-element-example-block-interpreter (example-block contents)
+   1111:(defun org-element-export-block-parser ()
+   1143:(defun org-element-export-block-interpreter (export-block contents)
+   1154:(defun org-element-fixed-width-parser ()
+   1190:(defun org-element-fixed-width-interpreter (fixed-width contents)
+   1199:(defun org-element-horizontal-rule-parser ()
+   1216:(defun org-element-horizontal-rule-interpreter (horizontal-rule contents)
+   1224:(defun org-element-keyword-parser ()
+   1248:(defun org-element-keyword-interpreter (keyword contents)
+   1258:(defun org-element-latex-environment-parser ()
+   1284:(defun org-element-latex-environment-interpreter (latex-environment contents)
+   1292:(defun org-element-paragraph-parser ()
+   1320:(defun org-element-paragraph-interpreter (paragraph contents)
+   1328:(defun org-element-planning-parser ()
+   1361:(defun org-element-planning-interpreter (planning contents)
+   1378:(defun org-element-property-drawer-parser ()
+   1414:(defun org-element-property-drawer-interpreter (property-drawer contents)
+   1428:(defun org-element-quote-section-parser ()
+   1449:(defun org-element-quote-section-interpreter (quote-section contents)
+   1457:(defun org-element-src-block-parser ()
+   1541:(defun org-element-src-block-interpreter (src-block contents)
+   1569:(defun org-element-table-parser ()
+   1606:(defun org-element-table-interpreter (table contents)
+   1620:(defun org-element-table-row-parser ()
+   1648:(defun org-element-table-row-interpreter (table-row contents)
+   1657:(defun org-element-verse-block-parser ()
+   1687:(defun org-element-verse-block-interpreter (verse-block contents)
+   1722:(defun org-element-bold-parser ()
+   1746:(defun org-element-bold-interpreter (bold contents)
+   1751:(defun org-element-text-markup-successor (limit)
+   1776:(defun org-element-code-parser ()
+   1797:(defun org-element-code-interpreter (code contents)
+   1805:(defun org-element-entity-parser ()
+   1836:(defun org-element-entity-interpreter (entity contents)
+   1843:(defun org-element-latex-or-entity-successor (limit)
+   1880:(defun org-element-export-snippet-parser ()
+   1909:(defun org-element-export-snippet-interpreter (export-snippet contents)
+   1916:(defun org-element-export-snippet-successor (limit)
+   1937:(defun org-element-footnote-reference-parser ()
+   1974:(defun org-element-footnote-reference-interpreter (footnote-reference contents)
+   1978:	(def
+   1985:(defun org-element-footnote-reference-successor (limit)
+   2007:(defun org-element-inline-babel-call-parser ()
+   2028:(defun org-element-inline-babel-call-interpreter (inline-babel-call contents)
+   2042:(defun org-element-inline-babel-call-successor (limit)
+   2060:(defun org-element-inline-src-block-parser ()
+   2086:(defun org-element-inline-src-block-interpreter (inline-src-block contents)
+   2097:(defun org-element-inline-src-block-successor (limit)
+   2110:(defun org-element-italic-parser ()
+   2134:(defun org-element-italic-interpreter (italic contents)
+   2142:(defun org-element-latex-fragment-parser ()
+   2175:(defun org-element-latex-fragment-interpreter (latex-fragment contents)
+   2182:(defun org-element-line-break-parser ()
+   2193:(defun org-element-line-break-interpreter (line-break contents)
+   2198:(defun org-element-line-break-successor (limit)
+   2215:(defun org-element-link-parser ()
+   2291:(defun org-element-link-interpreter (link contents)
+   2301:(defun org-element-link-successor (limit)
+   2318:(defun org-element-macro-parser ()
+   2353:(defun org-element-macro-interpreter (macro contents)
+   2358:(defun org-element-macro-successor (limit)
+   2374:(defun org-element-radio-target-parser ()
+   2399:(defun org-element-radio-target-interpreter (target contents)
+   2404:(defun org-element-radio-target-successor (limit)
+   2418:(defun org-element-statistics-cookie-parser ()
+   2439:(defun org-element-statistics-cookie-interpreter (statistics-cookie contents)
+   2444:(defun org-element-statistics-cookie-successor (limit)
+   2458:(defun org-element-strike-through-parser ()
+   2482:(defun org-element-strike-through-interpreter (strike-through contents)
+   2490:(defun org-element-subscript-parser ()
+   2518:(defun org-element-subscript-interpreter (subscript contents)
+   2525:(defun org-element-sub/superscript-successor  (limit)
+   2540:(defun org-element-superscript-parser ()
+   2567:(defun org-element-superscript-interpreter (superscript contents)
+   2577:(defun org-element-table-cell-parser ()
+   2595:(defun org-element-table-cell-interpreter (table-cell contents)
+   2600:(defun org-element-table-cell-successor (limit)
+   2612:(defun org-element-target-parser ()
+   2632:(defun org-element-target-interpreter (target contents)
+   2637:(defun org-element-target-successor (limit)
+   2651:(defun org-element-timestamp-parser ()
+   2682:(defun org-element-timestamp-interpreter (timestamp contents)
+   2687:(defun org-element-timestamp-successor (limit)
+   2707:(defun org-element-underline-parser ()
+   2731:(defun org-element-underline-interpreter (underline contents)
+   2739:(defun org-element-verbatim-parser ()
+   2760:(defun org-element-verbatim-interpreter (verbatim contents)
+   2775:(defconst org-element-paragraph-separate
+   2799:(defconst org-element-all-elements
+   2808:(defconst org-element-greater-elements
+   2813:(defconst org-element-all-successors
+   2820:(defconst org-element-object-successor-alist
+   2831:(defconst org-element-all-objects
+   2838:(defconst org-element-recursive-objects
+   2843:(defconst org-element-block-name-alist
+   2859:(defconst org-element-affiliated-keywords
+   2865:(defconst org-element-keyword-translation-alist
+   2873:(defconst org-element-multiple-keywords
+   2883:(defconst org-element-parsed-keywords '("AUTHOR" "CAPTION" "TITLE")
+   2892:(defconst org-element-dual-keywords '("CAPTION" "RESULTS")
+   2904:(defconst org-element-object-restrictions
+   2955:(defconst org-element-secondary-value-alist
+   2969:(defun org-element-type (element)
+   2981:(defun org-element-property (property element)
+   2985:(defun org-element-contents (element)
+   2989:(defun org-element-restriction (element)
+   3010:(defun org-element-current-element (&optional granularity special structure)
+   3153:(defconst org-element--affiliated-re
+   3170:(defun org-element-collect-affiliated-keywords
+   3261:(defun org-element-parse-buffer (&optional granularity visible-only)
+   3274:`object'            Parse the complete buffer (default).
+   3290:(defun org-element-parse-secondary-string (string restriction)
+   3299:(defun org-element-map (data types fun &optional info first-match no-recursion)
+   3404:(defun org-element-parse-elements
+   3477:(defun org-element-parse-objects (beg end acc restriction)
+   3538:(defun org-element-get-next-object-candidates (limit restriction objects)
+   3584:(defun org-element-interpret-data (data &optional parent)
+   3650:(defun org-element-interpret--affiliated-keywords (element)
+   3697:(defun org-element-normalize-string (s)
+   3709:(defun org-element-normalize-contents (element &optional ignore-first)
+   3799:(defun org-element-at-point (&optional keep-trail)
+   3891:(defsubst org-element-nested-p (elem-A elem-B)
+   3900:(defun org-element-swap-A-B (elem-A elem-B)
+   3944:(defun org-element-forward ()
+   3966:(defun org-element-backward ()
+   3989:(defun org-element-up ()
+   4006:(defun org-element-down ()
+   4020:(defun org-element-drag-backward ()
+   4036:(defun org-element-drag-forward ()
+   4070:(defun org-element-mark-element ()
+   4089:(defun org-narrow-to-element ()
+   4107:(defun org-element-transpose ()
+   4116:(defun org-element-unindent-buffer ()
+   4141:(defun org-element-fill-paragraph (&optional justify)
+
+
 * Programming Notes 'tj'
 ** 2012-06-06
 Action: 

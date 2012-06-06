@@ -37,7 +37,7 @@
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
-  (with-temp-buffer 
+  (with-temp-buffer
     (insert transc-str)
     (goto-char (point-min))
     (while (and

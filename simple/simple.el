@@ -76,14 +76,17 @@
   (if (not (file-exists-p (expand-file-name org-file simple-dir)))
       (error "File doesn't exist")
     (save-window-excursion
-      (with-current-buffer (find-file (expand-file-name org-file simple-dir))
-        (org-export-to-file
-         'e-html
-         (expand-file-name
-          (concat
-           (file-name-sans-extension
-            (file-name-nondirectory org-file))
-           ".html") simple-dir ))))))
+      (with-current-buffer
+          (find-file (expand-file-name org-file simple-dir))
+        (and
+         (org-check-for-org-mode)
+         (org-export-to-file
+          'e-html
+          (expand-file-name
+           (concat
+            (file-name-sans-extension
+             (file-name-nondirectory org-file))
+            ".html") simple-dir )))))))
 
 (defun iorg-404-handler (httpcon)
   ;; TODO: This should probably actually serve a 404 page rather than

@@ -26,14 +26,15 @@
   "The project directory of the 'simple' app in canonical form")
 
 (defconst simple-urls
-  '(("$"      . iorg-initialize-simple-handler)
-    ("todo/$" . iorg-change-state-handler)))
+  '(("^$"      . iorg-initialize-simple-handler)
+    ("^todo/$" . iorg-change-state-handler)))
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
   (progn
     (elnode-log-access "simple" httpcon)
-    (elnode-dispatcher httpcon simple-urls iorg-404-handler)))
+    (elnode-dispatcher
+     httpcon simple-urls :function-404 (elnode-send-404 httpcon))))  
 
 (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
@@ -47,7 +48,7 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8030/todo/\">"
+        "<form action=\"http://localhost:8031/todo/\">"
         "  <input type=\"submit\" value=\" Finish \" name=\" outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))

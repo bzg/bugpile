@@ -22,6 +22,10 @@
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
 
+(defvar iorg-alist-outline-regexp
+  "\\(outline\\)\\([-[:digit:]]+\\)"
+  "Match key in http-params alist that identifies the outline level of the html form")
+
 (defconst simple-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
   "The project directory of the 'simple' app in canonical form")
@@ -47,7 +51,7 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8033/todo/\">"
+        "<form action=\"http://localhost:8032/todo/\">"
         "  <input type=\"submit\" value=\" Finish \" name=\"outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
@@ -62,7 +66,7 @@
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
-  (elnode-send-file httpcon (iorg--org-to-html "simple2.org")))
+  (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
@@ -74,6 +78,10 @@
 (defun iorg--get-outline-level (params)
   "Return level of outline-tree encoded in http-params"
   )
+
+(defun iorg--goto-entry (outline-level)
+  "Go to entry specified by OUTLINE-LEVEL")
+  
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"

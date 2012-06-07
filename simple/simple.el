@@ -39,7 +39,7 @@
   (elnode-log-access "simple" httpcon)
   (elnode-dispatcher httpcon simple-urls))
 
-(defun iorg-html-postprocess (transc-str back-end comm-chan)
+ (defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
   (with-temp-buffer
@@ -51,7 +51,7 @@
       (goto-char (match-beginning 0))
       (insert
        (concat
-        "<form action=\"http://localhost:8032/todo/\">"
+        "<form action=\"http://localhost:8031/todo/\">"
         "  <input type=\"submit\" value=\" Finish \" name=\"outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
@@ -68,7 +68,7 @@
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
-(defun iorg-change-state-handler (httpcon)
+ (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
   (message "entering `iorg-change-state-handler'")  
@@ -80,7 +80,8 @@
         (iorg--params-find-entry params)
         (org-todo 'done))
       (save-buffer)
-      (kill-buffer (current-buffer)))
+      ;(kill-buffer (current-buffer))
+      )
     (iorg-initialize-simple-handler)))
 
 (defun iorg--get-outline-level (param-list)
@@ -103,7 +104,7 @@ in the Org file on that level."
     (error "Wrong type or format of OUTLINE-LEVEL argument")
   (delete "" (split-string outline-level "-"))))
 
-(defun iorg--params-find-entry (param-list &optional file)
+ (defun iorg--params-find-entry (param-list &optional file)
   "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
   (condition-case err
       (let* ((outline-level
@@ -114,7 +115,7 @@ in the Org file on that level."
         (with-current-buffer
             (if (and file (file-exists-p))
                 (find-file file)
-             (current-buffer))
+             (find-file (expand-file-name "simple.org" simple-dir)))
           (org-check-for-org-mode)
           (save-restriction
             (widen)

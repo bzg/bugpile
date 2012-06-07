@@ -46,7 +46,12 @@ the remainder of the iorg project.
 I've stubbed out a few functions in file:simple.el, add new functions
 as they are needed.
 
-* TODO Second top level heading                                         :ces:
+** HOLD Second child of first entry                            :WAITING:HOLD:
+   :LOGBOOK:
+   - State "HOLD"       from ""           [2012-06-07 Do 16:04] \\
+     state: hold
+   :END:
+* TODO Second top level heading                                         :ces: # # #
   :PROPERTIES:
   :iorg-property: sec
   :END:

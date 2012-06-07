@@ -1,6 +1,11 @@
 #+Title: A simple example Org-mode file
 
-* TODO This file has a top level heading                                :bar:
+* DONE This file has a top level heading                                :bar:
+  CLOSED: [2012-06-07 Do 18:59]
+  :LOGBOOK:
+  - State "TODO"       from "DONE"       [2012-06-07 Do 18:58]
+  - State "DONE"       from "TODO"       [2012-06-07 Do 18:57]
+  :END:
    :PROPERTIES:
   :iorg-property: foo
   :END:

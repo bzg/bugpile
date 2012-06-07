@@ -39,7 +39,7 @@
   (elnode-log-access "simple" httpcon)
   (elnode-dispatcher httpcon simple-urls))
 
- (defun iorg-html-postprocess (transc-str back-end comm-chan)
+(defun iorg-html-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
   (with-temp-buffer
@@ -64,7 +64,7 @@
    'simple-dispatcher-handler
    :port port :host "localhost"))
 
-(defun iorg-initialize-simple-handler (httpcon)
+ (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
@@ -75,14 +75,14 @@
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)
     (with-current-buffer
-        (find-file (expand-file-name "simple.el" simple-dir))
+        (find-file (expand-file-name "simple.org" simple-dir))
       (save-excursion
         (iorg--params-find-entry params)
         (org-todo 'done))
       (save-buffer)
       ;(kill-buffer (current-buffer))
       )
-    (iorg-initialize-simple-handler)))
+    (iorg-initialize-simple-handler httpcon)))
 
 (defun iorg--get-outline-level (param-list)
   "Return level of outline-tree encoded in http-params"

@@ -148,6 +148,22 @@ in the Org file on that level."
              (file-name-nondirectory org-file))
             ".html") simple-dir )))))))
 
+(defun iorg-wrap-element-in-html-form (action-url &optional submit reset &rest attributes) 
+  "Wrap Org element in html form-element with action ACTION-URL and optional method METHOD.")
+
+(defun iorg-wrap-element-in-html-input (type name &optional label &rest attributes )
+  "")
+
+(defun iorg-wrap-element-in-html-select (name size &optional label multiple &rest options)
+  "")
+
+(defun iorg-wrap-element-in-html-button (type name &rest attributes)
+  "")
+
+(defun iorg-wrap-element-in-html-textarea (name &optional rows cols &rest attributes)
+  "")
+
+
 (defun iorg-404-handler (httpcon)
   ;; TODO: This should probably actually serve a 404 page rather than
   ;;       throwing an error

@@ -24,7 +24,7 @@
 
 (defvar iorg-alist-outline-regexp
   "\\(outline\\)\\([-[:digit:]]+\\)"
-  "Match key in http-params alist that identifies the outline level of the html form")
+  "Match key in http-params alist that identifies the outline level.")
 
 (defconst simple-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
@@ -82,7 +82,11 @@
    (match-string 2)))
 
 (defun iorg--normalize-outline-level (outline-level)
-  "Normalize OUTLINE-LEVEL in the format \"[-[:digit:]]+\" to a list of numbers (as strings). The lenght of the returned list is equal to the number of sublevels we need to walk down in the outline tree, the value of each number identifies the nth-entry in the Org file on that level."
+  "Normalize OUTLINE-LEVEL in the format \"[-[:digit:]]+\" to a
+list of numbers (as strings). The lenght of the returned list is
+equal to the number of sublevels we need to walk down in the
+outline tree, the value of each number identifies the nth-entry
+in the Org file on that level."
 (if (not
      (and
       (iorg--stringp outline-level)
@@ -91,7 +95,7 @@
   (delete "" (split-string outline-level "-")))
 
 (defun iorg--goto-entry (param-list)
-  "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
+  "Go to the entry in the current Org buffer specified in the PARAM-LIST."
   (let* ((outline-level
           (iorg--get-outline-level param-list))
          (normalized-outline-level

@@ -68,20 +68,47 @@
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
-(defun iorg-change-state-handler (httpcon)
+(defun iorg-change-state-handler (httpcon &optional file)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
   (message "entering `iorg-change-state-handler'")  
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)))
 
-(defun iorg--get-outline-level (params)
+(defun iorg--get-outline-level (param-list)
   "Return level of outline-tree encoded in http-params"
-  )
+  (and
+   (assoc-re iorg-alist-outline-regexp param-list)
+   (match-string 2)))
 
-(defun iorg--goto-entry (outline-level)
-  "Go to entry specified by OUTLINE-LEVEL")
-  
+(defun iorg--normalize-outline-level (outline-level)
+  "Normalize OUTLINE-LEVEL in the format \"[-[:digit:]]+\" to a list of numbers (as strings). The lenght of the returned list is equal to the number of sublevels we need to walk down in the outline tree, the value of each number identifies the nth-entry in the Org file on that level."
+(if (not
+     (and
+      (iorg--stringp outline-level)
+      (string-match "[-[:digit:]]+" outline-level)))
+    (error "Wrong type or format of OUTLINE-LEVEL argument")
+  (delete "" (split-string outline-level "-")))
+
+(defun iorg--goto-entry (param-list)
+  "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
+  (let* ((outline-level
+          (iorg--get-outline-level param-list))
+         (normalized-outline-level
+          (iorg--normalize-outline-level outline-level))
+         (sublevel-p nil))
+    (save-excursion
+      (save-restriction
+        (widen)
+        (iorg--goto-first-entry)
+        (mapc
+         (lambda (n)
+           (if sublevel-p
+               (outline-next-heading))
+           (org-forward-same-level (1- n) INVISIBLE-OK)
+           (unless sublevel-p
+             (setq sublevel-p 1))
+         normalized-outline-level)))))
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"

@@ -997,6 +997,7 @@ Nicolas Goaziou
 
 * Programming Notes 'tj'
 ** 2012-06-06
+*** Bug in elnode-dispatcher(..)
 Action: 
 - open simple.org
 - M-x iorg-launch
@@ -1053,3 +1054,35 @@ Backtrace:
 `-----------------------------------------------------------------------
 
 ** 2012-06-07
+*** How to identify the Org file to act on
+Each object and scene must have a unique ID, and these IDs must be
+included programmatically into the name of the html form element (e.g.
+the button). 
+
+All objects (instances) of one class are found as top-level entries in
+one .org file, therefore the object name identifies the .org file (by
+the files name, e.g. 
+
+,-------------------------------
+| bugpile-<<class-name>>-obj.org
+`-------------------------------
+
+With scenes (one scene = one .org-file) this is probably easy too,
+since each scene is part of a use-case with its own controller elisp
+file and one handler-method for each user action (-> and every user
+action is associated with one scene), therefore the handler is
+specialised to work on one .org file only and this information is
+already included in the handlers name and the html-form's action-url.
+
+*** How to identify the org-element to work on?
+Since there are many instances (objects) of one class (e.g. 3456 bugs
+as top-level entries in the bugpile-bugs-obj.org file), a handler (or
+logic) function needs to know on which one it should act (implemented
+by CUSTOM-ID attribute or headline tag?)
+
+With regards to the web-frontend, the org-element is identified by
+'id' and/or 'class' information in the html file (or TYPE and/or
+ATTRIBUTES in the parse tree). This info must be included
+programmatically into the name of the html form element (e.g. the
+button) for the handler to know where to act in the underlying .org file.
+

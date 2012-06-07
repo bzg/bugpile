@@ -68,18 +68,27 @@
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
-(defun iorg-change-state-handler (httpcon &optional file)
+(defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
   (message "entering `iorg-change-state-handler'")  
   (let ((params (elnode-http-params httpcon)))
-    (message "These are the http-params: \n %s" params)))
+    (message "These are the http-params: \n %s" params)
+    (with-current-buffer
+        (find-file (expand-file-name "simple.el" simple-dir))
+      (save-excursion
+        (iorg--params-find-entry params)
+        (org-todo 'done))
+      (save-buffer)
+      (kill-buffer (current-buffer)))
+    (iorg-initialize-simple-handler)))
 
 (defun iorg--get-outline-level (param-list)
   "Return level of outline-tree encoded in http-params"
   (and
-   (assoc-re iorg-alist-outline-regexp param-list)
-   (match-string 2)))
+   (listp param-list)
+   (assoc-re iorg-alist-outline-regexp param-list 2)))
+
 
 (defun iorg--normalize-outline-level (outline-level)
   "Normalize OUTLINE-LEVEL in the format \"[-[:digit:]]+\" to a
@@ -92,27 +101,34 @@ in the Org file on that level."
       (iorg--stringp outline-level)
       (string-match "[-[:digit:]]+" outline-level)))
     (error "Wrong type or format of OUTLINE-LEVEL argument")
-  (delete "" (split-string outline-level "-")))
+  (delete "" (split-string outline-level "-"))))
 
-(defun iorg--goto-entry (param-list)
-  "Go to the entry in the current Org buffer specified in the PARAM-LIST."
-  (let* ((outline-level
-          (iorg--get-outline-level param-list))
-         (normalized-outline-level
-          (iorg--normalize-outline-level outline-level))
-         (sublevel-p nil))
-    (save-excursion
-      (save-restriction
-        (widen)
-        (iorg--goto-first-entry)
-        (mapc
-         (lambda (n)
-           (if sublevel-p
-               (outline-next-heading))
-           (org-forward-same-level (1- n) INVISIBLE-OK)
-           (unless sublevel-p
-             (setq sublevel-p 1))
-         normalized-outline-level)))))
+(defun iorg--params-find-entry (param-list &optional file)
+  "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
+  (condition-case err
+      (let* ((outline-level
+              (iorg--get-outline-level param-list))
+             (normalized-outline-level
+              (iorg--normalize-outline-level outline-level))
+             (sublevel-p nil))
+        (with-current-buffer
+            (if (and file (file-exists-p))
+                (find-file file)
+             (current-buffer))
+          (org-check-for-org-mode)
+          (save-restriction
+            (widen)
+            (iorg--goto-first-entry)
+            (mapc
+             (lambda (n)
+               (if sublevel-p
+                   (outline-next-heading))
+               (org-forward-same-level
+                (1- (string-to-int n)) "INVISIBLE-OK")
+               (unless sublevel-p
+                 (setq sublevel-p 1)))
+             normalized-outline-level))))
+    (error "Error while going to outline entry specified in PARAM-LIST: %s " err)))
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"

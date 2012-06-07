@@ -1080,3 +1080,12 @@ ATTRIBUTES in the parse tree). This info must be included
 programmatically into the name of the html form element (e.g. the
 button) for the handler to know where to act in the underlying .org file.
 
+*** TODO Find elements by ID
+Write (alternative) functions that write IDs for each Org element and
+find elements by ID.
+*** TODO Look for code in Erics mails how to limit line-lenght to 79
+*** while-visiting-file from util.el
+Question: 
+(save-buffer) in body saves file under its name (overwriting the
+content)? 
+If yes, rewrite iorg-change-state-handler using while-visiting-file. 

@@ -7,6 +7,8 @@
            (assoc-proc #'evenp '((1 . :foo) (2 . :baz) (4 . :qux)))
            '(2 . :baz))))
 
+
+;; TODO: update test to new implementation
 (ert-deftest iorg-util-assoc-re ()
   (should (tree-equal
            (assoc-re "outline-[[:digit:]]-[[:digit:]]"

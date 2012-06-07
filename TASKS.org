@@ -948,8 +948,11 @@ Deleted, is a special case of 'take action on selected task'
 ** Bugpile Implementation
 *** TODO Implement simple.el
     DEADLINE: <2012-06-11 Mo>
-**** TODO Serve simple.org to html using elnode and org-export
-     DEADLINE: <2012-06-05 Tue>
+**** DONE Serve simple.org to html using elnode and org-export
+     CLOSED: [2012-06-07 Do 09:30] DEADLINE: <2012-06-05 Tue>
+     :LOGBOOK:
+     - State "DONE"       from "TODO"       [2012-06-07 Do 09:30]
+     :END:
 
 **** TODO Add a JS form and button to the html export of simple.org
      DEADLINE: <2012-06-05 Tue>
@@ -962,8 +965,11 @@ Deleted, is a special case of 'take action on selected task'
 This should update the contents of simple.org and serve the new page
 as a response.
 
-**** TODO Change a TODO state using the web interface
+**** NEXT Change a TODO state using the web interface
      DEADLINE: <2012-06-06 Wed>
+     :LOGBOOK:
+     CLOCK: [2012-06-07 Do 09:39]
+     :END:
 
 **** TODO Change a property using the web interface
      DEADLINE: <2012-06-07 Thu>

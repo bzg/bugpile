@@ -14,11 +14,11 @@
 (add-to-list 'org-export-filter-final-output-functions
              'iorg-html-postprocess)
 
-(defvar iorg-html-postprocess-begin-txt-regexp
+(defvar iorg-html-begin-txt-regexp
   "<div class=\"outline-text.*\">"
   "Match the beginning of outline text in exported html.")
 
-(defvar iorg-html-postprocess-todo-regexp
+(defvar iorg-html-todo-regexp
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
 
@@ -42,8 +42,8 @@
     (insert transc-str)
     (goto-char (point-min))
     (while (and
-            (re-search-forward iorg-html-postprocess-todo-regexp nil t)
-            (re-search-forward iorg-html-postprocess-begin-txt-regexp nil t))
+            (re-search-forward iorg-html-todo-regexp nil t)
+            (re-search-forward iorg-html-begin-txt-regexp nil t))
       (goto-char (match-beginning 0))
       (insert
        (concat
@@ -62,7 +62,7 @@
 
 (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
-  (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
+  (elnode-send-file httpcon (iorg--org-to-html "simple2.org")))
 
 (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."

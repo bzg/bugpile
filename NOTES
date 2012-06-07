@@ -21,41 +21,6 @@ From =#emacs= WRT: how we can handle authentication issues moving forward.
 :                     client side cookie. that interface can always be improved.
 : 10:44 < _schulte_> nicferrier: I vigorously agree
 
-** Starting an elnode server
-=nicferrier= suggests this script to launch an elnode server.
-https://gist.github.com/2628802
-
-** Setup elnode
-   :PROPERTIES:
-   :results:  silent
-   :END:
-An abbreviated version of the instructions from
-https://github.com/nicferrier/elnode.
-
-1. clone locally to somewhere on the =load-path=.
-   #+begin_src sh
-   git clone git://github.com/nicferrier/elnode.git
-   #+end_src
-2. load up elnode
-   #+begin_src emacs-lisp
-   (require 'elnode)
-   #+end_src
-3. define a simple handler function
-   #+begin_src emacs-lisp
-     (defun simple-handler (httpcon)
-       (elnode-http-start httpcon "200" '("Content-type" . "text/html"))
-       (elnode-http-return httpcon "<html><b>HELLO!</b></html>"))
-   #+end_src
-4. start the server
-   #+begin_src emacs-lisp
-     (elnode-start 'simple-handler :port 3333 :host "localhost")
-   #+end_src
-5. point your browser at elnode http://localhost:3333/
-6. stop the server
-   #+begin_src emacs-lisp
-     (elnode-stop 3333)
-   #+end_src
-
 ** GSoC mid-term/final evaluations
 *** How do evaluations work? 
 Quote from GSoC [[http://www.google-melange.com/document/show/gsoc_program/google/gsoc2012/faqs][faq]]:
@@ -183,9 +148,188 @@ button
 |Abhängigkeiten|siehe Seite Elemente                                                                                                     |
 +----------------------------------------------------------------------------------------------------------------------------------------+
 
+** Libraries
+*** Elnode
+**** Starting an elnode server
+=nicferrier= suggests this script to launch an elnode server.
+https://gist.github.com/2628802
 
-** Org-export
-*** API
+**** Setup elnode
+   :PROPERTIES:
+   :results:  silent
+   :END:
+An abbreviated version of the instructions from
+https://github.com/nicferrier/elnode.
+
+1. clone locally to somewhere on the =load-path=.
+   #+begin_src sh
+   git clone git://github.com/nicferrier/elnode.git
+   #+end_src
+2. load up elnode
+   #+begin_src emacs-lisp
+   (require 'elnode)
+   #+end_src
+3. define a simple handler function
+   #+begin_src emacs-lisp
+     (defun simple-handler (httpcon)
+       (elnode-http-start httpcon "200" '("Content-type" . "text/html"))
+       (elnode-http-return httpcon "<html><b>HELLO!</b></html>"))
+   #+end_src
+4. start the server
+   #+begin_src emacs-lisp
+     (elnode-start 'simple-handler :port 3333 :host "localhost")
+   #+end_src
+5. point your browser at elnode http://localhost:3333/
+6. stop the server
+   #+begin_src emacs-lisp
+     (elnode-stop 3333)
+   #+end_src
+
+**** API
+
+#+begin_src emacs-lisp
+136 matches for "(def" in buffer: elnode.el
+     59:(defconst ELNODE-FORM-DATA-TYPE "application/x-www-form-urlencoded"
+     62:(defgroup elnode nil
+     66:(defvar elnode-server-socket nil
+     76:(defun elnode-trunc (data)
+     82:(defun elnode-trim (str)
+     89:(defcustom elnode-log-files-directory "~/.elnodelogs"
+     98:(defvar elnode-log-buffer-position-written 0
+    104:(defvar elnode-log-buffer-max-size 1000
+    107:(defvar elnode-log-buffer-datetime-format "%Y%m%d%H%M%S"
+    110:(defun elnode-log-buffer-log (text buffer-or-name &optional filename)
+    150:(defcustom elnode-error-log-to-messages t
+    155:(defvar elnode-server-error-log "*elnode-server-error*"
+    158:(defvar elnode--do-error-logging t
+    161:(defun elnode--get-error-log-buffer ()
+    165:(defun elnode-error (msg &rest args)
+    182:(defun elnode--log-filename (logname)
+    193:(defun elnode-log-access (logname httpcon)
+    217:(defvar elnode--deferred '()
+    220:(defun elnode-defer-now (handler)
+    230:(defmacro elnode-defer-or-do (guard &rest body)
+    243:(defun elnode--deferred-add (httpcon handler)
+    248:(defun elnode--deferred-processor ()
+    269:(defvar elnode--defer-timer nil
+    274:(defun elnode--init-deferring ()
+    281:(defun elnode-deferred-queue (arg)
+    292:(defun elnode-deferred-queue-stop ()
+    301:(defcustom elnode-default-response-table
+    323:(defun elnode--format-response (status &optional msg)
+    333:(defun elnode--sentinel (process status)
+    361:(defun elnode--process-send-string (proc data)
+    371:(defun elnode--process-send-eof (proc)
+    384:(defun elnode--http-parse (httpcon)
+    438:(defun elnode--http-make-hdr (method resource &rest headers)
+    480:(defun elnode--get-server-prop (process key)
+    490:(defun elnode--make-send-string ()
+    497:(defun elnode--make-send-eof ()
+    504:(defun elnode--filter (process data)
+    578:(defmacro with-elnode-mock-server (handler &rest body)
+    599:(defun* elnode-test-call (path
+    698:(defun elnode-test-handler (httpcon)
+    707:(defun elnode--log-fn (server con msg)
+    713:(defvar elnode-handler-history '()
+    716:(defvar elnode-port-history '()
+    719:(defvar elnode-host-history '()
+    723:(defun* elnode-start (request-handler
+    742:(defun nic-server (httpcon)
+    799:(defun elnode-stop (port)
+    819:(defun elnode-list-buffers ()
+    835:(defun elnode-time-encode (time-str)
+    842:(defun elnode--http-hdr (httpcon)
+    850:(defun elnode-http-header (httpcon name &optional convert)
+    877:(defun elnode-http-cookie (httpcon name)
+    899:(defun elnode--http-parse-status (httpcon &optional property)
+    913:(defun elnode--http-parse-resource (httpcon &optional property)
+    938:(defun elnode-http-pathinfo (httpcon)
+    944:(defun elnode-http-query (httpcon)
+    950:(defun elnode--http-param-part-decode (param-thing)
+    977:(defun elnode--http-query-to-alist (query)
+    993:(defun elnode--alist-merge (a b &optional operator)
+   1017:(defun elnode--http-post-to-alist (httpcon)
+   1029:(defun elnode-http-params (httpcon)
+   1061:(defun elnode-http-param (httpcon name)
+   1070:(defun elnode-http-method (httpcon)
+   1076:(defun elnode-http-version (httpcon)
+   1082:(defun elnode-http-send-string (httpcon str)
+   1096:(defvar elnode-http-codes-alist
+   1110:(defun elnode--http-result-header (hdr-alist)
+   1131:(defun elnode-http-start (httpcon status &rest header)
+   1165:(defun elnode--http-end (httpcon)
+   1179:(defun elnode-http-return (httpcon &optional data)
+   1198:(defun elnode-send-json (httpcon data &optional content-type)
+   1209:(defun elnode-send-status (httpcon status &optional msg)
+   1221:(defun elnode-send-404 (httpcon &optional msg)
+   1227:(defun elnode-send-400 (httpcon &optional msg)
+   1233:(defun elnode-send-500 (httpcon &optional msg)
+   1240:(defun elnode-send-redirect (httpcon location &optional type)
+   1251:(defun elnode-normalize-path (httpcon handler)
+   1268:(defun elnode--mapper-find-mapping (match-path mapping-table)
+   1274:(defun elnode--mapper-find (httpcon path mapping-table)
+   1314:(defun elnode-http-mapping (httpcon &optional part)
+   1344:(defun elnode-get-targetfile (httpcon docroot)
+   1367:(defvar elnode--do-access-logging-on-dispatch t
+   1370:(defun* elnode--dispatch-proc (httpcon
+   1397:(defun elnode-dispatcher (httpcon url-mapping-table &optional function-404)
+   1415:(defun my-server (httpcon)
+   1434:(defun* elnode-hostpath-dispatcher (httpcon
+   1468:(defcustom elnode-hostpath-default-table
+   1485:(defun elnode-hostpath-default-handler (httpcon)
+   1496:(defcustom elnode-log-worker-elisp nil
+   1503:(defcustom elnode-log-worker-responses nil
+   1510:(defun elnode--worker-filter-helper (process
+   1549:(defun elnode--worker-lisp-helper (child-lisp)
+   1558:(defmacro elnode-worker-elisp (output-stream bindings &rest body)
+   1709:(defun elnode-worker-last-code ()
+   1723:(defun elnode-wait-for-exit (process)
+   1730:(defun elnode--child-process-sentinel (process status)
+   1766:(defun elnode--child-process-filter (process data)
+   1784:(defun elnode-child-process (httpcon program &rest args)
+   1816:(defun elnode-auth (httpcon)
+   1819:(defcustom elnode-send-file-program "/bin/cat"
+   1827:(defun elnode--buffer-template (file-buf replacements)
+   1867:(defvar elnode-webserver-visit-file nil
+   1873:(defun* elnode-send-file (httpcon targetfile
+   1936:(defmacro elnode-method (&rest method-mappings)
+   1962:(defun elnode-make-redirecter (location &optional type)
+   1971:(defun* elnode-make-send-file  (filename &key preamble mime-types )
+   1990:(defun elnode--under-docroot-p (target-file doc-root)
+   1999:(defun elnode-not-found (httpcon target-file)
+   2006:(defun elnode-cached-p (httpcon target-file)
+   2017:(defun elnode-cached (httpcon)
+   2023:(defmacro elnode-docroot-for (doc-root with target-file-var
+   2071:(defcustom elnode-webserver-docroot "~/public_html"
+   2079:(defcustom elnode-webserver-extra-mimetypes '(("text/plain" . "creole")
+   2088:(defcustom elnode-webserver-index '("index.html" "index.htm")
+   2096:(defun elnode-url-encode-path (path)
+   2112:(defcustom elnode-webserver-index-page-template "<html>
+   2132:(defcustom elnode-webserver-index-file-template "<a href='%s'>%s</a><br/>\r\n"
+   2139:(defun elnode--webserver-index (docroot targetfile pathinfo)
+   2164:(defun elnode--webserver-handler-proc (httpcon docroot mime-types)
+   2195:(defun elnode-webserver-handler-maker (&optional docroot extra-mime-types)
+   2217:(defun elnode-webserver (httpcon)
+   2238:(defgroup elnode-wikiserver nil
+   2242:(defcustom elnode-wikiserver-wikiroot "~/wiki"
+   2247:(defcustom elnode-wikiserver-body-header
+   2253:(defcustom elnode-wikiserver-body-footer
+   2271:(defun elnode--wiki-call (out-buf page-text page)
+   2302:(defun elnode-wiki-send (httpcon wikipage &optional pageinfo)
+   2324:(defun elnode-wiki-handler (httpcon wikiroot)
+   2372:(defun elnode-wikiserver-test ()
+   2377:(defun elnode-wikiserver (httpcon)
+   2392:(defcustom elnode-init-port 8000
+   2396:(defcustom elnode-init-host "localhost\"
+   2401:(defun elnode-init ()
+   2426:(defcustom elnode-do-init 't
+   2441:(defvar elnode--inited nil
+#+end_src
+
+*** Org-export
+**** API
+
+#+begin_src emacs-lisp
 186 matches for "(def" in buffer: org-export.el
     110:(defconst org-export-max-depth 19
     113:(defconst org-export-option-alist
@@ -204,7 +348,6 @@ button
     357:(defcustom org-export-with-emphasize t
     368:(defcustom org-export-exclude-tags '("noexport")
     380:(defcustom org-export-with-fixed-width t
-    386:  : (while (defc cnt)
     395:(defcustom org-export-with-footnotes t
     402:(defcustom org-export-headline-levels 3
     413:(defcustom org-export-default-language "en"
@@ -237,12 +380,10 @@ button
    1174:(defun org-export-get-buffer-attributes ()
    1200:(defun org-export-get-global-options (&optional backend)
    1219:(defun org-export-store-footnote-definitions (info)
-   1244:	(let ((def (org-footnote-at-definition-p)))
    1260:(defvar org-export-allow-BIND-local nil)
    1261:(defun org-export-confirm-letbind ()
    1272:(defun org-export-install-letbind-maybe ()
    1302:(defun org-export-collect-tree-properties (data info)
-   1345:  (let ((defs (plist-get info :footnote-definition-alist)))
    1366:(defun org-export-get-min-level (data options)
    1384:(defun org-export-collect-headline-numbering (data options)
    1408:(defun org-export-populate-ignore-list (data options)
@@ -315,12 +456,10 @@ button
    2243:(defun org-export-to-file
    2268:(defun org-export-output-file-name (extension &optional subtreep pub-dir)
    2315:(defmacro org-export-with-current-buffer-copy (&rest body)
-   2343:(def-edebug-spec org-export-with-current-buffer-copy (body))
    2345:(defun org-export-expand-include-keyword (&optional included dir)
    2428:(defun org-export-prepare-file-contents (file &optional lines ind minlevel)
    2519:(defun org-export-snippet-backend (export-snippet)
    2544:(defun org-export-collect-footnote-definitions (data info)
-   2562:		 (let ((def (org-export-get-footnote-definition fn info)))
    2577:(defun org-export-footnote-first-reference-p (footnote-reference info)
    2609:(defun org-export-get-footnote-definition (footnote-reference info)
    2616:(defun org-export-get-footnote-number (footnote info)
@@ -373,8 +512,10 @@ button
    3797:(defun org-export-get-next-element (blob info)
    3816:(defun org-export-dispatch ()
    3904:(defun org-export-dispatch-ui (options expertp)
+#+end_src
 
-** Org-e-html
+*** Org-e-html
+#+begin_src emacs-lisp
 165 matches for "(def" in buffer: org-e-html.el
      49:(defvar org-element-string-restrictions)
      50:(defvar org-element-object-restrictions)
@@ -387,7 +528,6 @@ button
     165:(defcustom org-e-html-pretty-output nil
     173:(defcustom org-e-html-extension "html"
     178:(defcustom org-e-html-xml-declaration
-    193:;; (defcustom org-e-html-coding-system nil
     198:(defvar org-e-html-content-div "content"
     204:(defcustom org-e-html-divs '("preamble" "content" "postamble")
     218:(defconst org-e-html-style-default
@@ -427,18 +567,15 @@ button
     810:(defcustom org-e-html-link-org-files-as-html t
     831:(defcustom org-e-html-date-format
     839:(defcustom org-e-html-format-headline-function nil
-    854:\(defun org-e-html-format-headline \(todo todo-type priority text tags)
     868:(defcustom org-e-html-text-markup-alist
     891:(defcustom org-e-html-footnote-separator "<sup>, </sup>"
     899:(defcustom org-e-html-active-timestamp-format "\\textit{%s}"
     904:(defcustom org-e-html-inactive-timestamp-format "\\textit{%s}"
-    909:(defcustom org-e-html-diary-timestamp-format "\\textit{%s}"
+    909:(defcustom org-e-html-diary-timestamp-format "\\textit{%s}\"
     917:(defcustom org-e-html-inline-image-rules
     938:(defcustom org-e-html-table-caption-above t
     946:(defcustom org-e-html-format-drawer-function nil
-    958:\(defun org-e-html-format-drawer-default \(name contents\)
     967:(defcustom org-e-html-format-inlinetask-function nil
-    983:\(defun org-e-html-format-inlinetask \(todo type priority name tags contents\)
    1009:(defcustom org-e-html-quotes
    1047:(defun org-e-html-cvt-org-as-html (opt-plist type path)
    1063:(defun org-e-html-format-org-link (opt-plist type-1 path fragment desc attr
@@ -453,12 +590,10 @@ button
    1265:(defun org-e-html-toc-text (toc-entries)
    1288:(defun* org-e-html-format-toc-headline
    1300:(defun org-e-html-toc (depth info)
-   1324:;; (defun org-e-html-format-line (line)
    1329:(defun org-e-html-fix-class-name (kwd) 	; audit callers of this function
    1337:(defun org-e-html-format-footnote-reference (n def refcnt)
    1344:(defun org-e-html-format-footnotes-section (section-name definitions)
    1348:(defun org-e-html-format-footnote-definition (fn)
-   1349:  (let ((n (car fn)) (def (cdr fn)))
    1357:(defun org-e-html-footnote-section (info)
    1376:(defun org-e-html-format-date (info)
    1388:(defun org-e-html--caption/label-string (caption label info)
@@ -541,9 +676,10 @@ button
    3028:(defconst org-e-html-filters-alist
    3036:(defun org-e-html-final-function (contents backend info)
    3047:(defun org-e-html-export-to-html
+#+end_src
 
-** Org-element
-*** Introduction
+*** Org-element
+**** Introduction
 Location: http://article.gmane.org/gmane.emacs.orgmode/49416              
 Picon
 From: Nicolas Goaziou <n.goaziou <at> gmail.com>
@@ -691,7 +827,8 @@ Regards,
 -- 
 Nicolas Goaziou
 
-*** API
+**** API
+#+begin_src emacs-lisp
 165 matches for "(def" in buffer: org-element.el
     152:(defun org-element-center-block-parser ()
     181:(defun org-element-center-block-interpreter (center-block contents)
@@ -764,7 +901,6 @@ Nicolas Goaziou
    1916:(defun org-element-export-snippet-successor (limit)
    1937:(defun org-element-footnote-reference-parser ()
    1974:(defun org-element-footnote-reference-interpreter (footnote-reference contents)
-   1978:	(def
    1985:(defun org-element-footnote-reference-successor (limit)
    2007:(defun org-element-inline-babel-call-parser ()
    2028:(defun org-element-inline-babel-call-interpreter (inline-babel-call contents)
@@ -834,7 +970,6 @@ Nicolas Goaziou
    3153:(defconst org-element--affiliated-re
    3170:(defun org-element-collect-affiliated-keywords
    3261:(defun org-element-parse-buffer (&optional granularity visible-only)
-   3274:`object'            Parse the complete buffer (default).
    3290:(defun org-element-parse-secondary-string (string restriction)
    3299:(defun org-element-map (data types fun &optional info first-match no-recursion)
    3404:(defun org-element-parse-elements
@@ -858,7 +993,7 @@ Nicolas Goaziou
    4107:(defun org-element-transpose ()
    4116:(defun org-element-unindent-buffer ()
    4141:(defun org-element-fill-paragraph (&optional justify)
-
+#+end_src
 
 * Programming Notes 'tj'
 ** 2012-06-06
@@ -916,3 +1051,5 @@ Backtrace:
 | <127.0.0.1:33392>>) funcall(simple-dispatcher-handler #<process
 | *elnode-webserver-proc*<3> <127.0.0.1:33392>>)
 `-----------------------------------------------------------------------
+
+** 2012-06-07

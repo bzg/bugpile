@@ -1089,3 +1089,17 @@ Question:
 (save-buffer) in body saves file under its name (overwriting the
 content)? 
 If yes, rewrite iorg-change-state-handler using while-visiting-file. 
+*** Further todos
+Actually its ugly to put buttons behind many org elements to enable
+interaction from the webinterface. I see two reasonable ways to edit a
+page: 
+1. Put one edit button/link on the page that trigger that the page is
+   newly loaded, this time each editable org-element wrapped into a
+   html-form&input-elem due to postprocessing. Adecuate forms are
+   textfields for headline text, textareas for outline text,
+   html-choice for todo-states (and evtl. for tags, if the allowed tag
+   values are predefinedm html-checkboxes for selection lists. 
+2. Put a little edit symbol behind each editable element (maybe a
+   pen). pressing the symbol trigger a Ajax JS call, that wraps the
+   html element (and only this one) into a html form and sends the
+   replacing html without reloading the page. 

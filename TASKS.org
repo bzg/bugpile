@@ -965,9 +965,10 @@ Deleted, is a special case of 'take action on selected task'
 This should update the contents of simple.org and serve the new page
 as a response.
 
-**** NEXT Change a TODO state using the web interface
-     DEADLINE: <2012-06-06 Wed>
+**** DONE Change a TODO state using the web interface
+     CLOSED: [2012-06-07 Do 19:15] DEADLINE: <2012-06-06 Wed>
      :LOGBOOK:
+     - State "DONE"       from "NEXT"       [2012-06-07 Do 19:15]
      CLOCK: [2012-06-07 Do 09:39]
      :END:
 

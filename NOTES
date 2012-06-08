@@ -1115,6 +1115,7 @@ in such a case.
 With JS, each input/select field could probably send a
 request 'onchange' and would be updated immediately (PicoLisp as an
 example here). 
+
 *** Working on the parse tree?                                         :iorg:
     :PROPERTIES:
     :html-form:     http://localhost:8000/working-on-parse-tree
@@ -1128,9 +1129,11 @@ example here).
     :html-button-pos_ALL: top-left top-right bottom-left bottom-right
     :html-select_ALL: todo tags_ALIST properties_ALL
     :html-checkbox: checkbox
-    :html-text:     headline tags 
+    :html-text:     headline tags_FREE 
     :html-area:     text
-    :html-button: submit
+    :html-button: submit reset
+    :html-button-pos: bottom-right
+    :html-button-value: Send edits
     :END:
 
 I still don't have a clear idea of how this could work [UPDATE: after
@@ -1152,7 +1155,27 @@ Therefore, check all items you agree with:
    relation between entries gives all the necessary info)
 
 The order of properties is relevant, e.g. html-label belongs to the closest
-html-field property on top of it. 
+html-field property on top of it. Some html attritutes like 'name' or
+'ID' can be set automatically, but for others we would need additional
+user properties like:
+
+:html-area-rows: 
+:html-area-cols:
+:html-button-value:
+etc. 
+
+A bugpage would be delivered as a static webpage (SCENE 1) with only one button
+'Edit' first (if the user is in a group that has
+bug-edit-permissions). After pressing the button, the associated
+handler-functions either exports another Org file with all the
+necessary :html-attributes: and tags or adds these org-elements to the
+existing Org view file (SCENE 2). The user is then presented a html
+formular with all specified elements wrapped into input/select fields and
+submit/reset buttons. The system stores the edited info and delivers
+the edited page again (SCENE 1). 
+
+It seems easier to work on one file with always up-to-date content and
+programmatically change the properties and tags for different scenes.
 
 **** use Org syntax to tag Org elements                                
      :PROPERTIES:

@@ -1201,6 +1201,12 @@ org-properties.
  2) be strict: decide beforehand about the org-element/html-field
     association
 
+I would say: both. Different types of plain-lists could be wrapped
+into a set of radio buttons (only one selection allowed), so give the
+user the choice. On the other hand, I would only allow Org checkboxes
+as html checkboxes since everything else would cause confusion. 
+
+PS:
  - this list will not be processed by iOrg
  - while the list above will be converted into two connected
    html-radio-buttons. 
@@ -1213,12 +1219,12 @@ one :iorg: tag for a top-level entry means all sub-level entries are
 processed by iOrg too. the next entry will be ignored due to
 the :noiorg: tag.
 
-**** this entry does not have the iorg tag                           :noiorg:
+**** this entry will not be processed by iOrg                        :noiorg:
      :PROPERTIES:
      :CUSTOM_ID: only-static-export
      :END: 
-and will be ignored? what about conflicts between :html-xyz:
-properties and missing (forgotten) :iorg: tags (see above)?
+What about conflicts between :html-xyz: properties and the :noiorg: tag?
+I'd give priority to the :noiorg: tag.
 
 *** Question: multivalued properties
 There is a non-interactive API function to set multivalued properties,

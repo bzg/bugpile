@@ -1242,3 +1242,73 @@ or like this:
 :prop: val1
 :prop+: val2
 ?
+*** Question: item tags
+As far as I understand org-element.el, items are list items - but what
+is an item tag?
+
+,-----------------------------------------------------------------
+| Some elements also have special properties whose value can hold
+| objects themselves (i.e. an item tag or an headline name).  Such
+`-----------------------------------------------------------------
+
+Tags are only possible on headlines - right?
+
+*** org-element findings
+Most of the information needed by iOrg is included in the 'headline'
+element. The function
+
+,---------------------------------------------------------------------
+| (defun org-element-parse-buffer (&optional granularity visible-only)
+|   "Recursively parse the buffer and return structure.
+| If narrowing is in effect, only parse the visible part of the
+| buffer.
+| 
+| Optional argument GRANULARITY determines the depth of the
+| recursion.  It can be set to the following symbols:
+| 
+| `headline'          Only parse headlines.
+| `greater-element'   Don't recurse into greater elements excepted
+|                     headlines and sections.  Thus, elements
+|                     parsed are the top-level ones.
+| `element'           Parse everything but objects and plain text.
+| `object'            Parse the complete buffer (default).
+| 
+| When VISIBLE-ONLY is non-nil, don't parse contents of hidden
+| elements.
+| 
+| Assume buffer is in Org mode."
+`---------------------------------------------------------------------
+
+will be very usefull to get this info, especially with GRANULARITY
+headline. 
+
+The function
+
+,--------------------------------------------------------------------------------
+| (defun org-element-map (data types fun &optional info first-match no-recursion)
+|   "Map a function on selected elements or objects.
+| 
+| DATA is the parsed tree, as returned by, i.e,
+| `org-element-parse-buffer'.  TYPES is a symbol or list of symbols
+| of elements or objects types.  FUN is the function called on the
+| matching element or object.  It must accept one arguments: the
+| element or object itself.
+| 
+| When optional argument INFO is non-nil, it should be a plist
+| holding export options.  In that case, parts of the parse tree
+| not exportable according to that property list will be skipped.
+| 
+| When optional argument FIRST-MATCH is non-nil, stop at the first
+| match for which FUN doesn't return nil, and return that value.
+| 
+| Optional argument NO-RECURSION is a symbol or a list of symbols
+| representing elements or objects types.  `org-element-map' won't
+| enter any recursive element or object whose type belongs to that
+| list.  Though, FUN can still be applied on them.
+| 
+| Nil values returned from FUN do not appear in the results."
+`--------------------------------------------------------------------------------
+   
+Will be usefull to act on the parsed headline information. 
+
+

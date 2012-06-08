@@ -948,8 +948,7 @@ Deleted, is a special case of 'take action on selected task'
 ** Bugpile Implementation
 *** TODO Implement simple.el
     DEADLINE: <2012-06-11 Mo>
-****
-DONE Serve simple.org to html using elnode and org-export
+**** DONE Serve simple.org to html using elnode and org-export
      CLOSED: [2012-06-07 Do 09:30] DEADLINE: <2012-06-05 Tue>
      :LOGBOOK:
      - State "DONE"       from "TODO"       [2012-06-07 Do 09:30]
@@ -981,10 +980,6 @@ as a response.
 
 **** NEXT Change headline body text using the web interface
      DEADLINE: <2012-06-08 Fri>
-     :LOGBOOK:
-     CLOCK: [2012-06-07 Do 22:31]
-     :END:
-
 ** Bugpile Design
 *** TODO Design Bugreport
 **** TODO create bug report

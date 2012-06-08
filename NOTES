@@ -1117,17 +1117,20 @@ request 'onchange' and would be updated immediately (PicoLisp as an
 example here). 
 *** Working on the parse tree?                                         :iorg:
     :PROPERTIES:
-    :html-form:     http://localhost:8000/edit-bug 
+    :html-form:     http://localhost:8000/working-on-parse-tree
     :html-send: POST
     :html-send_ALL: POST GET   # should be http-send, but that will only confuse
     :html-radio_ALL: plain-list-dash plain-list-asteriks plain-list-plus plain-list-num-point plain-list-num-parenth
     :html-checkbox_ALL: checkbox
     :html-area_ALL: text source example quote verse center latex html ascii 
     :html-text_ALL: headline tags_FREE properties_FREE
-    :html-select_ALL: todo tags-ALIST properties_ALL
+    :html-button_ALL: button submit reset
+    :html-button-pos_ALL: top-left top-right bottom-left bottom-right
+    :html-select_ALL: todo tags_ALIST properties_ALL
     :html-checkbox: checkbox
     :html-text:     headline tags 
     :html-area:     text
+    :html-button: submit
     :END:
 
 I still don't have a clear idea of how this could work [UPDATE: after
@@ -1189,8 +1192,24 @@ the :noiorg: tag.
 
 **** this entry does not have the iorg tag                           :noiorg:
      :PROPERTIES:
-     :CUSTOM_ID: only static export
+     :CUSTOM_ID: only-static-export
      :END: 
 and will be ignored? what about conflicts between :html-xyz:
 properties and missing (forgotten) :iorg: tags (see above)?
 
+*** Question: multivalued properties
+There is a non-interactive API function to set multivalued properties,
+shouldn't this function be interactive? 
+
+Are multivalued properties
+supposed to look like this:
+
+:prop: val1 val2
+(once I have set _ALL for a property, I can't enter more than one
+value anymore in the minibuffer)
+
+or like this:
+
+:prop: val1
+:prop+: val2
+?

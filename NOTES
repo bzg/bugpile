@@ -1103,3 +1103,94 @@ page:
    pen). pressing the symbol trigger a Ajax JS call, that wraps the
    html element (and only this one) into a html form and sends the
    replacing html without reloading the page. 
+** 2012-06-09
+*** How to deal with one html-form with many input/select Elements?
+A typical html formular has many input/select fields, but only one
+submit and/or rest button. Thus, the single action url points to one
+single handler function that then must take care of all fields. This
+would be the typical design for the 'edit bug' use case - with no
+JavaScript. It would be very unusual to have a button for each field
+in such a case. 
+
+With JS, each input/select field could probably send a
+request 'onchange' and would be updated immediately (PicoLisp as an
+example here). 
+*** Working on the parse tree?                                         :iorg:
+    :PROPERTIES:
+    :html-form:     http://localhost:8000/edit-bug 
+    :html-send: POST
+    :html-send_ALL: POST GET   # should be http-send, but that will only confuse
+    :html-radio_ALL: plain-list-dash plain-list-asteriks plain-list-plus plain-list-num-point plain-list-num-parenth
+    :html-checkbox_ALL: checkbox
+    :html-area_ALL: text source example quote verse center latex html ascii 
+    :html-text_ALL: headline tags_FREE properties_FREE
+    :html-select_ALL: todo tags-ALIST properties_ALL
+    :html-checkbox: checkbox
+    :html-text:     headline tags 
+    :html-area:     text
+    :END:
+
+I still don't have a clear idea of how this could work [UPDATE: after
+having written this entry, I now have a quite clear idea, I think the
+approach used here looks quite promising]. Maybe something like the
+use of org properties and tags as examplified in this entry?
+
+But:
+1. org-properties and only work for outline headlines, so they must
+   declare what to do for the whole subtree
+2. iorg should not force a different use of org-mode elements, but
+   rather adapt to the common and natural use.
+
+Therefore, check all items you agree with: 
+ - [ ] Combine Org properties and tags for declarative iOrg programming
+ - [ ] Tag headlines with :iorg: for the iorg exporter (ignored
+   without tag)
+ - [ ] do not use attribute inheritance as default (the containment
+   relation between entries gives all the necessary info)
+
+The order of properties is relevant, e.g. html-label belongs to the closest
+html-field property on top of it. 
+
+**** use Org syntax to tag Org elements                                
+     :PROPERTIES:
+     :html-radio:   plain-list-dash
+     :html-label:    Org Syntax?
+     :END:
+probably properties, since we need values for action and other
+properties (names can be automatically produced)
+ - either only properties
+ - or combining properties and tags
+
+**** add functionality to the e-html export backend                    
+     :PROPERTIES:
+     :html-radio:   plain-list-num-parenth
+     :html-label:    New Functionality?
+     :END:
+add new semantic export rules to the e-html backend that not only look
+at the org-element type, but also at the content of the associated
+org-properties. 
+
+ 1) give choices: let the user define for each entry, what org-element
+    will be exported to which html-field 
+ 2) be strict: decide beforehand about the org-element/html-field
+    association
+
+ - this list will not be processed by iOrg
+ - while the list above will be converted into two connected
+   html-radio-buttons. 
+
+**** attribute inheritance
+     :PROPERTIES:
+     :html-area: text
+     :END:
+one :iorg: tag for a top-level entry means all sub-level entries are
+processed by iOrg too. the next entry will be ignored due to
+the :noiorg: tag.
+
+**** this entry does not have the iorg tag                           :noiorg:
+     :PROPERTIES:
+     :CUSTOM_ID: only static export
+     :END: 
+and will be ignored? what about conflicts between :html-xyz:
+properties and missing (forgotten) :iorg: tags (see above)?
+

@@ -1103,7 +1103,7 @@ page:
    pen). pressing the symbol trigger a Ajax JS call, that wraps the
    html element (and only this one) into a html form and sends the
    replacing html without reloading the page. 
-** 2012-06-09
+** 2012-06-08
 *** How to deal with one html-form with many input/select Elements?
 A typical html formular has many input/select fields, but only one
 submit and/or rest button. Thus, the single action url points to one
@@ -1312,3 +1312,79 @@ The function
 Will be usefull to act on the parsed headline information. 
 
 
+** 2012-06-09
+*** (org-element-parse-buffer 'headlines)
+Applied to this buffer, here, as an example, the headline "Working on
+the parse tree":
+#+begin_src emacs-lisp
+  (headline
+  (
+  :raw-value Working on the parse tree?
+  :title Working on the parse tree? 
+  :begin 59510 
+  :end 64038 
+  :pre-blank 0 
+  :hiddenp outline
+  :contents-begin 59588 
+  :contents-end 64037 
+  :level 3 
+  :priority nil 
+  :tags (iorg)
+  :todo-keyword nil 
+  :todo-type nil 
+  :scheduled nil 
+  :deadline nil
+  :timestamp nil 
+  :clock nil 
+  :post-blank 1 
+  :footnote-section-p nil
+  :archivedp nil 
+  :commentedp nil 
+  :quotedp nil 
+  :html-form http://localhost:8000/working-on-parse-tree 
+  :html-send POST
+  # should be http-send, but that will only confuse 
+  :html-send-all POST GET 
+  :html-radio-all plain-list-dash plain-list-asteriks
+  plain-list-plus plain-list-num-point plain-list-num-parenth
+  :html-checkbox-all checkbox 
+  :html-area-all text source example quote
+  verse center latex html ascii 
+  :html-text-all headline tags_FREE properties_FREE 
+  :html-button-all button submit reset
+  :html-button-pos-all top-left top-right bottom-left bottom-right
+  :html-select-all todo tags_ALIST properties_ALL 
+  :html-checkbox checkbox
+  :html-text headline tags_FREE 
+  :html-area text 
+  :html-button submit reset
+  :html-button-pos bottom-right 
+  :html-button-value Send edits 
+  :category bugpile
+  ))
+#+end_src
+
+The elements of an Org buffer (from org-element.el):
+
+#+begin_src emacs-lisp
+  (defconst org-element-all-elements
+    '(center-block clock comment comment-block drawer dynamic-block example-block
+                   export-block fixed-width footnote-definition headline
+                   horizontal-rule inlinetask item keyword latex-environment
+                   babel-call paragraph plain-list planning property-drawer
+                   quote-block quote-section section special-block src-block table
+                   table-row verse-block)
+    "Complete list of element types.")
+  
+  (defconst org-element-greater-elements
+    '(center-block drawer dynamic-block footnote-definition headline inlinetask
+                   item plain-list quote-block section special-block table)
+    "List of recursive element types aka Greater Elements.")
+  
+  (defconst org-element-all-successors
+    '(export-snippet footnote-reference inline-babel-call inline-src-block
+                     latex-or-entity line-break link macro radio-target
+                     statistics-cookie sub/superscript table-cell target
+                     text-markup timestamp)
+    "Complete list of successors.")
+#+end_src

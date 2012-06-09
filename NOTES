@@ -4,7 +4,8 @@
 
 A collection of working notes.
 
-* General Notes
+* Notes
+** proposed org-export integration
 ** Torvalds on bug trackers
 http://yarchive.net/comp/linux/bug_tracking.html
 
@@ -989,9 +990,11 @@ Nicolas Goaziou
    4141:(defun org-element-fill-paragraph (&optional justify)
 #+end_src
 
+* Scratch (temporary holding pen for quick notes)
+This subtree is a temporary holding place for on-the-fly notes.
+Anything of importance should be given a home in the "NOTES" subtree
+above.
 
-* Programming Notes 'tj'
-** 2012-06-06
 *** Bug in elnode-dispatcher(..)
 Action: 
 - open simple.org
@@ -1048,7 +1051,6 @@ Backtrace:
 | *elnode-webserver-proc*<3> <127.0.0.1:33392>>)
 `-----------------------------------------------------------------------
 
-** 2012-06-07
 *** How to identify the Org file to act on
 Each object and scene must have a unique ID, and these IDs must be
 included programmatically into the name of the html form element (e.g.
@@ -1104,7 +1106,6 @@ page:
    pen). pressing the symbol trigger a Ajax JS call, that wraps the
    html element (and only this one) into a html form and sends the
    replacing html without reloading the page. 
-** 2012-06-08
 *** How to deal with one html-form with many input/select Elements?
 A typical html formular has many input/select fields, but only one
 submit and/or rest button. Thus, the single action url points to one
@@ -1312,8 +1313,6 @@ The function
    
 Will be usefull to act on the parsed headline information. 
 
-
-** 2012-06-09
 *** (org-element-parse-buffer 'headlines)
 Applied to this buffer, here, as an example, the headline "Working on
 the parse tree":

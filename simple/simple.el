@@ -5,6 +5,8 @@
 (require 'org-e-html)
 (require 'org-agenda)
 (require 'util)
+(require 'iorg-element)
+(require 'iorg-e-html)
 
 ;;;; Declare functions
 (declare-function org-entry-is-todo-p "org" nil)

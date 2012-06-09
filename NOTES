@@ -989,6 +989,7 @@ Nicolas Goaziou
    4141:(defun org-element-fill-paragraph (&optional justify)
 #+end_src
 
+
 * Programming Notes 'tj'
 ** 2012-06-06
 *** Bug in elnode-dispatcher(..)

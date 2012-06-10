@@ -1313,9 +1313,242 @@ The function
    
 Will be usefull to act on the parsed headline information. 
 
-*** (org-element-parse-buffer 'headlines)
-Applied to this buffer, here, as an example, the headline "Working on
-the parse tree":
+*** Looking at ther parse-tree
+**** (org-element-parse-buffer)
+
+Applied to the simple.org buffer: 
+
+#+begin_src emacs-lisp
+;;(message "%s" simple-org-parsed) (pp-buffer)
+(org-data nil
+(section
+(:begin 1 :end 42 :contents-begin 1 :contents-end 41 :post-blank 1)
+(keyword
+(:key TITLE :value A simple example Org-mode file :begin 1 :end 41 :post-blank 0)))
+(headline
+(:raw-value This file has a top level heading :title
+(This file has a top level heading)
+:begin 42 :end 2038 :pre-blank 0 :hiddenp nil :contents-begin 120 :contents-end 2038 :level 1 :priority nil :tags
+(bar)
+:todo-keyword TODO :todo-type todo :scheduled nil :deadline nil :timestamp nil :clock nil :post-blank 0 :footnote-section-p nil :archivedp nil :commentedp nil :quotedp nil :iorg-property foo :category simple)
+(section
+(:begin 120 :end 2038 :contents-begin 120 :contents-end 2038 :post-blank 0)
+(property-drawer
+(:begin 120 :end 166 :hiddenp nil :properties
+((iorg-property . foo))
+:post-blank 1))
+(paragraph
+(:begin 166 :end 261 :contents-begin 166 :contents-end 260 :post-blank 0)
+This heading has five components.  Lets see if we can edit all five
+through the web interface.)
+(plain-list
+(:type ordered :begin 261 :end 591 :contents-begin 261 :contents-end 590 :structure
+((261 0 1.  nil nil nil 327)
+(327 0 2.  nil nil nil 397)
+(397 0 3.  nil nil nil 441)
+(441 0 4.  nil nil nil 521)
+(521 0 5.  nil nil nil 590))
+:post-blank 1)
+(item
+(:bullet 1.  :begin 261 :end 327 :contents-begin 264 :contents-end 327 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((261 0 1.  nil nil nil 327)
+(327 0 2.  nil nil nil 397)
+(397 0 3.  nil nil nil 441)
+(441 0 4.  nil nil nil 521)
+(521 0 5.  nil nil nil 590))
+:post-blank 0)
+(paragraph
+(:begin 264 :end 327 :contents-begin 264 :contents-end 326 :post-blank 0)
+task state, currently this is
+(verbatim
+(:value TODO :begin 294 :end 301 :post-blank 1))
+lets change it to
+(verbatim
+(:value DONE :begin 319 :end 325 :post-blank 0))
+.))
+(item
+(:bullet 2.  :begin 327 :end 397 :contents-begin 330 :contents-end 397 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((261 0 1.  nil nil nil 327)
+(327 0 2.  nil nil nil 397)
+(397 0 3.  nil nil nil 441)
+(441 0 4.  nil nil nil 521)
+(521 0 5.  nil nil nil 590))
+:post-blank 0)
+(paragraph
+(:begin 330 :end 397 :contents-begin 330 :contents-end 396 :post-blank 0)
+a property, try to change the
+(verbatim
+(:value iorg-property :begin 360 :end 376 :post-blank 1))
+from
+(verbatim
+(:value foo :begin 381 :end 387 :post-blank 1))
+to
+(verbatim
+(:value bar :begin 390 :end 395 :post-blank 0))
+.))
+(item
+(:bullet 3.  :begin 397 :end 441 :contents-begin 400 :contents-end 441 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((261 0 1.  nil nil nil 327)
+(327 0 2.  nil nil nil 397)
+(397 0 3.  nil nil nil 441)
+(441 0 4.  nil nil nil 521)
+(521 0 5.  nil nil nil 590))
+:post-blank 0)
+(paragraph
+(:begin 400 :end 441 :contents-begin 400 :contents-end 440 :post-blank 0)
+tag, change the tag from
+(verbatim
+(:value bar :begin 425 :end 431 :post-blank 1))
+to
+(verbatim
+(:value foo :begin 434 :end 439 :post-blank 0))
+.))
+(item
+(:bullet 4.  :begin 441 :end 521 :contents-begin 444 :contents-end 521 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((261 0 1.  nil nil nil 327)
+(327 0 2.  nil nil nil 397)
+(397 0 3.  nil nil nil 441)
+(441 0 4.  nil nil nil 521)
+(521 0 5.  nil nil nil 590))
+:post-blank 0)
+(paragraph
+(:begin 444 :end 521 :contents-begin 444 :contents-end 520 :post-blank 0)
+heading text, allow the heading text to be edited through the web interface.))
+(item
+(:bullet 5.  :begin 521 :end 590 :contents-begin 524 :contents-end 590 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((261 0 1.  nil nil nil 327)
+(327 0 2.  nil nil nil 397)
+(397 0 3.  nil nil nil 441)
+(441 0 4.  nil nil nil 521)
+(521 0 5.  nil nil nil 590))
+:post-blank 0)
+(paragraph
+(:begin 524 :end 590 :contents-begin 524 :contents-end 589 :post-blank 0)
+body text, allow this text to be edited through the web interface)))
+(paragraph
+(:begin 591 :end 998 :contents-begin 591 :contents-end 997 :post-blank 0)
+The five items listed about should be in rough order of difficulty.
+So lets work through them in order.  The simplest should be changing
+the task state.  We can start with a simple button on the final html
+page next to the headline, the text of this button can be \"finish\",
+and pressing it will change the TODO state in this Org-mode file on
+the server to DONE.  The implementation should look like this...)
+(plain-list
+(:type unordered :begin 998 :end 1469 :contents-begin 998 :contents-end 1468 :structure
+((998 0 -  nil nil nil 1179)
+(1179 0 -  nil nil nil 1369)
+(1369 0 -  nil nil nil 1468))
+:post-blank 1)
+(item
+(:bullet -  :begin 998 :end 1179 :contents-begin 1000 :contents-end 1179 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((998 0 -  nil nil nil 1179)
+(1179 0 -  nil nil nil 1369)
+(1369 0 -  nil nil nil 1468))
+:post-blank 0)
+(paragraph
+(:begin 1000 :end 1179 :contents-begin 1000 :contents-end 1178 :post-blank 0)
+add a function to the `org-export-html-final-hook' which will scan
+  through the resulting HTML and will add the html/JS necessary to
+  include this button on the final web page.))
+(item
+(:bullet -  :begin 1179 :end 1369 :contents-begin 1181 :contents-end 1369 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((998 0 -  nil nil nil 1179)
+(1179 0 -  nil nil nil 1369)
+(1369 0 -  nil nil nil 1468))
+:post-blank 0)
+(paragraph
+(:begin 1181 :end 1369 :contents-begin 1181 :contents-end 1368 :post-blank 0)
+start an elnode server and add two different handlers, one will
+  serve up this web page
+(with the above hook)
+, and the second will
+  handle the form data returned by the \"finish\" button.))
+(item
+(:bullet -  :begin 1369 :end 1468 :contents-begin 1371 :contents-end 1468 :checkbox nil :counter nil :tag nil :hiddenp nil :structure
+((998 0 -  nil nil nil 1179)
+(1179 0 -  nil nil nil 1369)
+(1369 0 -  nil nil nil 1468))
+:post-blank 0)
+(paragraph
+(:begin 1371 :end 1468 :contents-begin 1371 :contents-end 1467 :post-blank 0)
+the second handler will use the `org-todo' function to change the
+  actual state of the heading.)))
+(paragraph
+(:begin 1469 :end 1708 :contents-begin 1469 :contents-end 1706 :post-blank 1)
+Once this is working we should have a much better idea of what is
+required to make this process work end-to-end.  With luck we may have
+some initial functionality by the end of next week
+(some number of the
+above 5 parts being editable)
+.)
+(paragraph
+(:begin 1708 :end 1948 :contents-begin 1708 :contents-end 1946 :post-blank 1)
+Lets keep all of the code implementing this in
+(link
+(:type file :path simple.el :raw-link file:simple.el :begin 1755 :end 1769 :contents-begin nil :contents-end nil :post-blank 0))
+, once it
+is written we can see what it look like and decide how to better
+organize it into a directory structure which we'll want to keep for
+the remainder of the iorg project.)
+(paragraph
+(:begin 1948 :end 2038 :contents-begin 1948 :contents-end 2037 :post-blank 0)
+I've stubbed out a few functions in
+(link
+(:type file :path simple.el :raw-link file:simple.el :begin 1984 :end 1998 :contents-begin nil :contents-end nil :post-blank 0))
+, add new functions
+as they are needed.))))
+#+end_src
+
+Except for the headline section and with a keyword, all other elements
+in the simple.org buffer are subelements of the greater element
+headline, i.e. there are several paragraphs as subelements which
+themselves contain other elements like sections, list items, verbatim
+blocks, and links. 
+
+#+begin_src emacs-lisp
+34 matches for "([^:][a-z]+$" in buffer: tmp (parse-tree of simple.org)
+      3:(section
+      5:(keyword
+      7:(headline
+     13:(section
+     19:(paragraph
+     31:(item
+     39:(paragraph
+     42:(verbatim
+     45:(verbatim
+     48:(item
+     56:(paragraph
+     59:(verbatim
+     62:(verbatim
+     65:(verbatim
+     68:(item
+     76:(paragraph
+     79:(verbatim
+     82:(verbatim
+     85:(item
+     93:(paragraph
+     96:(item
+    104:(paragraph
+    107:(paragraph
+    121:(item
+    127:(paragraph
+    132:(item
+    138:(paragraph
+    145:(item
+    151:(paragraph
+    155:(paragraph
+    163:(paragraph
+    166:(link
+    172:(paragraph
+    175:(link
+#+end_src
+
+
+**** (org-element-parse-buffer 'headlines)
+
+Applied to the NOTES buffer, here is, as an example, the result for
+headline "Working on the parse tree":
+
 #+begin_src emacs-lisp
   (headline
   (

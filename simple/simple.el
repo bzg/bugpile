@@ -150,20 +150,12 @@ in the Org file on that level."
              (file-name-nondirectory org-file))
             ".html") simple-dir )))))))
 
-(defun iorg-wrap-element-in-html-form (action-url &optional submit reset &rest attributes) 
-  "Wrap Org element in html form-element with action ACTION-URL and optional method METHOD.")
+(defun iorg-html-postprocess-headline (transc-str back-end comm-chan) 
+  "Post-process the static html in TRANSC-STR produced by the e-html BACK-END of the new Org exporter while transcoding an Org headline. Use the information in the communication channel COMM-CHAN for the post-processing.")
 
-(defun iorg-wrap-element-in-html-input (type name &optional label &rest attributes )
-  "")
+(defun iorg-html-postprocess-paragraph (transc-str back-end comm-chan) 
+  "Post-process the static html in TRANSC-STR produced by the e-html BACK-END of the new Org exporter while transcoding an Org paragraph. Use the information in the communication channel COMM-CHAN for the post-processing.")
 
-(defun iorg-wrap-element-in-html-select (name size &optional label multiple &rest options)
-  "")
-
-(defun iorg-wrap-element-in-html-button (type name &rest attributes)
-  "")
-
-(defun iorg-wrap-element-in-html-textarea (name &optional rows cols &rest attributes)
-  "")
 
 
 (defun iorg-404-handler (httpcon)

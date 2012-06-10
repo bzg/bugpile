@@ -17,16 +17,27 @@
              'iorg-html-postprocess)
 
 (defvar iorg-html-begin-txt-regexp
-  "<div class=\"outline-text.*\">"
+  (concat
+   ;; class
+   "\\(<div class=\"outline-text-\\)\\([-[:digit:]]+\\)\\(\"\\)"
+   ;; blank(s)
+   "\\([[:blank:]]+\\)"
+   ;; id
+   "\\(id=\"text\\)\\([-[:digit:]]+\\)\\(\">\\)")
   "Match the beginning of outline text in exported html.")
 
 (defvar iorg-html-todo-regexp
   "\\(<span class=\"todo \\)\\([A-Z]+\\)\\(\">\\)"
   "Match todo items in exported html.")
 
+(defvar iorg-html-div-end-repexp
+  "</div>"
+  "Match end of <div> sections")
+
 (defvar iorg-alist-outline-regexp
   "\\(outline\\)\\([-[:digit:]]+\\)"
   "Match key in http-params alist that identifies the outline level.")
+
 
 (defconst simple-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
@@ -156,7 +167,22 @@ in the Org file on that level."
 (defun iorg-html-postprocess-paragraph (transc-str back-end comm-chan) 
   "Post-process the static html in TRANSC-STR produced by the e-html BACK-END of the new Org exporter while transcoding an Org paragraph. Use the information in the communication channel COMM-CHAN for the post-processing.")
 
-
+(defun iorg-html--wrap-headline-content-in-textarea (transc-str &optional rows cols) 
+  "Wrap the content part of the html-transcoded Org headline TRANSC-STR into a html text-area, optionally setting the number of rows to ROWS and the number of columns to COLS."
+    (with-temp-buffer
+    (insert transc-str)
+    (goto-char (point-min))
+    (while (re-search-forward iorg-html-begin-txt-regexp nil t)
+      (goto-char (match-end 0))
+      (insert
+       (concat
+        "<textarea name=\"simple-content\""
+        "cols=\"79\" rows=\"30\">" )))
+    (while (re-search-forward iorg-html-div-end-repexp nil t)
+      (goto-char (match-beginning 0))
+      (insert "<\textarea>")
+    (buffer-substring-no-properties (point-min) (point-max))))
+)
 
 (defun iorg-404-handler (httpcon)
   ;; TODO: This should probably actually serve a 404 page rather than

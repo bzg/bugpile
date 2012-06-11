@@ -220,7 +220,8 @@
 
 (defun iorg-html-wrap-headline-content-in-textarea (transc-str back-end comm-chan) 
   "Wrap the content of the (BACK-END = html) transcoded Org headline TRANSC-STR into a html textarea, using information from the communication channel COMM-CHAN."
-    (message "This is the comm-chan: %s" comm-chan)
+    ;; TODO delete this line:
+    (message "Machine readable comm-chan: %S" comm-chan)
     (with-temp-buffer
     (insert transc-str)
     (goto-char (point-min))

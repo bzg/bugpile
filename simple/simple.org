@@ -1,6 +1,6 @@
 #+Title: A simple example Org-mode file
 
-* TODO This file has a top level heading                                :bar: # #
+* TODO This file has a top level heading                                :bar:
   :PROPERTIES:
   :iorg-property: foo
   :END:

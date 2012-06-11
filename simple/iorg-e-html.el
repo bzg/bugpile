@@ -56,7 +56,11 @@ order to reproduce the default set-up:
   (when tags
     (concat "<span class=\"textfield\">"
             "<input type=\"text\" name:\"simple-tag\""
+<<<<<<< HEAD
                     "size=\"10\" maxlenght=\"30\" value=\"foo\">"
+=======
+                    "size=\"3\" maxlenght=\"6\" value=\"bar\">"
+>>>>>>> tj
             "</input>"
             "</span>")))
 
@@ -113,7 +117,11 @@ holding contextual information."
     	   :section-number section-number extra-keys)))
 
 
+<<<<<<< HEAD
 
+=======
+;; FIXME: where is it called??
+>>>>>>> tj
 (defun iorg-e-html-headline  (headline contents info)
   "Transcode an HEADLINE element from Org to HTML, conditional on iOrg information.
 CONTENTS holds the contents of the headline.  INFO is a plist
@@ -176,3 +184,30 @@ holding contextual information."
 			level1 id extra-ids full-text level1)
 		contents))))))
 
+<<<<<<< HEAD
+=======
+
+
+
+;;;; Section
+;; FIXME: where is it called??
+(defun iorg-e-html-section (section contents info) ; FIXME
+  "Transcode a SECTION element from Org to HTML.
+CONTENTS holds the contents of the section.  INFO is a plist
+holding contextual information."
+  (let ((parent (org-export-get-parent-headline section info))
+        (raw-org-contents (plist-get info :)))
+    ;; Before first headline: no container, just return CONTENTS.
+    (if (not parent) contents
+      ;; Get div's class and id references.
+      (let ((class-num (+ (org-export-get-relative-level parent info)
+			  (1- org-e-html-toplevel-hlevel)))
+            (id-num
+             (mapconcat
+              'number-to-string
+	      (org-export-get-headline-number parent info) "-")))
+        ;; Build return value.
+        (format "<div class=\"outline-text-%d\" id=\"text-%s\"><textarea name=\"simple-content\" cols=\"79\" rows=\"30\">\n%s</textarea>/</div>"
+                class-num id-num contents)))))
+
+>>>>>>> tj

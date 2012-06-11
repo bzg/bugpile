@@ -3,7 +3,11 @@
 ##+CATEGORY: bugpile
 
 * GSoC Project Evaluation
-** TODO update org mailing-list <2012-06-04 Mo 10:00 +1w>
+** WAITING update org mailing-list <2012-06-04 Mo 10:00 +1w>        :WAITING:
+   :LOGBOOK:
+   - State "WAITING"    from "TODO"       [2012-06-11 Mo 12:22] \\
+     Get something to work with simple.el first
+   :END:
 ** TODO status mail mentors <2012-06-07 Do 10:00 +1w>
 * Community bonding [berlin] <2012-04-23 Mo>--<2012-05-09 Mi>
 ** DONE Bugpile Requirements Analysis

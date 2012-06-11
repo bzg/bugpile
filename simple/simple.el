@@ -11,23 +11,26 @@
 (declare-function org-get-todo-state "org" nil)
 (declare-function org-check-for-org-mode "org-agenda" nil)
 
+;; FIXME delete this line:
+(setq org-export-filter-headline-function nil)
+
 ;; (add-to-list 'org-export-filter-final-output-functions
 ;;              'iorg-html-postprocess)
 
 (add-to-list 'org-export-filter-headline-functions
              'iorg-html-wrap-headline-content-in-textarea)
 
-(add-to-list 'org-export-filter-headline-functions
-             'iorg-html-wrap-headline-in-form)
+;; (add-to-list 'org-export-filter-headline-functions
+;;              'iorg-html-wrap-headline-in-form)
 
-(add-to-list 'org-export-filter-headline-functions
-             'iorg-html-wrap-headline-todo-in-select)
+;; (add-to-list 'org-export-filter-headline-functions
+;;              'iorg-html-wrap-headline-todo-in-select)
 
-(add-to-list 'org-export-filter-headline-functions
-             'iorg-html-wrap-headline-string-in-text)
+;; (add-to-list 'org-export-filter-headline-functions
+;;              'iorg-html-wrap-headline-string-in-text)
 
-(add-to-list 'org-export-filter-headline-functions
-             'iorg-html-wrap-headline-tags-in-text)
+;; (add-to-list 'org-export-filter-headline-functions
+;;              'iorg-html-wrap-headline-tags-in-text)
 
  
 (defvar iorg-html-outline-text-regexp
@@ -180,23 +183,24 @@
 
 (defun iorg-html-wrap-headline-string-in-text (transc-str back-end comm-chan) 
   "Wrap the headline string in the (BACK-END = html) transcoded Org headline TRANSC-STR into a html text-field, using information from the communication channel COMM-CHAN."
-    (with-temp-buffer
+  (with-temp-buffer
     (insert transc-str)
     (goto-char (point-min))
-    (while (and
-            (re-search-forward "&nbsp;&nbsp;&nbsp;" nil t)
-            (re-search-backward iorg-html-span-end-repexp nil t))
-      (goto-char (match-end 0))
-      (insert
-       (concat
-        "<input "
-        "type=\"text\""
-        "name=\"simple-headline\""
-        "size=\"40\""
-        "maxlenght=\"80\">")))
-    (while (re-search-forward "<" nil t)
-      (goto-char (match-beginning 0))
-      (insert "<\input>"))
+    (and
+     (re-search-forward "&nbsp;&nbsp;&nbsp;" nil t)
+     (re-search-backward iorg-html-span-end-repexp nil t)
+     (progn
+       (goto-char (match-end 0))
+       (insert
+        (concat
+         "<input "
+         "type=\"text\""
+         "name=\"simple-headline\""
+         "size=\"40\""
+         "maxlenght=\"80\">"))
+       (and (re-search-forward "<" nil t)
+            (goto-char (match-beginning 0))
+            (insert "<\input>"))))
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (defun iorg-html-wrap-headline-in-form (transc-str back-end comm-chan) 
@@ -216,6 +220,7 @@
 
 (defun iorg-html-wrap-headline-content-in-textarea (transc-str back-end comm-chan) 
   "Wrap the content of the (BACK-END = html) transcoded Org headline TRANSC-STR into a html textarea, using information from the communication channel COMM-CHAN."
+    (message "This is the comm-chan: %s" comm-chan)
     (with-temp-buffer
     (insert transc-str)
     (goto-char (point-min))
@@ -225,7 +230,7 @@
        (concat
         "<textarea name=\"simple-content\""
         "cols=\"79\" rows=\"30\">" )))
-    (while (re-search-forward iorg-html-div-end-repexp nil t)
+    (and (re-search-forward iorg-html-div-end-repexp nil t)
       (goto-char (match-beginning 0))
       (insert "<\textarea>"))
     (buffer-substring-no-properties (point-min) (point-max))))
@@ -306,7 +311,7 @@ in the Org file on that level."
               (iorg--normalize-outline-level outline-level))
              (sublevel-p nil))
         (with-current-buffer
-            (if (and file (file-exists-p))
+            (if (and file (file-exists-p file))
                 (find-file file)
              (find-file (expand-file-name "simple.org" simple-dir)))
           (org-check-for-org-mode)
@@ -318,7 +323,7 @@ in the Org file on that level."
                (if sublevel-p
                    (outline-next-heading))
                (org-forward-same-level
-                (1- (string-to-int n)) "INVISIBLE-OK")
+                (1- (string-to-number n)) "INVISIBLE-OK")
                (unless sublevel-p
                  (setq sublevel-p 1)))
              normalized-outline-level))))

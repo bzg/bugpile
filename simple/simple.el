@@ -221,7 +221,8 @@
 (defun iorg-html-wrap-headline-content-in-textarea (transc-str back-end comm-chan) 
   "Wrap the content of the (BACK-END = html) transcoded Org headline TRANSC-STR into a html textarea, using information from the communication channel COMM-CHAN."
     ;; TODO delete this line:
-    (message "Machine readable comm-chan: %S" comm-chan)
+    (message "Raw value headline: %S" (org-element-property :raw-value headline))
+    (message "Content headline: %s" (org-element-contents headline))
     (with-temp-buffer
     (insert transc-str)
     (goto-char (point-min))

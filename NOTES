@@ -1644,6 +1644,21 @@ Does work -- note: the com-chan itself is a plist.
   (plist-get com-chan :author) ;; => "Thorsten Jolitz"
 #+end_src
 
+**** how to work with org-elements from the INFO argument
+
+Here is and informative example from Org-e-html
+#+begin_src emacs-lisp
+(defun org-e-html-table-first-row-data-cells (table info)
+  (let ((table-row
+	 (org-element-map
+	  table 'table-row
+	  (lambda (row)
+	    (unless (eq (org-element-property :type row) 'rule) row))
+	  info 'first-match))
+	(special-column-p (org-export-table-has-special-column-p table)))
+    (if (not special-column-p) (org-element-contents table-row)
+      (cdr (org-element-contents table-row)))))
+#+end_src
 *** Export options for subtree
 
 Add export the following option to the function below?

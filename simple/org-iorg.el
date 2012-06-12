@@ -13,8 +13,8 @@ CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
   (if (not (member "iorg" (org-export-get-tags headline info)))
       ;; Fallback to regular HTML.
-      (funcall (cdr (assq 'headline org-e-html-translate-alist)
-               headline contents info))
+      (funcall (cdr (assq 'headline org-e-html-translate-alist))
+               headline contents info)
     ;; Otherwise, build <form> template.
     (let ((action (org-element-property :html-form headline))
           (submit (org-element-property :html-button-value headline)))
@@ -37,8 +37,8 @@ as a communication channel."
             (not (member "iorg"
                          (org-export-get-tags headline info))))
         ;; Fallback to regular HTML.
-        (funcall (cdr (assq 'section org-e-html-translate-alist)
-                 section contents info))
+        (funcall (cdr (assq 'section org-e-html-translate-alist))
+                 section contents info)
       ;; Otherwise, export CONTENTS as-is.
       contents)))
 
@@ -50,8 +50,8 @@ as a communication channel."
     (if (or (not headline)
             (not (member "iorg" (org-export-get-tags headline info))))
         ;; Fallback to regular HTML.
-        (funcall (cdr (assq 'paragraph org-e-html-translate-alist)
-                 paragraph contents info))
+        (funcall (cdr (assq 'paragraph org-e-html-translate-alist))
+                 paragraph contents info)
       (let ((attributes (org-export-read-attribute :attr_html paragraph)))
         (cond
          ;; If the paragraph is contained within an item, do not make
@@ -99,8 +99,8 @@ as a communication channel."
     (if (or (not headline)
             (not (member "iorg" (org-export-get-tags headline info))))
         ;; Fallback to regular HTML.
-        (funcall (cdr (assq 'plain-list org-e-html-translate-alist)
-                 plain-list contents info))
+        (funcall (cdr (assq 'plain-list org-e-html-translate-alist))
+                 plain-list contents info)
       ;; If plain-list is descriptive make it a select menu, otherwise
       ;; simply return CONTENTS as-is.
       (let ((attributes (org-export-read-attribute :attr_html plain-list)))
@@ -124,8 +124,8 @@ a communication channel."
             (not (member "iorg" (org-export-get-tags headline info))))
         ;; Fallback to regular HTML.
         (funcall
-         (cdr (assq 'item org-e-html-translate-alist)
-              item contents info)) 
+         (cdr (assq 'item org-e-html-translate-alist))
+              item contents info)
       ;; Otherwise find appropriate input type and build tag.
       ;; Attributes are read from parent plain-list since items have
       ;; no affiliated keyword attached to them.

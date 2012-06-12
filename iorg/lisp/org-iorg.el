@@ -1,4 +1,4 @@
-;;; iorg.el --- A webframework based on Org-mode and Elnode
+;;; org-iorg.el --- A webframework based on Org-mode and Elnode
 
 ;; Programming interactive web-applications with Org-mode 
 ;; Copyright (C) 2012  Thorsten Jolitz 
@@ -114,7 +114,7 @@
 
 
 ;;;; Customization variables
-(defgroup iorg nil
+(defgroup org-iorg nil
   "A webframework based on Org-mode, Elnode and dVCS."
   :tag "iOrg"
   :group 'org
@@ -122,12 +122,12 @@
 
 (defcustom iorg-mode-hook nil
   "Mode hook for iOrg-mode, run after the mode was turned on."
-  :group 'iorg
+  :group 'org-iorg
   :type 'hook)
 
 (defcustom iorg-load-hook nil
   "Hook that is run after iorg.el has been loaded."
-  :group 'iorg
+  :group 'org-iorg
   :type 'hook)
 
 

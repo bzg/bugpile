@@ -1,8 +1,10 @@
 #+Title: A simple example Org-mode file
 
-* TODO This file has a top level heading                                :bar:
+* TODO This file has a top level heading                           :iorg:bar:
   :PROPERTIES:
   :iorg-property: foo
+  :html-form:     http://localhost:8000/make-me-interactive-html
+  :html-button-value: Send edits
   :END:
 
 This heading has five components.  Lets see if we can edit all five

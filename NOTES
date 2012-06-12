@@ -1641,9 +1641,8 @@ the exported static html and replace it with something like this:
 
 Does work -- note: the com-chan itself is a plist.
 #+begin_src emacs-lisp
-<<<<<<< HEAD
   (plist-get com-chan :author) ;; => "Thorsten Jolitz"
-=======
+
 ;;This is the comm-chan for element headline (simple.org):
 ;; (message "%s" comm-chan)
 
@@ -1849,7 +1848,6 @@ I've stubbed out a few functions in
 (:type file :path simple.el :raw-link file:simple.el :begin 1988 :end 2002 :contents-begin nil :contents-end nil :post-blank 0))
 , add new functions
 as they are needed.))))
->>>>>>> tj
 #+end_src
 
 **** how to work with org-elements from the INFO argument
@@ -1867,25 +1865,7 @@ Here is and informative example from Org-e-html
     (if (not special-column-p) (org-element-contents table-row)
       (cdr (org-element-contents table-row)))))
 #+end_src
-<<<<<<< HEAD
-=======
 
-**** how to work with org-elements from the INFO argument
-
-Here is and informative example from Org-e-html
-#+begin_src emacs-lisp
-(defun org-e-html-table-first-row-data-cells (table info)
-  (let ((table-row
-	 (org-element-map
-	  table 'table-row
-	  (lambda (row)
-	    (unless (eq (org-element-property :type row) 'rule) row))
-	  info 'first-match))
-	(special-column-p (org-export-table-has-special-column-p table)))
-    (if (not special-column-p) (org-element-contents table-row)
-      (cdr (org-element-contents table-row)))))
-#+end_src
->>>>>>> tj
 *** Export options for subtree
 
 Add export the following option to the function below?
@@ -1933,3 +1913,50 @@ Return options as a plist."
 
 *** Org Exporter: important read
 [[http://orgmode.org/worg/dev/org-export-reference.html][Org Export Reference]]
+*** Install customized formatting functions 
+If the new exporter would be perfectly modularisized, i.e. some generic
+exporter functions calls a specific back-end function for each greater
+element, that then calls an atomic transcoding function for each
+subelement, things would be very easy for us. But it isn't. 
+
+For headline todos and tags, there are such atomic transcoding
+functions in org-e-html, and it was quick to write iorg variants of them
+(and the results, although not functional yet, look nice, see
+simple.html in the repo). 
+
+Otherwise its quite difficult to figure out where those back-end
+transcoding functions are called from the generic exporter. That would
+be the place to put a switch: (if :iorg: then iorg-transcode() else
+org-trancode()). 
+
+At least there are 3 possibilities to put customized formatting
+functions: 
+,---------------------------------------------------------
+| 839:(defcustom org-e-html-format-headline-function nil
+| 946:(defcustom org-e-html-format-drawer-function nil
+| 967:(defcustom org-e-html-format-inlinetask-function nil
+`---------------------------------------------------------
+
+So with this I could install my own format headline function:
+
+,------------------------------------------------------------------------
+| (setq org-e-html-format-headline-function 'iorg-e-html-format-headline)
+`------------------------------------------------------------------------
+
+*** Access the input Org file
+Since inside a html textfield or textarea we want to present the
+editable text in Org mode syntax (don't we?), I can access to the
+original Org buffer that is being exported via the comm-chan
+
+,---------------------------------------------------
+| :input-file /home/tj/git/bugpile/simple/simple.org
+`---------------------------------------------------
+
+Since the parse-tree holds the begin/end information for all
+buffer-elements, I could just copy the relevant parts from the Org
+buffer into the form field, e.g.
+
+,--------------------------------------------------------------------
+| (format "<textarea>%s</textarea> (copy-region-as-kill BEG END))
+`--------------------------------------------------------------------
+

@@ -55,9 +55,9 @@
   (eval (list (if (boundp child-alist) #'setq #'defvar) child-alist
               `(quote
                 ,(append
-                  `((headline   . ,(def-iorg-wrap org-e-html-item))
-                    (item       . ,(def-iorg-wrap org-e-html-paragraph))
-                    (paragraph  . wrap-paragraph)
+                  `((headline   . org-iorg-headline)
+                    (item       . ,(def-iorg-wrap org-e-html-item))
+                    (paragraph  . ,(def-iorg-wrap org-e-html-paragraph))
                     (section    . org-iorg-section))
                   (copy-sequence (symbol-value parent-alist)))))))
 

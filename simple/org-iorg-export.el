@@ -13,6 +13,12 @@
 ;;                     (paragraph . org-iorg-paragraph)
 ;;                     (plain-list . org-iorg-plain-list)
 ;;                     (section . org-iorg-section)))
+(defvar iorg-wrap-template
+  (concat
+   "<div id=...>%html-text</div>"
+   "<!-- html/js to make this editable by clicking a button -->"
+   "<div style=\"display:none\"><form>%org-text</form></div>"))
+
 (defmacro def-iorg-wrap (e-html-function)
   "Defines and returns an iorg-wrapped version of E-HTML-FUNCTION."
   (let ((fname (intern (concat "iorg"
@@ -27,13 +33,9 @@
                              "NIL")))
          (if (not (member "iorg" (org-export-get-tags element original-info)))
              html-text
-           (org-fill-template
-            (concat
-             "<div id=...>%html-text</div>"
-             "<!-- html/js to make this editable by clicking a button -->"
-             "<div style=\"display:none\"><form>%org-text</form></div>")
-            (list (cons "html-text" html-text)
-                  (cons "org-text"  org-text))))))))
+           (org-fill-template iorg-wrap-template
+                              (list (cons "html-text" html-text)
+                                    (cons "org-text"  org-text))))))))
 
 ;; A couple of interesting things are happening here.  We work around
 ;; a bug in `org-export-define-derived-backend' in which it will not

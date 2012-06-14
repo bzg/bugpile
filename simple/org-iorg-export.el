@@ -1,4 +1,4 @@
-;;; org-iorg -- back-end for exporting Org files to interactive HTML
+;;; org-iorg-export -- back-end for exporting Org files to interactive HTML
 
 (require 'org-export)
 (require 'org-element)

@@ -2276,3 +2276,54 @@ buffer into the form field, e.g.
 | (format "<textarea>%s</textarea> (copy-region-as-kill BEG END))
 `--------------------------------------------------------------------
 
+*** Define derived backend (bug)
+Bug in (org-export-define-derived-backend iorg e-html):
+#+begin_src emacs-lisp
+  ;;Debugger entered--Lisp error:
+  (wrong-type-argument symbolp
+  (org-iorg-wrap org-e-html-paragraph))
+  fboundp((org-iorg-wrap org-e-html-paragraph))
+  (and
+  (fboundp transcoder)
+  transcoder)
+  (let
+  ((transcoder
+  (cdr
+  (assq type
+  (plist-get info :translate-alist)))))
+  (and
+  (fboundp transcoder)
+  transcoder))
+  (if
+  (eq type
+  (quote org-data))
+  (lambda
+  (blob contents info)
+  contents)
+  (let
+  ((transcoder
+  (cdr
+  (assq type
+  (plist-get info :translate-alist)))))
+  (and
+  (fboundp transcoder)
+  transcoder)))
+  (let
+  ((type
+  (org-element-type blob)))
+  (if
+  (eq type
+  (quote org-data))
+  (lambda
+  (blob contents info)
+  contents)
+  (let
+  ((transcoder
+  (cdr
+  (assq type
+  (plist-get info :translate-alist)))))
+  (and
+  (fboundp transcoder)
+  transcoder))))
+  org-export-transcoder((...
+#+end_src

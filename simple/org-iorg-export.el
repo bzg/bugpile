@@ -5,7 +5,6 @@
 (require 'org-e-html)
 ;; (require 'org-iorg)
 
-<<<<<<< HEAD
 ;;;; Define derived backend
 
 
@@ -50,22 +49,19 @@
 
 
 
-=======
 
 ;;; Define derived backend
->>>>>>> master
+
 ;; (org-export-define-derived-backend iorg e-html
 ;;   :translate-alist ((headline . org-iorg-headline)
 ;;                     (item . org-iorg-item)
 ;;                     (paragraph . org-iorg-paragraph)
 ;;                     (plain-list . org-iorg-plain-list)
 ;;                     (section . org-iorg-section)))
-<<<<<<< HEAD
 
 
 ;;;; Customisation group
 
-=======
 (defvar iorg-wrap-template
   (concat
    "<div id=...>%html-text</div>"
@@ -122,7 +118,6 @@
   :tag "Org iOrg Export"
   :group 'org-iorg)
 
-<<<<<<< HEAD
 ;;;; Generic Wrapper
 
 (defun org-iorg-wrap (e-html-function)
@@ -141,10 +136,10 @@
 
 
 ;;;; Headline
-=======
+
 
 ;;; Headline
->>>>>>> master
+
 ;; Headline customization variables
 (defcustom org-iorg-format-headline-function nil
   "Function to format headline text.

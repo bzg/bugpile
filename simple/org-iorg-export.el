@@ -5,6 +5,7 @@
 (require 'org-e-html)
 ;; (require 'org-iorg)
 
+<<<<<<< HEAD
 ;;;; Define derived backend
 
 
@@ -49,21 +50,79 @@
 
 
 
+=======
+
+;;; Define derived backend
+>>>>>>> master
 ;; (org-export-define-derived-backend iorg e-html
 ;;   :translate-alist ((headline . org-iorg-headline)
 ;;                     (item . org-iorg-item)
 ;;                     (paragraph . org-iorg-paragraph)
 ;;                     (plain-list . org-iorg-plain-list)
 ;;                     (section . org-iorg-section)))
+<<<<<<< HEAD
 
 
 ;;;; Customisation group
 
+=======
+(defvar iorg-wrap-template
+  (concat
+   "<div id=...>%html-text</div>"
+   "<!-- html/js to make this editable by clicking a button -->"
+   "<div style=\"display:none\"><form>%org-text</form></div>"))
+
+(defmacro def-iorg-wrap (e-html-function)
+  "Defines and returns an iorg-wrapped version of E-HTML-FUNCTION."
+  (let ((fname (intern (concat "iorg"
+                               (substring (symbol-name 'org-e-html-item) 3)))))
+    `(defun ,fname (element contents info)
+       ,(format "iOrg wrapper around `%s'." e-html-function)
+       (let* ((original-contents (copy-seq contents))
+              (original-info     (copy-seq info))
+              (html-text (,e-html-function element contents info))
+              (org-text  (or (org-element-interpret-data element)
+                             original-contents
+                             "NIL")))
+         (if (not (member "iorg" (org-export-get-tags element original-info)))
+             html-text
+           (org-fill-template iorg-wrap-template
+                              (list (cons "html-text" html-text)
+                                    (cons "org-text"  org-text))))))))
+
+;; A couple of interesting things are happening here.  We work around
+;; a bug in `org-export-define-derived-backend' in which it will not
+;; change the value of an already defined translation alist (because
+;; it uses `defvar').  To work around this we simply define the alist
+;; ourselves calculating it's value in the same manner as does
+;; `org-export-define-derived-backend'.  And we explicitly check if
+;; the alist is already defined and if so we use `setq' instead of
+;; `defvar'.
+;;
+;; In setting the value of this alist we use the `def-iorg-wrap' macro
+;; to define translation functions and return their symbol names for
+;; insertion into the `org-iorg-translate-alist'.
+(let* ((fmt-str      "org-%s-translate-alist")
+       (child-alist  (intern (format fmt-str 'iorg)))
+       (parent-alist (intern (format fmt-str 'e-html))))
+  (eval (list (if (boundp child-alist) #'setq #'defvar) child-alist
+              `(quote
+                ,(append
+                  `((headline   . org-iorg-headline)
+                    (item       . ,(def-iorg-wrap org-e-html-item))
+                    (paragraph  . ,(def-iorg-wrap org-e-html-paragraph))
+                    (section    . org-iorg-section))
+                  (copy-sequence (symbol-value parent-alist)))))))
+
+
+;;; Customisation group
+>>>>>>> master
 (defgroup org-iorg-export nil
   "Options for exporting Org files to dynamic html."
   :tag "Org iOrg Export"
   :group 'org-iorg)
 
+<<<<<<< HEAD
 ;;;; Generic Wrapper
 
 (defun org-iorg-wrap (e-html-function)
@@ -82,6 +141,10 @@
 
 
 ;;;; Headline
+=======
+
+;;; Headline
+>>>>>>> master
 ;; Headline customization variables
 (defcustom org-iorg-format-headline-function nil
   "Function to format headline text.

@@ -1,4 +1,4 @@
-;;; org-iorg -- back-end for exporting Org files to interactive HTML
+;;; org-iorg-export -- back-end for exporting Org files to interactive HTML
 
 (require 'org-export)
 (require 'org-element)
@@ -7,12 +7,54 @@
 
 ;;;; Define derived backend
 
-(org-export-define-derived-backend iorg e-html
-  :translate-alist ((headline . org-iorg-headline)
-                    (item . org-iorg-item)
-                    (paragraph . org-iorg-paragraph)
-                    (plain-list . org-iorg-plain-list)
-                    (section . org-iorg-section)))
+
+    ;; (let ((wrap-item (org-iorg-wrap 'org-e-html-item))
+    ;;         (wrap-paragraph (org-iorg-wrap 'org-e-html-paragraph)))
+    ;;   (org-export-define-derived-backend iorg e-html 
+    ;;     :translate-alist
+    ;;     ((headline   . org-iorg-headline)
+    ;;      (item       . wrap-item)
+    ;;      (paragraph  . wrap-paragraph)
+    ;;      (section    . org-iorg-section))))
+
+
+
+ ;; (org-export-define-derived-backend iorg e-html
+ ;;   :translate-alist
+ ;;   `((headline   . org-iorg-headline)
+ ;;     (item       . ,(org-iorg-wrap org-e-html-item))
+ ;;     (paragraph  . ,(org-iorg-wrap org-e-html-paragraph))
+ ;;     ;; ...
+ ;;     (section    . org-iorg-section)))
+ 
+
+;; (org-export-define-derived-backend iorg e-html 
+  ;; (let ((wrap-item (org-iorg-wrap 'org-e-html-item))
+  ;;       (wrap-paragraph (org-iorg-wrap 'org-e-html-paragraph)))
+                   
+  ;; :translate-alist
+  ;; (;(headline   . org-iorg-headline)
+  ;;  (item       . wrap-item)
+  ;;  (paragraph  . wrap-paragraph)
+  ;;  ;; ...
+  ;;  (section    . org-iorg-section))))
+
+ ;; (org-export-define-derived-backend iorg e-html
+ ;;   :translate-alist
+ ;;   ((headline   . org-iorg-headline)
+ ;;    (item       . (org-iorg-wrap org-e-html-item))
+ ;;    (paragraph  . (org-iorg-wrap org-e-html-paragraph))
+ ;;    ;; ...
+ ;;    (section    . org-iorg-section)))
+
+
+
+;; (org-export-define-derived-backend iorg e-html
+;;   :translate-alist ((headline . org-iorg-headline)
+;;                     (item . org-iorg-item)
+;;                     (paragraph . org-iorg-paragraph)
+;;                     (plain-list . org-iorg-plain-list)
+;;                     (section . org-iorg-section)))
 
 
 ;;;; Customisation group
@@ -21,6 +63,23 @@
   "Options for exporting Org files to dynamic html."
   :tag "Org iOrg Export"
   :group 'org-iorg)
+
+;;;; Generic Wrapper
+
+(defun org-iorg-wrap (e-html-function)
+  (lambda (element contents info)
+    (let ((html-text
+           (funcall (cdr e-html-function) element contents info)))
+      (if (not (member "iorg" (org-export-get-tags headline info)))
+          html-text
+        (org-fill-template
+         (concat "<div id=...>%html-text</div>"
+                 "<!-- html/js to make this editable by clicking a button -->"
+                 "<div style=\"display:none\"><form>%org-text</form></div>")
+         `((html-text . ,html-text)
+           (org-text  . ,org-text)))))))
+
+
 
 ;;;; Headline
 ;; Headline customization variables

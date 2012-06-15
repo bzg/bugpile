@@ -68,22 +68,23 @@ as a communication channel."
            (numberedp (org-export-numbered-headline-p headline info))
            (priority (and (plist-get info :with-priority)
                           (org-element-property :priority headline)))
-           (section-number (and (org-export-numbered-headline-p headline info)
-                                (mapconcat 'number-to-string
-                                           (org-export-get-headline-number
-                                            headline info) ".")))
-           (section-number-dash (mapconcat 'number-to-string
-                                           (org-export-get-headline-number
-                                            headline info) "-"))
+           (section-number (org-export-get-headline-number headline info))
+           (section-number-point (and (org-export-numbered-headline-p headline info)
+                                      (mapconcat 'number-to-string section-number ".")))
+           (section-number-dash (and (org-export-numbered-headline-p headline info)
+                                     (mapconcat 'number-to-string section-number "-")))
            (text (org-export-data (org-element-property :title headline) info))
            ;; TODO's
            (todo (and (plist-get info :with-todo-keywords)
                       (let ((todo (org-element-property :todo-keyword headline)))
                         (and todo (org-export-data todo info)))))
            (todo-type (and todo (org-element-property :todo-type headline)))
+           (todo-formatted (org-iorg-b--todo todo))
+
            ;; TAG's
            (tags (and (plist-get info :with-tags)
                       (org-export-get-tags headline info)))
+           (tags-formatted (org-iorg-b--tags tags))
            ;; ID's
            (ids (remove 'nil
                         (list (org-element-property :custom-id headline)
@@ -103,8 +104,15 @@ as a communication channel."
                           (1- org-e-html-toplevel-hlevel)))
            (level (org-export-get-relative-level headline info))
            (level1 (+ level (1- org-e-html-toplevel-hlevel)))
+           ;; formatted section number
+           (section-number-formatted
+            (when section-number
+              (format "<span class=\"section-number-%d\">%s</span> "
+                      level section-number)))
+
            ;; Create the headline text.
-           (full-text (org-iorg-b-format-headline--wrap headline info)))
+           ;; (full-text (org-iorg-b-format-headline--wrap headline info))
+           )
 
       (format "<div id=\"%s\" class=\"%s\">%s%s%s</div>\n"
               ;; id
@@ -128,13 +136,15 @@ as a communication channel."
                                       x))))
                            (format "<a id=\"%s\" name=\"%s\"></a>" id id)))
                        extra-ids "")
-                      (org-iorg-b-format-headline
-                       todo todo-type  priority text tags
-                       :headline-label headline-label :level level-wrap
-                       :section-number section-number
-                       ;extra-keys
-                       )
-                     ;full-text  REPLACE!
+                      (concat section-number todo-formatted (and todo-formatted " ") text
+                              (and tags-formatted "&nbsp;&nbsp;&nbsp;") tags-formatted)
+                      ;; (org-iorg-b-format-headline
+                      ;;  todo todo-type  priority text tags
+                      ;;  :headline-label headline-label :level level-wrap
+                      ;;  :section-number section-number-point
+                                        ;extra-keys
+                      
+                                        ;full-text  REPLACE!
                       level1)
               ;; content
               (concat contents
@@ -146,35 +156,6 @@ as a communication channel."
                       "</tr>\n"
                       "</table>\n"
                       "</form>")))))
-
-
-;; Format headline
-(defun* org-iorg-b-format-headline   
-  (todo todo-type priority text tags
-	&key level section-number headline-label &allow-other-keys)
-  (let ((section-number
-	 (when section-number
-	   (format "<span class=\"section-number-%d\">%s</span> "
-		   level section-number)))
-	(todo (org-iorg-b--todo todo))
-	(tags (org-iorg-b--tags tags)))
-    (concat section-number todo (and todo " ") text
-	    (and tags "&nbsp;&nbsp;&nbsp;") tags)))
-	 ;; 
-	 ;; (section-number (and (org-export-numbered-headline-p headline info)
-	 ;;        	      (mapconcat 'number-to-string
-	 ;;        			 headline-number ".")))
-	 ;; (todo (and (plist-get info :with-todo-keywords)
-	 ;;            (let ((todo (org-element-property :todo-keyword headline)))
-	 ;;              (and todo (org-export-data todo info)))))
-	 ;; (todo-type (and todo (org-element-property :todo-type headline)))
-
-           ;; (priority (and (plist-get info :with-priority)
-           ;;                (org-element-property :priority headline)))
-	 ;; (text (org-export-data (org-element-property :title headline) info))
-	 ;; (tags (and (plist-get info :with-tags)
-	 ;;            (org-export-get-tags headline info)))
-
 
 
 ;;; Transcode Helpers

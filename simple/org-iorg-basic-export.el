@@ -73,18 +73,12 @@ as a communication channel."
                                       (mapconcat 'number-to-string section-number ".")))
            (section-number-dash (and (org-export-numbered-headline-p headline info)
                                      (mapconcat 'number-to-string section-number "-")))
-           (text (org-export-data (org-element-property :title headline) info))
+           ;; text
+           (text-formatted (org-iorg-b--headline-text headline info))
            ;; TODO's
-           (todo (and (plist-get info :with-todo-keywords)
-                      (let ((todo (org-element-property :todo-keyword headline)))
-                        (and todo (org-export-data todo info)))))
-           (todo-type (and todo (org-element-property :todo-type headline)))
-           (todo-formatted (org-iorg-b--todo todo))
-
+           (todo-formatted (org-iorg-b--headline-todo headline info))
            ;; TAG's
-           (tags (and (plist-get info :with-tags)
-                      (org-export-get-tags headline info)))
-           (tags-formatted (org-iorg-b--tags tags))
+           (tags-formatted (org-iorg-b--headline-tags headline info))
            ;; ID's
            (ids (remove 'nil
                         (list (org-element-property :custom-id headline)
@@ -108,11 +102,7 @@ as a communication channel."
            (section-number-formatted
             (when section-number
               (format "<span class=\"section-number-%d\">%s</span> "
-                      level section-number)))
-
-           ;; Create the headline text.
-           ;; (full-text (org-iorg-b-format-headline--wrap headline info))
-           )
+                      level section-number))))           
 
       (format "<div id=\"%s\" class=\"%s\">%s%s%s</div>\n"
               ;; id
@@ -136,15 +126,9 @@ as a communication channel."
                                       x))))
                            (format "<a id=\"%s\" name=\"%s\"></a>" id id)))
                        extra-ids "")
-                      (concat section-number todo-formatted (and todo-formatted " ") text
+                      (concat section-number todo-formatted (and todo-formatted " ")
+                              text-formatted
                               (and tags-formatted "&nbsp;&nbsp;&nbsp;") tags-formatted)
-                      ;; (org-iorg-b-format-headline
-                      ;;  todo todo-type  priority text tags
-                      ;;  :headline-label headline-label :level level-wrap
-                      ;;  :section-number section-number-point
-                                        ;extra-keys
-                      
-                                        ;full-text  REPLACE!
                       level1)
               ;; content
               (concat contents
@@ -159,30 +143,56 @@ as a communication channel."
 
 
 ;;; Transcode Helpers
-;; Wrap Todo in select-box
-(defun org-iorg-b--todo (todo)
-  (when todo
-    (concat "<span class=\"selectbox\">"
-            "<select name:\"simple-todo\" size=\"1\">"
-            "<option selected>TODO</option>"
-            "<option>DONE</option>"
-            "<option>WAITING</option>"
-            "<option>CANCELLED</option>"
-            "<option>HOLD</option>"
-            "<option>NEXT</option>"
-            "</select>"
-            "</span>")))
+(defun org-iorg-b--headline-todo (headline info)
+  "Wrap headline todo's in html select-box, reading values from the HEADLINE and INFO arguments"
+  (let* ((todo (and (plist-get info :with-todo-keywords)
+                    (let ((todo (org-element-property :todo-keyword headline)))
+                      (and todo (org-export-data todo info)))))
+         (todo-type (and todo (org-element-property :todo-type headline))))
+
+    (when todo
+      (concat "<span class=\"selectbox\">"
+              "<select name:\"simple-todo\" size=\"1\">"
+              "<option selected>TODO</option>"
+              "<option>DONE</option>"
+              "<option>WAITING</option>"
+              "<option>CANCELLED</option>"
+              "<option>HOLD</option>"
+              "<option>NEXT</option>"
+              "</select>"
+              "</span>"))))
 
 
-;; Wrap Tags in text-field
-(defun org-iorg-b--tags (tags)
-  (when tags
-    (concat "<span class=\"textfield\">"
-            "<input type=\"text\" name=\"simple-tag\" size=\"3\" "
-            "maxlenght=\"6\" value=\"bar\">"
-            "</input>"
-            "</span>")))
+(defun org-iorg-b--headline-tags (headline info)
+  "Wrap headline tags in html text-field, reading values from the HEADLINE and INFO arguments"
+  (let* ((tags (and (plist-get info :with-tags)
+                    (org-export-get-tags headline info))))
 
+    (when tags
+      (format "%s%s%s"
+              (concat "<span class=\"textfield\">"
+                      "<input type=\"text\" name=\"simple-tag\" size=\"10\""
+                      "maxlenght=\"20\" value=\"")
+              tags
+              (concat "\">"
+                      "</input>"
+                      "</span>")))))
+
+
+
+(defun org-iorg-b--headline-text (headline info)
+  "Wrap headline text in html text-field, reading values from the HEADLINE and INFO arguments"
+  (let ((text (org-export-data (org-element-property :title headline) info)))
+    (when text
+      (format "%s%s%s"
+              (concat "<span class=\"textfield\">"
+                      "<input type=\"text\" name=\"simple-text\" size=\"40\" "
+                      "maxlenght=\"80\" value=\"")
+              text
+              (concat "\">"
+                      "</input>"
+                      "</span>")))))
+        
 
 ;;;; Section
 

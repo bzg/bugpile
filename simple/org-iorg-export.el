@@ -5,49 +5,6 @@
 (require 'org-e-html)
 ;; (require 'org-iorg)
 
-;;;; Define derived backend
-
-
-    ;; (let ((wrap-item (org-iorg-wrap 'org-e-html-item))
-    ;;         (wrap-paragraph (org-iorg-wrap 'org-e-html-paragraph)))
-    ;;   (org-export-define-derived-backend iorg e-html 
-    ;;     :translate-alist
-    ;;     ((headline   . org-iorg-headline)
-    ;;      (item       . wrap-item)
-    ;;      (paragraph  . wrap-paragraph)
-    ;;      (section    . org-iorg-section))))
-
-
-
- ;; (org-export-define-derived-backend iorg e-html
- ;;   :translate-alist
- ;;   `((headline   . org-iorg-headline)
- ;;     (item       . ,(org-iorg-wrap org-e-html-item))
- ;;     (paragraph  . ,(org-iorg-wrap org-e-html-paragraph))
- ;;     ;; ...
- ;;     (section    . org-iorg-section)))
- 
-
-;; (org-export-define-derived-backend iorg e-html 
-  ;; (let ((wrap-item (org-iorg-wrap 'org-e-html-item))
-  ;;       (wrap-paragraph (org-iorg-wrap 'org-e-html-paragraph)))
-                   
-  ;; :translate-alist
-  ;; (;(headline   . org-iorg-headline)
-  ;;  (item       . wrap-item)
-  ;;  (paragraph  . wrap-paragraph)
-  ;;  ;; ...
-  ;;  (section    . org-iorg-section))))
-
- ;; (org-export-define-derived-backend iorg e-html
- ;;   :translate-alist
- ;;   ((headline   . org-iorg-headline)
- ;;    (item       . (org-iorg-wrap org-e-html-item))
- ;;    (paragraph  . (org-iorg-wrap org-e-html-paragraph))
- ;;    ;; ...
- ;;    (section    . org-iorg-section)))
-
-
 
 
 ;;; Define derived backend
@@ -112,7 +69,6 @@
 
 
 ;;; Customisation group
->>>>>>> master
 (defgroup org-iorg-export nil
   "Options for exporting Org files to dynamic html."
   :tag "Org iOrg Export"

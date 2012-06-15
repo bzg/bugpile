@@ -2327,3 +2327,18 @@ Bug in (org-export-define-derived-backend iorg e-html):
   transcoder))))
   org-export-transcoder((...
 #+end_src
+
+*** What are the elisp library structuring conventions?
+E.g.:
+#+begin_src emacs-lisp
+
+;;; Customisation group
+(def ...)
+;;;; Generic Wrapper
+(def ...)
+#+end_src
+
+- is it reverse system like in Org files, i.e. ;;;; is a parent of ;;;
+  is a parent of ;; is a parent of ;  ?
+- whats the conventional top-level (;;;; or ;;;)?
+- where to put the =^L= - only top-level? 

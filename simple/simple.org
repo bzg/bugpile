@@ -1,4 +1,4 @@
- #+Title: A simple example Org-mode file
+#+Title: A simple example Org-mode file
 
 * TODO This file has a top level heading                           :iorg:bar:
   :PROPERTIES:

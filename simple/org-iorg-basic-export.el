@@ -1,4 +1,4 @@
-;;; org-iorg -- back-end for exporting Org files to interactive HTML
+;;; org-iorg-b-export -- basic back-end for exporting Org files to interactive HTML
 
 (require 'org-export)
 (require 'org-element)
@@ -8,23 +8,23 @@
 ;;;; Define derived backend
 
 (org-export-define-derived-backend iorg e-html
-  :translate-alist ((headline . org-iorg-headline)
-                    (item . org-iorg-item)
-                    (paragraph . org-iorg-paragraph)
-                    (plain-list . org-iorg-plain-list)
-                    (section . org-iorg-section)))
+  :translate-alist ((headline . org-iorg-b-headline)
+                    (item . org-iorg-b-item)
+                    (paragraph . org-iorg-b-paragraph)
+                    (plain-list . org-iorg-b-plain-list)
+                    (section . org-iorg-b-section)))
 
 
 ;;;; Customisation group
 
-(defgroup org-iorg-export nil
+(defgroup org-iorg-b-export nil
   "Options for exporting Org files to dynamic html."
   :tag "Org iOrg Export"
   :group 'org-iorg)
 
 ;;;; Headline
 ;; Headline customization variables
-(defcustom org-iorg-format-headline-function nil
+(defcustom org-iorg-b-format-headline-function nil
   "Function to format headline text.
 
 This function will be called with 5 arguments:
@@ -47,12 +47,12 @@ order to reproduce the default set-up:
             \(format \"\\\\framebox{\\\\#%c} \" priority))
 	  text
 	  \(when tags (format \"\\\\hfill{}\\\\textsc{%s}\" tags))))"
-  :group 'org-iorg-export
+  :group 'org-iorg-b-export
   :type 'function)
 
 
 ;; Main headline export function
-(defun org-iorg-headline (headline contents info)
+(defun org-iorg-b-headline (headline contents info)
   "Transcode element HEADLINE into HTML syntax.
 CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
@@ -79,83 +79,63 @@ as a communication channel."
                                            (org-export-get-headline-number
                                             headline info) ".")))
            ;; Create the headline text.
-           (full-text (org-iorg-format-headline--wrap headline info)))
-      
-      (cond
-       ;; Case 1: This is a footnote section: ignore it.
-       ((org-element-property :footnote-section-p headline) nil)
-       ;; Case 2. This is a deep sub-tree: export it as a list item.
-       ;;         Also export as items headlines for which no section
-       ;;         format has been found.
-       ((org-export-low-level-p headline info) ; FIXME (or (not section-fmt))
-        ;; Build the real contents of the sub-tree.
-        (let* ((type (if numberedp 'unordered 'unordered)) ; FIXME
-               (itemized-body (org-e-html-format-list-item
-                               contents type nil nil full-text)))
-          (concat
-           (and (org-export-first-sibling-p headline)
-                (org-e-html-begin-plain-list type))
-           itemized-body
-           (and (org-export-last-sibling-p headline)
-                (org-e-html-end-plain-list type)))))
-       ;; Case 3. Standard headline.  Export it as a section.
-       (t
-        (let* ((section-number (mapconcat 'number-to-string
-                                          (org-export-get-headline-number
-                                           headline info) "-"))
-               (ids (remove 'nil
-                            (list (org-element-property :custom-id headline)
-                                  (org-element-property :id headline)
-                                  (concat "sec-" section-number))))
-               (preferred-id (car ids))
-               (extra-ids (cdr ids))
-               (extra-class (org-element-property :html-container-class headline))
-               (level1 (+ level (1- org-e-html-toplevel-hlevel))))
-          (format "<div id=\"%s\" class=\"%s\">%s%s%s</div>\n"
-                  (format "outline-container-%s"
-                          (if (zerop (length extra-ids)) section-number
-                            preferred-id))
-                  (concat (format "outline-%d" level1) (and extra-class " ")
-                          extra-class)
-                  (format "<form method=post action=\"%s\">\n" action)
-                  (format "\n<h%d id=\"%s\">%s%s</h%d>\n"
-                          level1
-                          preferred-id
-                          (mapconcat
-                           (lambda (x)
-                             (let ((id (org-solidify-link-text
-                                        (if (org-uuidgen-p x) (concat "ID-" x)
-                                          x))))
-                               (format "<a id=\"%s\" name=\"%s\"></a>" id id)))
-                           extra-ids "")
-                          full-text
-                          level1)
-                  (concat "<table border=0>\n"
-                          contents
-                          "<tr>\n"
-                          (format "<td><input type=\"reset\"></td>\n")
-                          (format "<td><input type=\"submit\" value=\"%s\"></td>\n" submit)
-                          "</tr>\n"
-                          "</table>\n"
-                          "</form>"))))))))
+           (full-text (org-iorg-b-format-headline--wrap headline info))
+           (section-number-dash (mapconcat 'number-to-string
+                                           (org-export-get-headline-number
+                                            headline info) "-"))
+           (ids (remove 'nil
+                        (list (org-element-property :custom-id headline)
+                              (org-element-property :id headline)
+                              (concat "sec-" section-number-dash))))
+           (preferred-id (car ids))
+           (extra-ids (cdr ids))
+           (extra-class (org-element-property :html-container-class headline))
+           (level1 (+ level (1- org-e-html-toplevel-hlevel))))
+      (format "<div id=\"%s\" class=\"%s\">%s%s%s</div>\n"
+              (format "outline-container-%s"
+                      (if (zerop (length extra-ids)) section-number-dash
+                        preferred-id))
+              (concat (format "outline-%d" level1) (and extra-class " ")
+                      extra-class)
+              (format "<form method=post action=\"%s\">\n" action)
+              (format "\n<h%d id=\"%s\">%s%s</h%d>\n"
+                      level1
+                      preferred-id
+                      (mapconcat
+                       (lambda (x)
+                         (let ((id (org-solidify-link-text
+                                    (if (org-uuidgen-p x) (concat "ID-" x)
+                                      x))))
+                           (format "<a id=\"%s\" name=\"%s\"></a>" id id)))
+                       extra-ids "")
+                      full-text
+                      level1)
+              (concat "<table border=0>\n"
+                      contents
+                      "<tr>\n"
+                      (format "<td><input type=\"reset\"></td>\n")
+                      (format "<td><input type=\"submit\" value=\"%s\"></td>\n" submit)
+                      "</tr>\n"
+                      "</table>\n"
+                      "</form>")))))
 
 
 ;; Format headline
-(defun* org-iorg-format-headline   
+(defun* org-iorg-b-format-headline   
   (todo todo-type priority text tags
 	&key level section-number headline-label &allow-other-keys)
   (let ((section-number
 	 (when section-number
 	   (format "<span class=\"section-number-%d\">%s</span> "
 		   level section-number)))
-	(todo (org-iorg--todo todo))
-	(tags (org-iorg--tags tags)))
+	(todo (org-iorg-b--todo todo))
+	(tags (org-iorg-b--tags tags)))
     (concat section-number todo (and todo " ") text
 	    (and tags "&nbsp;&nbsp;&nbsp;") tags)))
 
 
 ;; Wrap headline
-(defun org-iorg-format-headline--wrap
+(defun org-iorg-b-format-headline--wrap
   (headline info &optional format-function &rest extra-keys)
   "Transcode an HEADLINE element from Org to HTML.
 CONTENTS holds the contents of the headline.  INFO is a plist
@@ -186,7 +166,7 @@ holding contextual information."
 					   &allow-other-keys)
 			       (funcall org-e-html-format-headline-function
 					todo todo-type priority text tags))))
-			   (t 'org-iorg-format-headline))))
+			   (t 'org-iorg-b-format-headline))))
     (apply format-function
     	   todo todo-type  priority text tags
     	   :headline-label headline-label :level level
@@ -194,7 +174,7 @@ holding contextual information."
 
 ;;; Transcode Helpers
 ;; Wrap Todo in select-box
-(defun org-iorg--todo (todo)
+(defun org-iorg-b--todo (todo)
   (when todo
     (concat "<span class=\"selectbox\">"
             "<select name:\"simple-todo\" size=\"1\">"
@@ -209,7 +189,7 @@ holding contextual information."
 
 
 ;; Wrap Tags in text-field
-(defun org-iorg--tags (tags)
+(defun org-iorg-b--tags (tags)
   (when tags
     (concat "<span class=\"textfield\">"
             "<input type=\"text\" name=\"simple-tag\" size=\"3\" "
@@ -220,7 +200,7 @@ holding contextual information."
 
 ;;;; Section
 
-(defun org-iorg-section (section contents info)
+(defun org-iorg-b-section (section contents info)
   "Transcode element HEADLINE into HTML syntax.
 CONTENTS is the contents of the headline.  INFO is a plist used
 as a communication channel."
@@ -234,7 +214,7 @@ as a communication channel."
       ;; Otherwise, export CONTENTS as-is.
       contents)))
 
-(defun org-iorg-paragraph (paragraph contents info)
+(defun org-iorg-b-paragraph (paragraph contents info)
   "Transcode element PARAGRAPH into HTML syntax.
 CONTENTS is the contents of the paragraph.  INFO is a plist used
 as a communication channel."
@@ -283,7 +263,7 @@ as a communication channel."
                     contents)))
         ))))
 
-(defun org-iorg-plain-list (plain-list contents info)
+(defun org-iorg-b-plain-list (plain-list contents info)
   "Transcode element PLAIN-LIST into HTML syntax.
 CONTENTS is the contents of the plain-list.  INFO is a plist used
 as a communication channel."
@@ -307,7 +287,7 @@ as a communication channel."
                     contents)
           contents)))))
 
-(defun org-iorg-item (item contents info)
+(defun org-iorg-b-item (item contents info)
   "Transcode element ITEM into HTML syntax.
 CONTENTS is the contents of the ITEM.  INFO is a plist used as
 a communication channel."
@@ -345,7 +325,7 @@ a communication channel."
                         (t " unchecked"))))))))
 
 
-(defun org-iorg-export-to-html
+(defun org-iorg-b-export-to-html
   (&optional subtreep visible-only body-only ext-plist pub-dir)
   "Export current buffer to a HTML file.
 

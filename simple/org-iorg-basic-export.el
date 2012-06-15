@@ -148,19 +148,23 @@ as a communication channel."
   (let* ((todo (and (plist-get info :with-todo-keywords)
                     (let ((todo (org-element-property :todo-keyword headline)))
                       (and todo (org-export-data todo info)))))
-         (todo-type (and todo (org-element-property :todo-type headline))))
+         ;; (todo-type (and todo (org-element-property :todo-type headline)))
+         )
 
     (when todo
-      (concat "<span class=\"selectbox\">"
-              "<select name:\"simple-todo\" size=\"1\">"
-              "<option selected>TODO</option>"
-              "<option>DONE</option>"
-              "<option>WAITING</option>"
-              "<option>CANCELLED</option>"
-              "<option>HOLD</option>"
-              "<option>NEXT</option>"
-              "</select>"
-              "</span>"))))
+      (format "%s%s%s"
+              (concat "<span class=\"selectbox\">"
+                      "<select name:\"simple-todo\" size=\"1\">"
+                      "<option selected>")
+              (upcase-word todo)
+              (concat "</option>"
+                      "<option>DONE</option>"
+                      "<option>WAITING</option>"
+                      "<option>CANCELLED</option>"
+                      "<option>HOLD</option>"
+                      "<option>NEXT</option>"
+                      "</select>"
+                      "</span>")))))
 
 
 (defun org-iorg-b--headline-tags (headline info)

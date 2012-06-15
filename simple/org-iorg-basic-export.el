@@ -61,43 +61,63 @@ as a communication channel."
       (funcall (cdr (assq 'headline org-e-html-translate-alist))
                headline contents info)
     ;; Otherwise, build <form> template.
-    (let* ((action (org-element-property :html-form headline))
+    (let* (;; <form> related Vars
+           (action (org-element-property :html-form headline))
            (submit (org-element-property :html-button-value headline))
+           ;; headline attributes
            (numberedp (org-export-numbered-headline-p headline info))
-           (level (org-export-get-relative-level headline info))
-           (text (org-export-data (org-element-property :title headline) info))
-           (todo (and (plist-get info :with-todo-keywords)
-                      (let ((todo (org-element-property :todo-keyword headline)))
-                        (and todo (org-export-data todo info)))))
-           (todo-type (and todo (org-element-property :todo-type headline)))
-           (tags (and (plist-get info :with-tags)
-                      (org-export-get-tags headline info)))
            (priority (and (plist-get info :with-priority)
                           (org-element-property :priority headline)))
            (section-number (and (org-export-numbered-headline-p headline info)
                                 (mapconcat 'number-to-string
                                            (org-export-get-headline-number
                                             headline info) ".")))
-           ;; Create the headline text.
-           (full-text (org-iorg-b-format-headline--wrap headline info))
            (section-number-dash (mapconcat 'number-to-string
                                            (org-export-get-headline-number
                                             headline info) "-"))
+           (text (org-export-data (org-element-property :title headline) info))
+           ;; TODO's
+           (todo (and (plist-get info :with-todo-keywords)
+                      (let ((todo (org-element-property :todo-keyword headline)))
+                        (and todo (org-export-data todo info)))))
+           (todo-type (and todo (org-element-property :todo-type headline)))
+           ;; TAG's
+           (tags (and (plist-get info :with-tags)
+                      (org-export-get-tags headline info)))
+           ;; ID's
            (ids (remove 'nil
                         (list (org-element-property :custom-id headline)
                               (org-element-property :id headline)
                               (concat "sec-" section-number-dash))))
            (preferred-id (car ids))
            (extra-ids (cdr ids))
+           (headline-number (org-export-get-headline-number headline info))
+           (headline-label (or (org-element-property :custom-id headline)
+                               (concat "sec-" (mapconcat 'number-to-string
+                                                         headline-number "-"))))
+
+           ;; class
            (extra-class (org-element-property :html-container-class headline))
-           (level1 (+ level (1- org-e-html-toplevel-hlevel))))
+           ;; Level
+           (level-wrap (+ (org-export-get-relative-level headline info)
+                          (1- org-e-html-toplevel-hlevel)))
+           (level (org-export-get-relative-level headline info))
+           (level1 (+ level (1- org-e-html-toplevel-hlevel)))
+           ;; Create the headline text.
+           (full-text (org-iorg-b-format-headline--wrap headline info)))
+
       (format "<div id=\"%s\" class=\"%s\">%s%s%s</div>\n"
+              ;; id
               (format "outline-container-%s"
-                      (if (zerop (length extra-ids)) section-number-dash
+                      (if (zerop (length extra-ids))
+                          section-number-dash
                         preferred-id))
+              ;; class
               (concat (format "outline-%d" level1) (and extra-class " ")
                       extra-class)
+              ;; <form>
               (format "<form method=post action=\"%s\">\n" action)
+              ;; formatted headline
               (format "\n<h%d id=\"%s\">%s%s</h%d>\n"
                       level1
                       preferred-id
@@ -108,10 +128,18 @@ as a communication channel."
                                       x))))
                            (format "<a id=\"%s\" name=\"%s\"></a>" id id)))
                        extra-ids "")
-                      full-text
+                      (org-iorg-b-format-headline
+                       todo todo-type  priority text tags
+                       :headline-label headline-label :level level-wrap
+                       :section-number section-number
+                       ;extra-keys
+                       )
+                     ;full-text  REPLACE!
                       level1)
-              (concat "<table border=0>\n"
-                      contents
+              ;; content
+              (concat contents
+                      ;; <form> buttons
+                      "<table border=0>\n"
                       "<tr>\n"
                       (format "<td><input type=\"reset\"></td>\n")
                       (format "<td><input type=\"submit\" value=\"%s\"></td>\n" submit)
@@ -132,45 +160,22 @@ as a communication channel."
 	(tags (org-iorg-b--tags tags)))
     (concat section-number todo (and todo " ") text
 	    (and tags "&nbsp;&nbsp;&nbsp;") tags)))
+	 ;; 
+	 ;; (section-number (and (org-export-numbered-headline-p headline info)
+	 ;;        	      (mapconcat 'number-to-string
+	 ;;        			 headline-number ".")))
+	 ;; (todo (and (plist-get info :with-todo-keywords)
+	 ;;            (let ((todo (org-element-property :todo-keyword headline)))
+	 ;;              (and todo (org-export-data todo info)))))
+	 ;; (todo-type (and todo (org-element-property :todo-type headline)))
+
+           ;; (priority (and (plist-get info :with-priority)
+           ;;                (org-element-property :priority headline)))
+	 ;; (text (org-export-data (org-element-property :title headline) info))
+	 ;; (tags (and (plist-get info :with-tags)
+	 ;;            (org-export-get-tags headline info)))
 
 
-;; Wrap headline
-(defun org-iorg-b-format-headline--wrap
-  (headline info &optional format-function &rest extra-keys)
-  "Transcode an HEADLINE element from Org to HTML.
-CONTENTS holds the contents of the headline.  INFO is a plist
-holding contextual information."
-  (let* ((level (+ (org-export-get-relative-level headline info)
-		   (1- org-e-html-toplevel-hlevel)))
-	 (headline-number (org-export-get-headline-number headline info))
-	 (section-number (and (org-export-numbered-headline-p headline info)
-			      (mapconcat 'number-to-string
-					 headline-number ".")))
-	 (todo (and (plist-get info :with-todo-keywords)
-		    (let ((todo (org-element-property :todo-keyword headline)))
-		      (and todo (org-export-data todo info)))))
-	 (todo-type (and todo (org-element-property :todo-type headline)))
-	 (priority (and (plist-get info :with-priority)
-			(org-element-property :priority headline)))
-	 (text (org-export-data (org-element-property :title headline) info))
-	 (tags (and (plist-get info :with-tags)
-		    (org-export-get-tags headline info)))
-	 (headline-label (or (org-element-property :custom-id headline)
-			     (concat "sec-" (mapconcat 'number-to-string
-						       headline-number "-"))))
-	 (format-function (cond
-			   ((functionp format-function) format-function)
-			   ((functionp org-e-html-format-headline-function)
-			    (function*
-			     (lambda (todo todo-type priority text tags
-					   &allow-other-keys)
-			       (funcall org-e-html-format-headline-function
-					todo todo-type priority text tags))))
-			   (t 'org-iorg-b-format-headline))))
-    (apply format-function
-    	   todo todo-type  priority text tags
-    	   :headline-label headline-label :level level
-    	   :section-number section-number extra-keys)))
 
 ;;; Transcode Helpers
 ;; Wrap Todo in select-box

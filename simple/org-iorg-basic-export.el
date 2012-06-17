@@ -93,7 +93,7 @@ as a communication channel."
 
            ;; class
            (extra-class (org-element-property :html-container-class headline))
-           ;; Level
+           ;; level
            (level-wrap (+ (org-export-get-relative-level headline info)
                           (1- org-e-html-toplevel-hlevel)))
            (level (org-export-get-relative-level headline info))

@@ -68,14 +68,16 @@ as a communication channel."
            (action (org-element-property :html-form headline))
            (submit (org-element-property :html-button-value headline))
            ;; headline attributes
-           (numberedp (org-export-numbered-headline-p headline info))
            (priority (and (plist-get info :with-priority)
                           (org-element-property :priority headline)))
+           (numberedp (org-export-numbered-headline-p headline info))
            (section-number (org-export-get-headline-number headline info))
-           (section-number-point (and (org-export-numbered-headline-p headline info)
-                                      (mapconcat 'number-to-string section-number ".")))
-           (section-number-dash (and (org-export-numbered-headline-p headline info)
-                                     (mapconcat 'number-to-string section-number "-")))
+           (section-number-point (and
+                                  numberedp
+                                  (mapconcat 'number-to-string section-number ".")))
+           (section-number-dash (and
+                                 numberedp
+                                 (mapconcat 'number-to-string section-number "-")))
            ;; text
            (text (org-export-data (org-element-property :title headline) info))
            (text-formatted (org-iorg-b--headline-text text))
@@ -131,7 +133,7 @@ as a communication channel."
                        extra-ids "")
                       (concat
                        section-number-point
-                       (and section-number-point "&nbsp;") ; FIXME where is the point?
+                       (and section-number-point "&nbsp;&nbsp;") ; FIXME where is the point?
                        todo-formatted
                        (and todo-formatted "&nbsp;")
                        text
@@ -148,6 +150,30 @@ as a communication channel."
                       "</tr>\n"
                       "</table>\n"
                       "</form>")))))
+
+
+;;; Helper Functions
+(defun org-iorg-b--read-from-input-file (file beg end)
+  "Return buffer substring between characters BEG and END from Org input file FILE, given as absolute file-name."
+  (if (not
+       (file-exists-p file)
+       (number-or-marker-p beg)
+       (number-or-marker-p end))
+      (error: "File doesn't exists or START and END arguments are not numbers or markers")
+    (with-current-buffer (find-file file)
+      (save-excursion
+        (save-restriction
+          (widen)
+          (buffer-substring-no-properties beg end))))))
+
+
+;; FIXME only first version
+(defun org-iorg-b--get-org-input (info element)
+  "Return content of input Org file"
+  (let ((input-file (plist-get info :input-file))
+        (beg (org-element-property :begin element))
+        (end (org-element-property :end element)))
+    (org-iorg-b--read-from-input-file input-file beg end)))
 
 
 ;;; Transcode Helpers
@@ -173,9 +199,9 @@ as a communication channel."
                        (lambda (x)
                          (format
                           "<option>%s</option>" x))
-                       (remove todo org-todo-keywords-for-agenda) ""))
-              "</select>"
-              "</span>"))))
+                       (remove todo org-todo-keywords-for-agenda) "")
+                      "</select>"
+                      "</span>")))))
 
 (defun org-iorg-b--headline-tags (headline info)
   "Wrap headline tags in html text-field, reading values from the HEADLINE and INFO arguments"
@@ -187,8 +213,10 @@ as a communication channel."
               (concat "<span class=\"textfield\">"
                       "<input type=\"text\" name=\"simple-tag\" size=\"10\""
                       "maxlenght=\"20\" value=\"")
-              tags
-              (concat "\">"
+              (mapconcat
+               (lambda (x)
+                 (format ":%s" x)) (remove "iorg" tags) "")
+              (concat ":\">"
                       "</input>"
                       "</span>")))))
 

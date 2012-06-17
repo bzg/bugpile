@@ -22,33 +22,36 @@
   :tag "Org iOrg Export"
   :group 'org-iorg)
 
-;;;; Headline
-;; Headline customization variables
-(defcustom org-iorg-b-format-headline-function nil
-  "Function to format headline text.
+ 
+;;; Headline
 
-This function will be called with 5 arguments:
-TODO      the todo keyword (string or nil).
-TODO-TYPE the type of todo (symbol: `todo', `done', nil)
-PRIORITY  the priority of the headline (integer or nil)
-TEXT      the main headline text (string).
-TAGS      the tags (string or nil).
+;; OBLSOLETE not needed anymore
+;; ;; Headline customization variables
+;; (defcustom org-iorg-b-format-headline-function nil
+;;   "Function to format headline text.
 
-The function result will be used in the section format string.
+;; This function will be called with 5 arguments:
+;; TODO      the todo keyword (string or nil).
+;; TODO-TYPE the type of todo (symbol: `todo', `done', nil)
+;; PRIORITY  the priority of the headline (integer or nil)
+;; TEXT      the main headline text (string).
+;; TAGS      the tags (string or nil).
 
-As an example, one could set the variable to the following, in
-order to reproduce the default set-up:
+;; The function result will be used in the section format string.
 
-\(defun org-e-html-format-headline \(todo todo-type priority text tags)
-  \"Default format function for an headline.\"
-  \(concat \(when todo
-            \(format \"\\\\textbf{\\\\textsc{\\\\textsf{%s}}} \" todo))
-	  \(when priority
-            \(format \"\\\\framebox{\\\\#%c} \" priority))
-	  text
-	  \(when tags (format \"\\\\hfill{}\\\\textsc{%s}\" tags))))"
-  :group 'org-iorg-b-export
-  :type 'function)
+;; As an example, one could set the variable to the following, in
+;; order to reproduce the default set-up:
+
+;; \(defun org-e-html-format-headline \(todo todo-type priority text tags)
+;;   \"Default format function for an headline.\"
+;;   \(concat \(when todo
+;;             \(format \"\\\\textbf{\\\\textsc{\\\\textsf{%s}}} \" todo))
+;; 	  \(when priority
+;;             \(format \"\\\\framebox{\\\\#%c} \" priority))
+;; 	  text
+;; 	  \(when tags (format \"\\\\hfill{}\\\\textsc{%s}\" tags))))"
+;;   :group 'org-iorg-b-export
+;;   :type 'function)
 
 
 ;; Main headline export function
@@ -74,7 +77,8 @@ as a communication channel."
            (section-number-dash (and (org-export-numbered-headline-p headline info)
                                      (mapconcat 'number-to-string section-number "-")))
            ;; text
-           (text-formatted (org-iorg-b--headline-text headline info))
+           (text (org-export-data (org-element-property :title headline) info))
+           (text-formatted (org-iorg-b--headline-text text))
            ;; TODO's
            (todo-formatted (org-iorg-b--headline-todo headline info))
            ;; TAG's
@@ -90,7 +94,6 @@ as a communication channel."
            (headline-label (or (org-element-property :custom-id headline)
                                (concat "sec-" (mapconcat 'number-to-string
                                                          headline-number "-"))))
-
            ;; class
            (extra-class (org-element-property :html-container-class headline))
            ;; level
@@ -126,9 +129,14 @@ as a communication channel."
                                       x))))
                            (format "<a id=\"%s\" name=\"%s\"></a>" id id)))
                        extra-ids "")
-                      (concat section-number todo-formatted (and todo-formatted " ")
-                              text-formatted
-                              (and tags-formatted "&nbsp;&nbsp;&nbsp;") tags-formatted)
+                      (concat
+                       section-number-point
+                       (and section-number-point "&nbsp;") ; FIXME where is the point?
+                       todo-formatted
+                       (and todo-formatted "&nbsp;")
+                       text
+                       (and tags-formatted "&nbsp;&nbsp;&nbsp;")
+                       tags-formatted)
                       level1)
               ;; content
               (concat contents
@@ -151,21 +159,23 @@ as a communication channel."
          ;; (todo-type (and todo (org-element-property :todo-type headline)))
          )
 
-    (when todo
+    (when (and
+           todo
+           org-todo-keywords-for-agenda
+           (member todo org-todo-keywords-for-agenda))
       (format "%s%s%s"
               (concat "<span class=\"selectbox\">"
                       "<select name:\"simple-todo\" size=\"1\">"
                       "<option selected>")
-              (upcase-word todo)
+              todo
               (concat "</option>"
-                      "<option>DONE</option>"
-                      "<option>WAITING</option>"
-                      "<option>CANCELLED</option>"
-                      "<option>HOLD</option>"
-                      "<option>NEXT</option>"
-                      "</select>"
-                      "</span>")))))
-
+                      (mapconcat
+                       (lambda (x)
+                         (format
+                          "<option>%s</option>" x))
+                       (remove todo org-todo-keywords-for-agenda) ""))
+              "</select>"
+              "</span>"))))
 
 (defun org-iorg-b--headline-tags (headline info)
   "Wrap headline tags in html text-field, reading values from the HEADLINE and INFO arguments"
@@ -184,21 +194,20 @@ as a communication channel."
 
 
 
-(defun org-iorg-b--headline-text (headline info)
-  "Wrap headline text in html text-field, reading values from the HEADLINE and INFO arguments"
-  (let ((text (org-export-data (org-element-property :title headline) info)))
-    (when text
-      (format "%s%s%s"
-              (concat "<span class=\"textfield\">"
-                      "<input type=\"text\" name=\"simple-text\" size=\"40\" "
-                      "maxlenght=\"80\" value=\"")
-              text
-              (concat "\">"
-                      "</input>"
-                      "</span>")))))
+(defun org-iorg-b--headline-text (text)
+  "Wrap headline TEXT in html text-field."
+  (when text
+    (format "%s%s%s"
+            (concat "<span class=\"textfield\">"
+                    "<input type=\"text\" name=\"simple-text\" size=\"40\" "
+                    "maxlenght=\"80\" value=\"")
+            text
+            (concat "\">"
+                    "</input>"
+                    "</span>"))))
         
-
-;;;; Section
+ 
+;;; Section
 
 (defun org-iorg-b-section (section contents info)
   "Transcode element HEADLINE into HTML syntax.
@@ -213,6 +222,8 @@ as a communication channel."
                  section contents info)
       ;; Otherwise, export CONTENTS as-is.
       contents)))
+ 
+;;; Paragraph
 
 (defun org-iorg-b-paragraph (paragraph contents info)
   "Transcode element PARAGRAPH into HTML syntax.
@@ -262,6 +273,9 @@ as a communication channel."
                       options)
                     contents)))
         ))))
+
+ 
+;;; Plain List
 
 (defun org-iorg-b-plain-list (plain-list contents info)
   "Transcode element PLAIN-LIST into HTML syntax.
@@ -324,6 +338,8 @@ a communication channel."
                         ((eq checkboxp 'on) " checked")
                         (t " unchecked"))))))))
 
+ 
+;;; Exporting function
 
 (defun org-iorg-b-export-to-html
   (&optional subtreep visible-only body-only ext-plist pub-dir)

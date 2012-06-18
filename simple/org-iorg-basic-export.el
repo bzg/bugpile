@@ -155,10 +155,10 @@ as a communication channel."
 ;;; Helper Functions
 (defun org-iorg-b--read-from-input-file (file beg end)
   "Return buffer substring between characters BEG and END from Org input file FILE, given as absolute file-name."
-  (if (not
-       (file-exists-p file)
-       (number-or-marker-p beg)
-       (number-or-marker-p end))
+  (if (not (and
+            (file-exists-p file)
+            (number-or-marker-p beg)
+            (number-or-marker-p end)))
       (error: "File doesn't exists or START and END arguments are not numbers or markers")
     (with-current-buffer (find-file file)
       (save-excursion
@@ -167,8 +167,8 @@ as a communication channel."
           (buffer-substring-no-properties beg end))))))
 
 
-;; FIXME only first version
-(defun org-iorg-b--get-org-input (info element)
+;; FIXME first draft
+(defun org-iorg-b--get-org-input (element info)
   "Return content of input Org file"
   (let ((input-file (plist-get info :input-file))
         (beg (org-element-property :begin element))
@@ -249,7 +249,12 @@ as a communication channel."
         (funcall (cdr (assq 'section org-e-html-translate-alist))
                  section contents info)
       ;; Otherwise, export CONTENTS as-is.
-      contents)))
+                                        ; contents
+      (format
+       (concat
+        "<textarea class=\"textarea\" name=\"simple-section\""
+        "cols=\"80\" rows=\"40\">%s</textarea>")
+       (org-iorg-b--get-org-input section info)))))
  
 ;;; Paragraph
 

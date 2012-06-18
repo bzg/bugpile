@@ -167,7 +167,6 @@ as a communication channel."
           (buffer-substring-no-properties beg end))))))
 
 
-;; FIXME first draft
 (defun org-iorg-b--get-org-input (element info)
   "Return content of input Org file"
   (let ((input-file (plist-get info :input-file))
@@ -249,7 +248,7 @@ as a communication channel."
         (funcall (cdr (assq 'section org-e-html-translate-alist))
                  section contents info)
       ;; Otherwise, export CONTENTS as-is.
-                                        ; contents
+      ;; contents
       (format
        (concat
         "<textarea class=\"textarea\" name=\"simple-section\""

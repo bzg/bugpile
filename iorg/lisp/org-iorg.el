@@ -207,7 +207,7 @@ with `file-name-nondirectory' of the project directory."
             (iorg--pwd)))
          (dir-files (directory-files proj))
          (new-prefix
-          (if (and name (iorg--stringp name))
+          (if (and name (non-empty-string-p name))
               name
             (file-name-nondirectory (directory-file-name proj))))
          (old-prefix))
@@ -311,15 +311,10 @@ all (non-directory) files in present working directory or DIR."
       (expand-file-name (file-name-as-directory dir))
     (message "Not a directory name")))
 
-(defun iorg--stringp (str)
-  "Return t if function argument STR is a string of length > 0, nil otherwise."
- (if (and (stringp str) (> (length str) 0))
-     str
-   nil))
   
 (defun iorg--normalize-new-dir-name (name)
   "Return NAME for a new directory in canonical form"
-  (and (iorg--stringp name)
+  (and (non-empty-string-p name)
        (expand-file-name (file-name-as-directory name))))
 
 ;;; Modified or new Org-mode functionality
@@ -367,7 +362,7 @@ that match REGEXP."
               (iorg--normalize-existing-dir-name dir)
             (iorg--pwd)))
          (project-name 
-          (if (and name (iorg--stringp name))
+          (if (and name (non-empty-string-p name))
               name
             (concat
              "project"
@@ -404,7 +399,7 @@ present working directory or DIR."
     (cond
      ((not (iorg--project-directory-structure-p proj))
       (message "Directory does not confirm to iOrg directory structure."))
-     ((not (iorg--stringp name))
+     ((not (non-empty-string-p name))
       (message "New project name must be a string of length > 0"))
      (t
       (condition-case err

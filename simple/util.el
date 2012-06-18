@@ -27,6 +27,15 @@
   `(with-temp-buffer
      (insert-file ,file)
      ,@body))
+
 (def-edebug-spec while-visiting-file (form body))
+
+(defun non-empty-string-p (str)
+  "Return t if function argument STR is a string of length > 0, nil otherwise."
+ (if (and (stringp str) (> (length str) 0))
+     str
+   nil))
+
+
 
 (provide 'util)

@@ -3,6 +3,7 @@
 (require 'org-export)
 (require 'org-element)
 (require 'org-e-html)
+(require 'util)
 ;; (require 'org-iorg)
 
 ;;;; Define derived backend
@@ -12,7 +13,8 @@
                     (item . org-iorg-b-item)
                     (paragraph . org-iorg-b-paragraph)
                     (plain-list . org-iorg-b-plain-list)
-                    (section . org-iorg-b-section)))
+                    (section . org-iorg-b-section)
+                    (property-drawer . org-iorg-b-property-drawer)))
 
 
 ;;;; Customisation group
@@ -22,7 +24,17 @@
   :tag "Org iOrg Export"
   :group 'org-iorg)
 
+;;;; Customisation variables
+
+(defcustom org-iorg-b-property-key-prefix-plist
+  '(:export ("iorg" "bugpile") :noexport  nil) 
+  "Alist with a list of prefix strings in the cdr that are used to identify those headline properties that will be made editable by the iOrg exporter."
+  :group 'org-iorg-b-export
+  :type 'plist)
  
+
+
+
 ;;; Headline
 
 ;; OBLSOLETE not needed anymore
@@ -175,6 +187,14 @@ as a communication channel."
     (org-iorg-b--read-from-input-file input-file beg end)))
 
 
+
+(defun org-iorg-b--generate-property-key-regexp (prefix)
+  "Generate a regexp that matches all Org headline properties whose keys begin with PREFIX followed by a dash '-'."
+  (if (not (non-empty-string-p prefix))
+      (error "PREFIX must be a non-empty string")
+    (format "%s-[-[:alpha:]]+" prefix)))
+  
+
 ;;; Transcode Helpers
 (defun org-iorg-b--headline-todo (headline info)
   "Wrap headline todo's in html select-box, reading values from the HEADLINE and INFO arguments"
@@ -232,8 +252,9 @@ as a communication channel."
             (concat "\">"
                     "</input>"
                     "</span>"))))
-        
- 
+
+
+
 ;;; Section
 
 (defun org-iorg-b-section (section contents info)
@@ -254,6 +275,52 @@ as a communication channel."
         "<textarea class=\"textarea\" name=\"simple-section\""
         "cols=\"80\" rows=\"40\">%s</textarea>")
        (org-iorg-b--get-org-input section info)))))
+
+
+;;; Property drawer
+
+(defun org-iorg-b-property-drawer
+  (property-drawer contents info &optional key-prefix-list)
+  "Transcode element PROPERTY-DRAWER into HTML syntax. CONTENTS is the contents of the paragraph. INFO is a plist used as a communication channel. KEY-PREFIX-LIST
+is an optional list of prefix strings."
+  (let ((headline (org-export-get-parent-headline property-drawer))
+        (properties
+         (org-export-read-attribute :properties property-drawer))
+        (prefix-list
+         (or key-prefix-list
+             (plist-get org-iorg-b-property-key-prefix-alist :export))))
+    (or (not headline)
+        (not (member "iorg"
+                     (org-export-get-tags headline info)))
+        ;; (not (and prefix-list   ))
+        )
+    ;; Fallback to regular HTML.
+    (message "Properties: %s Prefix-List: %s" properties prefix-list)
+
+    ;; (funcall
+    ;;  (cdr (assq 'property-drawer org-e-html-translate-alist))
+    ;;  property-drawer contents info)
+    ;; (let ()
+    ;;   (format
+    ;;    (concat "<tr><td>%s</td><td>"
+    ;;            "<textarea%s>\n%s</textarea>"
+    ;;            "</td></tr>")
+    ;;    (or (plist-get attributes :title) "")
+    ;;    (let (options)
+    ;;      (mapc
+    ;;       (lambda (prop)
+    ;;         (let ((value (plist-get attributes prop)))
+    ;;           (when value
+    ;;             (setq options
+    ;;                   (concat options
+    ;;                           (format " %s=\"%s\""
+    ;;                                   (substring (symbol-name prop)
+    ;;                                              1)
+    ;;                                   value))))))
+    ;;       '(:cols :rows :name :readonly :value))
+    ;;      options)
+    ;;    contents)))))
+    ))
  
 ;;; Paragraph
 

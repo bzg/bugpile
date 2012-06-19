@@ -47,15 +47,17 @@
   (message "entering `iorg-change-state-handler'")  
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)
-    (with-current-buffer
-        (find-file (expand-file-name "simple.org" simple-dir))
-      (save-excursion
-        (iorg--params-find-entry params)
-        (org-todo 'done))
-      (save-buffer)
-      ;(kill-buffer (current-buffer))
-      )
+    ;; (with-current-buffer
+    ;;     (find-file (expand-file-name "simple.org" simple-dir))
+    ;;   (save-excursion
+    ;;     (iorg--params-find-entry params)
+    ;;     (org-todo 'done))
+    ;;   (save-buffer)
+    ;;   ;(kill-buffer (current-buffer))
+    ;;   )
     (iorg-initialize-simple-handler httpcon)))
+
+
 
 
 ;; (defun iorg-edit-headline-handler (httpcon)
@@ -122,8 +124,8 @@ in the Org file on that level."
              normalized-outline-level))))
     (error "Error while going to outline entry specified in PARAM-LIST: %s " err)))
 
-(defun iorg--org-to-html (org-file)
-  "Export ORG-FILE to html and return the expanded filename"
+(defun iorg--org-to-html (org-file &optional STATIC)
+  "Export ORG-FILE to html and return the expanded filename. If STATIC is non nil, export to static html, otherwise use the iOrg exporter"
   (if (not (file-exists-p (expand-file-name org-file simple-dir)))
       (error "File doesn't exist")
     (save-window-excursion
@@ -132,7 +134,7 @@ in the Org file on that level."
         (and
          (org-check-for-org-mode)
          (org-export-to-file
-          'e-html
+          (if STATIC 'e-html 'iorg) ; FIXME register iorg backend?
           (expand-file-name
            (concat
             (file-name-sans-extension

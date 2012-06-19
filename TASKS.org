@@ -2,6 +2,126 @@
 #+Options: ^:nil
 ##+CATEGORY: bugpile
 
+* Tasks [0/15]
+  :PROPERTIES:
+  :CUSTOM_ID: tasks
+  :END:
+Alright, most of the first tasks should be able to re-use code from
+the simple/ directory.
+
+** TODO Serve a directory of Org-mode files using elnode
+This will include writing a function to launch an elnode server,
+writing the appropriate handler(s) for serving the pages.  The pages
+should be exported using iorg-html.
+
+*** Notes
+
+** TODO Change a TODO state using the web interface
+This will probably involve the addition of an elnode handler to manage
+POST requests.
+
+The actual changes to the Org-mode files should use fairly abstract
+functions from iorg-db.el which we will be able to easily re-use when
+implementing MVC models.
+
+This will be harder than the next three tasks as it will require you
+to make decisions about how to find entries in Org-mode files, how to
+pass such location information through iorg-html into forms, and then
+back from the forms to the elnode POST handler.
+
+*** Notes
+
+** TODO Change a property using the web interface
+I don't know if this will require a new handler or if it will be able
+to re-use the handler from the previous task.  I imagine it will
+probably need at least one new function in iorg-db.el.
+
+*** Notes
+
+** TODO Change a tag using the web interface
+Same instructions as the previous task.
+
+*** Notes
+
+** TODO Change a headline body text using the web interface
+Same instructions as the previous task.
+
+*** Notes
+
+** TODO Commit an Org-mode file to DVCS
+This will involve writing a function which takes location information
+(preferably in a similar/same format to the location information used
+by elnode handlers above), and a commit message, and possibly other
+information (user name?) and performs the DVCS commit.
+
+This functionality should live in iorg-db.el under a main ;;; section.
+
+*** Notes
+
+** TODO Decide when to commit changes to DVCS
+- Should this happen on every edit?
+- Should this be user-configurable through iorg properties?
+- Should commit messages be generated automatically, or part of the forms?
+
+Once you have an idea of how this should work, just write it out here.
+
+*** Notes
+
+** TODO Update the forms to accommodate DVCS
+Based on your decisions in the previous task.
+
+*** Notes
+
+** TODO Update the handlers to accommodate the DVCS 
+Based on your decisions in the previous task.
+
+This will include changes to the update functions in iorg-db.el
+(probably make the commit step optional?).
+
+*** Notes
+
+** TODO Write an update to the Org-mode mailing list              :milestone:
+This should describe the usage of iorg to make an Org-mode file
+editable through a web interface.  It should include step by step
+instructions for how to serve a directory of Org-mode files using
+elnode, then how to edit them through the web interface.
+
+This will be our first major mile stone.
+
+*** Notes
+
+** TODO Plan out MVC view implementation
+What syntactic constructs will need to be added to an Org-mode file
+for it to serve as a template?  Do we need new syntactic devices for
+views or can we re-use some existing Org-mode syntax?
+
+** TODO Implement iorg-view.el towards a simple working example
+Based on your decisions in the above, add functionality to iorg-view
+until a simple example of a view backed by content from another
+Org-mode file is working.
+
+Probably better to setup the example first before writing any code, so
+that you can test incrementally.  It would be great to define ert
+tests for this, but that can be optional depending on how things are
+going.
+
+** TODO Plan out MVC controller implementation
+I'd like to collaborate on this step both because I'm less sure what
+will be involved and I'd like to know, and also because I have some
+experience with "meta-programming" type tasks like this one.
+
+What sort of interface to we want to provide to iorg users/developers
+through which they can define new elnode handlers?
+
+** TODO Implement iorg-controller.el towards a simple working example
+Again, first write out the example which should work to enable
+incremental testing and feedback.
+
+** TODO Package iorg into a separate git repository               :milestone:
+- write a brief README
+- clean up the code
+- clean up any loose files (e.g., example html exports etc...)
+
 * GSoC Project Evaluation
 ** WAITING update org mailing-list <2012-06-04 Mo 10:00 +1w>        :WAITING:
    :LOGBOOK:
@@ -950,47 +1070,13 @@ Deleted, is a special case of 'take action on selected task'
 
 * Coding [berlin] <2012-05-31 Do>--<2012-07-08 So>
 ** Bugpile Implementation
-*** TODO Implement simple.el
-    DEADLINE: <2012-06-11 Mo>
-**** DONE Serve simple.org to html using elnode and org-export
-     CLOSED: [2012-06-07 Do 09:30] DEADLINE: <2012-06-05 Tue>
-     :LOGBOOK:
-     - State "DONE"       from "TODO"       [2012-06-07 Do 09:30]
-     :END:
+Moved to [[#tasks][Tasks]].
 
-**** TODO Add a JS form and button to the html export of simple.org
-     DEADLINE: <2012-06-05 Tue>
-- use the html exporter from org-export for export
-- use a filter (see comments in org-export) to add the form/button to
-  the final html output
-
-**** TODO Write an elnode handler to handle the form POST response
-     DEADLINE: <2012-06-06 Wed>
-This should update the contents of simple.org and serve the new page
-as a response.
-
-**** DONE Change a TODO state using the web interface
-     CLOSED: [2012-06-07 Do 19:15] DEADLINE: <2012-06-06 Wed>
-     :LOGBOOK:
-     - State "DONE"       from "NEXT"       [2012-06-07 Do 19:15]
-     CLOCK: [2012-06-07 Do 09:39]--[2012-06-07 Do 19:39] => 10:00
-     :END:
-
-**** TODO Change a property using the web interface
-     DEADLINE: <2012-06-07 Thu>
-
-**** TODO Change a tag using the web interface
-     DEADLINE: <2012-06-07 Thu>
-
-**** NEXT Change headline body text using the web interface
-     DEADLINE: <2012-06-08 Fri>
 ** Bugpile Design
-*** TODO Design Bugreport
-**** TODO create bug report
-     SCHEDULED: <2012-06-03 So>
+*** Design Bugreport
+**** create bug report
 
-**** TODO change meta-data of bug report
-     SCHEDULED: <2012-06-03 So>
+**** change meta-data of bug report
 meta-data could include
 - type
   - bug
@@ -1011,17 +1097,14 @@ meta-data could include
   - breaking
   - etc...
 
-**** TODO change text of bug report
-     SCHEDULED: <2012-06-03 So>
+**** change text of bug report
 This would be the actual textual notes, which would presumably live in
 the body of an Org-mode headline.
 
-**** TODO associate bug report with commit in version control repository
-     SCHEDULED: <2012-06-11 Mo>
+**** associate bug report with commit in version control repository
 
 *** Domain Class Model
 **** NEXT [req-dom-class-mod-uml] Class Model of Requirements Analysis
-     SCHEDULED: <2012-06-02 Sa>
 
 *** iOrg Authentication
 I think Nic Ferrier is working on an authentication system for elnode,
@@ -1030,12 +1113,6 @@ all of the heavy lifting for us.  For that reason I'm removing the
 TODO from this headline for now.
 
 ***** [iorg-req-authent] Try authentication prototype
-     SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
-     :LOGBOOK:
-     - State "TODO"       from "CANCELLED"  [2012-06-03 So 09:14]
-     - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 21:41] \\
-       duplicate
-     :END:
 This should be a simple cookie system.  For now we can just keep a
 server-side list of usernames and passwords.  The authentication
 process will be as follows.
@@ -1054,22 +1131,10 @@ process will be as follows.
    to the system
 
 ***** [iorg-impl-auth] Implement basic authentication
-      SCHEDULED: <2012-06-25 Mo>--<2012-07-01 So>
-
-***** CANCELLED [iorg-impl-auth] Implement OAuth authentication   :CANCELLED:
-      CLOSED: [2012-06-01 Fr 18:42] SCHEDULED: <2012-05-14 Mo>--<2012-05-20 So>
-      :LOGBOOK:
-      - State "CANCELLED"  from "TODO"       [2012-06-01 Fr 18:42] \\
-        not part of project
-      :END:
-
-*** TODO Application Design
-**** TODO polish design
-     DEADLINE: <2012-06-11 Mo>
-
-**** TODO finish (programmatical) transformations
-     DEADLINE: <2012-06-11 Mo>
-
+***** [iorg-impl-auth] Implement OAuth authentication
+*** Application Design
+**** polish design
+**** finish (programmatical) transformations
 * Evaluating (mid-term) [berlin] <2012-07-09 Mo>--<2012-07-13 Fr>
 ** GSoC mid-term evalution 
 * Coding [berlin] <2012-07-14 Sa>--<2012-08-12 So>

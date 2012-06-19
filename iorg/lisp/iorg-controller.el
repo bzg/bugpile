@@ -1,4 +1,4 @@
-;;; iorg-generic-controller.el -- generic reusable and use case
+;;; iorg-controller.el -- generic reusable and use case
 ;;; independent controller functions for the iOrg framework
 
 (defun iorg-static-export-handler (httpcon file)
@@ -26,4 +26,4 @@
 
 
 
-(provide 'iorg-generic-controller)
+(provide 'iorg-controller)

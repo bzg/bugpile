@@ -1,4 +1,4 @@
-;;; org-iorg.el --- A webframework based on Org-mode and Elnode
+;;; iorg.el --- A webframework based on Org-mode and Elnode
 
 ;; Programming interactive web-applications with Org-mode 
 ;; Copyright (C) 2012  Thorsten Jolitz 
@@ -462,3 +462,5 @@ the iOrg framework."
 ;; Integration with and fixes for other packages
 ;; Experimental code
 ;; Finish up
+
+(provide 'iorg)

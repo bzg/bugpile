@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <title>Example: edit in place</title>
+    <style type="text/css">
+<!--/*--><![CDATA[/*><!--*/
+/* this class is used to highlight editable secitons on mouseover */
+.editable{ background: lightyellow; }
+/*]]>*/-->
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+// after the page loads, run the set set_clickable function
+$(document).ready(function(){ set_clickable(); });
+
+function set_clickable(){
+  // to every element with class="edit_in_place"
+  $('.edit_in_place').click(function(){
+    // Replace the original html with the following text area.
+    // In this example we replace with the raw html, but in iorg we
+    // will replace with the raw Org-mode text.
+    $(this).after('<div><textarea rows="10" cols="80">'+$(this).html()+'</textarea>'+
+                  '<div><input type="button" value="SAVE" class="saveButton" /></div>'+
+                  '</div>')
+    // remove the orignal html
+    $(this).remove();;
+    // call this function when buttons are hit
+    $('.saveButton').click(function(){ save_changes(this); });
+  });
+  // make every div with class="edit_in_place" highlight on mouseover
+  $('.edit_in_place').mouseover(function(){ $(this).addClass("editable"); });
+  $('.edit_in_place').mouseout(function() { $(this).removeClass("editable"); });
+}
+
+function save_changes(obj){
+  var new_text = $(obj).parent().siblings(0).val();
+  $.post("update-this-org-file", {content: new_text}, function(txt){ alert(txt); });
+  // In real life the above post request would hit the elnode server,
+  // which would in turn respond with the HTML that we would use to
+  // replace the element.  For now we'll just replace with the raw
+  // text verbatim.
+  $(obj).parent().parent().after('<div class="edit_in_place">'+new_text+'</div>');
+  $(obj).parent().parent().remove();
+  set_clickable();
+};
+/*]]>*///-->
+    </script>
+  </head>
+  <body>
+    <h1>Edit in place</h1>
+    <p class="edit_in_place">Some of the elements of this page may be edited in place.</p>
+    <p>Some of them can't.</p>
+    <p class="edit_in_place">
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+hendrerit tempor tellus. Donec pretium posuere tellus. Proin
+quam nisl, tincidunt et, mattis eget, convallis nec, purus. Cum
+sociis natoque penatibus et magnis dis parturient montes,
+nascetur ridiculus mus. Nulla posuere. Donec vitae dolor. Nullam
+tristique diam non turpis. Cras placerat accumsan nulla. Nullam
+rutrum. Nam vestibulum accumsan nisl.
+    </p>
+    <ul class="edit_in_place">
+      <li>one</li>
+      <li>two</li>
+      <li>three</li>
+    </ul>
+  </body>
+</html>

@@ -1,5 +1,5 @@
-;;; simple-controller.el -- use case dependent controller
-;;; functionality for the 'simple' example.
+;;; bugpile-controller.el -- use case independent controller
+;;; functionality for bugpile
 
 (require 'org)
 (require 'elnode)
@@ -44,7 +44,7 @@
  (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
- 
+xo 
  (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
@@ -153,4 +153,4 @@ in the Org file on that level."
     (elnode-log-access "simple" httpcon)
     (error "iorg: 404 handler invoked")))
 
-(provide 'simple)
+(provide 'bugpile-controller)

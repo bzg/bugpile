@@ -9,6 +9,11 @@
 Alright, most of the first tasks should be able to re-use code from
 the simple/ directory.
 
+Also, as you're working please remember to auto-fill your
+documentation strings so they don't overflow.  The reason they don't
+auto-fill on the first line is because the first line is supposed to
+be a self-contained sentence of <=67 characters.
+
 ** TODO Serve a directory of Org-mode files using elnode
 This will include writing a function to launch an elnode server,
 writing the appropriate handler(s) for serving the pages.  The pages

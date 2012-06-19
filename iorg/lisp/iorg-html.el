@@ -3,7 +3,7 @@
 (require 'org-export)
 (require 'org-element)
 (require 'org-e-html)
-(require 'util)
+(require 'iorg-util)
 
 ;;;; Define derived backend
 

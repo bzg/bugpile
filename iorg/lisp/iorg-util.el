@@ -21,21 +21,31 @@
              (match-string count in-string)
            assoc)))
 
-(defmacro while-visiting-file (file &rest body)
-  "Execute BODY in a temporary buffer visiting FILE."
-  (declare (indent 1))
-  `(with-temp-buffer
-     (insert-file ,file)
-     ,@body))
-
-(def-edebug-spec while-visiting-file (form body))
-
 (defun non-empty-string-p (str)
   "Return t if function argument STR is a string of length > 0, nil otherwise."
  (if (and (stringp str) (> (length str) 0))
      str
    nil))
 
+(defmacro while-visiting-file (file &rest body)
+  "Execute BODY in a temporary buffer visiting FILE."
+  (declare (indent 1))
+  `(with-temp-buffer
+     (insert-file ,file)
+     ,@body))
+(def-edebug-spec while-visiting-file (form body))
 
+(defun file-contents (path)
+  (while-visiting-file path (buffer-string)))
 
-(provide 'util)
+(defvar iorg-base
+  (expand-file-name
+   ".." (file-name-directory (or load-file-name (buffer-file-name)))))
+
+(defvar iorg-lisp
+  (expand-file-name "lisp" iorg-base))
+
+(defvar iorg-src
+  (expand-file-name "src" iorg-base))
+
+(provide 'iorg-util)

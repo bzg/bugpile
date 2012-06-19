@@ -2,7 +2,6 @@
 (require 'ert)
 (require 'org-test)
 (require 'iorg-js)
-(require 'iorg-server)
 
 (defvar test-iorg-js-dir
   (file-name-directory (or load-file-name (buffer-file-name))))

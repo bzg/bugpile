@@ -9,7 +9,7 @@
 (defvar iorg-js-style
   (concat
    "<style type=\"text/css\">\n<!--/*--><![CDATA[/*><!--*/\n"
-   (file-contents (expand-file-name "iorg-js.css" iorg-base))
+   (file-contents (expand-file-name "iorg-js.css" iorg-src))
    "/*]]>*/-->\n</style>"))
 
 (defvar iorg-js-jquery
@@ -19,7 +19,7 @@
   (concat
    "<script type=\"text/javascript\" src=\"" iorg-js-jquery "\"></script>"
    "<script type=\"text/javascript\">\n<!--/*--><![CDATA[/*><!--*/\n"
-   (file-contents (expand-file-name "iorg-js.js" iorg-base))
+   (file-contents (expand-file-name "iorg-js.js" iorg-src))
    "/*]]>*///-->\n</script>\n"))
 
 (defvar iorg-js-wrap-template
@@ -54,19 +54,19 @@
 
 (eval `(org-export-define-derived-backend iorg-js e-html
          :translate-alist
-         ((paragraph  . ,(def-iorg-js-wrap html-paragraph))
-          (plain-list . ,(def-iorg-js-wrap html-plain-list)))))
+         ((paragraph  . ,(def-iorg-js-wrap org-e-html-paragraph))
+          (plain-list . ,(def-iorg-js-wrap org-e-html-plain-list)))))
 
 (defun iorg-js-export-to-html
   (&optional subtreep visible-only body-only ext-plist pub-dir)
   "Export current buffer to an interactive HTML file."
   (interactive)
-  (let* ((extension (concat "." html-extension))
+  (let* ((extension (concat "." org-e-html-extension))
 	 (file (org-export-output-file-name extension subtreep pub-dir))
-	 (org-export-coding-system html-coding-system)
+	 (org-export-coding-system org-e-html-coding-system)
          ;; custom headers
-         (html-style-extra iorg-js-style)
-         (html-scripts iorg-js-scripts))
+         (org-e-html-style-extra iorg-js-style)
+         (org-e-html-scripts iorg-js-scripts))
     (org-export-to-file
      'iorg-js file subtreep visible-only body-only ext-plist)))
 

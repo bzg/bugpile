@@ -8,13 +8,14 @@
 
 ;;;; Define derived backend
 
+;; Enables e.g. (org-export-to-file 'iorg ...)
 (org-export-define-derived-backend iorg e-html
   :translate-alist ((headline . org-iorg-b-headline)
-                    (item . org-iorg-b-item)
-                    (paragraph . org-iorg-b-paragraph)
-                    (plain-list . org-iorg-b-plain-list)
                     (section . org-iorg-b-section)
                     (property-drawer . nil)
+                    ;;(item . org-iorg-b-item)
+                    ;; (paragraph . org-iorg-b-paragraph)
+                    ;; (plain-list . org-iorg-b-plain-list)
                     ;; (property-drawer . org-iorg-b-property-drawer)
                     ))
 

@@ -4,6 +4,7 @@
 (require 'org-export)
 (require 'org-e-html)
 (require 'org-agenda)
+(require 'org-iorg-basic-export)
 (require 'util)
 
 ;;;; Declare functions
@@ -40,7 +41,7 @@
  (defun iorg-initialize-simple-handler (httpcon)
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
-
+ 
  (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
@@ -134,7 +135,7 @@ in the Org file on that level."
         (and
          (org-check-for-org-mode)
          (org-export-to-file
-          (if STATIC 'e-html 'iorg) ; FIXME register iorg backend?
+          (if STATIC 'e-html 'iorg) 
           (expand-file-name
            (concat
             (file-name-sans-extension

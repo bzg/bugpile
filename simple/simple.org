@@ -1,6 +1,10 @@
 #+Title: A simple example Org-mode file
 
-* TODO This file has a top level heading                           :iorg:bar:
+* HOLD This file has a top level heading              :iorg:bar:WAITING:HOLD:
+  :LOGBOOK:
+  - State "HOLD"       from "TODO"       [2012-06-19 Di 08:11] \\
+    just a test
+  :END:
   :PROPERTIES:
   :iorg-property: foo
   :html-form:     http://localhost:8000/make-me-interactive-html
@@ -42,3 +46,4 @@ the remainder of the iorg project.
 
 I've stubbed out a few functions in file:simple.el, add new functions
 as they are needed.
+     

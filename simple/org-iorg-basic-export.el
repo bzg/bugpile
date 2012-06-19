@@ -14,7 +14,9 @@
                     (paragraph . org-iorg-b-paragraph)
                     (plain-list . org-iorg-b-plain-list)
                     (section . org-iorg-b-section)
-                    (property-drawer . org-iorg-b-property-drawer)))
+                    (property-drawer . nil)
+                    ;; (property-drawer . org-iorg-b-property-drawer)
+                    ))
 
 
 ;;;; Customisation group
@@ -27,12 +29,16 @@
 ;;;; Customisation variables
 
 (defcustom org-iorg-b-property-key-prefix-plist
-  '(:export ("iorg" "bugpile") :noexport  nil) 
+  '(:export ("html" "bugpile") :noexport  nil) 
   "Alist with a list of prefix strings in the cdr that are used to identify those headline properties that will be made editable by the iOrg exporter."
   :group 'org-iorg-b-export
   :type 'plist)
  
 
+;;;; Variables
+
+(defvar org-iorg-b-property-prefix-regexp "^[^-]+"
+  "Regexp that matches any prefix of an Org headline property key.")
 
 
 ;;; Headline
@@ -179,13 +185,15 @@ as a communication channel."
           (buffer-substring-no-properties beg end))))))
 
 
-(defun org-iorg-b--get-org-input (element info)
+(defun org-iorg-b--get-org-input (element info &optional property-drawer)
   "Return content of input Org file"
-  (let ((input-file (plist-get info :input-file))
-        (beg (org-element-property :begin element))
-        (end (org-element-property :end element)))
+  (let* ((input-file (plist-get info :input-file))
+         (beg (or (and property-drawer
+                       (org-element-property :end property-drawer))
+                  (org-element-property :begin element)))
+         (end (org-element-property :end element)))
+    (message "%S" (org-element-property :end property-drawer))
     (org-iorg-b--read-from-input-file input-file beg end)))
-
 
 
 (defun org-iorg-b--generate-property-key-regexp (prefix)
@@ -211,7 +219,8 @@ as a communication channel."
       (format "%s%s%s"
               (concat "<span class=\"selectbox\">"
                       "<select name:\"simple-todo\" size=\"1\">"
-                      "<option selected>")
+                      ;; FIXME generate unique value
+                      "<option value=\"1\" selected>")
               todo
               (concat "</option>"
                       (mapconcat
@@ -257,185 +266,216 @@ as a communication channel."
 
 ;;; Section
 
-(defun org-iorg-b-section (section contents info)
+(defun org-iorg-b-section (section contents info &optional key-prefix-list)
   "Transcode element HEADLINE into HTML syntax.
 CONTENTS is the contents of the headline.  INFO is a plist used
-as a communication channel."
-  (let ((headline (org-export-get-parent section)))
+as a communication channel.KEY-PREFIX-LIST
+is an optional list of prefix strings.
+"
+  (let* ((headline (org-export-get-parent section))
+         ;; Get the property drawer
+         (prop-drawer
+          (org-element-map
+           section 'property-drawer
+           (lambda (draw)
+             draw) nil 'first-match))
+         ;; Get the properties
+         (properties (org-element-property :properties prop-drawer))
+         ;; Get the prefixes that tell a property should be exported
+         (prefix-list
+          (or key-prefix-list
+              (plist-get org-iorg-b-property-key-prefix-plist :export)))
+         ;; Generate a set of all property-key prefixes in the drawer
+         (prop-drawer-prefix-list
+          (and
+           prop-drawer
+           (delete-dups
+            (mapcar
+             (lambda (x)
+               (progn
+                 (string-match
+                  org-iorg-b-property-prefix-regexp (car x))
+                 (match-string 0 (car x))))
+             properties))))
+         ;; Are there Org properties that need to be exported?
+         (export-prop-p
+          (and
+           prop-drawer-prefix-list
+           (mapc
+            (lambda (x)
+              (member x prefix-list))
+            prop-drawer-prefix-list))))
+
     (if (or (not headline)
             (not (member "iorg"
                          (org-export-get-tags headline info))))
         ;; Fallback to regular HTML.
         (funcall (cdr (assq 'section org-e-html-translate-alist))
                  section contents info)
-      ;; Otherwise, export CONTENTS as-is.
-      ;; contents
-      (format
-       (concat
-        "<textarea class=\"textarea\" name=\"simple-section\""
-        "cols=\"80\" rows=\"40\">%s</textarea>")
-       (org-iorg-b--get-org-input section info)))))
+      ;; Otherwise
+      (format "%s%s"
+              (or
+               ;; Are there properties that need to be exported?
+               (and
+                export-prop-p
+                ;; Put the textfields in a table
+                (format
+                 "<table border=\"0\">%s</table>"
+                 (mapconcat
+                  (lambda (x)
+                    ;;  Select the properties that need to be exported 
+                    (if (member
+                         (progn
+                           (string-match
+                            org-iorg-b-property-prefix-regexp
+                            (car x))
+                           (match-string 0 (car x)))
+                         prefix-list)
+                        ;; Generate one table row for each exported property
+                        (format 
+                         (concat
+                          "<tr>"
+                          "<td>%s</td>"
+                          ;; FIXME generate unique names
+                          "<td><input type=\"text\" name=\"simple-prop\""
+                          "size=\"40\" maxlength=\"80\" value=\"%s\">"
+                          "</input></td>"
+                          "</tr>")
+                         (car x)
+                         (cdr x))))
+                  properties "")))
+               ;; Export (maybe only) the section content                  
+               "")
+              (format
+               (concat
+                "<textarea class=\"textarea\" name=\"simple-section\""
+                "cols=\"80\" rows=\"35\">%s</textarea>")
+               (org-iorg-b--get-org-input
+                section info prop-drawer))))))
 
 
-;;; Property drawer
 
-(defun org-iorg-b-property-drawer
-  (property-drawer contents info &optional key-prefix-list)
-  "Transcode element PROPERTY-DRAWER into HTML syntax. CONTENTS is the contents of the paragraph. INFO is a plist used as a communication channel. KEY-PREFIX-LIST
-is an optional list of prefix strings."
-  (let ((headline (org-export-get-parent-headline property-drawer))
-        (properties
-         (org-export-read-attribute :properties property-drawer))
-        (prefix-list
-         (or key-prefix-list
-             (plist-get org-iorg-b-property-key-prefix-alist :export))))
-    (or (not headline)
-        (not (member "iorg"
-                     (org-export-get-tags headline info)))
-        ;; (not (and prefix-list   ))
-        )
-    ;; Fallback to regular HTML.
-    (message "Properties: %s Prefix-List: %s" properties prefix-list)
+;; ;;; Property drawer
 
-    ;; (funcall
-    ;;  (cdr (assq 'property-drawer org-e-html-translate-alist))
-    ;;  property-drawer contents info)
-    ;; (let ()
-    ;;   (format
-    ;;    (concat "<tr><td>%s</td><td>"
-    ;;            "<textarea%s>\n%s</textarea>"
-    ;;            "</td></tr>")
-    ;;    (or (plist-get attributes :title) "")
-    ;;    (let (options)
-    ;;      (mapc
-    ;;       (lambda (prop)
-    ;;         (let ((value (plist-get attributes prop)))
-    ;;           (when value
-    ;;             (setq options
-    ;;                   (concat options
-    ;;                           (format " %s=\"%s\""
-    ;;                                   (substring (symbol-name prop)
-    ;;                                              1)
-    ;;                                   value))))))
-    ;;       '(:cols :rows :name :readonly :value))
-    ;;      options)
-    ;;    contents)))))
-    ))
+;; (defun org-iorg-b-property-drawer
+;;   (property-drawer contents info)
+;;   "Transcode element PROPERTY-DRAWER into HTML syntax. CONTENTS is the contents of the paragraph. INFO is a plist used as a communication channel."
+;;     (format "%s" ""))
  
-;;; Paragraph
+;; ;;; Paragraph
 
-(defun org-iorg-b-paragraph (paragraph contents info)
-  "Transcode element PARAGRAPH into HTML syntax.
-CONTENTS is the contents of the paragraph.  INFO is a plist used
-as a communication channel."
-  (let ((headline (org-export-get-parent-headline paragraph)))
-    (if (or (not headline)
-            (not (member "iorg" (org-export-get-tags headline info))))
-        ;; Fallback to regular HTML.
-        (funcall (cdr (assq 'paragraph org-e-html-translate-alist))
-                 paragraph contents info)
-      (let ((attributes (org-export-read-attribute :attr_html paragraph)))
-        (cond
-         ;; If the paragraph is contained within an item, do not make
-         ;; it a textarea.
-         ((catch 'item-found
-            (mapc (lambda (parent)
-                    (when (eq (org-element-type parent) 'item)
-                      (throw 'item-found t)))
-                  (org-export-get-genealogy paragraph))
-            nil)
-          contents)
-         ;; If paragraph has no special attribute, consider it
-         ;; is plain text.
-         ((not attributes)
-          (format "<tr>\n<td colspan=2>\n%s</td>\n</tr>" contents))
-         ;; Otherwise build <textarea> template.
-         (t (format "<tr>
-<td>%s</td>
-<td>
-<textarea%s>\n%s</textarea>
-</td>
-</tr>"
-                    (or (plist-get attributes :title) "")
-                    (let (options)
-                      (mapc
-                       (lambda (prop)
-                         (let ((value (plist-get attributes prop)))
-                           (when value
-                             (setq options
-                                   (concat options
-                                           (format " %s=\"%s\""
-                                                   (substring (symbol-name prop)
-                                                              1)
-                                                   value))))))
-                       '(:cols :rows :name :readonly :value))
-                      options)
-                    contents)))
-        ))))
+;; (defun org-iorg-b-paragraph (paragraph contents info)
+;;   "Transcode element PARAGRAPH into HTML syntax.
+;; CONTENTS is the contents of the paragraph.  INFO is a plist used
+;; as a communication channel."
+;;   (let ((headline (org-export-get-parent-headline paragraph)))
+;;     (if (or (not headline)
+;;             (not (member "iorg" (org-export-get-tags headline info))))
+;;         ;; Fallback to regular HTML.
+;;         (funcall (cdr (assq 'paragraph org-e-html-translate-alist))
+;;                  paragraph contents info)
+;;       (let ((attributes (org-export-read-attribute :attr_html paragraph)))
+;;         (cond
+;;          ;; If the paragraph is contained within an item, do not make
+;;          ;; it a textarea.
+;;          ((catch 'item-found
+;;             (mapc (lambda (parent)
+;;                     (when (eq (org-element-type parent) 'item)
+;;                       (throw 'item-found t)))
+;;                   (org-export-get-genealogy paragraph))
+;;             nil)
+;;           contents)
+;;          ;; If paragraph has no special attribute, consider it
+;;          ;; is plain text.
+;;          ((not attributes)
+;;           (format "<tr>\n<td colspan=2>\n%s</td>\n</tr>" contents))
+;;          ;; Otherwise build <textarea> template.
+;;          (t (format "<tr>
+;; <td>%s</td>
+;; <td>
+;; <textarea%s>\n%s</textarea>
+;; </td>
+;; </tr>"
+;;                     (or (plist-get attributes :title) "")
+;;                     (let (options)
+;;                       (mapc
+;;                        (lambda (prop)
+;;                          (let ((value (plist-get attributes prop)))
+;;                            (when value
+;;                              (setq options
+;;                                    (concat options
+;;                                            (format " %s=\"%s\""
+;;                                                    (substring (symbol-name prop)
+;;                                                               1)
+;;                                                    value))))))
+;;                        '(:cols :rows :name :readonly :value))
+;;                       options)
+;;                     contents)))
+;;         ))))
 
  
-;;; Plain List
+;; ;;; Plain List
 
-(defun org-iorg-b-plain-list (plain-list contents info)
-  "Transcode element PLAIN-LIST into HTML syntax.
-CONTENTS is the contents of the plain-list.  INFO is a plist used
-as a communication channel."
-  (let ((headline (org-export-get-parent-headline plain-list)))
-    (if (or (not headline)
-            (not (member "iorg" (org-export-get-tags headline info))))
-        ;; Fallback to regular HTML.
-        (funcall (cdr (assq 'plain-list org-e-html-translate-alist))
-                 plain-list contents info)
-      ;; If plain-list is descriptive make it a select menu, otherwise
-      ;; simply return CONTENTS as-is.
-      (let ((attributes (org-export-read-attribute :attr_html plain-list)))
-        (if (eq (org-element-property :type plain-list) 'descriptive)
-            (format "<tr>
-<td>%s</td>
-<td>
-<select name=\"%s\">\n%s</select>
-</td>
-</tr>"
-                    (or (plist-get attributes :name) "")
-                    contents)
-          contents)))))
+;; (defun org-iorg-b-plain-list (plain-list contents info)
+;;   "Transcode element PLAIN-LIST into HTML syntax.
+;; CONTENTS is the contents of the plain-list.  INFO is a plist used
+;; as a communication channel."
+;;   (let ((headline (org-export-get-parent-headline plain-list)))
+;;     (if (or (not headline)
+;;             (not (member "iorg" (org-export-get-tags headline info))))
+;;         ;; Fallback to regular HTML.
+;;         (funcall (cdr (assq 'plain-list org-e-html-translate-alist))
+;;                  plain-list contents info)
+;;       ;; If plain-list is descriptive make it a select menu, otherwise
+;;       ;; simply return CONTENTS as-is.
+;;       (let ((attributes (org-export-read-attribute :attr_html plain-list)))
+;;         (if (eq (org-element-property :type plain-list) 'descriptive)
+;;             (format "<tr>
+;; <td>%s</td>
+;; <td>
+;; <select name=\"%s\">\n%s</select>
+;; </td>
+;; </tr>"
+;;                     (or (plist-get attributes :name) "")
+;;                     contents)
+;;           contents)))))
 
-(defun org-iorg-b-item (item contents info)
-  "Transcode element ITEM into HTML syntax.
-CONTENTS is the contents of the ITEM.  INFO is a plist used as
-a communication channel."
-  (let ((headline (org-export-get-parent-headline item)))
-    (if (or (not headline)
-            (not (member "iorg" (org-export-get-tags headline info))))
-        ;; Fallback to regular HTML.
-        (funcall
-         (cdr (assq 'item org-e-html-translate-alist))
-              item contents info)
-      ;; Otherwise find appropriate input type and build tag.
-      ;; Attributes are read from parent plain-list since items have
-      ;; no affiliated keyword attached to them.
-      (let ((plain-list (org-export-get-parent item)))
-        ;; List is descriptive: item is an option line whose value is
-        ;; item's tag.
-        (if (eq (org-element-property :type plain-list) 'descriptive)
-            (format "<option value=\"%s\">%s</option>"
-                    (org-export-data (org-element-property :tag item) info)
-                    (org-trim contents)))
-        ;; Otherwise build appropriate input type.  Assume item's
-        ;; contents is the text before the input tag.
-        (let* ((attributes (org-export-read-attribute :attr_html plain-list))
-               (checkboxp (org-element-property :checkbox item))
-               (type (if checkboxp 'checkbox (plist-get attributes :type))))
-          (format "<tr>
-<td>%s</td>
-<td><input type=%s name=\"%s\"%s></td>
-</tr>"
-                  contents
-                  type
-                  (or (plist-get attributes :name) "")
-                  (cond ((not (eq type 'checkbox)) "")
-                        ((eq checkboxp 'on) " checked")
-                        (t " unchecked"))))))))
+;; (defun org-iorg-b-item (item contents info)
+;;   "Transcode element ITEM into HTML syntax.
+;; CONTENTS is the contents of the ITEM.  INFO is a plist used as
+;; a communication channel."
+;;   (let ((headline (org-export-get-parent-headline item)))
+;;     (if (or (not headline)
+;;             (not (member "iorg" (org-export-get-tags headline info))))
+;;         ;; Fallback to regular HTML.
+;;         (funcall
+;;          (cdr (assq 'item org-e-html-translate-alist))
+;;               item contents info)
+;;       ;; Otherwise find appropriate input type and build tag.
+;;       ;; Attributes are read from parent plain-list since items have
+;;       ;; no affiliated keyword attached to them.
+;;       (let ((plain-list (org-export-get-parent item)))
+;;         ;; List is descriptive: item is an option line whose value is
+;;         ;; item's tag.
+;;         (if (eq (org-element-property :type plain-list) 'descriptive)
+;;             (format "<option value=\"%s\">%s</option>"
+;;                     (org-export-data (org-element-property :tag item) info)
+;;                     (org-trim contents)))
+;;         ;; Otherwise build appropriate input type.  Assume item's
+;;         ;; contents is the text before the input tag.
+;;         (let* ((attributes (org-export-read-attribute :attr_html plain-list))
+;;                (checkboxp (org-element-property :checkbox item))
+;;                (type (if checkboxp 'checkbox (plist-get attributes :type))))
+;;           (format "<tr>
+;; <td>%s</td>
+;; <td><input type=%s name=\"%s\"%s></td>
+;; </tr>"
+;;                   contents
+;;                   type
+;;                   (or (plist-get attributes :name) "")
+;;                   (cond ((not (eq type 'checkbox)) "")
+;;                         ((eq checkboxp 'on) " checked")
+;;                         (t " unchecked"))))))))
 
  
 ;;; Exporting function

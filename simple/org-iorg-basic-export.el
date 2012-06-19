@@ -192,7 +192,6 @@ as a communication channel."
                        (org-element-property :end property-drawer))
                   (org-element-property :begin element)))
          (end (org-element-property :end element)))
-    (message "%S" (org-element-property :end property-drawer))
     (org-iorg-b--read-from-input-file input-file beg end)))
 
 
@@ -237,6 +236,7 @@ as a communication channel."
                     (org-export-get-tags headline info))))
 
     (when tags
+      ;; FIXME handle Orgs default tags (or ban them from export)
       (format "%s%s%s"
               (concat "<span class=\"textfield\">"
                       "<input type=\"text\" name=\"simple-tag\" size=\"10\""
@@ -281,7 +281,7 @@ is an optional list of prefix strings.
              draw) nil 'first-match))
          ;; Get the properties
          (properties (org-element-property :properties prop-drawer))
-         ;; Get the prefixes that tell a property should be exported
+         ;; Get the prefixes that flag a property for export
          (prefix-list
           (or key-prefix-list
               (plist-get org-iorg-b-property-key-prefix-plist :export)))

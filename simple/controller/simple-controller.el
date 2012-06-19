@@ -1,4 +1,6 @@
-;;; simple.el -- iorg proof of concept
+;;; simple-controller.el -- use case dependent controller
+;;; functionality for the 'simple' example.
+
 (require 'org)
 (require 'elnode)
 (require 'org-export)
@@ -7,7 +9,7 @@
 (require 'org-iorg-basic-export)
 (require 'util)
 
-;;;; Declare functions
+;;; Declare functions
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
 (declare-function org-check-for-org-mode "org-agenda" nil)
@@ -22,8 +24,9 @@
 
 (defconst simple-urls
   '(("^$"      . iorg-initialize-simple-handler)
-    ("^todo/$" . iorg-change-state-handler)
-    ("^edit/$" . iorg-edit-headline-handler)))
+    ("^edit/$" . iorg-change-state-handler)
+    ("^send/$" . iorg-change-state-handler)
+    ("^reset/$" . iorg-edit-headline-handler)))
 
 (defun simple-dispatcher-handler (httpcon)
   "Dispatch requests to the 'simple' app"
@@ -98,7 +101,7 @@ in the Org file on that level."
     (error "Wrong type or format of OUTLINE-LEVEL argument")
   (delete "" (split-string outline-level "-"))))
 
- (defun iorg--params-find-entry (param-list &optional file)
+(defun iorg--params-find-entry (param-list &optional file)
   "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
   (condition-case err
       (let* ((outline-level
@@ -109,7 +112,7 @@ in the Org file on that level."
         (with-current-buffer
             (if (and file (file-exists-p file))
                 (find-file file)
-             (find-file (expand-file-name "simple.org" simple-dir)))
+              (find-file (expand-file-name "simple.org" simple-dir)))
           (org-check-for-org-mode)
           (save-restriction
             (widen)

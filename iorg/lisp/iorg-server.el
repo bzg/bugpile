@@ -1,4 +1,4 @@
-;;; iorg-server.el -- elnode handlers and such for handling web POST/GET requests
+;;; iorg-server -- elnode handlers and such for handling web POST/GET requests
 
 (require 'org)
 (require 'elnode)
@@ -18,8 +18,10 @@
 
 (defconst iorg-server-urls
   '(("^$"      . iorg-initialize-simple-handler)
-    ("^todo/$" . iorg-change-state-handler)
-    ("^edit/$" . iorg-edit-headline-handler)))
+    ("^edit/$" . iorg-change-state-handler)
+    ("^send/$" . iorg-change-state-handler)
+    ("^reset/$" . iorg-edit-headline-handler)))
+
 
 (defun iorg-server-dispatcher-handler (httpcon)
   "Dispatch requests to the 'iorg-server' app"
@@ -42,102 +44,6 @@
         "  <input type=\"submit\" value=\" Finish \" name=\"outline-1\">"
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
-
-
-(defun iorg-server-wrap-headline-todo-in-select (transc-str back-end comm-chan) 
-  "Wrap the todo part of the (BACK-END = html) transcoded Org headline TRANSC-STR into a html select-field, using information from the communication channel COMM-CHAN."
-    (with-temp-buffer
-    (insert transc-str)
-    (goto-char (point-min))
-    (while (re-search-forward iorg-server-todo-regexp nil t)
-      (goto-char (match-end 0))
-      (insert
-       (concat
-        "<select "
-        "name=\"iorg-server-todo\""
-        "size=\"1\">"
-        "<option selected>TODO</option>"
-        "<option>DONE</option>")))
-    (while (re-search-forward iorg-server-span-end-repexp nil t)
-      (goto-char (match-beginning 0))
-      (insert "<\select>"))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun iorg-server-wrap-headline-tags-in-text (transc-str back-end comm-chan) 
-  "Wrap the tags in the (BACK-END = html) transcoded Org headline TRANSC-STR into one html text-field each, using information from the communication channel COMM-CHAN."
-    (with-temp-buffer
-    (insert transc-str)
-    (goto-char (point-min))
-    (while (re-search-forward iorg-server-tag-regexp nil t)
-      (goto-char (match-end 0))
-      (insert
-       (concat
-        "<input "
-        "type=\"text\""
-        "name=\"iorg-server-tag\""
-        "size=\"40\""
-        "maxlenght=\"80\">")))
-    (while (re-search-forward iorg-server-span-end-repexp nil t)
-      (goto-char (match-end 0))
-      (insert "<\input>"))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun iorg-server-wrap-headline-string-in-text (transc-str back-end comm-chan) 
-  "Wrap the headline string in the (BACK-END = html) transcoded Org headline TRANSC-STR into a html text-field, using information from the communication channel COMM-CHAN."
-  (with-temp-buffer
-    (insert transc-str)
-    (goto-char (point-min))
-    (and
-     (re-search-forward "&nbsp;&nbsp;&nbsp;" nil t)
-     (re-search-backward iorg-server-span-end-repexp nil t)
-     (progn
-       (goto-char (match-end 0))
-       (insert
-        (concat
-         "<input "
-         "type=\"text\""
-         "name=\"iorg-server-headline\""
-         "size=\"40\""
-         "maxlenght=\"80\">"))
-       (and (re-search-forward "<" nil t)
-            (goto-char (match-beginning 0))
-            (insert "<\input>"))))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun iorg-server-wrap-headline-in-form (transc-str back-end comm-chan) 
-  "Wrap the headline in the (BACK-END = html) transcoded Org headline TRANSC-STR into a html form, using information from the communication channel COMM-CHAN."
-    (with-temp-buffer
-    (insert transc-str)
-    (goto-char (point-min))
-    (while (re-search-forward iorg-server-outline-container-regexp nil t)
-      (goto-char (match-end 0))
-      (insert "<form action=\"http://localhost:8031/edit/\">"))
-    (while (re-search-forward iorg-server-div-end-repexp nil t)
-      (goto-char (match-beginning 0))
-      (insert
-        "<input type=\"submit\" value=\" Edit \" name=\"outline-container-1\">"
-        "</form>"))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun iorg-server-wrap-headline-content-in-textarea (transc-str back-end comm-chan) 
-  "Wrap the content of the (BACK-END = html) transcoded Org headline TRANSC-STR into a html textarea, using information from the communication channel COMM-CHAN."
-    ;; TODO delete this line:
-    (message "Raw value headline: %S" (org-element-property :raw-value headline))
-    (message "Content headline: %s" (org-element-contents headline))
-    (with-temp-buffer
-    (insert transc-str)
-    (goto-char (point-min))
-    (while (re-search-forward iorg-server-outline-text-regexp nil t)
-      (goto-char (match-end 0))
-      (insert
-       (concat
-        "<textarea name=\"iorg-server-content\""
-        "cols=\"79\" rows=\"30\">" )))
-    (and (re-search-forward iorg-server-div-end-repexp nil t)
-      (goto-char (match-beginning 0))
-      (insert "<\textarea>"))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
 
 (defun iorg-server-launch (port)
   "Launch the elnode server which will serve and edit simple.org."

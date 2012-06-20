@@ -113,20 +113,15 @@
 ;;   "Regexp used to identify code blocks.")
 
 
-;;;; Customization variables
-(defgroup iorg-projects nil
-  "A webframework based on Org-mode, Elnode and dVCS."
-  :tag "iOrg"
-  :group 'org
-  :group 'elnode)
+;;; Customisation Groups and Variables
 
-(defcustom iorg-projects-mode-hook nil
-  "Mode hook for iorg-projects-mode, run after the mode was turned on."
-  :group 'org-iorg
-  :type 'hook)
+(defgroup iorg-projects nil
+  "Creating and managing iOrg projects"
+  :tag "iOrg-Projects"
+  :group 'iorg)
 
 (defcustom iorg-projects-load-hook nil
-  "Hook that is run after iorg.el has been loaded."
+  "Hook that is run after iorg-projects.el has been loaded."
   :group 'org-iorg
   :type 'hook)
 

@@ -7,10 +7,29 @@
 (require 'org-agenda)
 (require 'iorg-util)
 
-;;;; Declare functions
-(declare-function org-entry-is-todo-p "org" nil)
-(declare-function org-get-todo-state "org" nil)
-(declare-function org-check-for-org-mode "org-agenda" nil)
+
+
+;;; Customs, Constants and Variables
+
+;; Customisation Groups and Variables
+
+(defgroup iorg nil
+  "A webframework based on Org-mode, Elnode and dVCS."
+  :tag "iOrg"
+  :group 'org
+  :group 'elnode)
+
+(defgroup iorg-server nil
+  "Elnode handlers for handling web request."
+  :tag "iOrg-Server"
+  :group 'iorg)
+
+(defcustom iorg-server-load-hook nil
+  "Hook that is run after iorg-server.el has been loaded."
+  :group 'iorg-server
+  :type 'hook)
+
+;; Constants
 
 (defconst iorg-server-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
@@ -21,6 +40,18 @@
     ("^edit/$" . iorg-change-state-handler)
     ("^send/$" . iorg-change-state-handler)
     ("^reset/$" . iorg-edit-headline-handler)))
+
+
+;; Variables
+
+
+;;; Functions
+
+;; Declare functions
+(declare-function org-entry-is-todo-p "org" nil)
+(declare-function org-get-todo-state "org" nil)
+(declare-function org-check-for-org-mode "org-agenda" nil)
+
 
 
 (defun iorg-server-dispatcher-handler (httpcon)
@@ -45,10 +76,11 @@
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
-(defun iorg-server-launch (port)
+(defun iorg-server-launch (&optional port host)
   "Launch the elnode server which will serve and edit simple.org."
   ;; TODO: (1) elnode serving simple.org to html
   (interactive "nPort number: ")
+  
   (elnode-start
    'iorg-server-dispatcher-handler
    :port port :host "localhost"))

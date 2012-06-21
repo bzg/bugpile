@@ -20,6 +20,56 @@ writing the appropriate handler(s) for serving the pages.  The pages
 should be exported using iorg-html.
 
 *** Notes
+1. In a defcustom like this, is it possible to use a function that
+   returns a string as value?
+
+#+begin_src emacs-lisp
+  :type '(alist :key-type string
+                :value-type string)
+;; e.g.
+("project-dir" . (expand-file-name ...))
+#+end_src
+
+2. How to read and write defcustoms?
+see iorg-projects.el
+
+#+begin_src emacs-lisp
+(defcustom iorg-projects-config
+  '(("project" . "bugpile")
+    ("dir" . "~/git")))
+
+  :group 'iorg-projects
+  :type '(alist :key-type string
+                :value-type string))
+#+end_src
+
+How to change "bugpile" to "something-else", how to read the value of
+"dir", and how to add ("key" . "val") to the alist? 
+
+Just treat the defcustom like every other alist (use assoc and append
+e.g.) or are there special considereations because its a defcustom
+(like customize-set-variable or customize-option e.g.)?
+
+What, if I actually want to customize several projects in that
+variable, I want a key "project1" and then a alist of values for that
+project, and then another key "project2" and then another alist of
+values for project2 etc. ?
+
+Like this:  (?)
+
+#+begin_src emacs-lisp
+(defcustom iorg-projects-config
+ '(
+("project1" .
+ (("name" . "bugpile")("dir" . "~/git") ... )) 
+("project2" .
+(("name" . "something-else")("dir" . "~/git") ... ))
+)
+
+  :group 'iorg-projects
+  :type '(alist :key-type string
+                :value-type alist))
+#+end_src
 
 ** TODO Change a TODO state using the web interface
 This will probably involve the addition of an elnode handler to manage

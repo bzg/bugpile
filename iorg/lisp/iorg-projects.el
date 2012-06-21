@@ -44,7 +44,42 @@
   :group 'iorg-projects
   :type 'plist)
 
-(defcustom iorg-projects-
+;; FIXME make directory names more generic/portable for multi-person
+;; projects on multiple platforms
+(defcustom iorg-projects-config
+  '(("project" . "bugpile")
+    ("dir" . "~/git")
+    ("host" . "localhost")
+    ("port" . "8008")
+    ("docroot" . "docroot")
+    ("model" . "db")
+    ("view" . "view") 
+    ("controller" . "server")
+    ("persistence" . "objects")
+    ("test" . "test")
+    ("doc" . "doc"))
+  
+  "Alist of name/value pairs that define an iOrg project. 
+
+PROJECT defines the project name, DIR the parent directory of the
+project, DOCROOT the webserver root directory, MODEL, VIEW,
+CONTROLLER the directories were the related elisp files are
+stored, TEST and DOC the directories for tests and documentation
+and PERSISTENCE the directory for Org files used as data storage.
+Thus, the projects view directory would be defined as
+'DIR/PROJECT/VIEW/' m(e.g. ~/git/bugpile/view), the projects
+controller directory as 'DIR/PROJECT/CONTROLLER/'(e.g.
+~/git/bugpile/server/).
+
+HOST and PORT are used to configure the projects elnode webserver
+as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
+
+  :group 'iorg-projects
+  :type '(alist :key-type string
+                :value-type string))
+
+
+ 
 
 ;;; Variables 
 (defvar iorg-projects-plantuml-diagram-type-repexp

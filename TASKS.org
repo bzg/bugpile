@@ -57,6 +57,10 @@ values for project2 etc. ?
 
 Like this:  (?)
 
+3. What is our core library (like org.el for Org)? 
+iorg-server.el or rather iorg-projects.el? rather iorg-server.el?
+
+
 #+begin_src emacs-lisp
 (defcustom iorg-projects-config
  '(

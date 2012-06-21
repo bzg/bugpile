@@ -57,7 +57,8 @@
     ("controller" . "server")
     ("persistence" . "objects")
     ("test" . "test")
-    ("doc" . "doc"))
+    ("doc" . "doc")
+    ("urls" . "alist of server-urls")) ; FIXME alist needed, no string
   
   "Alist of name/value pairs that define an iOrg project. 
 
@@ -68,7 +69,7 @@ stored, TEST and DOC the directories for tests and documentation
 and PERSISTENCE the directory for Org files used as data storage.
 Thus, the projects view directory would be defined as
 'DIR/PROJECT/VIEW/' m(e.g. ~/git/bugpile/view), the projects
-controller directory as 'DIR/PROJECT/CONTROLLER/'(e.g.
+ocontroller directory as 'DIR/PROJECT/CONTROLLER/'(e.g.
 ~/git/bugpile/server/).
 
 HOST and PORT are used to configure the projects elnode webserver

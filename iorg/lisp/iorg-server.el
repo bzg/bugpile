@@ -73,8 +73,20 @@
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
-(defun iorg-server-launch (&optional port host)
-  "Launch the elnode server which will serve and edit simple.org."
+(defun iorg-server-launch
+  (project &optional host port docroot &rest config)
+  "Launch the elnode server which will serve PROJECT.
+
+PROJECT must be a predefined project in customisation variable
+'iorg-projects-config', from which configuration is read. 
+
+If optional arguments HOST, PORT and DOCROOT are given, they
+override the values from 'iorg-projects-config'.
+
+CONFIG is an alist of additional project configuration variables
+in the ((:key1 . value1) (:key2 value2)...) format that override
+their counterparts in 'iorg-projects-config'"
+
   ;; TODO: (1) elnode serving simple.org to html
   (interactive "nPort number: ")
   

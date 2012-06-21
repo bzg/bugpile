@@ -88,7 +88,7 @@ in the ((:key1 . value1) (:key2 value2)...) format that override
 their counterparts in 'iorg-projects-config'"
 
   ;; TODO: (1) elnode serving simple.org to html
-  (interactive "nPort number: ")
+  (interactive "nProject: ")
   
   (elnode-start
    'iorg-server-dispatcher-handler

@@ -7,6 +7,8 @@
 (require 'org-agenda)
 (require 'iorg-util)
 
+(eval-when-compile
+  (require 'cl))
 
 
 ;;; Customs, Constants and Variables
@@ -73,28 +75,30 @@
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
-(defun iorg-server-launch
-  (project &optional host port docroot &rest config)
+(defun* iorg-server-launch (project &allow-other-keys)
   "Launch the elnode server which will serve PROJECT.
 
 PROJECT must be a predefined project in customisation variable
 'iorg-projects-config', from which configuration is read. 
 
-If optional arguments HOST, PORT and DOCROOT are given, they
-override the values from 'iorg-projects-config'.
+An alist of additional project configuration variables in
+the ((:key1 . value1) (:key2 value2)...) format can be given as
+other keys that override their counterparts in
+'iorg-projects-config'. Any keys that do not have a counterpart
+in 'iorg-projects-config' are simply ignored."
 
-CONFIG is an alist of additional project configuration variables
-in the ((:key1 . value1) (:key2 value2)...) format that override
-their counterparts in 'iorg-projects-config'"
+  (interactive "DProject: ")
+  ;; (apply
+  ;;  (lambda (key)
+  ;;    (and (member key iorg-projects-config)
 
-  ;; TODO: (1) elnode serving simple.org to html
-  (interactive "nProject: ")
-  
-  (elnode-start
-   'iorg-server-dispatcher-handler
-   :port port :host "localhost"))
+  (message  "%s" (apply cdr other-keys)))
 
- (defun iorg-initialize-iorg-server-handler (httpcon)
+          ;; (elnode-start
+          ;;  'iorg-server-dispatcher-handler
+          ;;  :host proj-host :port proj-port :docroot proj-docroot))
+
+(defun iorg-initialize-iorg-server-handler (httpcon)
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
@@ -209,7 +213,7 @@ in the Org file on that level."
 
 
 
------------------------------------
+; -----------------------------------
 
 
 (defun iorg-server-static-export-handler (httpcon file)

@@ -77,7 +77,7 @@
 (require 'elnode)
 (require 'vc)
 
-;;;; Other stuff we need
+;;; Other stuff we need
 
 ;; remember this directory
 (setq iorg-projects-dir
@@ -89,12 +89,27 @@
 
 ;; (unless (fboundp 'xyz) (defalias 'xyz 'uvw))
 
-;;;; Declare functions
-(declare-function org-check-for-org-mode "org-agenda" nil)
-(declare-function org-entry-is-todo-p "org" nil)
-(declare-function org-get-todo-state "org" nil)
 
-;;;; Variables 
+
+;;; Customs, Constants and Variables
+
+;; Customisation Groups and Variables
+(defgroup iorg-projects nil
+  "Creating and managing iOrg projects"
+  :tag "iOrg-Projects"
+  :group 'iorg)
+
+(defcustom iorg-projects-load-hook nil
+  "Hook that is run after iorg-projects.el has been loaded."
+  :group 'org-iorg
+  :type 'hook)
+
+(defcustom iorg-projects-elnode-customisation nil
+  "Project-related elnode customisations"
+  :group 'iorg-projects
+  :type 'plist)
+
+;;; Variables 
 (defvar iorg-projects-plantuml-diagram-type-repexp
 (concat "<\\(soa\\|csa\\|dcm\\)>")
   "Regexp used to identify plantuml diagramtypes from the
@@ -113,23 +128,19 @@
 ;;   "Regexp used to identify code blocks.")
 
 
-;;; Customisation Groups and Variables
-
-(defgroup iorg-projects nil
-  "Creating and managing iOrg projects"
-  :tag "iOrg-Projects"
-  :group 'iorg)
-
-(defcustom iorg-projects-load-hook nil
-  "Hook that is run after iorg-projects.el has been loaded."
-  :group 'org-iorg
-  :type 'hook)
-
 
-;;;; Private functions
-;;; iOrg meta data
+;;; Functions
+
+;; Declare functions
+(declare-function org-check-for-org-mode "org-agenda" nil)
+(declare-function org-entry-is-todo-p "org" nil)
+(declare-function org-get-todo-state "org" nil)
+
+;; Private functions
+;; iOrg meta data
 (defun iorg-projects--update-iorg-config (prop val)
-  "Update property PROP with value VAL in the global iOrg configuration file."
+  "Update property PROP with value VAL in the global iOrg
+configuration file."
   (org-entry-add-to-multivalued-property
    (iorg-projects--goto-first-entry
     (expand-file-name "iorg-projects-config.org" iorg-projects-dir)) prop val))

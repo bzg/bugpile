@@ -58,8 +58,13 @@ values for project2 etc. ?
 Like this:  (?)
 
 3. What is our core library (like org.el for Org)? 
+
 iorg-server.el or rather iorg-projects.el? rather iorg-server.el?
 
+4. How to write (interactive ...) 
+
+when there are &optinal and &rest args - ask for the optional values
+or not?
 
 #+begin_src emacs-lisp
 (defcustom iorg-projects-config

@@ -12,7 +12,6 @@
 ;;; Customs, Constants and Variables
 
 ;; Customisation Groups and Variables
-
 (defgroup iorg nil
   "A webframework based on Org-mode, Elnode and dVCS."
   :tag "iOrg"
@@ -30,17 +29,15 @@
   :type 'hook)
 
 ;; Constants
-
 (defconst iorg-server-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
-  "The project directory of the 'simple' app in canonical form")
+  "The directory of iorg-server.el in canonical form")
 
 (defconst iorg-server-urls
   '(("^$"      . iorg-initialize-simple-handler)
     ("^edit/$" . iorg-change-state-handler)
     ("^send/$" . iorg-change-state-handler)
     ("^reset/$" . iorg-edit-headline-handler)))
-
 
 ;; Variables
 

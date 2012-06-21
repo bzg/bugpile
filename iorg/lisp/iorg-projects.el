@@ -109,6 +109,8 @@
   :group 'iorg-projects
   :type 'plist)
 
+(defcustom iorg-projects-
+
 ;;; Variables 
 (defvar iorg-projects-plantuml-diagram-type-repexp
 (concat "<\\(soa\\|csa\\|dcm\\)>")

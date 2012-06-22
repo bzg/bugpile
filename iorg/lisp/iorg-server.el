@@ -75,28 +75,28 @@
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
-(defun* iorg-server-launch (project &allow-other-keys)
+
+(defun iorg-server-launch
+  (project &optional host port docroot &rest config)
   "Launch the elnode server which will serve PROJECT.
 
 PROJECT must be a predefined project in customisation variable
 'iorg-projects-config', from which configuration is read. 
 
-An alist of additional project configuration variables in
-the ((:key1 . value1) (:key2 value2)...) format can be given as
-other keys that override their counterparts in
-'iorg-projects-config'. Any keys that do not have a counterpart
-in 'iorg-projects-config' are simply ignored."
+If optional arguments HOST, PORT and DOCROOT are given, they
+override the values from 'iorg-projects-config'.
+
+CONFIG is an alist of additional project configuration variables
+in the ((:key1 . value1) (:key2 value2)...) format that override
+their counterparts in 'iorg-projects-config'"
 
   (interactive "DProject: ")
-  ;; (apply
-  ;;  (lambda (key)
-  ;;    (and (member key iorg-projects-config)
 
-  (message  "%s" (apply cdr other-keys)))
+  (elnode-start
+   'iorg-server-dispatcher-handler
+   :port port :host "localhost"))
 
-          ;; (elnode-start
-          ;;  'iorg-server-dispatcher-handler
-          ;;  :host proj-host :port proj-port :docroot proj-docroot))
+
 
 (defun iorg-initialize-iorg-server-handler (httpcon)
   "Serves the start-page of the 'simple' app"

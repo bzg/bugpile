@@ -1,4 +1,4 @@
-;;; iorg-server -- elnode handlers and such for handling web POST/GET requests
+;;; iorg-controller -- elnode handlers and such for handling web POST/GET requests
 
 (require 'org)
 (require 'elnode)
@@ -20,22 +20,22 @@
   :group 'org
   :group 'elnode)
 
-(defgroup iorg-server nil
+(defgroup iorg-controller nil
   "Elnode handlers for handling web request."
-  :tag "iOrg-Server"
+  :tag "iorg-controller"
   :group 'iorg)
 
-(defcustom iorg-server-load-hook nil
-  "Hook that is run after iorg-server.el has been loaded."
-  :group 'iorg-server
+(defcustom iorg-controller-load-hook nil
+  "Hook that is run after iorg-controller.el has been loaded."
+  :group 'iorg-controller
   :type 'hook)
 
 ;; Constants
-(defconst iorg-server-dir
+(defconst iorg-controller-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
-  "The directory of iorg-server.el in canonical form")
+  "The directory of iorg-controller.el in canonical form")
 
-(defconst iorg-server-urls
+(defconst iorg-controller-urls
   '(("^$"      . iorg-initialize-simple-handler)
     ("^edit/$" . iorg-change-state-handler)
     ("^send/$" . iorg-change-state-handler)
@@ -53,20 +53,20 @@
 
 
 
-(defun iorg-server-dispatcher-handler (httpcon)
-  "Dispatch requests to the 'iorg-server' app"
-  (elnode-log-access "iorg-server" httpcon)
-  (elnode-dispatcher httpcon iorg-server-urls))
+(defun iorg-controller-dispatcher-handler (httpcon)
+  "Dispatch requests to the 'iorg-controller' app"
+  (elnode-log-access "iorg-controller" httpcon)
+  (elnode-dispatcher httpcon iorg-controller-urls))
 
-(defun iorg-server-postprocess (transc-str back-end comm-chan)
+(defun iorg-controller-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
   (with-temp-buffer
     (insert transc-str)
     (goto-char (point-min))
     (while (and
-            (re-search-forward iorg-server-todo-regexp nil t)
-            (re-search-forward iorg-server-outline-text-regexp nil t))
+            (re-search-forward iorg-controller-todo-regexp nil t)
+            (re-search-forward iorg-controller-outline-text-regexp nil t))
       (goto-char (match-beginning 0))
       (insert
        (concat
@@ -76,7 +76,7 @@
     (buffer-substring-no-properties (point-min) (point-max))))
 
 
-(defun iorg-server-launch
+(defun iorg-controller-launch
   (project &optional host port docroot &rest config)
   "Launch the elnode server which will serve PROJECT.
 
@@ -99,13 +99,13 @@ their counterparts in 'iorg-projects-config'"
         (error (concat "Project not registered in customizable "
                        "variable 'iorg-projects-config'"))
       (elnode-start
-       'iorg-server-dispatcher-handler
+       'iorg-controller-dispatcher-handler
        :host (or host (cdr (assoc :host proj-config)))
        :port (or port (cdr (assoc :port proj-config)))
        ;;:docroot (or docroot (cdr (assoc :port proj-config)))
        ))))
 
-(defun iorg-initialize-iorg-server-handler (httpcon)
+(defun iorg-initialize-iorg-controller-handler (httpcon)
   "Serves the start-page of the 'simple' app"
   (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
 
@@ -116,14 +116,14 @@ their counterparts in 'iorg-projects-config'"
   (let ((params (elnode-http-params httpcon)))
     (message "These are the http-params: \n %s" params)
     (with-current-buffer
-        (find-file (expand-file-name "simple.org" iorg-server-dir))
+        (find-file (expand-file-name "simple.org" iorg-controller-dir))
       (save-excursion
         (iorg--params-find-entry params)
         (org-todo 'done))
       (save-buffer)
       ;(kill-buffer (current-buffer))
       )
-    (iorg-initialize-iorg-server-handler httpcon)))
+    (iorg-initialize-iorg-controller-handler httpcon)))
 
 
 ;; (defun iorg-edit-headline-handler (httpcon)
@@ -133,14 +133,14 @@ their counterparts in 'iorg-projects-config'"
 ;;   (let ((params (elnode-http-params httpcon)))
 ;;     (message "These are the http-params: \n %s" params)
 ;;     (with-current-buffer
-;;         (find-file (expand-file-name "simple.org" iorg-server-dir))
+;;         (find-file (expand-file-name "simple.org" iorg-controller-dir))
 ;;       (save-excursion
 ;;         ;; (iorg--params-find-entry params)
 ;;         ;; (org-todo 'done))
 ;;       (save-buffer)
 ;;       ;(kill-buffer (current-buffer))
 ;;       )
-;;     (iorg-initialize-iorg-server-handler httpcon))))
+;;     (iorg-initialize-iorg-controller-handler httpcon))))
   
 
 (defun iorg--get-outline-level (param-list)
@@ -174,7 +174,7 @@ in the Org file on that level."
         (with-current-buffer
             (if (and file (file-exists-p file))
                 (find-file file)
-             (find-file (expand-file-name "simple.org" iorg-server-dir)))
+             (find-file (expand-file-name "simple.org" iorg-controller-dir)))
           (org-check-for-org-mode)
           (save-restriction
             (widen)
@@ -192,11 +192,11 @@ in the Org file on that level."
 
 (defun iorg--org-to-html (org-file)
   "Export ORG-FILE to html and return the expanded filename"
-  (if (not (file-exists-p (expand-file-name org-file iorg-server-dir)))
+  (if (not (file-exists-p (expand-file-name org-file iorg-controller-dir)))
       (error "File doesn't exist")
     (save-window-excursion
       (with-current-buffer
-          (find-file (expand-file-name org-file iorg-server-dir))
+          (find-file (expand-file-name org-file iorg-controller-dir))
         (and
          (org-check-for-org-mode)
          (org-export-to-file
@@ -205,7 +205,7 @@ in the Org file on that level."
            (concat
             (file-name-sans-extension
              (file-name-nondirectory org-file))
-            ".html") iorg-server-dir )))))))
+            ".html") iorg-controller-dir )))))))
 
 
 (defun iorg-404-handler (httpcon)
@@ -215,7 +215,7 @@ in the Org file on that level."
     (elnode-log-access "simple" httpcon)
     (error "iorg: 404 handler invoked")))
 
-(provide 'iorg-server)
+(provide 'iorg-controller)
 
 
 
@@ -223,18 +223,18 @@ in the Org file on that level."
 ; -----------------------------------
 
 
-(defun iorg-server-static-export-handler (httpcon file)
+(defun iorg-controller-static-export-handler (httpcon file)
   "Exports an Org file to static html"
   (elnode-send-file httpcon (iorg--org-to-html file 'STATIC)))
 
 
 (defun iorg--org-to-html (org-file &optional STATIC)
   "Export ORG-FILE to html and return the expanded filename. If STATIC is non nil, export to static html, otherwise use the iOrg exporter"
-  (if (not (file-exists-p (expand-file-name org-file iorg-server-dir)))
+  (if (not (file-exists-p (expand-file-name org-file iorg-controller-dir)))
       (error "File doesn't exist")
     (save-window-excursion
       (with-current-buffer
-          (find-file (expand-file-name org-file iorg-server-dir))
+          (find-file (expand-file-name org-file iorg-controller-dir))
         (and
          (org-check-for-org-mode)
          (org-export-to-file
@@ -243,9 +243,9 @@ in the Org file on that level."
            (concat
             (file-name-sans-extension
              (file-name-nondirectory org-file))
-            ".html") iorg-server-dir )))))))
+            ".html") iorg-controller-dir )))))))
 
 
 
 
-(provide 'iorg-server)
+(provide 'iorg-controller)

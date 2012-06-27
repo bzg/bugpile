@@ -2,4 +2,7 @@
 ;;; POST/GET requests
 
 
+(defvar bugpile-server-docroot-handler nil)
+
+
 (provide 'bugpile-server)

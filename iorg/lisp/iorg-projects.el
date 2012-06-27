@@ -2,15 +2,15 @@
 
 ;;; Require other packages
 
-(eval-when-compile
-  (require 'cl)
-;;   (require 'gnus-sum)
-  )
-
 (require 'org)
 (require 'ob-tangle)
 (require 'elnode)
 (require 'vc)
+
+;; (eval-when-compile
+;;   (require 'cl)
+;;   )
+
 
 ;;; Other stuff we need
 
@@ -44,42 +44,89 @@
   :group 'iorg-projects
   :type 'plist)
 
+
+(defun iorg-projects--get-docroot (project)
+  "Return the normalized directory name of PROJECTs document root."
+  (if (not (and (non-empty-string-p project)
+                (assoc project iorg-projects-config)))
+      (error (concat "Project not registered in customizable "
+                     "variable 'iorg-projects-config'"))
+    (concat (iorg-server-(cdr (assoc :dir iorg-projects-config
+                        (cdr (assoc project iorg-projects-config))))
+            (
+
+
+
+
+
+
 ;; FIXME make directory names more generic/portable for multi-person
 ;; projects on multiple platforms
 (defcustom iorg-projects-config
-  '(("project" . "bugpile")
-    ("dir" . "~/git")
-    ("host" . "localhost")
-    ("port" . "8008")
-    ("docroot" . "docroot")
-    ("model" . "db")
-    ("view" . "view") 
-    ("controller" . "server")
-    ("persistence" . "objects")
-    ("test" . "test")
-    ("doc" . "doc")
-    ("urls" . "alist of server-urls")) ; FIXME alist needed, no string
-  
-  "Alist of name/value pairs that define an iOrg project. 
+  '(("bugpile" . ((:dir . "~/git/bugpile/")
+                  (:host . "localhost")
+                  (:port . "8008")
+                  (:docroot . "docroot")
+                  (:model . "db")
+                  (:view . "view") 
+                  (:controller . "server")
+                  (:persistence . "objects")
+                  (:test . "test")
+                  (:doc . "doc")))
+    ("test" . ((:dir . "~/git/test/")
+               (:host . "localhost")
+               (:port . "8088")
+               (:docroot . "docroot")
+               (:model . "model")
+               (:view . "view") 
+               (:controller . "controller")
+               (:persistence . "objects")
+               (:test . "test")
+               (:doc . "doc"))))
 
-PROJECT defines the project name, DIR the parent directory of the
-project, DOCROOT the webserver root directory, MODEL, VIEW,
-CONTROLLER the directories were the related elisp files are
-stored, TEST and DOC the directories for tests and documentation
-and PERSISTENCE the directory for Org files used as data storage.
+
+  
+  "Alist of iOrg projects with configuration. 
+
+The project name is used as a key, project configuration as an
+alist for that key. DIR defines the directory of the project,
+DOCROOT the webserver root directory, MODEL, VIEW, CONTROLLER the
+directories were the related elisp and Org files are stored, TEST
+and DOC the directories for tests and documentation and
+PERSISTENCE the directory for Org files used as data storage.
 Thus, the projects view directory would be defined as
-'DIR/PROJECT/VIEW/' m(e.g. ~/git/bugpile/view), the projects
-ocontroller directory as 'DIR/PROJECT/CONTROLLER/'(e.g.
-~/git/bugpile/server/).
+'DIR/VIEW/' (e.g. ~/git/bugpile/view), the projects controller
+directory as 'DIR/CONTROLLER/'(e.g. ~/git/bugpile/server/).
 
 HOST and PORT are used to configure the projects elnode webserver
 as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
 
   :group 'iorg-projects
   :type '(alist :key-type string
-                :value-type string))
+                :value-type alist))
 
 
+(defcustom iorg-projects-urls
+  '(("bugpile" . (("^$"      . iorg-initialize-simple-handler)
+                  ("^edit/$" . iorg-change-state-handler)
+                  ("^send/$" . iorg-change-state-handler)
+                  ("^reset/$" . iorg-edit-headline-handler)))
+    ("test" . (("^$"      . iorg-initialize-simple-handler)
+               ("^edit/$" . iorg-change-state-handler)
+               ("^send/$" . iorg-change-state-handler)
+               ("^reset/$" . iorg-edit-headline-handler))))
+
+  
+  "Alist of iOrg projects with urls. 
+
+The project name is used as a key, project urls as an alist for
+that key. Each key in that alist represents an url, the
+associated value a function that handles http-requests to that
+url."
+
+  :group 'iorg-projects
+  :type '(alist :key-type string
+                :value-type alist))
  
 
 ;;; Variables 

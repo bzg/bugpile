@@ -91,12 +91,19 @@ in the ((:key1 . value1) (:key2 value2)...) format that override
 their counterparts in 'iorg-projects-config'"
 
   (interactive "DProject: ")
-
-  (elnode-start
-   'iorg-server-dispatcher-handler
-   :port port :host "localhost"))
-
-
+  (let* ((proj (file-name-nondirectory
+                (file-name-as-directory
+                 project)))
+         (proj-config (assoc proj iorg-projects-config)))
+    (if (not (assoc proj iorg-projects-config))
+        (error (concat "Project not registered in customizable "
+                       "variable 'iorg-projects-config'"))
+      (elnode-start
+       'iorg-server-dispatcher-handler
+       :host (or host (cdr (assoc :host proj-config)))
+       :port (or port (cdr (assoc :port proj-config)))
+       ;;:docroot (or docroot (cdr (assoc :port proj-config)))
+       ))))
 
 (defun iorg-initialize-iorg-server-handler (httpcon)
   "Serves the start-page of the 'simple' app"

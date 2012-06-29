@@ -63,9 +63,9 @@
 ;; FIXME make directory names more generic/portable for multi-person
 ;; projects on multiple platforms
 (defcustom iorg-projects-config
-  '(("bugpile" . ((:dir . "~/git/bugpile/")
+  '(("test" . ((:dir . "~/git/test/")
                   (:host . "localhost")
-                  (:port . "8008")
+                  (:port . "8088")
                   (:docroot . "docroot")
                   (:model . "db")
                   (:view . "view") 
@@ -73,9 +73,9 @@
                   (:persistence . "objects")
                   (:test . "test")
                   (:doc . "doc")))
-    ("test" . ((:dir . "~/git/test/")
+    ("bugpile" . ((:dir . "~/git/bugpile/")
                (:host . "localhost")
-               (:port . "8088")
+               (:port . "8008")
                (:docroot . "docroot")
                (:model . "model")
                (:view . "view") 

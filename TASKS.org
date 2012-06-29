@@ -30,6 +30,11 @@ should be exported using iorg-html.
 ("project-dir" . (expand-file-name ...))
 #+end_src
 
+#+begin_quote Eric
+Yes, with =defcustom= and =defvar= you can use arbitrary code to
+return the value to be stored in the defined symbol.
+#+end_quote
+
 2. How to read and write defcustoms?
 see iorg-projects.el
 
@@ -50,6 +55,12 @@ Just treat the defcustom like every other alist (use assoc and append
 e.g.) or are there special considereations because its a defcustom
 (like customize-set-variable or customize-option e.g.)?
 
+#+begin_quote Eric
+No special considerations, defcustom variables are just like any other
+variables except that the Emacs customization interface will be
+available for users who want to change the variable's values.
+#+end_quote
+
 What, if I actually want to customize several projects in that
 variable, I want a key "project1" and then a alist of values for that
 project, and then another key "project2" and then another alist of
@@ -61,10 +72,26 @@ Like this:  (?)
 
 iorg-server.el or rather iorg-projects.el? rather iorg-server.el?
 
+#+begin_quote Eric
+I don't know that a *single* key file is required.  You could add a
+main =iorg.el= file which =requires= all of the libraries and then
+runs =(provide 'iorg)=.
+#+end_quote
+
 4. How to write (interactive ...) 
 
 when there are &optinal and &rest args - ask for the optional values
 or not?
+
+#+begin_quote Eric
+The interactive directive is smart about interacting with &optional
+arguments.  If the argument is supplied then it will be used, if the
+argument is not supplied, and the function is run interactively, then
+the interactive directive will try to supply a value.  For more
+information run (elisp-index-search "interactive"), or just run
+elisp-index-search and the type in "interactive" interactively.  The
+elisp-index-search function exemplifies this behavior.
+#+end_quote
 
 #+begin_src emacs-lisp
 (defcustom iorg-projects-config

@@ -44,28 +44,6 @@
   :group 'iorg-projects
   :type 'plist)
 
-
-(defun iorg-projects--get-project-info (project key)
-  "Return the value of KEY for PROJECT."
-  (if (not (and (non-empty-string-p project)
-                (assoc project iorg-projects-config)))
-      (error (concat "Project not registered in customizable "
-                     "variable 'iorg-projects-config'"))
-    (cond 
-     ((member
-       key '(:docroot :logiv :view :controller :objects :doc :test))
-      (iorg-projects--normalize-existing-dir-name
-       (concat
-        (iorg-projects--normalize-existing-dir-name
-         (cdr (assoc :dir (cdr (assoc project iorg-projects-config)))))
-        (cdr (assoc key (cdr (assoc project iorg-projects-config)))))))
-     ((or (member key '(:dir :host :port))
-          (assoc key (cdr (assoc project iorg-projects-config))))
-      (cdr (assoc key (cdr (assoc project iorg-projects-config)))))
-     (t (error "KEY not found or wrong format - missing leading colon?")))))
-
-
-
 ;; FIXME make directory names more generic/portable for multi-person
 ;; projects on multiple platforms
 (defcustom iorg-projects-config
@@ -213,6 +191,41 @@ gathered from the iorg-projects-config.org file."
 (defun iorg-projects--max-numbering-unnamed-projects ()
   "Return the highest numbering of unnamed iOrg projects."
   (nth 2 (iorg-projects--meta-data)))
+
+(defun iorg-projects--get-project-info (project key)
+  "Return the value of KEY for PROJECT."
+  (if (not (and (non-empty-string-p project)
+                (assoc project iorg-projects-config)))
+      (error (concat "Project not registered in customizable "
+                     "variable 'iorg-projects-config'"))
+    (cond 
+     ((member
+       key '(:docroot :logiv :view :controller :objects :doc :test))
+      (iorg-projects--normalize-existing-dir-name
+       (concat
+        (iorg-projects--normalize-existing-dir-name
+         (cdr (assoc :dir (cdr (assoc project iorg-projects-config)))))
+        (cdr (assoc key (cdr (assoc project iorg-projects-config)))))))
+     ((or (member key '(:dir :host :port))
+          (assoc key (cdr (assoc project iorg-projects-config))))
+      (cdr (assoc key (cdr (assoc project iorg-projects-config)))))
+     (t (error "KEY not found or wrong format - missing leading colon?")))))
+
+(defun iorg-projects--get-project-urls (project)
+  "Return the alist of url's and handlers for PROJECT."
+  (if (not (and (non-empty-string-p project)
+                (assoc project iorg-projects-urls)))
+      (error (concat "Project not registered in customizable "
+                     "variable 'iorg-projects-urls'"))
+    (cdr (assoc project iorg-projects-urls))))
+
+(defun iorg-projects--get-project-url-handler (project url)
+  "Return the handler for URL in PROJECT."
+  (and (assoc url (iorg-projects--get-project-urls project))
+       (cdr (assoc url (iorg-projects--get-project-urls project)))))
+
+
+
 
 ;;; Project management
 (defun iorg-projects--update-project-config (prop val &optional dir)

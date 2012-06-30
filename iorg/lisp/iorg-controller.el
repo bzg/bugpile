@@ -107,8 +107,14 @@ their counterparts in 'iorg-projects-config'"
 
 (defun iorg-controller-init-handler (httpcon)
   "Serves the start-page of the iOrg application"
-  (elnode-send-file httpcon (iorg--org-to-html
-                             ".org")))
+  (elnode-send-file httpcon
+                    (iorg--org-to-html
+                     (concat
+                      (iorg-projects--get-project-info
+                       
+;; TODO get actual project out of httpcon?
+;; concat project/view dir and index.org        
+                             ".org")))))
 
  (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."

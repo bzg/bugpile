@@ -60,7 +60,7 @@ No special considerations, defcustom variables are just like any other
 variables except that the Emacs customization interface will be
 available for users who want to change the variable's values.
 #+end_quote
-
+ 
 What, if I actually want to customize several projects in that
 variable, I want a key "project1" and then a alist of values for that
 project, and then another key "project2" and then another alist of

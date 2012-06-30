@@ -105,9 +105,10 @@ their counterparts in 'iorg-projects-config'"
        ;;:docroot (or docroot (cdr (assoc :port proj-config)))
        ))))
 
-(defun iorg-initialize-iorg-controller-handler (httpcon)
-  "Serves the start-page of the 'simple' app"
-  (elnode-send-file httpcon (iorg--org-to-html "simple.org")))
+(defun iorg-controller-init-handler (httpcon)
+  "Serves the start-page of the iOrg application"
+  (elnode-send-file httpcon (iorg--org-to-html
+                             ".org")))
 
  (defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."

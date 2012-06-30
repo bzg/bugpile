@@ -45,18 +45,24 @@
   :type 'plist)
 
 
-(defun iorg-projects--get-docroot (project)
-  "Return the normalized directory name of PROJECTs document root."
+(defun iorg-projects--get-project-info (project key)
+  "Return the value of KEY for PROJECT."
   (if (not (and (non-empty-string-p project)
                 (assoc project iorg-projects-config)))
       (error (concat "Project not registered in customizable "
                      "variable 'iorg-projects-config'"))
-    (concat (iorg-server-(cdr (assoc :dir iorg-projects-config
-                        (cdr (assoc project iorg-projects-config))))
-            (
-
-
-
+    (cond 
+     ((member
+       key '(:docroot :model :view :controller :persistence :doc :test))
+      (iorg-projects--normalize-existing-dir-name
+       (concat
+        (iorg-projects--normalize-existing-dir-name
+         (cdr (assoc :dir (cdr (assoc project iorg-projects-config)))))
+        (cdr (assoc key (cdr (assoc project iorg-projects-config)))))))
+     ((or (member key '(:dir :host :port))
+          (assoc key (cdr (assoc project iorg-projects-config))))
+      (cdr (assoc key (cdr (assoc project iorg-projects-config)))))
+     (t (error "KEY not found or wrong format - missing leading colon?")))))
 
 
 
@@ -107,14 +113,20 @@ as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
 
 
 (defcustom iorg-projects-urls
-  '(("bugpile" . (("^$"      . iorg-initialize-simple-handler)
-                  ("^edit/$" . iorg-change-state-handler)
-                  ("^send/$" . iorg-change-state-handler)
-                  ("^reset/$" . iorg-edit-headline-handler)))
-    ("test" . (("^$"      . iorg-initialize-simple-handler)
-               ("^edit/$" . iorg-change-state-handler)
-               ("^send/$" . iorg-change-state-handler)
-               ("^reset/$" . iorg-edit-headline-handler))))
+  '(("bugpile" . (("^$"      . iorg-controller-init-handler)
+                  ("^edit/$" . iorg-controller-edit-handler)
+                  ("^send/$" . iorg-controller-send-handler)
+                  ("^reset/$" . iorg-controller-reset-handler)))
+    ("test" .  (("^$"      . iorg-controller-init-handler)
+                  ("^edit/$" . iorg-controller-edit-handler)
+                  ("^send/$" . iorg-controller-send-handler)
+                  ("^reset/$" . iorg-controller-reset-handler))))
+
+
+               ;; (("^$" . iorg-initialize-simple-handler)
+               ;; ("^edit/$" . iorg-change-state-handler)
+               ;; ("^send/$" . iorg-change-state-handler)
+               ;; ("^reset/$" . iorg-edit-headline-handler))))
 
   
   "Alist of iOrg projects with urls. 

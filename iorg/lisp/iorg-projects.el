@@ -53,7 +53,7 @@
                      "variable 'iorg-projects-config'"))
     (cond 
      ((member
-       key '(:docroot :model :view :controller :persistence :doc :test))
+       key '(:docroot :logiv :view :controller :objects :doc :test))
       (iorg-projects--normalize-existing-dir-name
        (concat
         (iorg-projects--normalize-existing-dir-name
@@ -73,20 +73,20 @@
                   (:host . "localhost")
                   (:port . "8088")
                   (:docroot . "docroot")
-                  (:model . "db")
+                  (:logic . "db")
                   (:view . "view") 
                   (:controller . "server")
-                  (:persistence . "objects")
+                  (:objects . "objects")
                   (:test . "test")
                   (:doc . "doc")))
     ("bugpile" . ((:dir . "~/git/bugpile/")
                (:host . "localhost")
                (:port . "8008")
                (:docroot . "docroot")
-               (:model . "model")
+               (:logic . "logic")
                (:view . "view") 
                (:controller . "controller")
-               (:persistence . "objects")
+               (:objects . "objects")
                (:test . "test")
                (:doc . "doc"))))
 
@@ -113,11 +113,11 @@ as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
 
 
 (defcustom iorg-projects-urls
-  '(("bugpile" . (("^$"      . iorg-controller-init-handler)
+  '(("bugpile" . (("^$"      . bugpile-controller-init-handler)
                   ("^edit/$" . iorg-controller-edit-handler)
                   ("^send/$" . iorg-controller-send-handler)
                   ("^reset/$" . iorg-controller-reset-handler)))
-    ("test" .  (("^$"      . iorg-controller-init-handler)
+    ("test" .  (("^$"      . test-controller-init-handler)
                   ("^edit/$" . iorg-controller-edit-handler)
                   ("^send/$" . iorg-controller-send-handler)
                   ("^reset/$" . iorg-controller-reset-handler))))

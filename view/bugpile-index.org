@@ -1,0 +1,41 @@
+#+OPTIONS:    H:3 num:nil toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate hideblocks
+#+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
+#+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
+#+TITLE:      Bugpile - A Bugtracker for Org Mode
+#+AUTHOR:     Thorsten Jolitz
+#+EMAIL:      tj[at]data-driven[dot]de
+#+LANGUAGE:   en
+#+STYLE:      <style type="text/css">#outline-container-introduction{ clear:both; }</style>
+# #+LINK_UP:  http://orgmode.org/worg/org-faq.html
+#+LINK_HOME:  http://orgmode.org/worg/
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+
+# #+name: banner
+# #+begin_html
+#   <div id="subtitle" style="float: center; text-align: center;">
+#   <p>
+#   Org Mode info-page for GNU's application to  <a href="http://www.google-melange.com/gsoc/homepage/google/gsoc2012">GSoC 2012</a>
+#   </p>
+#   <p>
+#   <a
+#   href="http://www.google-melange.com/gsoc/homepage/google/gsoc2012"/>
+# <img src="../../images/gsoc/2012/beach-books-beer-60pc.png"  alt="Beach, Books
+#   and Beer"/>
+#   </a>
+#   </p>
+#   </div>
+# #+end_html
+
+/Bug-Reports and Feature-Requests for GNU Emacs Org Mode/
+
+* Tasks (Bugs and Features)
+** [[http://localhost:8008/open-new-task][Open New Task]]
+
+| How to write a good bug report    | [[http://localhost:8009/guidelines.html][guidelines]]    |
+| Report a bug or request a feature | [[http://localhost:8008/open-new-task][open new task]] |
+
+** [[http://localhost:8008/search-tasklist][Search Tasklist]]
+
+| Search and edit bug reports and feature requests |[[http://localhost:8008/search-tasklist][ search tasklist]] |

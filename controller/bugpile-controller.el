@@ -4,14 +4,14 @@
 
 ;; (defvar bugpile-controller-docroot-handler nil)
 
-(defun bugpile-controller-init-handler (httpcon)
+(defun bugpile-controller-index-handler (httpcon)
   "Serves the start-page of the Bugpile application"
   (elnode-send-file httpcon
                     (iorg--org-to-html
                      (concat
                       (iorg-projects--get-project-info
                        "bugpile" :view)
-                       "index.org"))))
+                       "bugpile-index.org"))))
 
 ;; TODO move urls from iorg to bugpile
 

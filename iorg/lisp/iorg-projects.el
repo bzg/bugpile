@@ -51,6 +51,8 @@
                   (:host . "localhost")
                   (:port . "8088")
                   (:docroot . "docroot")
+                  (:docroot-port . "8089")
+                  (:docroot-handler . "test-server-docroot-handler")
                   (:logic . "db")
                   (:view . "view") 
                   (:controller . "server")
@@ -61,6 +63,8 @@
                (:host . "localhost")
                (:port . "8008")
                (:docroot . "docroot")
+               (:docroot-port . "8009")
+               (:docroot-handler . "bugpile-controller-docroot-handler")
                (:logic . "logic")
                (:view . "view") 
                (:controller . "controller")
@@ -91,11 +95,18 @@ as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
 
 
 (defcustom iorg-projects-urls
-  '(("bugpile" . (("^$"      . bugpile-controller-init-handler)
+  '(("bugpile" . (("^$"      . bugpile-controller-index-handler)
                   ("^edit/$" . iorg-controller-edit-handler)
                   ("^send/$" . iorg-controller-send-handler)
-                  ("^reset/$" . iorg-controller-reset-handler)))
-    ("test" .  (("^$"      . test-controller-init-handler)
+                  ("^reset/$" . iorg-controller-reset-handler)
+                  ("^open-new-task/$" .
+                   bugpile-controller-open-new-task-handler)
+                  ("^search-tasklist/$" .
+                   bugpile-controller-search-tasklist-handler)
+                  ("^take-action-on-selected-tasks/$" .
+                   bugpile-controller-take-action-on-selected-tasks-handler)
+                  ))
+    ("test" .  (("^$"      . test-controller-index-handler)
                   ("^edit/$" . iorg-controller-edit-handler)
                   ("^send/$" . iorg-controller-send-handler)
                   ("^reset/$" . iorg-controller-reset-handler))))

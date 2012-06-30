@@ -35,11 +35,11 @@
   (file-name-directory (or load-file-name (buffer-file-name)))
   "The directory of iorg-controller.el in canonical form")
 
-(defconst iorg-controller-urls
-  '(("^$"      . iorg-initialize-simple-handler)
-    ("^edit/$" . iorg-change-state-handler)
-    ("^send/$" . iorg-change-state-handler)
-    ("^reset/$" . iorg-edit-headline-handler)))
+;; (defconst iorg-controller-urls
+;;   '(("^$"      . iorg-initialize-simple-handler)
+;;     ("^edit/$" . iorg-change-state-handler)
+;;     ("^send/$" . iorg-change-state-handler)
+;;     ("^reset/$" . iorg-edit-headline-handler)))
 
 ;; Variables
 
@@ -76,18 +76,18 @@
     (buffer-substring-no-properties (point-min) (point-max))))
 
 
-(defun iorg-controller-launch
-  (project &optional host port docroot &rest config)
+(defun iorg-controller-launch-project
+  (project &optional host port &rest args)
   "Launch the elnode server which will serve PROJECT.
 
 PROJECT must be a predefined project in customisation variable
 'iorg-projects-config', from which configuration is read. 
 
-If optional arguments HOST, PORT and DOCROOT are given, they
-override the values from 'iorg-projects-config'.
+If optional arguments HOST and PORT are given, they override the
+values from 'iorg-projects-config'.
 
-CONFIG is an alist of additional project configuration variables
-in the ((:key1 . value1) (:key2 value2)...) format that override
+ARGS is an alist of additional project configuration variables
+in the ((:key1 . value1) (:key2 . value2)) format that override
 their counterparts in 'iorg-projects-config'"
 
   (interactive "DProject: ")
@@ -101,12 +101,42 @@ their counterparts in 'iorg-projects-config'"
       (elnode-start
        'iorg-controller-dispatcher-handler
        :host (or host (cdr (assoc :host proj-config)))
-       :port (or port (cdr (assoc :port proj-config)))
-       ;;:docroot (or docroot (cdr (assoc :port proj-config)))
-       ))))
+       :port (or port (cdr (assoc :port proj-config)))))
+    (if args
+        (iorg-controller--serve-docroot proj proj-config args)
+      (iorg-controller--serve-docroot proj proj-config))))
 
 
- (defun iorg-change-state-handler (httpcon)
+(defun iorg-controller--serve-docroot (project proj-config &rest args)
+  "Make a webserver that serves the static files in projects's docroot.
+
+Use data from the alists PROJ-CONFIG or ARGS to configure the server."
+  (set (intern
+        (concat
+         project "-"
+         (if (and args (assoc :controller args))
+             (cdr (assoc :controller args))
+           (cdr (assoc :controller proj-config)))
+         "-docroot-handler"))
+       (elnode-webserver-handler-maker
+        (iorg-projects--get-project-info project :docroot)))
+  (elnode-start (quote (intern-soft
+                        (concat
+                         project "-"
+                         (if (and args (assoc :controller args))
+                             (cdr (assoc :controller args))
+                           (cdr (assoc :controller proj-config)))
+                         "-docroot-handler")))
+                (if (and args (assoc :docroot-port args))
+                    (string-to-int (cdr (assoc :docroot-port args)))
+                  (string-to-int (cdr (assoc :docroot-port proj-config))))
+                (if (and args (assoc :host args))
+                    (cdr (assoc :host args))
+                  (cdr (assoc :host proj-config)))))
+       
+              
+
+(defun iorg-change-state-handler (httpcon)
   "Called by the elnode form handler to update task state."
   ;; TODO: (3) handle form post data and update an Org-mode file
   (message "entering `iorg-change-state-handler'")  

@@ -90,21 +90,21 @@ ARGS is an alist of additional project configuration variables
 in the ((:key1 . value1) (:key2 . value2)) format that override
 their counterparts in 'iorg-projects-config'"
 
-  (interactive "DProject: ")
-  (let* ((proj (file-name-nondirectory
-                (file-name-as-directory
-                 project)))
-         (proj-config (assoc proj iorg-projects-config)))
-    (if (not (assoc proj iorg-projects-config))
-        (error (concat "Project not registered in customizable "
-                       "variable 'iorg-projects-config'"))
+  (interactive "sProject: ")
+  (let* ((proj-config (assoc project iorg-projects-config)))
+    (if (not (and
+              (non-empty-string-p project)
+              (assoc project iorg-projects-config)))
+        (message "%s"
+                 (concat "Project not registered in customizable "
+                         "variable 'iorg-projects-config'"))
       (elnode-start
        'iorg-controller-dispatcher-handler
        :host (or host (cdr (assoc :host proj-config)))
        :port (or port (cdr (assoc :port proj-config)))))
     (if args
-        (iorg-controller--serve-docroot proj proj-config args)
-      (iorg-controller--serve-docroot proj proj-config))))
+        (iorg-controller--serve-docroot project proj-config args)
+      (iorg-controller--serve-docroot project proj-config))))
 
 
 
@@ -114,12 +114,16 @@ their counterparts in 'iorg-projects-config'"
 Use data from the alists PROJ-CONFIG or ARGS to configure the server."
   ;; make sure all .org files in docroot have been exported to html
   ;; and the html files are up-to-date
-  (let ((docroot-files
-         (directory-files
-          (iorg-projects--get-project-info project :docroot))))
+  (let* ((docroot-dir
+         (iorg-projects--get-project-info project :docroot))
+        (docroot-files
+         (directory-files docroot-dir)))
     (mapc
      (lambda (file)
-       (and (string= (file-name-extension file) org)
+       (and (string= (file-name-extension file) "org")
+            (let ((absolute-file-name
+                   (expand-file-name
+                    file docroot-dir)))
             (unless
                 (and 
                  (member
@@ -128,7 +132,7 @@ Use data from the alists PROJ-CONFIG or ARGS to configure the server."
                  (file-newer-than-file-p
                   (concat (file-name-sans-extension file) ".html")
                   (concat (file-name-sans-extension file) ".org")))
-              (org-export-to-file 'e-html file))))
+              (org-export-to-file 'e-html absolute-file-name)))))
      docroot-files))
   ;; define the webserver handler
   (set (intern

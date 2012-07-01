@@ -4,6 +4,8 @@
 
 ;; (defvar bugpile-controller-docroot-handler nil)
 
+;; TODO abstract and move back to iorg-controller
+;; use intern and inter-soft
 (defun bugpile-controller-index-handler (httpcon)
   "Serves the start-page of the Bugpile application"
   (elnode-send-file httpcon

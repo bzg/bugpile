@@ -107,10 +107,30 @@ their counterparts in 'iorg-projects-config'"
       (iorg-controller--serve-docroot proj proj-config))))
 
 
+
 (defun iorg-controller--serve-docroot (project proj-config &rest args)
   "Make a webserver that serves the static files in projects's docroot.
 
 Use data from the alists PROJ-CONFIG or ARGS to configure the server."
+  ;; make sure all .org files in docroot have been exported to html
+  ;; and the html files are up-to-date
+  (let ((docroot-files
+         (directory-files
+          (iorg-projects--get-project-info project :docroot))))
+    (mapc
+     (lambda (file)
+       (and (string= (file-name-extension file) org)
+            (unless
+                (and 
+                 (member
+                  (concat
+                   (file-name-sans-extension file) ".html") docroot-files)
+                 (file-newer-than-file-p
+                  (concat (file-name-sans-extension file) ".html")
+                  (concat (file-name-sans-extension file) ".org")))
+              (org-export-to-file 'e-html file))))
+     docroot-files))
+  ;; define the webserver handler
   (set (intern
         (concat
          project "-"
@@ -120,6 +140,8 @@ Use data from the alists PROJ-CONFIG or ARGS to configure the server."
          "-docroot-handler"))
        (elnode-webserver-handler-maker
         (iorg-projects--get-project-info project :docroot)))
+  ;; start an elnode server that serves all the static html files
+  ;; in projects docroot 
   (elnode-start (quote (intern-soft
                         (concat
                          project "-"
@@ -133,7 +155,6 @@ Use data from the alists PROJ-CONFIG or ARGS to configure the server."
                 (if (and args (assoc :host args))
                     (cdr (assoc :host args))
                   (cdr (assoc :host proj-config)))))
-       
               
 
 (defun iorg-change-state-handler (httpcon)

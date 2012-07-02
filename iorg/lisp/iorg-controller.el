@@ -301,18 +301,19 @@ ORG-FILE is given as absolute file-name"
            (html-file
             (expand-file-name html-file-nondir org-file-dir)))           
       (if (and (member html-file-nondir dir-files)
-               (not (file-newer-than-file-p org-file html-file)))                
-          html-file)
-      (save-window-excursion
-        (with-current-buffer (find-file org-file)
-          (and
-           (org-check-for-org-mode)
-           (org-export-to-file
-            ;; TODO replace e-html with iorg
-            'e-html
-            html-file)
-           ;; TODO Erics solution
-           (kill-buffer (find-file org-file))))))))
+               (not (file-newer-than-file-p org-file html-file))                
+               html-file)
+          (save-window-excursion
+            (with-current-buffer (find-file org-file)
+              (and
+               (org-check-for-org-mode)
+               (org-export-to-file
+                ;; TODO replace e-html with iorg
+                'e-html
+                html-file)
+               ;; TODO Erics solution
+               (kill-buffer (find-file org-file))))
+            html-file)))))
 
 
 (defun iorg-404-handler (httpcon)

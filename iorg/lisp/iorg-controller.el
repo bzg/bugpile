@@ -53,11 +53,6 @@
 
 
 
-(defun iorg-controller-dispatcher-handler (httpcon)
-  "Dispatch requests to the 'iorg-controller' app"
-  (elnode-log-access "iorg-controller" httpcon)
-  (elnode-dispatcher httpcon iorg-controller-urls))
-
 (defun iorg-controller-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
   ;; TODO: (2) adding buttons to html export
@@ -124,7 +119,7 @@ their counterparts in 'iorg-projects-config'"
     ;; TODO check if (cdr (assoc ...)) is needed
     (let ((proj-config (assoc project iorg-projects-config)))
       (elnode-start
-       'iorg-controller-dispatcher-handler
+       'bugpile-controller-dispatcher-handler
        :host (or host (cdr (assoc :host proj-config)))
        :port (string-to-int
               (or port (cdr (assoc :port proj-config)))))
@@ -166,6 +161,7 @@ server."
                    (concat
                     (file-name-sans-extension absolute-file-name)
                     ".html"))
+                  ;; TODO safer solution, see Erics mail
                   (kill-buffer (find-file absolute-file-name)))))))
      docroot-files))
   ;; define the webserver handler
@@ -287,21 +283,34 @@ in the Org file on that level."
     (error "Error while going to outline entry specified in PARAM-LIST: %s " err)))
 
 (defun iorg--org-to-html (org-file)
-  "Export ORG-FILE to html and return the expanded filename"
-  (if (not (file-exists-p (expand-file-name org-file iorg-controller-dir)))
+  "Export ORG-FILE to html and return the expanded filename.
+ORG-FILE is given as absolute file-name"
+  (if (not (file-exists-p org-file))
       (error "File doesn't exist")
-    (save-window-excursion
-      (with-current-buffer
-          (find-file (expand-file-name org-file iorg-controller-dir))
-        (and
-         (org-check-for-org-mode)
-         (org-export-to-file
-          'e-html
-          (expand-file-name
-           (concat
-            (file-name-sans-extension
-             (file-name-nondirectory org-file))
-            ".html") iorg-controller-dir )))))))
+    (let* ((org-file-nondir-sans-ext
+            (file-name-nondirectory
+             (file-name-sans-extension org-file)))
+           (org-file-dir
+            (file-name-directory org-file))
+           (dir-files
+            (directory-files org-file-dir))
+           (html-file-nondir
+            (concat org-file-nondir-sans-ext ".html"))
+           (html-file
+            (expand-file-name html-file-nondir org-file-dir)))           
+      (if (and (member html-file-nondir dir-files)
+               (not (file-newer-than-file-p org-file html-file)))                
+          html-file)
+      (save-window-excursion
+        (with-current-buffer (find-file org-file)
+          (and
+           (org-check-for-org-mode)
+           (org-export-to-file
+            ;; TODO replace e-html with iorg
+            'e-html
+            html-file)
+           ;; TODO Erics solution
+           (kill-buffer (find-file org-file))))))))
 
 
 (defun iorg-404-handler (httpcon)

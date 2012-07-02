@@ -101,7 +101,8 @@ their counterparts in 'iorg-projects-config'"
       (elnode-start
        'iorg-controller-dispatcher-handler
        :host (or host (cdr (assoc :host proj-config)))
-       :port (or port (cdr (assoc :port proj-config)))))
+       :port (string-to-int
+              (or port (cdr (assoc :port proj-config))))))
     (if args
         (iorg-controller--serve-docroot project proj-config args)
       (iorg-controller--serve-docroot project proj-config))))
@@ -111,7 +112,7 @@ their counterparts in 'iorg-projects-config'"
 (defun iorg-controller--serve-docroot (project proj-config &rest args)
   "Make a webserver that serves the static files in projects's docroot.
 
- Use data from the alists PROJ-CONFIG or ARGS to configure the server."
+ Use data from the alists PROJ-CONFIG or ARGS to configure the server." 
   ;; make sure all .org files in docroot have been exported to html
   ;; and the html files are up-to-date
   (let* ((docroot-dir
@@ -130,8 +131,8 @@ their counterparts in 'iorg-projects-config'"
                     (concat
                      (file-name-sans-extension file) ".html") docroot-files)
                    (not (file-newer-than-file-p
-                    (concat (file-name-sans-extension file) ".org")
-                    (concat (file-name-sans-extension file) ".html"))))  
+                         (concat (file-name-sans-extension file) ".org")
+                         (concat (file-name-sans-extension file) ".html"))))  
                 (with-current-buffer
                     (find-file absolute-file-name)
                   (org-export-to-file
@@ -153,19 +154,28 @@ their counterparts in 'iorg-projects-config'"
         (iorg-projects--get-project-info project :docroot)))
   ;; start an elnode server that serves all the static html files
   ;; in projects docroot 
-  (elnode-start (intern-soft
-                 (concat
-                  project "-"
-                  (if (and args (assoc :controller args))
-                      (cdr (assoc :controller args))
-                    (cdr (assoc :controller proj-config)))
-                  "-docroot-handler"))
-                :port (if (and args (assoc :docroot-port args))
-                          (string-to-int (cdr (assoc :docroot-port args)))
-                        (string-to-int (cdr (assoc :docroot-port proj-config))))
-                :host  (if (and args (assoc :host args))
-                           (cdr (assoc :host args))
-                         (cdr (assoc :host proj-config)))))
+  (eval
+   `(elnode-start
+     ,(intern-soft
+       (concat
+        project "-"
+        (if (and args (assoc :controller args))
+            (cdr (assoc :controller args))
+          (cdr (assoc :controller proj-config)))
+        "-docroot-handler"))
+     ;; (elnode-start (intern-soft
+     ;;                (concat
+     ;;                 project "-"
+     ;;                 (if (and args (assoc :controller args))
+     ;;                     (cdr (assoc :controller args))
+     ;;                   (cdr (assoc :controller proj-config)))
+     ;;                 "-docroot-handler"))
+     :port (if (and args (assoc :docroot-port args))
+               (string-to-int (cdr (assoc :docroot-port args)))
+             (string-to-int (cdr (assoc :docroot-port proj-config))))
+     :host  (if (and args (assoc :host args))
+                (cdr (assoc :host args))
+              (cdr (assoc :host proj-config))))))
 
               
 

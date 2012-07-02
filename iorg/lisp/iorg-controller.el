@@ -75,6 +75,30 @@
         "</form>")))
     (buffer-substring-no-properties (point-min) (point-max))))
 
+(defun iorg-controller-stop-project-servers (project)
+  "Stop both elnode servers started when PROJECT was launched.
+
+Each project is started with one elnode server handling the
+http-requests during user interaction, and a second elnode server
+serving all static html files in PROJECTs docroot. Host and port
+for both servers are defined in 'iorg-projects-config'. This
+function looks up the project information and stops both
+servers."
+  (interactive "sProject: ")
+  (if (not (and
+            (non-empty-string-p project)
+            (assoc project iorg-projects-config)))
+      (message "%s"
+               (concat "Project not registered in customizable "
+                       "variable 'iorg-projects-config'"))
+    (let ((proj-config (assoc project iorg-projects-config)))
+      (elnode-stop
+       (string-to-int
+        (cdr (assoc :port proj-config))))
+      (elnode-stop
+       (string-to-int
+        (cdr (assoc :docroot-port proj-config)))))))
+
 
 (defun iorg-controller-launch-project
   (project &optional host port &rest args)
@@ -91,28 +115,30 @@ in the ((:key1 . value1) (:key2 . value2)) format that override
 their counterparts in 'iorg-projects-config'"
 
   (interactive "sProject: ")
-  (let* ((proj-config (assoc project iorg-projects-config)))
-    (if (not (and
-              (non-empty-string-p project)
-              (assoc project iorg-projects-config)))
-        (message "%s"
-                 (concat "Project not registered in customizable "
-                         "variable 'iorg-projects-config'"))
+  (if (not (and
+            (non-empty-string-p project)
+            (assoc project iorg-projects-config)))
+      (message "%s"
+               (concat "Project not registered in customizable "
+                       "variable 'iorg-projects-config'"))
+    ;; TODO check if (cdr (assoc ...)) is needed
+    (let ((proj-config (assoc project iorg-projects-config)))
       (elnode-start
        'iorg-controller-dispatcher-handler
        :host (or host (cdr (assoc :host proj-config)))
        :port (string-to-int
-              (or port (cdr (assoc :port proj-config))))))
-    (if args
-        (iorg-controller--serve-docroot project proj-config args)
-      (iorg-controller--serve-docroot project proj-config))))
+              (or port (cdr (assoc :port proj-config)))))
+      (if args
+          (iorg-controller--serve-docroot project proj-config args)
+        (iorg-controller--serve-docroot project proj-config)))))
 
 
 
 (defun iorg-controller--serve-docroot (project proj-config &rest args)
-  "Make a webserver that serves the static files in projects's docroot.
+  "Make a webserver serving static files in projects's docroot.
 
- Use data from the alists PROJ-CONFIG or ARGS to configure the server." 
+Use data from the alists PROJ-CONFIG or ARGS to configure the
+server."
   ;; make sure all .org files in docroot have been exported to html
   ;; and the html files are up-to-date
   (let* ((docroot-dir

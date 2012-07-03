@@ -1,13 +1,11 @@
 #+Title: The abstract class definition for 'html' 
 
 *  html                                                    :abstract:bar:
-** class
   :PROPERTIES:
   :iorg-super: object
   :html-edit_ALL: link button    
-  :END:
-** instance
-  :PROPERTIES:
+  :html-headline_forms_ALL: all notext todo text tag
+  :html-headline-forms: notext
   :html-index-action:   nil
   :html-edit-action:    nil
   :html-send-action:    nil

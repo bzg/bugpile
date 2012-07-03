@@ -1,14 +1,7 @@
 #+Title: The abstract class definition for 'object' 
 
 * object                                                       :abstract:bar:
-** class
   :PROPERTIES:
   :iorg-super: root
-  :iorg-headline_ALL: all todo text tag
+  :iorg-id:  nil
   :END:
-** instance
-   :PROPERTIES:
-   :iorg-headline: all
-   :END:
-
-     

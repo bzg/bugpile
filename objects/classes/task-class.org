@@ -1,16 +1,13 @@
 #+Title: The class definition for a 'task' 
 
-* TODO Simple                                                      :bar:
+* TODO task                                                             :bar:
   :PROPERTIES:
   :iorg-super: html
-  :html-index-action:   http://localhost:8008/
-  :html-edit-action:     http://localhost:8008/edit/
-  :html-send-action:     http://localhost:8008/send/
-  :html-reset-action:    http://localhost:8008/reset/
-  :html-edit: link    
-  :html-edit-value: Edit
-  :html-send-button: Submit
-  :html-reset-button: Reset
+  :task-type_ALL: bug feature
+  :task-priority_ALL: low medium high urgent
+  :task-type: bug
+  :task-author: nil
+  :task-priority: medium
   :END:
 
      

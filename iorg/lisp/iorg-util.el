@@ -1,10 +1,9 @@
 ;;;; iorg-util.el --- collection of utility functions for iOrg
 
+;;;; Requirements
 
 ;;;; Variables
-
 ;;; Consts
-
 ;;; Vars
 
 ;; (defvar iorg-base
@@ -21,8 +20,11 @@
 ;;; Customs
 
 ;;;; Functions
+;;; Function Declarations
+;;; Helper Functions 
+;;; Public Functions (interactive)
 
-;;; New Generic Emacs Functionality
+;;; Public Functions (non-interactive - generic emacs functions)
 (defun assoc-proc (proc list)
   "Like `assoc' but return the first pair whose `car' matches PROC."
   (dolist (pair list)
@@ -61,7 +63,7 @@
 (defun file-contents (path)
   (while-visiting-file path (buffer-string)))
 
-;;; Generic iOrg Utility Functions
+;;; Public Functions (non-interactive - iorg utility functions)
 
 (defun iorg-util-goto-first-entry (&optional file)
   "Move point to the beginning of line of the first entry in the

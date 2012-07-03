@@ -156,9 +156,7 @@ url."
 (declare-function iorg-util-goto-last-entry "iorg-logic" nil)
 (declare-function iorg-util-goto-first-entry "iorg-logic" nil)
 
-;;; Private functions
-
-;; iOrg meta data
+;;; Private functions (iOrg meta data)
 
 (defun iorg-projects--update-iorg-config (prop val)
   "Update property PROP with value VAL in the global iOrg
@@ -237,7 +235,7 @@ gathered from the iorg-projects-config.org file."
        (cdr (assoc url (iorg-projects--get-project-urls project)))))
 
 
-;; Project management
+;;; Helper Functions (project management)
 
 (defun iorg-projects--update-project-config (prop val &optional dir)
   "Update the iOrg project configuration of project in present
@@ -323,9 +321,7 @@ iOrg project directory structure, nil otherwise."
       ((not (member "view" dir-files)))))))
 
 
-;;; Public functions
-
-;; Project management 
+;;; Public Functions (interactive - project management)
 
 (defun iorg-projects-initialize-project (&optional dir name)
   "Copy the iOrg project template into DIR and rename the project."
@@ -405,11 +401,6 @@ start the elnode server when SERVER is non-nil"
     (message "Not a valid directory name")))
 
 
-;;; Key bindings
-;;; Documentation
-;;; Miscellaneous stuff
-;;; Integration with and fixes for other packages
-;;; Experimental code
-;;; Finish up
+;;; Public Functions (non-interactive)              
 
 (provide 'iorg-projects)

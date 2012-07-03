@@ -8,7 +8,7 @@
 
 ;;; Helper Functions
 
-;;; Public Functions 
+;;; Public Functions (interactive)
 (defun iorg-logic-new-object (project class)
   "Instantiate a new object of CLASS in PROJECT.
 
@@ -51,5 +51,7 @@ each object) from all their superclasses."
                     (point) iorg-super))
                   "root")))))))
                
+
+;;; Public Functions (non-interactive)
 
 (provide 'iorg-logic)

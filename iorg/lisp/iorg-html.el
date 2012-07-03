@@ -1,13 +1,17 @@
-;;; iorg-html -- basic back-end for exporting Org files to interactive HTML
+;;;; iorg-html -- basic back-end for exporting Org files to interactive HTML
 
+;;;; Requirements
+
+;;; Require Packages
 (require 'org-export)
 (require 'org-element)
 (require 'org-e-html)
 (require 'iorg-util)
 
-;;;; Define derived backend
+;;; Other Stuff
 
-;; Enables e.g. (org-export-to-file 'iorg-html ...)
+;; Define iorg-html as derived backend for org-export. Enables e.g.
+;; (org-export-to-file 'iorg-html ...)
 (org-export-define-derived-backend iorg-html e-html
   :translate-alist ((headline . iorg-html-headline)
                     (section . iorg-html-section)
@@ -19,14 +23,19 @@
                     ))
 
 
-;;;; Customisation group
+;;;; Variables
+;;; Consts
+
+;;; Vars
+(defvar iorg-html-property-prefix-regexp "^[^-]+"
+  "Regexp that matches any prefix of an Org headline property key.")
+
+;;; Customs
 
 (defgroup iorg-html nil
   "Options for exporting Org files to dynamic html."
   :tag "Org iOrg Export"
   :group 'org-iorg)
-
-;;;; Customisation variables
 
 (defcustom iorg-html-property-key-prefix-plist
   '(:export ("html" "bugpile") :noexport  nil) 
@@ -34,43 +43,140 @@
   :group 'iorg-html
   :type 'plist)
  
-
-;;;; Variables
-
-(defvar iorg-html-property-prefix-regexp "^[^-]+"
-  "Regexp that matches any prefix of an Org headline property key.")
+;;;; Functions
+;;; Function Declarations
 
 
-;;; Headline
+;;; Helper Functions (general)
+(defun iorg-html--read-from-input-file (file beg end)
+  "Return buffer substring between characters BEG and END from Org input file FILE, given as absolute file-name."
+  (if (not (and
+            (file-exists-p file)
+            (number-or-marker-p beg)
+            (number-or-marker-p end)))
+      (error: "File doesn't exists or START and END arguments are not numbers or markers")
+    (with-current-buffer (find-file file)
+      (save-excursion
+        (save-restriction
+          (widen)
+          (buffer-substring-no-properties beg end))))))
 
-;; OBLSOLETE not needed anymore
-;; ;; Headline customization variables
-;; (defcustom iorg-html-format-headline-function nil
-;;   "Function to format headline text.
 
-;; This function will be called with 5 arguments:
-;; TODO      the todo keyword (string or nil).
-;; TODO-TYPE the type of todo (symbol: `todo', `done', nil)
-;; PRIORITY  the priority of the headline (integer or nil)
-;; TEXT      the main headline text (string).
-;; TAGS      the tags (string or nil).
+(defun iorg-html--get-org-input (element info &optional property-drawer)
+  "Return content of input Org file"
+  (let* ((input-file (plist-get info :input-file))
+         (beg (or (and property-drawer
+                       (org-element-property :end property-drawer))
+                  (org-element-property :begin element)))
+         (end (org-element-property :end element)))
+    (iorg-html--read-from-input-file input-file beg end)))
 
-;; The function result will be used in the section format string.
 
-;; As an example, one could set the variable to the following, in
-;; order to reproduce the default set-up:
+(defun iorg-html--generate-property-key-regexp (prefix)
+  "Generate a regexp that matches all Org headline properties whose keys begin with PREFIX followed by a dash '-'."
+  (if (not (non-empty-string-p prefix))
+      (error "PREFIX must be a non-empty string")
+    (format "%s-[-[:alpha:]]+" prefix)))
+  
 
-;; \(defun org-e-html-format-headline \(todo todo-type priority text tags)
-;;   \"Default format function for an headline.\"
-;;   \(concat \(when todo
-;;             \(format \"\\\\textbf{\\\\textsc{\\\\textsf{%s}}} \" todo))
-;; 	  \(when priority
-;;             \(format \"\\\\framebox{\\\\#%c} \" priority))
-;; 	  text
-;; 	  \(when tags (format \"\\\\hfill{}\\\\textsc{%s}\" tags))))"
-;;   :group 'iorg-html
-;;   :type 'function)
+;;; Helper Functions (transcode headline)
+(defun iorg-html--headline-todo (headline info)
+  "Wrap headline todo's in html select-box, reading values from the HEADLINE and INFO arguments"
+  (let* ((todo (and (plist-get info :with-todo-keywords)
+                    (let ((todo (org-element-property :todo-keyword headline)))
+                      (and todo (org-export-data todo info)))))
+         ;; (todo-type (and todo (org-element-property :todo-type headline)))
+         )
 
+    (when (and
+           todo
+           org-todo-keywords-for-agenda
+           (member todo org-todo-keywords-for-agenda))
+      (format "%s%s%s"
+              (concat "<span class=\"selectbox\">"
+                      "<select name:\"simple-todo\" size=\"1\">"
+                      ;; FIXME generate unique value
+                      "<option value=\"1\" selected>")
+              todo
+              (concat "</option>"
+                      (mapconcat
+                       (lambda (x)
+                         (format
+                          "<option>%s</option>" x))
+                       (remove todo org-todo-keywords-for-agenda) "")
+                      "</select>"
+                      "</span>")))))
+
+(defun iorg-html--headline-tags (headline info)
+  "Wrap headline tags in html text-field, reading values from the HEADLINE and INFO arguments"
+  (let* ((tags (and (plist-get info :with-tags)
+                    (org-export-get-tags headline info))))
+
+    (when tags
+      ;; FIXME handle Orgs default tags (or ban them from export)
+      (format "%s%s%s"
+              (concat "<span class=\"textfield\">"
+                      "<input type=\"text\" name=\"simple-tag\" size=\"10\""
+                      "maxlenght=\"20\" value=\"")
+              (mapconcat
+               (lambda (x)
+                 (format ":%s" x)) (remove "iorg" tags) "")
+              (concat ":\">"
+                      "</input>"
+                      "</span>")))))
+
+(defun iorg-html--headline-text (text)
+  "Wrap headline TEXT in html text-field."
+  (when text
+    (format "%s%s%s"
+            (concat "<span class=\"textfield\">"
+                    "<input type=\"text\" name=\"simple-text\" size=\"40\" "
+                    "maxlenght=\"80\" value=\"")
+            text
+            (concat "\">"
+                    "</input>"
+                    "</span>"))))
+
+
+
+;;; Public Functions (interactive)
+
+;; Exporting function
+(defun iorg-html-export-to-html
+  (&optional subtreep visible-only body-only ext-plist pub-dir)
+  "Export current buffer to a HTML file.
+
+If narrowing is active in the current buffer, only export its
+narrowed part.
+
+If a region is active, export that region.
+
+When optional argument SUBTREEP is non-nil, export the sub-tree
+at point, extracting information from the headline properties
+first.
+
+When optional argument VISIBLE-ONLY is non-nil, don't export
+contents of hidden elements.
+
+When optional argument BODY-ONLY is non-nil, only write code
+between \"<body>\" and \"</body>\".
+
+EXT-PLIST, when provided, is a property list with external
+parameters overriding Org default settings, but still inferior to
+file-local settings.
+
+When optional argument PUB-DIR is set, use it as the publishing
+directory.
+
+Return output file's name."
+  (interactive)
+  (let* ((extension (concat "." org-e-html-extension))
+	 (file (org-export-output-file-name extension subtreep pub-dir))
+	 (org-export-coding-system org-e-html-coding-system))
+    (org-export-to-file 'iorg file subtreep visible-only body-only ext-plist)))
+
+
+;;; Public Functions (non-interactive)              
 
 ;; Main headline export function
 (defun iorg-html-headline (headline contents info)
@@ -169,103 +275,7 @@ as a communication channel."
                       "</table>\n"
                       "</form>")))))
 
-
-;;; Helper Functions
-(defun iorg-html--read-from-input-file (file beg end)
-  "Return buffer substring between characters BEG and END from Org input file FILE, given as absolute file-name."
-  (if (not (and
-            (file-exists-p file)
-            (number-or-marker-p beg)
-            (number-or-marker-p end)))
-      (error: "File doesn't exists or START and END arguments are not numbers or markers")
-    (with-current-buffer (find-file file)
-      (save-excursion
-        (save-restriction
-          (widen)
-          (buffer-substring-no-properties beg end))))))
-
-
-(defun iorg-html--get-org-input (element info &optional property-drawer)
-  "Return content of input Org file"
-  (let* ((input-file (plist-get info :input-file))
-         (beg (or (and property-drawer
-                       (org-element-property :end property-drawer))
-                  (org-element-property :begin element)))
-         (end (org-element-property :end element)))
-    (iorg-html--read-from-input-file input-file beg end)))
-
-
-(defun iorg-html--generate-property-key-regexp (prefix)
-  "Generate a regexp that matches all Org headline properties whose keys begin with PREFIX followed by a dash '-'."
-  (if (not (non-empty-string-p prefix))
-      (error "PREFIX must be a non-empty string")
-    (format "%s-[-[:alpha:]]+" prefix)))
-  
-
-;;; Transcode Helpers
-(defun iorg-html--headline-todo (headline info)
-  "Wrap headline todo's in html select-box, reading values from the HEADLINE and INFO arguments"
-  (let* ((todo (and (plist-get info :with-todo-keywords)
-                    (let ((todo (org-element-property :todo-keyword headline)))
-                      (and todo (org-export-data todo info)))))
-         ;; (todo-type (and todo (org-element-property :todo-type headline)))
-         )
-
-    (when (and
-           todo
-           org-todo-keywords-for-agenda
-           (member todo org-todo-keywords-for-agenda))
-      (format "%s%s%s"
-              (concat "<span class=\"selectbox\">"
-                      "<select name:\"simple-todo\" size=\"1\">"
-                      ;; FIXME generate unique value
-                      "<option value=\"1\" selected>")
-              todo
-              (concat "</option>"
-                      (mapconcat
-                       (lambda (x)
-                         (format
-                          "<option>%s</option>" x))
-                       (remove todo org-todo-keywords-for-agenda) "")
-                      "</select>"
-                      "</span>")))))
-
-(defun iorg-html--headline-tags (headline info)
-  "Wrap headline tags in html text-field, reading values from the HEADLINE and INFO arguments"
-  (let* ((tags (and (plist-get info :with-tags)
-                    (org-export-get-tags headline info))))
-
-    (when tags
-      ;; FIXME handle Orgs default tags (or ban them from export)
-      (format "%s%s%s"
-              (concat "<span class=\"textfield\">"
-                      "<input type=\"text\" name=\"simple-tag\" size=\"10\""
-                      "maxlenght=\"20\" value=\"")
-              (mapconcat
-               (lambda (x)
-                 (format ":%s" x)) (remove "iorg" tags) "")
-              (concat ":\">"
-                      "</input>"
-                      "</span>")))))
-
-
-
-(defun iorg-html--headline-text (text)
-  "Wrap headline TEXT in html text-field."
-  (when text
-    (format "%s%s%s"
-            (concat "<span class=\"textfield\">"
-                    "<input type=\"text\" name=\"simple-text\" size=\"40\" "
-                    "maxlenght=\"80\" value=\"")
-            text
-            (concat "\">"
-                    "</input>"
-                    "</span>"))))
-
-
-
-;;; Section
-
+;; Section
 (defun iorg-html-section (section contents info &optional key-prefix-list)
   "Transcode element HEADLINE into HTML syntax.
 CONTENTS is the contents of the headline.  INFO is a plist used
@@ -354,15 +364,16 @@ is an optional list of prefix strings.
                 section info prop-drawer))))))
 
 
+;;; Public Functions (obsolete?)              
 
-;; ;;; Property drawer
+;; ;; Property drawer
 
 ;; (defun iorg-html-property-drawer
 ;;   (property-drawer contents info)
 ;;   "Transcode element PROPERTY-DRAWER into HTML syntax. CONTENTS is the contents of the paragraph. INFO is a plist used as a communication channel."
 ;;     (format "%s" ""))
  
-;; ;;; Paragraph
+;; ;; Paragraph
 
 ;; (defun iorg-html-paragraph (paragraph contents info)
 ;;   "Transcode element PARAGRAPH into HTML syntax.
@@ -414,7 +425,7 @@ is an optional list of prefix strings.
 ;;         ))))
 
  
-;; ;;; Plain List
+;; ;; Plain List
 
 ;; (defun iorg-html-plain-list (plain-list contents info)
 ;;   "Transcode element PLAIN-LIST into HTML syntax.
@@ -476,42 +487,6 @@ is an optional list of prefix strings.
 ;;                   (cond ((not (eq type 'checkbox)) "")
 ;;                         ((eq checkboxp 'on) " checked")
 ;;                         (t " unchecked"))))))))
-
- 
-;;; Exporting function
-
-(defun iorg-html-export-to-html
-  (&optional subtreep visible-only body-only ext-plist pub-dir)
-  "Export current buffer to a HTML file.
-
-If narrowing is active in the current buffer, only export its
-narrowed part.
-
-If a region is active, export that region.
-
-When optional argument SUBTREEP is non-nil, export the sub-tree
-at point, extracting information from the headline properties
-first.
-
-When optional argument VISIBLE-ONLY is non-nil, don't export
-contents of hidden elements.
-
-When optional argument BODY-ONLY is non-nil, only write code
-between \"<body>\" and \"</body>\".
-
-EXT-PLIST, when provided, is a property list with external
-parameters overriding Org default settings, but still inferior to
-file-local settings.
-
-When optional argument PUB-DIR is set, use it as the publishing
-directory.
-
-Return output file's name."
-  (interactive)
-  (let* ((extension (concat "." org-e-html-extension))
-	 (file (org-export-output-file-name extension subtreep pub-dir))
-	 (org-export-coding-system org-e-html-coding-system))
-    (org-export-to-file 'iorg file subtreep visible-only body-only ext-plist)))
 
 
 (provide 'iorg-html)

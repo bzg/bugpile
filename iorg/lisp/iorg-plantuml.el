@@ -1,6 +1,7 @@
 ;;;; iorg-plantuml.el --- transforming PlantUML into Elisp code skeletons.
 
 ;;;; Requirements
+(require 'org)
 
 ;;;; Variables
 
@@ -14,12 +15,18 @@
 
 ;;; Customs
 
-;;;; Funtions
+
+
+;;;; Functions
+
+;;; Function Declarations
+(declare-function org-goto-line "org" nil)
 
 ;;; Helper Functions
 
+;;; Public Functions (interactive)
 
-;;; Public Functions
+;; TODO make interactive
 (defun iorg-plantuml-transform-to-code (&optional file)
   "Transform all PlantUML source blocks in Org-file FILE into
 Org-mode files (with entries) and Emacs Lisp files (with
@@ -43,5 +50,6 @@ the iOrg framework."
                    (forward-line)
                    (while (not (looking-at "#+end_src")))))))))))
 
+;;; Public Functions (non-interactive)
 
 (provide 'iorg-plantuml)

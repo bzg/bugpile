@@ -8,8 +8,7 @@
 (require 'org-e-html)
 (require 'org-agenda)
 (require 'iorg-util)
-;; (require 'iorg-projects)
-;; (require 'iorg-html)
+(require 'iorg-projects)
 
 (eval-when-compile
   (require 'cl))
@@ -22,13 +21,6 @@
 (defconst iorg-controller-dir
   (file-name-directory (or load-file-name (buffer-file-name)))
   "The directory of iorg-controller.el in canonical form")
-
-;; (defconst iorg-controller-urls
-;;   '(("^$"      . iorg-initialize-simple-handler)
-;;     ("^edit/$" . iorg-change-state-handler)
-;;     ("^send/$" . iorg-change-state-handler)
-;;     ("^reset/$" . iorg-edit-headline-handler)))
-
 
 ;;; Vars
 
@@ -49,8 +41,6 @@
   :group 'iorg-controller
   :type 'hook)
 
-
-
 
 ;;;; Functions
 
@@ -58,8 +48,90 @@
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
 (declare-function org-check-for-org-mode "org-agenda" nil)
+(declare-function
+ iorg-projects--get-project-info "iorg-projects" nil)
+(declare-function iorg-util-goto-first-entry "iorg-util" nil)
 
 ;;; Helper Functions
+
+(defun iorg-controller--get-outline-level (param-list)
+  "Return level of outline-tree encoded in http-params"
+  (and
+   (listp param-list)
+   (assoc-re iorg-alist-outline-regexp param-list 2)))
+
+
+(defun iorg-controller--normalize-outline-level (outline-level)
+  "Normalize OUTLINE-LEVEL in the format \"[-[:digit:]]+\" to a
+list of numbers (as strings). The lenght of the returned list is
+equal to the number of sublevels we need to walk down in the
+outline tree, the value of each number identifies the nth-entry
+in the Org file on that level."
+(if (not
+     (and
+      (non-empty-string-p outline-level)
+      (string-match "[-[:digit:]]+" outline-level)))
+    (error "Wrong type or format of OUTLINE-LEVEL argument")
+  (delete "" (split-string outline-level "-"))))
+
+ (defun iorg-controller--params-find-entry (param-list &optional file)
+  "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
+  (condition-case err
+      (let* ((outline-level
+              (iorg-controller--get-outline-level param-list))
+             (normalized-outline-level
+              (iorg-controller--normalize-outline-level outline-level))
+             (sublevel-p nil))
+        (with-current-buffer
+            (if (and file (file-exists-p file))
+                (find-file file)
+             (find-file (expand-file-name "simple.org" iorg-controller-dir)))
+          (org-check-for-org-mode)
+          (save-restriction
+            (widen)
+            (iorg-util-goto-first-entry)
+            (mapc
+             (lambda (n)
+               (if sublevel-p
+                   (outline-next-heading))
+               (org-forward-same-level
+                (1- (string-to-number n)) "INVISIBLE-OK")
+               (unless sublevel-p
+                 (setq sublevel-p 1)))
+             normalized-outline-level))))
+    (error "Error while going to outline entry specified in PARAM-LIST: %s " err)))
+
+(defun iorg-controller--org-to-html (org-file)
+  "Export ORG-FILE to html and return the expanded filename.
+ORG-FILE is given as absolute file-name"
+  (if (not (file-exists-p org-file))
+      (error "File doesn't exist")
+    (let* ((org-file-nondir-sans-ext
+            (file-name-nondirectory
+             (file-name-sans-extension org-file)))
+           (org-file-dir
+            (file-name-directory org-file))
+           (dir-files
+            (directory-files org-file-dir))
+           (html-file-nondir
+            (concat org-file-nondir-sans-ext ".html"))
+           (html-file
+            (expand-file-name html-file-nondir org-file-dir)))           
+      (if (and (member html-file-nondir dir-files)
+               (not (file-newer-than-file-p org-file html-file))                
+               html-file)
+          (save-window-excursion
+            (with-current-buffer (find-file org-file)
+              (and
+               (org-check-for-org-mode)
+               (org-export-to-file
+                ;; TODO replace e-html with iorg
+                'e-html
+                html-file)
+               ;; TODO Erics solution
+               (kill-buffer (find-file org-file))))
+            html-file)))))
+
 
 (defun iorg-controller--serve-docroot (project proj-config &rest args)
   "Make a webserver serving static files in projects's docroot.
@@ -117,13 +189,6 @@ server."
             (cdr (assoc :controller args))
           (cdr (assoc :controller proj-config)))
         "-docroot-handler"))
-     ;; (elnode-start (intern-soft
-     ;;                (concat
-     ;;                 project "-"
-     ;;                 (if (and args (assoc :controller args))
-     ;;                     (cdr (assoc :controller args))
-     ;;                   (cdr (assoc :controller proj-config)))
-     ;;                 "-docroot-handler"))
      :port (if (and args (assoc :docroot-port args))
                (string-to-int (cdr (assoc :docroot-port args)))
              (string-to-int (cdr (assoc :docroot-port proj-config))))
@@ -132,49 +197,7 @@ server."
               (cdr (assoc :host proj-config))))))
 
 
-;;; Public Functions
-
-(defun iorg-controller-postprocess (transc-str back-end comm-chan)
-  "Add buttons to HTML export to make headlines editable."
-  ;; TODO: (2) adding buttons to html export
-  (with-temp-buffer
-    (insert transc-str)
-    (goto-char (point-min))
-    (while (and
-            (re-search-forward iorg-controller-todo-regexp nil t)
-            (re-search-forward iorg-controller-outline-text-regexp nil t))
-      (goto-char (match-beginning 0))
-      (insert
-       (concat
-        "<form action=\"http://localhost:8031/todo/\">"
-        "  <input type=\"submit\" value=\" Finish \" name=\"outline-1\">"
-        "</form>")))
-    (buffer-substring-no-properties (point-min) (point-max))))
-
-(defun iorg-controller-stop-project-servers (project)
-  "Stop both elnode servers started when PROJECT was launched.
-
-Each project is started with one elnode server handling the
-http-requests during user interaction, and a second elnode server
-serving all static html files in PROJECTs docroot. Host and port
-for both servers are defined in 'iorg-projects-config'. This
-function looks up the project information and stops both
-servers."
-  (interactive "sProject: ")
-  (if (not (and
-            (non-empty-string-p project)
-            (assoc project iorg-projects-config)))
-      (message "%s"
-               (concat "Project not registered in customizable "
-                       "variable 'iorg-projects-config'"))
-    (let ((proj-config (assoc project iorg-projects-config)))
-      (elnode-stop
-       (string-to-int
-        (cdr (assoc :port proj-config))))
-      (elnode-stop
-       (string-to-int
-        (cdr (assoc :docroot-port proj-config)))))))
-
+;;; Public Functions (interactive)
 
 (defun iorg-controller-launch-project
   (project &optional host port &rest args)
@@ -209,24 +232,50 @@ their counterparts in 'iorg-projects-config'"
         (iorg-controller--serve-docroot project proj-config)))))
 
 
+(defun iorg-controller-stop-project-servers (project)
+  "Stop both elnode servers started when PROJECT was launched.
 
-              
+Each project is started with one elnode server handling the
+http-requests during user interaction, and a second elnode server
+serving all static html files in PROJECTs docroot. Host and port
+for both servers are defined in 'iorg-projects-config'. This
+function looks up the project information and stops both
+servers."
+  (interactive "sProject: ")
+  (if (not (and
+            (non-empty-string-p project)
+            (assoc project iorg-projects-config)))
+      (message "%s"
+               (concat "Project not registered in customizable "
+                       "variable 'iorg-projects-config'"))
+    (let ((proj-config (assoc project iorg-projects-config)))
+      (elnode-stop
+       (string-to-int
+        (cdr (assoc :port proj-config))))
+      (elnode-stop
+       (string-to-int
+        (cdr (assoc :docroot-port proj-config)))))))
 
-(defun iorg-change-state-handler (httpcon)
-  "Called by the elnode form handler to update task state."
-  ;; TODO: (3) handle form post data and update an Org-mode file
-  (message "entering `iorg-change-state-handler'")  
-  (let ((params (elnode-http-params httpcon)))
-    (message "These are the http-params: \n %s" params)
-    (with-current-buffer
-        (find-file (expand-file-name "simple.org" iorg-controller-dir))
-      (save-excursion
-        (iorg--params-find-entry params)
-        (org-todo 'done))
-      (save-buffer)
-      ;(kill-buffer (current-buffer))
-      )
-    (iorg-initialize-iorg-controller-handler httpcon)))
+;;; Public Functions (non-interactive)              
+
+
+;;; Public Functions (obsolete?)              
+
+;; (defun iorg-change-state-handler (httpcon)
+;;   "Called by the elnode form handler to update task state."
+;;   ;; TODO: (3) handle form post data and update an Org-mode file
+;;   (message "entering `iorg-change-state-handler'")  
+;;   (let ((params (elnode-http-params httpcon)))
+;;     (message "These are the http-params: \n %s" params)
+;;     (with-current-buffer
+;;         (find-file (expand-file-name "simple.org" iorg-controller-dir))
+;;       (save-excursion
+;;         (iorg-controller--params-find-entry params)
+;;         (org-todo 'done))
+;;       (save-buffer)
+;;       ;(kill-buffer (current-buffer))
+;;       )
+;;     (iorg-initialize-iorg-controller-handler httpcon)))
 
 
 ;; (defun iorg-edit-headline-handler (httpcon)
@@ -238,131 +287,41 @@ their counterparts in 'iorg-projects-config'"
 ;;     (with-current-buffer
 ;;         (find-file (expand-file-name "simple.org" iorg-controller-dir))
 ;;       (save-excursion
-;;         ;; (iorg--params-find-entry params)
+;;         ;; (iorg-controller--params-find-entry params)
 ;;         ;; (org-todo 'done))
 ;;       (save-buffer)
 ;;       ;(kill-buffer (current-buffer))
 ;;       )
 ;;     (iorg-initialize-iorg-controller-handler httpcon))))
   
-
-(defun iorg--get-outline-level (param-list)
-  "Return level of outline-tree encoded in http-params"
-  (and
-   (listp param-list)
-   (assoc-re iorg-alist-outline-regexp param-list 2)))
-
-
-(defun iorg--normalize-outline-level (outline-level)
-  "Normalize OUTLINE-LEVEL in the format \"[-[:digit:]]+\" to a
-list of numbers (as strings). The lenght of the returned list is
-equal to the number of sublevels we need to walk down in the
-outline tree, the value of each number identifies the nth-entry
-in the Org file on that level."
-(if (not
-     (and
-      (iorg--stringp outline-level)
-      (string-match "[-[:digit:]]+" outline-level)))
-    (error "Wrong type or format of OUTLINE-LEVEL argument")
-  (delete "" (split-string outline-level "-"))))
-
- (defun iorg--params-find-entry (param-list &optional file)
-  "Go to the entry in the current Org buffer that is specified in the PARAM-LIST"
-  (condition-case err
-      (let* ((outline-level
-              (iorg--get-outline-level param-list))
-             (normalized-outline-level
-              (iorg--normalize-outline-level outline-level))
-             (sublevel-p nil))
-        (with-current-buffer
-            (if (and file (file-exists-p file))
-                (find-file file)
-             (find-file (expand-file-name "simple.org" iorg-controller-dir)))
-          (org-check-for-org-mode)
-          (save-restriction
-            (widen)
-            (iorg--goto-first-entry)
-            (mapc
-             (lambda (n)
-               (if sublevel-p
-                   (outline-next-heading))
-               (org-forward-same-level
-                (1- (string-to-number n)) "INVISIBLE-OK")
-               (unless sublevel-p
-                 (setq sublevel-p 1)))
-             normalized-outline-level))))
-    (error "Error while going to outline entry specified in PARAM-LIST: %s " err)))
-
-(defun iorg--org-to-html (org-file)
-  "Export ORG-FILE to html and return the expanded filename.
-ORG-FILE is given as absolute file-name"
-  (if (not (file-exists-p org-file))
-      (error "File doesn't exist")
-    (let* ((org-file-nondir-sans-ext
-            (file-name-nondirectory
-             (file-name-sans-extension org-file)))
-           (org-file-dir
-            (file-name-directory org-file))
-           (dir-files
-            (directory-files org-file-dir))
-           (html-file-nondir
-            (concat org-file-nondir-sans-ext ".html"))
-           (html-file
-            (expand-file-name html-file-nondir org-file-dir)))           
-      (if (and (member html-file-nondir dir-files)
-               (not (file-newer-than-file-p org-file html-file))                
-               html-file)
-          (save-window-excursion
-            (with-current-buffer (find-file org-file)
-              (and
-               (org-check-for-org-mode)
-               (org-export-to-file
-                ;; TODO replace e-html with iorg
-                'e-html
-                html-file)
-               ;; TODO Erics solution
-               (kill-buffer (find-file org-file))))
-            html-file)))))
-
-
-(defun iorg-404-handler (httpcon)
-  ;; TODO: This should probably actually serve a 404 page rather than
-  ;;       throwing an error
-  (progn
-    (elnode-log-access "simple" httpcon)
-    (error "iorg: 404 handler invoked")))
-
-(provide 'iorg-controller)
+;; (defun iorg-controller-postprocess (transc-str back-end comm-chan)
+;;   "Add buttons to HTML export to make headlines editable."
+;;   ;; TODO: (2) adding buttons to html export
+;;   (with-temp-buffer
+;;     (insert transc-str)
+;;     (goto-char (point-min))
+;;     (while (and
+;;             (re-search-forward iorg-controller-todo-regexp nil t)
+;;             (re-search-forward iorg-controller-outline-text-regexp nil t))
+;;       (goto-char (match-beginning 0))
+;;       (insert
+;;        (concat
+;;         "<form action=\"http://localhost:8031/todo/\">"
+;;         "  <input type=\"submit\" value=\" Finish \" name=\"outline-1\">"
+;;         "</form>")))
+;;     (buffer-substring-no-properties (point-min) (point-max))))
 
 
 
+;; (defun iorg-404-handler (httpcon)
+;;   ;; TODO: This should probably actually serve a 404 page rather than
+;;   ;;       throwing an error
+;;   (progn
+;;     (elnode-log-access "simple" httpcon)
+;;     (error "iorg: 404 handler invoked")))
 
-; -----------------------------------
-
-
-(defun iorg-controller-static-export-handler (httpcon file)
-  "Exports an Org file to static html"
-  (elnode-send-file httpcon (iorg--org-to-html file 'STATIC)))
-
-
-;; (defun iorg--org-to-html (org-file &optional STATIC)
-;;   "Export ORG-FILE to html and return the expanded filename. If STATIC is non nil, export to static html, otherwise use the iOrg exporter"
-;;   (if (not (file-exists-p (expand-file-name org-file iorg-controller-dir)))
-;;       (error "File doesn't exist")
-;;     (save-window-excursion
-;;       (with-current-buffer
-;;           (find-file (expand-file-name org-file iorg-controller-dir))
-;;         (and
-;;          (org-check-for-org-mode)
-;;          (org-export-to-file
-;;           (if STATIC 'e-html 'iorg) 
-;;           (expand-file-name
-;;            (concat
-;;             (file-name-sans-extension
-;;              (file-name-nondirectory org-file))
-;;             ".html") iorg-controller-dir )))))))
-
-
-
+;; (defun iorg-controller-static-export-handler (httpcon file)
+;;   "Exports an Org file to static html"
+;;   (elnode-send-file httpcon (iorg-controller--org-to-html file 'STATIC)))
 
 (provide 'iorg-controller)

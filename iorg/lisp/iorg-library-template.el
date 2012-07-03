@@ -1,4 +1,4 @@
-;;;; iorg-view.el --- expand Org-mode templates for export to HTML
+;;;; iorg-<<library>> -- description description description description
 
 ;;;; Requirements
 ;;; Require Packages
@@ -16,5 +16,4 @@
 ;;; Public Functions (interactive)
 ;;; Public Functions (non-interactive)              
 
-
-(provide 'iorg-view)
+;; (provide 'iorg-<<library>>)

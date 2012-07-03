@@ -1,6 +1,6 @@
 #+Title: The abstract class definition for 'object' 
 
-* TODO object                                                  :abstract:bar:
+* object                                                       :abstract:bar:
   :PROPERTIES:
   :iorg-super: root
   :iorg-headline_ALL: all todos text tags

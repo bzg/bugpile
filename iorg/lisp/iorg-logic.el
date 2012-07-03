@@ -19,6 +19,11 @@ entries, with all instance attributes (with individual values for
 each object) from all their superclasses."
 
   (interactive "fClass: ")
+  (if (not (file-exists-p class))
+      (error "CLASS doesn't exist")
+    (with-current-buffer (find-file class)
+      (org-check-for-org-mode))))
+      
   
 
 

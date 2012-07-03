@@ -1,11 +1,13 @@
-;;; iorg-projects.el --- functions to create and manage iOrg projects
+;;;; iorg-projects.el --- functions to create and manage iOrg projects
+
+;;;; Requirements
 
 ;;; Require other packages
-
 (require 'org)
 (require 'ob-tangle)
 (require 'elnode)
 (require 'vc)
+(require 'iorg-util)
 
 ;; (eval-when-compile
 ;;   (require 'cl)
@@ -13,7 +15,6 @@
 
 
 ;;; Other stuff we need
-
 ;; remember this directory
 (setq iorg-projects-dir
       (expand-file-name
@@ -26,9 +27,25 @@
 
 
 
-;;; Customs, Constants and Variables
+;;;; Variables
 
-;; Customisation Groups and Variables
+;;; Consts
+
+;;; Vars 
+  
+;; (defvar org-babel-src-block-regexp
+;;   (concat
+;;    ;; (1) indentation                 (2) lang
+;;    "^\\([ \t]*\\)#\\+begin_src[ \t]+\\([^ \f\t\n\r\v]+\\)[ \t]*"
+;;    ;; (3) switches
+;;    "\\([^\":\n]*\"[^\"\n*]*\"[^\":\n]*\\|[^\":\n]*\\)"
+;;    ;; (4) header arguments
+;;    "\\([^\n]*\\)\n"
+;;    ;; (5) body
+;;    "\\([^\000]*?\n\\)?[ \t]*#\\+end_src")
+;;   "Regexp used to identify code blocks.")
+
+;;; Customs
 (defgroup iorg-projects nil
   "Creating and managing iOrg projects"
   :tag "iOrg-Projects"
@@ -71,8 +88,6 @@
                (:objects . "objects")
                (:test . "test")
                (:doc . "doc"))))
-
-
   
   "Alist of iOrg projects with configuration. 
 
@@ -130,48 +145,34 @@ url."
                 :value-type alist))
  
 
-;;; Variables 
-(defvar iorg-projects-plantuml-diagram-type-repexp
-(concat "<\\(soa\\|csa\\|dcm\\)>")
-  "Regexp used to identify plantuml diagramtypes from the
-  plantuml 'titel' line in the Org-mode source block")
-  
-;; (defvar org-babel-src-block-regexp
-;;   (concat
-;;    ;; (1) indentation                 (2) lang
-;;    "^\\([ \t]*\\)#\\+begin_src[ \t]+\\([^ \f\t\n\r\v]+\\)[ \t]*"
-;;    ;; (3) switches
-;;    "\\([^\":\n]*\"[^\"\n*]*\"[^\":\n]*\\|[^\":\n]*\\)"
-;;    ;; (4) header arguments
-;;    "\\([^\n]*\\)\n"
-;;    ;; (5) body
-;;    "\\([^\000]*?\n\\)?[ \t]*#\\+end_src")
-;;   "Regexp used to identify code blocks.")
-
-
 
-;;; Functions
+;;;; Functions
 
-;; Declare functions
+;;; Function Declarations
 (declare-function org-check-for-org-mode "org-agenda" nil)
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
+(declare-function iorg-util-goto-first-entry "iorg-logic" nil)
+(declare-function iorg-util-goto-last-entry "iorg-logic" nil)
+(declare-function iorg-util-goto-first-entry "iorg-logic" nil)
 
-;; Private functions
+;;; Private functions
+
 ;; iOrg meta data
+
 (defun iorg-projects--update-iorg-config (prop val)
   "Update property PROP with value VAL in the global iOrg
 configuration file."
   (org-entry-add-to-multivalued-property
-   (iorg-projects--goto-first-entry
+   (iorg-util-goto-first-entry
     (expand-file-name "iorg-projects-config.org" iorg-projects-dir)) prop val))
 
 (defun iorg-projects--meta-data ()
   "Return a list with meta-data about the current iOrg projects,
 gathered from the iorg-projects-config.org file."
-  (iorg-projects--goto-first-entry (expand-file-name "iorg-projects-config.org" iorg-projects-dir))
+  (iorg-util-goto-first-entry (expand-file-name "iorg-projects-config.org" iorg-projects-dir))
   (let* ((proj (org-entry-get (point) "projects"))
-         (unnamed-proj (iorg-projects--filter-multival-property proj "project[0-9]+$"))
+         (unnamed-proj (iorg-util-filter-multival-property proj "project[0-9]+$"))
          (unnamed-max 0))
     ;; get the highest numbering of unnamed projects
     (mapc
@@ -212,9 +213,9 @@ gathered from the iorg-projects-config.org file."
     (cond 
      ((member
        key '(:docroot :logiv :view :controller :objects :doc :test))
-      (iorg-projects--normalize-existing-dir-name
+      (iorg-util-normalize-existing-dir-name
        (concat
-        (iorg-projects--normalize-existing-dir-name
+        (iorg-util-normalize-existing-dir-name
          (cdr (assoc :dir (cdr (assoc project iorg-projects-config)))))
         (cdr (assoc key (cdr (assoc project iorg-projects-config)))))))
      ((or (member key '(:dir :host :port))
@@ -236,27 +237,26 @@ gathered from the iorg-projects-config.org file."
        (cdr (assoc url (iorg-projects--get-project-urls project)))))
 
 
+;; Project management
 
-
-;;; Project management
 (defun iorg-projects--update-project-config (prop val &optional dir)
   "Update the iOrg project configuration of project in present
 working directory or DIR."
   (org-entry-add-to-multivalued-property
-   (iorg-projects--goto-first-entry
+   (iorg-util-goto-first-entry
     (if dir
         (expand-file-name
          (concat
           (file-name-nondirectory
            (directory-file-name
-            (iorg-projects--normalize-existing-dir-name dir))) "-config.org")
-         (iorg-projects--normalize-existing-dir-name dir))
+            (iorg-util-normalize-existing-dir-name dir))) "-config.org")
+         (iorg-util-normalize-existing-dir-name dir))
       (expand-file-name
        (concat
         (file-name-nondirectory
          (directory-file-name
-          (iorg-projects--pwd))) "-config.org")
-       (iorg-projects--pwd)))
+          (iorg-util-pwd))) "-config.org")
+       (iorg-util-pwd)))
     prop val)))
 
 (defun iorg-projects--rename-project-files (&optional name dir)
@@ -265,8 +265,8 @@ DIR, replacing the old prefix (taken from <<project>>-config.org)
 with `file-name-nondirectory' of the project directory."
   (let* ((proj
           (if dir
-              (iorg-projects--normalize-existing-dir-name dir)
-            (iorg-projects--pwd)))
+              (iorg-util-normalize-existing-dir-name dir)
+            (iorg-util-pwd)))
          (dir-files (directory-files proj))
          (new-prefix
           (if (and name (non-empty-string-p name))
@@ -283,16 +283,16 @@ with `file-name-nondirectory' of the project directory."
      dir-files)
     ;; replace old-prefix with new-prefix
     ;; project directory
-    (iorg-projects--replace-filename-prefix old-prefix new-prefix proj)
+    (iorg-util-replace-filename-prefix old-prefix new-prefix proj)
     ;; subdirectories (1st level)
     (mapc
      (lambda (x)
        (unless (string-match-p "^\\.+" x)
-         (let ((f (iorg-projects--normalize-new-dir-name
+         (let ((f (iorg-util-normalize-new-dir-name
                    (concat proj x))))
            (and
             (file-directory-p f)
-            (iorg-projects--replace-filename-prefix
+            (iorg-util-replace-filename-prefix
              old-prefix new-prefix f)))))
      dir-files)))
 
@@ -301,8 +301,8 @@ with `file-name-nondirectory' of the project directory."
 iOrg project directory structure, nil otherwise."
   (let* ((project-dir
           (if dir
-              (iorg-projects--normalize-existing-dir-name dir)
-            (iorg-projects--pwd)))
+              (iorg-util-normalize-existing-dir-name dir)
+            (iorg-util-pwd)))
          (dir-files (directory-files project-dir)))
     (not
      (cond
@@ -322,107 +322,18 @@ iOrg project directory structure, nil otherwise."
       ((not (member "test" dir-files)))
       ((not (member "view" dir-files)))))))
 
-;;; Modified or new Emacs functionality
-(defmacro iorg-projects-in-file (file &rest body)
-  "Execute BODY in a buffer visiting FILE.
-    If no buffer exists visiting FILE then open FILE in a new buffer."
-  `(save-window-excursion
-     (condition-case nil
-         (with-temp-buffer (find-file ,file) ,@body)
-       (error (message "iorg: there has been an error")))))
 
-;; (iorg-projects-in-file "/tmp/something.org" (message "in %s" (current-buffer)))
+;;; Public functions
 
-(defun iorg-projects--pwd ()
-  "Return the (normalized) directory part of the function `pwd'."
-  (expand-file-name
-   (file-name-as-directory
-    (cadr (split-string (pwd) " ")))))
+;; Project management 
 
-(defun iorg-projects--replace-filename-prefix (old-prefix new-prefix &optional dir)
-  "Replace OLD-PREFIX with NEW-PREFIX in filename of
-all (non-directory) files in present working directory or DIR."
-  (let ((proj
-         (if dir
-             (iorg-projects--normalize-existing-dir-name dir)
-           (iorg-projects--pwd))))
-    (condition-case err
-        (mapc
-         (lambda (x)
-           (and
-            (string-match
-             (concat "\\(^\\)\\(" old-prefix "\\)\\(.+\\)\\($\\)") x)
-            (not (file-directory-p (concat proj x)))
-            (let* ((first-part (match-string 2 x))
-                   (last-part (match-string 3 x)))
-              (and first-part last-part
-                   (rename-file
-                    (concat proj first-part last-part)
-                    (concat proj new-prefix last-part) t)))))
-         (directory-files proj))
-    ;; error handler
-    (error 
-     (princ
-      (format
-       "Error replacing the filename-prefix: %s" err))
-     nil))))
-
-(defun iorg-projects--normalize-existing-dir-name (dir)
-  "Return name of existing DIR in canonical form"
-  (if (file-directory-p dir)
-      (expand-file-name (file-name-as-directory dir))
-    (message "Not a directory name")))
-
-  
-(defun iorg-projects--normalize-new-dir-name (name)
-  "Return NAME for a new directory in canonical form"
-  (and (non-empty-string-p name)
-       (expand-file-name (file-name-as-directory name))))
-
-;;; Modified or new Org-mode functionality
-(defun iorg-projects--goto-first-entry (&optional file)
-  "Move point to the beginning of line of the first entry in the
-current buffer or FILE."
-  (with-current-buffer
-      (if (and file (file-exists-p file))
-          (find-file-existing file)
-        (current-buffer))
-    (org-goto-line 1)
-    (or (looking-at org-outline-regexp)
-        (re-search-forward org-outline-regexp-bol nil t))
-    (beginning-of-line)))
-
-(defun iorg-projects--goto-last-entry (&optional file)
-  "Move point to the beginning of line of the last entry in the
-current buffer or FILE."
-  (with-current-buffer
-      (if (and file (file-exists-p file))
-          (find-file-existing file)
-        (current-buffer))
-    (org-goto-line
-     (line-number-at-pos (point-max))
-     (or (looking-at org-outline-regexp)
-         (re-search-backward org-outline-regexp-bol nil t))
-     (beginning-of-line))))
-
-(defun iorg-projects--filter-multival-property (prop reg)
-  "Returns a list of strings with all elements of MULTIVAL-PROP
-that match REGEXP."
-  (remove nil 
-          (mapcar
-           (lambda (x)
-             (and (string-match-p reg x) x))
-           prop)))
-
-;;;; Public functions and user commands
-;;; Project management 
 (defun iorg-projects-initialize-project (&optional dir name)
   "Copy the iOrg project template into DIR and rename the project."
   (interactive "DProject directory: \nsProject name: ")
   (let* ((directory
           (if dir
-              (iorg-projects--normalize-existing-dir-name dir)
-            (iorg-projects--pwd)))
+              (iorg-util-normalize-existing-dir-name dir)
+            (iorg-util-pwd)))
          (project-name 
           (if (and name (non-empty-string-p name))
               name
@@ -444,8 +355,8 @@ present working directory or DIR."
   (interactive "DProject directory: ")
   (let ((proj
          (if dir
-             (iorg-projects--normalize-existing-dir-name dir)
-           (iorg-projects--pwd))))
+             (iorg-util-normalize-existing-dir-name dir)
+           (iorg-util-pwd))))
     (iorg-projects--rename-project-files nil proj)
     ;; (iorg-projects--update-project-config proj)
     ;; (iorg-projects--update-iorg-projects-config proj)
@@ -456,8 +367,8 @@ present working directory or DIR."
   (interactive "sNew project name: \nDProject directory: ")
   (let ((proj
          (if dir
-             (iorg-projects--normalize-existing-dir-name dir)
-           (iorg-projects--pwd))))
+             (iorg-util-normalize-existing-dir-name dir)
+           (iorg-util-pwd))))
     (cond
      ((not (iorg-projects--project-directory-structure-p proj))
       (message "Directory does not confirm to iOrg directory structure."))
@@ -467,7 +378,7 @@ present working directory or DIR."
       (condition-case err
           ;; rename and update project
           (let ((new-proj
-                 (iorg-projects--normalize-new-dir-name
+                 (iorg-util-normalize-new-dir-name
                   (concat
                    (file-name-directory
                     (directory-file-name proj)) name))))
@@ -493,36 +404,12 @@ start the elnode server when SERVER is non-nil"
       () ;check dir structure, tangle ob files, export org files
     (message "Not a valid directory name")))
 
-;;; PlantUML transformation
-(defun iorg-projects-plantuml-to-code (&optional file)
-  "Transform all PlantUML source blocks in Org-file FILE into
-Org-mode files (with entries) and Emacs Lisp files (with
-functions and variables), following the transformation rules of
-the iOrg framework."
-  (with-current-buffer
-      (if (and file (file-exists-p file))
-          (find-file-existing file)
-        (current-buffer))
-    (case-fold-search t)
-    (save-excursion
-      (save-restriction
-        (widen)
-        (org-goto-line 1)
-           (while (not (eobp))
-             (if (not (looking-at org-babel-src-block-regexp))
-                 (forward-line)
-               (while (not (eolp))
-                 (if (not (looking-at "plantuml"))
-                     (forward-word)
-                   (forward-line)
-                   (while (not (looking-at "#+end_src")))))))))))
 
-;; ...
-;; Key bindings
-;; Documentation
-;; Miscellaneous stuff
-;; Integration with and fixes for other packages
-;; Experimental code
-;; Finish up
+;;; Key bindings
+;;; Documentation
+;;; Miscellaneous stuff
+;;; Integration with and fixes for other packages
+;;; Experimental code
+;;; Finish up
 
-(provide 'iorg)
+(provide 'iorg-projects)

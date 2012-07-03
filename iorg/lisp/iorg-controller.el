@@ -1,4 +1,6 @@
-;;; iorg-controller -- elnode handlers and such for handling web POST/GET requests
+;;;; iorg-controller -- elnode handlers and such for handling web POST/GET requests
+
+;;;; Requirements
 
 (require 'org)
 (require 'elnode)
@@ -13,9 +15,24 @@
   (require 'cl))
 
 
-;;; Customs, Constants and Variables
+;;;; Variables
 
-;; Customisation Groups and Variables
+;;; Consts
+
+(defconst iorg-controller-dir
+  (file-name-directory (or load-file-name (buffer-file-name)))
+  "The directory of iorg-controller.el in canonical form")
+
+;; (defconst iorg-controller-urls
+;;   '(("^$"      . iorg-initialize-simple-handler)
+;;     ("^edit/$" . iorg-change-state-handler)
+;;     ("^send/$" . iorg-change-state-handler)
+;;     ("^reset/$" . iorg-edit-headline-handler)))
+
+
+;;; Vars
+
+;;; Customs
 (defgroup iorg nil
   "A webframework based on Org-mode, Elnode and dVCS."
   :tag "iOrg"
@@ -32,28 +49,90 @@
   :group 'iorg-controller
   :type 'hook)
 
-;; Constants
-(defconst iorg-controller-dir
-  (file-name-directory (or load-file-name (buffer-file-name)))
-  "The directory of iorg-controller.el in canonical form")
 
-;; (defconst iorg-controller-urls
-;;   '(("^$"      . iorg-initialize-simple-handler)
-;;     ("^edit/$" . iorg-change-state-handler)
-;;     ("^send/$" . iorg-change-state-handler)
-;;     ("^reset/$" . iorg-edit-headline-handler)))
-
-;; Variables
 
 
-;;; Functions
+;;;; Functions
 
-;; Declare functions
+;;; Function Declarations
 (declare-function org-entry-is-todo-p "org" nil)
 (declare-function org-get-todo-state "org" nil)
 (declare-function org-check-for-org-mode "org-agenda" nil)
 
+;;; Helper Functions
 
+(defun iorg-controller--serve-docroot (project proj-config &rest args)
+  "Make a webserver serving static files in projects's docroot.
+
+Use data from the alists PROJ-CONFIG or ARGS to configure the
+server."
+  ;; make sure all .org files in docroot have been exported to html
+  ;; and the html files are up-to-date
+  (let* ((docroot-dir
+          (iorg-projects--get-project-info project :docroot))
+         (docroot-files
+          (directory-files docroot-dir)))
+    (mapc
+     (lambda (file)
+       (and (string= (file-name-extension file) "org")
+            (let ((absolute-file-name
+                   (expand-file-name
+                    file docroot-dir)))
+              (unless
+                  (and 
+                   (member
+                    (concat
+                     (file-name-sans-extension file) ".html") docroot-files)
+                   (not (file-newer-than-file-p
+                         (concat (file-name-sans-extension file) ".org")
+                         (concat (file-name-sans-extension file) ".html"))))  
+                (with-current-buffer
+                    (find-file absolute-file-name)
+                  (org-export-to-file
+                   'e-html
+                   (concat
+                    (file-name-sans-extension absolute-file-name)
+                    ".html"))
+                  ;; TODO safer solution, see Erics mail
+                  (kill-buffer (find-file absolute-file-name)))))))
+     docroot-files))
+  ;; define the webserver handler
+  (set (intern
+        (concat
+         project "-"
+         (if (and args (assoc :controller args))
+             (cdr (assoc :controller args))
+           (cdr (assoc :controller proj-config)))
+         "-docroot-handler"))
+       (elnode-webserver-handler-maker
+        (iorg-projects--get-project-info project :docroot)))
+  ;; start an elnode server that serves all the static html files
+  ;; in projects docroot 
+  (eval
+   `(elnode-start
+     ,(intern-soft
+       (concat
+        project "-"
+        (if (and args (assoc :controller args))
+            (cdr (assoc :controller args))
+          (cdr (assoc :controller proj-config)))
+        "-docroot-handler"))
+     ;; (elnode-start (intern-soft
+     ;;                (concat
+     ;;                 project "-"
+     ;;                 (if (and args (assoc :controller args))
+     ;;                     (cdr (assoc :controller args))
+     ;;                   (cdr (assoc :controller proj-config)))
+     ;;                 "-docroot-handler"))
+     :port (if (and args (assoc :docroot-port args))
+               (string-to-int (cdr (assoc :docroot-port args)))
+             (string-to-int (cdr (assoc :docroot-port proj-config))))
+     :host  (if (and args (assoc :host args))
+                (cdr (assoc :host args))
+              (cdr (assoc :host proj-config))))))
+
+
+;;; Public Functions
 
 (defun iorg-controller-postprocess (transc-str back-end comm-chan)
   "Add buttons to HTML export to make headlines editable."
@@ -130,76 +209,6 @@ their counterparts in 'iorg-projects-config'"
         (iorg-controller--serve-docroot project proj-config)))))
 
 
-
-(defun iorg-controller--serve-docroot (project proj-config &rest args)
-  "Make a webserver serving static files in projects's docroot.
-
-Use data from the alists PROJ-CONFIG or ARGS to configure the
-server."
-  ;; make sure all .org files in docroot have been exported to html
-  ;; and the html files are up-to-date
-  (let* ((docroot-dir
-          (iorg-projects--get-project-info project :docroot))
-         (docroot-files
-          (directory-files docroot-dir)))
-    (mapc
-     (lambda (file)
-       (and (string= (file-name-extension file) "org")
-            (let ((absolute-file-name
-                   (expand-file-name
-                    file docroot-dir)))
-              (unless
-                  (and 
-                   (member
-                    (concat
-                     (file-name-sans-extension file) ".html") docroot-files)
-                   (not (file-newer-than-file-p
-                         (concat (file-name-sans-extension file) ".org")
-                         (concat (file-name-sans-extension file) ".html"))))  
-                (with-current-buffer
-                    (find-file absolute-file-name)
-                  (org-export-to-file
-                   'e-html
-                   (concat
-                    (file-name-sans-extension absolute-file-name)
-                    ".html"))
-                  ;; TODO safer solution, see Erics mail
-                  (kill-buffer (find-file absolute-file-name)))))))
-     docroot-files))
-  ;; define the webserver handler
-  (set (intern
-        (concat
-         project "-"
-         (if (and args (assoc :controller args))
-             (cdr (assoc :controller args))
-           (cdr (assoc :controller proj-config)))
-         "-docroot-handler"))
-       (elnode-webserver-handler-maker
-        (iorg-projects--get-project-info project :docroot)))
-  ;; start an elnode server that serves all the static html files
-  ;; in projects docroot 
-  (eval
-   `(elnode-start
-     ,(intern-soft
-       (concat
-        project "-"
-        (if (and args (assoc :controller args))
-            (cdr (assoc :controller args))
-          (cdr (assoc :controller proj-config)))
-        "-docroot-handler"))
-     ;; (elnode-start (intern-soft
-     ;;                (concat
-     ;;                 project "-"
-     ;;                 (if (and args (assoc :controller args))
-     ;;                     (cdr (assoc :controller args))
-     ;;                   (cdr (assoc :controller proj-config)))
-     ;;                 "-docroot-handler"))
-     :port (if (and args (assoc :docroot-port args))
-               (string-to-int (cdr (assoc :docroot-port args)))
-             (string-to-int (cdr (assoc :docroot-port proj-config))))
-     :host  (if (and args (assoc :host args))
-                (cdr (assoc :host args))
-              (cdr (assoc :host proj-config))))))
 
               
 

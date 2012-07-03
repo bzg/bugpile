@@ -35,7 +35,8 @@ each object) from all their superclasses."
                           "variable 'iorg-projects-config'")))
         ((not (file-exists-p class))
          (message "Class doesn't exist"))
-        (with-current-buffer (find-file class)
+        (t
+         (with-current-buffer (find-file class)
           (org-check-for-org-mode)
           (while
               (progn
@@ -49,7 +50,7 @@ each object) from all their superclasses."
                   (car
                    (org-entry-get-multivalued-property
                     (point) iorg-super))
-                  "root")))))))
+                  "root"))))))))
                
 
 ;;; Public Functions (non-interactive)

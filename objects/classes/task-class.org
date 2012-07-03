@@ -1,10 +1,14 @@
 #+Title: The class definition for a 'task' 
 
 * TODO task                                                             :bar:
+** class
   :PROPERTIES:
   :iorg-super: html
   :task-type_ALL: bug feature
   :task-priority_ALL: low medium high urgent
+  :END:
+** instance
+  :PROPERTIES:
   :task-type: bug
   :task-author: nil
   :task-priority: medium

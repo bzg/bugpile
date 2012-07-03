@@ -1,6 +1,8 @@
 #+Title: The abstract class definition for 'object' 
 
 * object                                                       :abstract:bar:
+** class
+** instance
   :PROPERTIES:
   :iorg-super: root
   :iorg-id:  nil

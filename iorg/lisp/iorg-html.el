@@ -3,10 +3,10 @@
 ;;;; Requirements
 
 ;;; Require Packages
-(require 'org-export)
 (require 'org-element)
-(require 'org-e-html)
-(require 'iorg-util)
+;; (require 'org-export)
+;; (require 'org-e-html)
+;; (require 'iorg-util)
 
 ;;; Other Stuff
 

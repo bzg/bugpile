@@ -3,11 +3,11 @@
 ;;;; Requirements
 
 ;;; Require other packages
-(require 'org)
 (require 'ob-tangle)
-(require 'elnode)
-(require 'vc)
-(require 'iorg-util)
+;; (require 'org)
+;; (require 'elnode)
+;; (require 'vc)
+;; (require 'iorg-util)
 
 ;; (eval-when-compile
 ;;   (require 'cl)

@@ -42,6 +42,7 @@ each object) from all their superclasses."
               (progn
                 ;; do the work
                 (iorg-util-goto-first-entry)
+                
 
 
                 ;; test the condition
@@ -51,6 +52,15 @@ each object) from all their superclasses."
                    (org-entry-get-multivalued-property
                     (point) iorg-super))
                   "root"))))))))
+
+;; I can't remember exactly what Org actions added unique ID's to every
+;; subheading, but I'm confident that there is precedent for doing this.
+
+;; The `org-id-get-create' function may be used to add a global unique ID
+;; to a heading.  Then you can jump to that ID from anywhere using the
+;; `org-id-goto' function.  This should be a great way to identify and
+;; return to headings.
+
                
 
 ;;; Public Functions (non-interactive)

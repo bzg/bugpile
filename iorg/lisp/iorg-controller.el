@@ -6,9 +6,11 @@
 (require 'elnode)
 (require 'org-export)
 (require 'org-e-html)
-(require 'org-agenda)
+;;(require 'org-agenda)
 (require 'iorg-util)
 (require 'iorg-projects)
+(require 'iorg-html)
+(require 'iorg-logic)
 
 (eval-when-compile
   (require 'cl))

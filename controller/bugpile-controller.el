@@ -2,11 +2,7 @@
 ;;;; POST/GET requests
 
 ;;;; Requirements
-(require 'elnode)
 (require 'iorg-controller)
-(require 'iorg-projects)
-
-
 
 ;;;; Variables
 

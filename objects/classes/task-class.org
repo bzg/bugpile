@@ -1,4 +1,4 @@
-#+Title: The class definition for a 'task' 
+#+Title: The class definition for 'task' 
 
 * TODO task                                                             :bar:
 ** class

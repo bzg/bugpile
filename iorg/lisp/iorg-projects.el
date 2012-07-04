@@ -87,6 +87,7 @@
                (:view . "view") 
                (:controller . "controller")
                (:objects . "objects")
+               (:classes . "objects/classes")
                (:test . "test")
                (:doc . "doc"))))
   

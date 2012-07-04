@@ -2,6 +2,12 @@
 
 ;;;; Requirements
 
+(eval-when-compile
+  (require 'cl)
+  )
+;; FIXME necesary for getkey functions?
+;; (require 'cl)  
+
 ;;;; Variables
 ;;; Consts
 ;;; Vars
@@ -25,6 +31,51 @@
 ;;; Public Functions (interactive)
 
 ;;; Public Functions (non-interactive - generic emacs functions)
+
+;; 'getkey(s)' functions courtesy of Pascal Bourguignon
+(defun* getkey (val table &key (test (function eql)) (default nil))
+   ;; (hash-table-test table)  is for keys, not for values…
+   (maphash (lambda (k v) 
+              (when (funcall test val v) (return-from getkey k)))
+            table)
+   default)
+
+;; Usage example: 
+;; (let ((h (make-hash-table)))
+;;   (setf (gethash :one h) "un"
+;;         (gethash :two h) "deux"
+;;         (gethash :a   h) "un")
+
+;;   (getkey "un" h :test (function string=)))
+;; --> :one ; or :a, who knows?
+
+
+;; Bastiens approach: 
+;; (let (key-found)
+;;   (maphash (lambda (key val)
+;; 	     (when (equal val "my_value")
+;; 	       (setq key-found key)))
+;; 	   hashtest)
+;;   key-found)
+
+
+(defun* getkeys (val table &key (test (function eql)))
+   ;; (hash-table-test table)  is for keys, not for values…
+   (let ((keys '()))
+     (maphash (lambda (k v) 
+                 (when (funcall test val v) (push k keys)))
+              table)
+     keys))
+
+;; Usage example:
+;; (let ((h (make-hash-table)))
+;;   (setf (gethash :one h) "un"
+;;         (gethash :two h) "deux"
+;;         (gethash :a   h) "un")
+;;   (getkeys "un" h :test (function string=)))
+;; --> (:a :one)
+
+
 (defun assoc-proc (proc list)
   "Like `assoc' but return the first pair whose `car' matches PROC."
   (dolist (pair list)

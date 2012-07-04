@@ -74,6 +74,7 @@
                   (:view . "view") 
                   (:controller . "server")
                   (:objects . "objects")
+                  (:classes . "objects/classes")
                   (:test . "test")
                   (:doc . "doc")))
     ("bugpile" . ((:dir . "~/git/bugpile/")
@@ -210,7 +211,8 @@ gathered from the iorg-projects-config.org file."
                      "variable 'iorg-projects-config'"))
     (cond 
      ((member
-       key '(:docroot :logiv :view :controller :objects :doc :test))
+       key
+       '(:docroot :logic :view :controller :objects :classes :doc :test))
       (iorg-util-normalize-existing-dir-name
        (concat
         (iorg-util-normalize-existing-dir-name

@@ -1,0 +1,9 @@
+#+Title: The class definition for 'foo-bug'
+
+* TODO foo-bug                                                      :foo:doo:
+  :PROPERTIES:
+  :ID:       2d5a34c6-cf93-4f13-9b93-7c5e0f1f8353
+  :iorg-super-C: object
+  :foo-bug-author: Bill
+  :END:
+  [2012-07-05 Do 15:49]

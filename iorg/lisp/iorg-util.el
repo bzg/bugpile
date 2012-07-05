@@ -33,7 +33,7 @@
 ;;; Public Functions (non-interactive - generic emacs functions)
 
 ;; 'getkey(s)' functions courtesy of Pascal Bourguignon
-(defun* getkey (val table &key (test (function eql)) (default nil))
+(defun* getkey (val table &key (test (function string-match)) (default nil))
    ;; (hash-table-test table)  is for keys, not for values…
    (maphash (lambda (k v) 
               (when (funcall test val v) (return-from getkey k)))
@@ -59,7 +59,7 @@
 ;;   key-found)
 
 
-(defun* getkeys (val table &key (test (function eql)))
+(defun* getkeys (val table &key (test (function string-match)))
    ;; (hash-table-test table)  is for keys, not for values…
    (let ((keys '()))
      (maphash (lambda (k v) 

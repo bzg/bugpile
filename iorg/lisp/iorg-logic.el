@@ -15,12 +15,19 @@ inserting a class headline.")
   "String constant to be used by the `format' function when
 inserting a abstract class headline.")
 
+(defconst iorg-logic-class-name-format-string
+  "^.+%s-class\\.org$"
+  "String constant to be used by the `format' function when
+constructing a class name regexp. The format specification
+'%s' should be replaced by the name of the class, e.g. 'task'")
+
 (defconst iorg-logic-class-property-key-regexp
-  "^:.*-C$"
+  "^:?.+-C$"
   "Regexp that recognizes property keys in alists that end with
 '-C', identifying them as 'class-properties' to be stored in the
 property drawer of the 'class' sub-heading of an iOrg class
 file.")
+
 
 ;;; Vars
 
@@ -55,6 +62,8 @@ values vary between instances/objects of the class)"
 ;;; Public Functions (interactive)
 
 ;; FIXME interactive for &optional and &rest
+;; FIXME class already exists
+;; FIXME finally kill Org buffer 
 (defun iorg-logic-new-class
   (project name &optional todo &rest tags-and-properties)
   "Make a new class NAME in PROJECT.
@@ -154,7 +163,6 @@ objects (instances) of that class."
                        (assoc :tags tags-and-properties)
                        tags-and-properties))))
 
-           ;; TODO deal with existing class files                       
            (with-current-buffer (find-file classname)
              (org-check-for-org-mode)
              (goto-char (point-min))
@@ -193,12 +201,12 @@ objects (instances) of that class."
                          (org-set-property
                           ;; get rid of trailing '-C'
                           (car (split-string
-                                 ;; make key symbol a string
-                                 ;; and get rid of leading ':'
-                                 (cadr (split-string
-                                        (format "%s" (car x))
-                                        ":"))
-                                 "-C"))
+                                ;; make key symbol a string
+                                ;; and get rid of leading ':'
+                                (cadr (split-string
+                                       (format "%s" (car x))
+                                       ":"))
+                                "-C"))
                           (cdr x))))
                    properties))
              (show-all)
@@ -213,21 +221,24 @@ objects (instances) of that class."
                               iorg-logic-class-property-key-regexp
                               (format "%s" (car x)))
                        (org-set-property
+                        ;; make key symbol a string
+                        ;; and get rid of leading ':'
                         (cadr (split-string
                                (format "%s" (car x))
                                ":"))
                         (cdr x))))
                    properties))
-             (show-all))))))  ; FIXME kill-buffer if not visited
+             (save-buffer)
+             (show-all)))))) 
                
 
 (defun iorg-logic-new-object (project class)
-  "Instantiate a new object of CLASS in PROJECT.
+  "Instantiate a new object of CLASS in PROJECT. CLASS is the string that appears as text in the top-level headline of the class file, (e.g. 'task'). PROJECT is the string that appears as a key in 'iorg-projects-config', e.g. (e.g. 'bugpile').
 
 In the context of iOrg, an object is a top-level entry in the Org
 file for its class (<<class>>-obj.org), located in the projects
 'objects' directory which is defined under the key :objects in
-the customizable variable 'iorg-projects-config'. 
+the customizable variable 'iorg-projects-config'.
 
 Each object has a headline and optional todo's and tags. The
 instance properties of the class are represented by
@@ -271,10 +282,14 @@ might appear in an objects property drawer."
          (message "%s"
                   (concat "Project not registered in customizable "
                           "variable 'iorg-projects-config'")))
-        ((not (file-exists-p class))
-         (message "Class doesn't exist"))
+        (not (non-empty-string-p class)
+         (message "Invalid class name"))
         (t
-         (with-current-buffer (find-file class)
+         (with-current-buffer
+             (org-id-goto 
+              (getkey (format
+                       iorg-logic-class-name-format-string class)
+                      org-id-locations))
           (org-check-for-org-mode)
           (while
               (progn

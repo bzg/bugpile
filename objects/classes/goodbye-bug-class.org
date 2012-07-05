@@ -1,0 +1,17 @@
+#+Title: The class definition for 'goodbye-bug'
+
+* TODO goodbye-bug                                                  :foo:bar:
+  :PROPERTIES:
+  :ID:       4af61e72-abe4-4a59-8989-5557b8c9a9fc
+  :END:
+  [2012-07-05 Do 04:49]
+** class
+   :PROPERTIES:
+   :iorg-super: root
+   :END:
+   [2012-07-05 Do 04:49]
+** instance
+   :PROPERTIES:
+   :html-edit: link
+   :END:
+   [2012-07-05 Do 04:49]

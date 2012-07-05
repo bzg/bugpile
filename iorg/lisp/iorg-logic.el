@@ -19,15 +19,17 @@
 (defcustom iorg-logic-class-name-format-string
   "^.+%s-class\\.org$"
   "String to be used by the `format' function when constructing a
-class name regexp. The format specification '%s' should be
-replaced by the name of the class, e.g. 'task'"
+class name regexp."
   :group 'iorg-logic
   :type 'string)
 
-(defconst iorg-logic-class-headline-format-string
+(defcustom iorg-logic-class-headline-format-string
   "#+Title: The class definition for '%s'"
-  "String constant to be used by the `format' function when
-inserting a class headline.")
+  "String to be used by the `format' function when inserting a
+class headline. The format specification '%s' should be replaced
+by the name of the class, e.g. 'task'."
+  :group 'iorg-logic
+  :type 'string)
 
 (defcustom iorg-logic-abstract-class-headline-format-string
   "#+Title: The abstract class definition for '%s'"

@@ -1,9 +1,9 @@
 #+Title: The abstract class definition for 'object' 
 
 * object                                                       :abstract:bar:
-** class
-** instance
   :PROPERTIES:
   :iorg-super: root
-  :iorg-id:  nil
+  :ID:       b035c285-0474-4e29-ae51-c2209e38029d
+  :object-foo: bar
+  :object-bar: foo
   :END:

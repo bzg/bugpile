@@ -5,8 +5,6 @@
 (eval-when-compile
   (require 'cl)
   )
-;; FIXME necesary for getkey functions?
-;; (require 'cl)  
 
 ;;;; Variables
 ;;; Consts
@@ -28,7 +26,29 @@
 ;;;; Functions
 ;;; Function Declarations
 ;;; Helper Functions 
+
 ;;; Public Functions (interactive)
+
+(defun org-val-goto (val &optional obj)
+  "Switch to the iOrg file buffer containing VAL in its name. 
+
+String VAL represents an iOrg class name (like 'task' or 'bug').
+If one of the values of the associations in the
+`org-id-locations' hash-table string-matches either
+`iorg-logic-class-regexp' (or
+`iorg-logic-object-regexp' if OBJ is non nil), formatted
+with VAL replacing the format specification '%s', the associated
+global ID is used to switch to the Org buffer."
+  (interactive "siOrg class name: ")
+  (org-id-goto 
+   (getkey (format
+            (if obj
+                iorg-logic-object-regexp
+              iorg-logic-class-regexp)
+            val)
+           org-id-locations)))
+
+
 
 ;;; Public Functions (non-interactive - generic emacs functions)
 
@@ -74,6 +94,7 @@
 ;;         (gethash :a   h) "un")
 ;;   (getkeys "un" h :test (function string=)))
 ;; --> (:a :one)
+
 
 
 (defun assoc-proc (proc list)
@@ -207,6 +228,7 @@ that match REGEXP."
            (lambda (x)
              (and (string-match-p reg x) x))
            prop)))
+
 
 
 (provide 'iorg-util)

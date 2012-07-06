@@ -51,7 +51,7 @@
 (declare-function org-get-todo-state "org" nil)
 (declare-function org-check-for-org-mode "org-agenda" nil)
 (declare-function
- iorg-projects--get-project-info "iorg-projects" nil)
+ iorg-projects-get-project-info "iorg-projects" nil)
 (declare-function iorg-util-goto-first-entry "iorg-util" nil)
 
 ;;; Helper Functions
@@ -143,7 +143,7 @@ server."
   ;; make sure all .org files in docroot have been exported to html
   ;; and the html files are up-to-date
   (let* ((docroot-dir
-          (iorg-projects--get-project-info project :docroot))
+          (iorg-projects-get-project-info project :docroot))
          (docroot-files
           (directory-files docroot-dir)))
     (mapc
@@ -179,7 +179,7 @@ server."
            (cdr (assoc :controller proj-config)))
          "-docroot-handler"))
        (elnode-webserver-handler-maker
-        (iorg-projects--get-project-info project :docroot)))
+        (iorg-projects-get-project-info project :docroot)))
   ;; start an elnode server that serves all the static html files
   ;; in projects docroot 
   (eval

@@ -16,12 +16,32 @@
   :group 'iorg)
 
 
-(defcustom iorg-logic-class-name-format-string
+(defcustom iorg-logic-class-regexp
   "^.+%s-class\\.org$"
   "String to be used by the `format' function when constructing a
-class name regexp."
+class filename regexp."
   :group 'iorg-logic
   :type 'string)
+
+(defcustom iorg-logic-object-regexp
+  "^.+%s-obj\\.org$"
+  "String to be used by the `format' function when constructing an
+object filename regexp."
+  :group 'iorg-logic
+  :type 'string)
+
+(defcustom iorg-logic-object-filename-tail
+  "-obj.org"
+  "String that, when encountered as the tail of a filename, identifies the file as iOrg objects file. At least in the context of an iOrgapplication"
+  :group 'iorg-logic
+  :type 'string)
+
+(defcustom iorg-logic-class-filename-tail
+  "-class.org"
+  "String that, when encountered as the tail of a filename, identifies the file as iOrg class file. At least in the context of an iOrgapplication."
+  :group 'iorg-logic
+  :type 'string)
+
 
 (defcustom iorg-logic-class-headline-format-string
   "#+Title: The class definition for '%s'"
@@ -76,6 +96,11 @@ the TAGS-AND-PROPERTIES, that are associations like (:key .
 \"value1 value2\"), with one of them (optionally) defining the
 tags (:tags \"tag1\" \"tag2\").
 
+Usage example:
+\(iorg-logic-new-class \"bugpile\" \"foo-bug\" 'todo '(:tags
+\"foo\" \"doo\") '(:iorg-super-C . \"object html\")
+'(:foo-bug-author .\"Bill\"))
+               
 Each class must have at least two (obligatory) headline
 attributes for the 'class' entry, :iorg-super-C: and :ID:, that
 are, respectively, read from the TAGS-AND-PROPERTIES
@@ -145,7 +170,7 @@ objects (instances) of that class."
                 (classname
                  (expand-file-name
                   classname-nondir
-                  (iorg-projects--get-project-info
+                  (iorg-projects-get-project-info
                    project :classes)))
                 (tags
                  (and tags-and-properties
@@ -192,10 +217,6 @@ objects (instances) of that class."
              (save-buffer)
              (show-all)))))) 
 
-;; usage example:
-;; (iorg-logic-new-class "bugpile" "foo-bug" 'todo '(:tags "foo"
-;; "doo") '(:iorg-super-C . "object") '(:foo-bug-author ."Bill"))
-               
 
 (defun iorg-logic-new-object (project class)
   "Instantiate a new object of CLASS in PROJECT. CLASS is the string that appears as text in the top-level headline of the class file, (e.g. 'task'). PROJECT is the string that appears as a key in 'iorg-projects-config', e.g. (e.g. 'bugpile').
@@ -251,10 +272,22 @@ might appear in an objects property drawer."
          (message "Invalid class name"))
         (t
          (with-current-buffer
-             (org-id-goto 
-              (getkey (format
-                       iorg-logic-class-name-format-string class)
-                      org-id-locations))
+             (find-file
+              (or
+               (org-id-goto 
+                (getkey (format
+                         iorg-logic-object-regexp class)
+                        org-id-locations))
+               (expand-file-name
+                (format iorg-logic-object-regexp class)
+                (iorg-projects-get-project-info
+                 project :objects))))
+           
+                
+
+               
+
+          (org-val-goto class)
           (org-check-for-org-mode)
           (save-restriction
             (widen)
@@ -274,7 +307,92 @@ might appear in an objects property drawer."
                     (point) iorg-super))
                   "root")))))))))
 
+;; FIXME interactive - not-create y-or-n
+;; FIXME eliminate redundancy
+(defun iorg-logic-goto-objects-file (project class &optional not-create)
+  "Selects a buffer visiting the Org file that contains all objects of CLASS in PROJECT. If NOT-CREATE is non nil, do not create a non existing class file."
+  (interactive "sProject: \nsClass: ")
+  (or
+   (not
+    (condition-case nil
+        (org-val-goto class 'obj) ;successful search returns nil
+      (error "%s" "Not found")))
+   (if not-create
+       (ignore-errors
+         (find-file-existing
+          (expand-file-name
+           (concat class
+                   iorg-logic-object-filename-tail)
+           (iorg-projects-get-project-info project :objects))))
+     (find-file
+      (expand-file-name
+       (concat class
+               iorg-logic-object-filename-tail)
+       (iorg-projects-get-project-info project :objects)))))) 
+       
+;; FIXME interactive - not-create y-or-n
+;; FIXME eliminate redundancy
+(defun iorg-logic-goto-class-file (project class &optional not-create)
+  "Selects a buffer visiting the Org file that contains the class definition of CLASS in PROJECT. If NOT-CREATE is non nil, do not create a non existing class file."
+  (interactive "sProject: \nsClass: ")
+  (or
+   (not
+    (condition-case nil
+        (org-val-goto class) ;successful search returns nil
+      (error "%s" "Not found")))
+   (if not-create
+       (ignore-errors
+         (find-file-existing
+          (expand-file-name
+           (concat class
+                   iorg-logic-class-filename-tail)
+           (iorg-projects-get-project-info project :classes))))
+     (find-file
+      (expand-file-name
+       (concat class
+               iorg-logic-class-filename-tail)
+       (iorg-projects-get-project-info project :classes))))))
+       
 
+
+(defun iorg-logic--build-object-from-class-hierarchy (project class)
+  "Return a buffer-string that contains an iOrg object with all todo's, tags and properties having default values. 
+
+The iOrg object is a top-level heading with a property drawer and
+optionally todo's and tags. It is constructed by combining all
+properties and tags from the object's CLASS in PROJECT and all
+its super-classes."
+  (with-temp-buffer
+    (org-mode)
+     (save-excursion
+       (iorg-logic-goto-class-file
+        project class 'not-create)
+       (save-restriction
+         (widen)
+         (show-all)
+         (iorg-util-goto-first-entry)
+         (ignore-errors
+         (org-copy-subtree))))
+     (yank)
+    (buffer-substring-no-properties
+     (point-min) (point-max))))
+    
 ;;; Public Functions (non-interactive)
 
 (provide 'iorg-logic)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

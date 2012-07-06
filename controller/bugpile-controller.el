@@ -30,7 +30,7 @@
   (elnode-send-file httpcon
                     (iorg-controller--org-to-html
                      (concat
-                      (iorg-projects--get-project-info
+                      (iorg-projects-get-project-info
                        "bugpile" :view)
                        "bugpile-index.org"))))
 
@@ -38,7 +38,7 @@
   "Dispatch requests to the Bugpile application."
   (elnode-log-access "bugpile-controller" httpcon)
   (elnode-dispatcher httpcon
-                     (iorg-projects--get-project-urls "bugpile")))
+                     (iorg-projects-get-project-urls "bugpile")))
 
 
 

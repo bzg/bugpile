@@ -105,22 +105,22 @@ constructed out of a class hierarchy."
 
 ;; FIXME multiple superclasses
 ;; FIXME avoid endless recursion if 'root' not found
-(defun iorg-logic--get-properties-with-class-inheritance
+(defun iorg-logic--get-entry-properties-with-class-inheritance
   (project class props)
   "Walk down the the class hierarchy of CLASS in PROJECT until `iorg-logic-root-class' is reached and accumulate the `org-entry-properties' in PROPS."
   (if (string=
        (org-entry-get (point) "iorg-super")
        iorg-logic-root-class)
-      (list
+      (nconc
        (org-entry-properties)
        props)
     (let ((accum
            (remove
-            nil (list (org-entry-properties) props)))
+            nil (nconc (org-entry-properties) props)))
           (superclass
            (org-entry-get (point) "iorg-super")))
       (iorg-logic-goto-class-file project superclass)
-      (iorg-logic--cons-class-hierarchy-properties
+      (iorg-logic--get-entry-properties-with-class-inheritance
        project superclass accum))))
  
 ;; FIXME deal with non existing class
@@ -130,28 +130,57 @@ constructed out of a class hierarchy."
 The iOrg object is a top-level heading with a property drawer and
 optionally todo's and tags. It is constructed by combining all
 properties and tags from the object's CLASS in PROJECT and all
-its super-classes (except those in `iorg-logic-ignore-tags' and ."
+its super-classes (except those tags found in
+`iorg-logic-ignore-tags' and those properties removed by
+`iorg-logic--filter-properties')."
+  ;; put temporary buffer in org-mode
   (with-temp-buffer
     (org-mode)
-     (save-excursion
-       (iorg-logic-goto-class-file
-        project class 'not-create)
-       (save-restriction
-         (widen)
-         (show-all)
-         (iorg-util-goto-first-entry)
-         (ignore-errors
-         (org-copy-subtree))))
-     (yank)
-     (save-excursion
-       (iorg-logic-goto-class-file
-        project
-        (org-entry-get
-         (point) 
-        'not-create)))
-       
-    (buffer-substring-no-properties
-     (point-min) (point-max))))
+    ;; visit existing iOrg class file and copy its entry
+    (let* ((nconced-props nil)
+           (accum-props-filtered
+            (save-excursion
+              (iorg-logic-goto-class-file
+               project class 'not-create)
+              (save-restriction
+                (widen)
+                (show-all)
+                (iorg-util-goto-first-entry)
+                (ignore-errors
+                  (org-copy-subtree)))
+              ;; get all entry properties of class and its superclasses
+              ;; and filter them
+              (iorg-logic--filter-properties
+               (iorg-logic--get-entry-properties-with-class-inheritance
+                  project class nil)))))
+      ;; yank the copied subtree into the temp buffer and delete :ID
+      ;; and :iorg-super properties of class
+      (yank)
+      ;; FIXME why?? 
+      (org-entry-delete (point) "ID")
+      (org-entry-delete (point) "iorg-super")      
+      ;; insert the accumulated and filtered class properties
+      (mapc
+       (lambda (p)
+         (let ((key (car p))
+               (val (cdr p)))
+           (if (and
+                ;; key found in entry's properties?
+                (org-entry-get-multivalued-property
+                 (point) key)
+                ;; val not member of multivalued property?
+                (not
+                 (org-entry-member-in-multivalued-property
+                  (point) key val)))
+               ;; then add val to multivalued property
+               (org-entry-add-to-multivalued-property
+                (point) key val))
+             ;; otherwise add p to entry's properties
+             (org-entry-put (point) key val)))
+       accum-props-filtered)
+      ;; return complete buffer-string without properties   
+      (buffer-substring-no-properties
+       (point-min) (point-max)))))
 
 ;; FIXME: properties missing?
 (defun iorg-logic--filter-properties (props)

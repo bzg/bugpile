@@ -88,7 +88,7 @@ constructed out of a class hierarchy."
   :type '(repeat string))
 
 
-(defcustom iorg-logic-ignore-property-keys '("ID" "iorg-super")
+(defcustom iorg-logic-ignore-properties '("ID" "iorg-super")
   "List of strings that should be ignored when an object is
 constructed out of a class hierarchy."
   :group 'iorg-logic
@@ -103,12 +103,83 @@ constructed out of a class hierarchy."
 
 ;;; Helper Functions
 
+;; FIXME multiple superclasses
+;; FIXME avoid endless recursion if 'root' not found
+(defun iorg-logic--get-properties-with-class-inheritance
+  (project class props)
+  "Walk down the the class hierarchy of CLASS in PROJECT until `iorg-logic-root-class' is reached and accumulate the `org-entry-properties' in PROPS."
+  (if (string=
+       (org-entry-get (point) "iorg-super")
+       iorg-logic-root-class)
+      (list
+       (org-entry-properties)
+       props)
+    (let ((accum
+           (remove
+            nil (list (org-entry-properties) props)))
+          (superclass
+           (org-entry-get (point) "iorg-super")))
+      (iorg-logic-goto-class-file project superclass)
+      (iorg-logic--cons-class-hierarchy-properties
+       project superclass accum))))
+ 
+;; FIXME deal with non existing class
+(defun iorg-logic--construct-object-in-temp-buffer (project class)
+  "Return a buffer-string that contains an iOrg object with all todo's, tags and properties having default values. 
+
+The iOrg object is a top-level heading with a property drawer and
+optionally todo's and tags. It is constructed by combining all
+properties and tags from the object's CLASS in PROJECT and all
+its super-classes (except those in `iorg-logic-ignore-tags' and ."
+  (with-temp-buffer
+    (org-mode)
+     (save-excursion
+       (iorg-logic-goto-class-file
+        project class 'not-create)
+       (save-restriction
+         (widen)
+         (show-all)
+         (iorg-util-goto-first-entry)
+         (ignore-errors
+         (org-copy-subtree))))
+     (yank)
+     (save-excursion
+       (iorg-logic-goto-class-file
+        project
+        (org-entry-get
+         (point) 
+        'not-create)))
+       
+    (buffer-substring-no-properties
+     (point-min) (point-max))))
+
+;; FIXME: properties missing?
+(defun iorg-logic--filter-properties (props)
+  "Returns PROPS (an alist) with all properties whose keys are member of `iorg-logic-ignore-properties', `org-special-properties', `org-global-properties', `org-default-properties' or `org-file-properties' removed."
+  (if (not (listp props))
+      (message "Not an alist with properties: %s" props)
+    (let ((lst (copy-alist props)))
+      (mapc
+       (lambda (p)
+         (let ((key (car p)))           
+           (and (or
+                 (member key iorg-logic-ignore-properties)
+                 (member key org-special-properties)
+                 (member key org-global-properties)
+                 (member key org-default-properties)
+                 (member key org-file-properties)
+                 (not (non-empty-string-p key)))
+                (setq lst (delete (assoc key lst) lst)))))
+       props)
+      lst)))
+
+;; FIXME delete not iOrg related tags/properties
 (defun iorg-logic--postprocess-new-object ()
   "Postprocess new object at point.
-
+n
 Eliminate all tags that are member of the
 `iorg-logic-ignore-tags' list as well as all headline properties
-whose key is member of the `iorg-logic-ignore-property-keys'
+whose key is member of the `iorg-logic-ignore-properties'
 list. Convert all headline properties whose key ends with the
 `iorg-logic-class-property-suffix' into file-local-variables."
   (let* ((old-tags (assoc "TAGS" (org-entry-properties)))
@@ -129,7 +200,7 @@ list. Convert all headline properties whose key ends with the
        (let ((key (car association))
              (value (cdr association)))
          (and
-          (member key iorg-logic-ignore-property-keys)
+          (member key iorg-logic-ignore-properties)
           (org-entry-delete (point) key))
          (and
           (string-match-p
@@ -411,58 +482,6 @@ might appear in an objects property drawer."
                iorg-logic-class-filename-tail)
        (iorg-projects-get-project-info project :classes))))))
        
-
-
-(defun iorg-logic--build-object-from-class-hierarchy (project class)
-  "Return a buffer-string that contains an iOrg object with all todo's, tags and properties having default values. 
-
-The iOrg object is a top-level heading with a property drawer and
-optionally todo's and tags. It is constructed by combining all
-properties and tags from the object's CLASS in PROJECT and all
-its super-classes."
-  (with-temp-buffer
-    (org-mode)
-     (save-excursion
-       (iorg-logic-goto-class-file
-        project class 'not-create)
-       (save-restriction
-         (widen)
-         (show-all)
-         (iorg-util-goto-first-entry)
-         (ignore-errors
-         (org-copy-subtree))))
-     (yank)
-     (save-excursion
-       (iorg-logic-goto-class-file
-        project
-        (org-entry-get
-         (point) 
-        'not-create)))
-       
-    (buffer-substring-no-properties
-     (point-min) (point-max))))
-
-;; FIXME multiple superclasses
-(defun iorg-logic--cons-class-hierarchy-properties (project class props)
-  "Walk down the the class hierarchy of CLASS in PROJECT until 'root' is reached and accumulate the entry's properties."
-  (if (string=
-       (org-entry-get (point) "iorg-super")
-       iorg-logic-root-class)
-      (message "%S"
-               (list
-       (org-entry-properties)
-       props))
-    (let ((accum
-           (remove
-            nil (list (org-entry-properties) props)))
-          (superclass
-           (org-entry-get (point) "iorg-super")))
-      (message "accum: %S" accum)
-      (iorg-logic-goto-class-file project superclass)
-      (iorg-logic--cons-class-hierarchy-properties
-       project superclass accum))))
- 
-
     
 ;;; Public Functions (non-interactive)
 

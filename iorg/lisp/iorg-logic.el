@@ -106,6 +106,7 @@ constructed out of a class hierarchy."
 (defun iorg-logic--get-entry-properties-with-class-inheritance
   (project class props)
   "Walk down the the class hierarchy of CLASS in PROJECT until `iorg-logic-root-class' is reached and accumulate the `org-entry-properties' in PROPS."
+  (iorg-util-goto-first-entry)
   (if (string=
        (org-entry-get (point) "iorg-super")
        iorg-logic-root-class)
@@ -158,8 +159,7 @@ its super-classes (except those tags found in
   (with-temp-buffer
     (org-mode)
     ;; visit existing iOrg class file and copy its entry
-    (let* ((nconced-props nil)
-           (accum-props-filtered
+    (let* ((accum-props-filtered
             (save-excursion
               (iorg-logic-goto-class-file
                project class 'not-create)
@@ -169,12 +169,13 @@ its super-classes (except those tags found in
                 (iorg-util-goto-first-entry)
                 (ignore-errors
                   (org-copy-subtree)))
-              ;; get all entry properties of class and its superclasses
-              ;; and filter them
+              ;; get all org-entry-properties of class and its
+              ;; superclasses and filter them
               (iorg-logic--filter-properties
                (iorg-logic--get-entry-properties-with-class-inheritance
-                  project class nil)))))
-      ;; yank the copied subtree in temp buffer and delete property block
+                project class nil)))))
+      ;; yank the copied subtree in temp buffer and delete property
+      ;; block
       (yank)
       (delete-region
        (car (org-get-property-block))
@@ -195,8 +196,8 @@ its super-classes (except those tags found in
                ;; then add val to multivalued property
                (org-entry-add-to-multivalued-property
                 (point) key val))
-             ;; otherwise add p to entry's properties
-             (org-entry-put (point) key val)))
+           ;; otherwise add p to entry's properties
+           (org-entry-put (point) key val)))
        accum-props-filtered)
       ;; return complete buffer-string without properties   
       (buffer-substring-no-properties

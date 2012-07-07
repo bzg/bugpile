@@ -65,10 +65,24 @@
   :END:
   [2012-07-06 Fr 11:59]
 
+* TODO top
+  :PROPERTIES:
+  :object-foo: doo
+  :ID:       e5405f21-0059-4490-bf77-bd3dfa28fe85
+  :END:
+  [2012-07-06 Fr 11:59]
+           
+* TODO top
+  :PROPERTIES:
+  :object-foo: doo foo bar
+  :ID:       582b7a6e-59f1-4f40-9f68-b234faed28bd
+  :END:
+  [2012-07-06 Fr 11:59]
+
 * File Local Variables (iOrg class properties)              :file_local_vars:
   [2012-07-08 So 00:55]
 # Local Variables:
-# object-foo_ALL: "bar code"
+# object-foo_ALL: "doo foo bar"
 # middle-class: "extinct"
 # top-bar_ALL: "foo manchu"
 # End:

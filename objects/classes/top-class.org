@@ -3,9 +3,8 @@
 * TODO top
   :PROPERTIES:
   :ID:       72567fcc-9b6c-4539-8c84-0c86b75122c8
-  :top-foo:  bar
-  :top-bar:  foo
   :iorg-super: middle
-  :top-bar_ALL-C: foo manchu
+  :object-foo: doo
+  :object-foo_ALL-C: doo
   :END:
   [2012-07-06 Fr 11:59]

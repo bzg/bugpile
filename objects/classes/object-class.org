@@ -5,7 +5,6 @@
   :iorg-super: root
   :ID:       b035c285-0474-4e29-ae51-c2209e38029d
   :object-foo: bar
-  :object-foo_ALL-C: bar code
-  :object-bar: foo
+  :object-foo_ALL-C: bar 
   :END:
 

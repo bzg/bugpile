@@ -3,10 +3,8 @@
 * middle
   :PROPERTIES:
   :ID:       02462677-71c6-4f4d-8033-38e2314f2f4a
-  :middle-foo: bar
-  :middle-bar: foo
+  :object-foo: foo
   :iorg-super: object
-  :middle-class-C: extinct
-  :top-foo:  foo doo
+  :object-foo_ALL-C: foo
   :END:
   [2012-07-06 Fr 11:57]

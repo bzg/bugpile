@@ -209,9 +209,9 @@ its super-classes (except those tags found in
                   (point) key val)))
                ;; then add val to multivalued property
                (org-entry-add-to-multivalued-property
-                (point) key val))
-           ;; otherwise add p to entry's properties
-           (org-entry-put (point) key val)))
+                (point) key val)
+             ;; otherwise add p to entry's properties
+             (org-entry-put (point) key val))))
        accum-props-filtered)
       ;; return complete buffer-string without properties   
       (buffer-substring-no-properties

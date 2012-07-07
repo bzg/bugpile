@@ -202,7 +202,7 @@ its super-classes (except those tags found in
       (buffer-substring-no-properties
        (point-min) (point-max)))))
 
-;; 
+
 (defun iorg-logic--write-new-object-to-file (project class subtree)
   "Write object (SUBTREE) of type class CLASS in PROJECT in objects file. 
 
@@ -220,31 +220,15 @@ subtree as as last entry to the Org file."
     (insert subtree))
   (iorg-logic--postprocess-new-object))
 
-;; FIXME delete not iOrg related tags/properties
+
 (defun iorg-logic--postprocess-new-object ()
   "Postprocess new object at point.
 Convert all headline properties whose key ends with the
 `iorg-logic-class-property-suffix' into file-local-variables."
-  ;; (let* ((old-tags (assoc "TAGS" (org-entry-properties)))
-  ;;        (new-tags
-  ;;         (remove "" (split-string (cdr old-tags) ":"))))
-  ;;   ;; delete tags from the ignore list
-  ;;   (org-set-tags-to 
-  ;;    (mapconcat
-  ;;     (lambda (tag)
-  ;;       (and
-  ;;        (member tag iorg-logic-ignore-tags)
-  ;;        (delete tag new-tags)))
-  ;;     new-tags " "))
-  ;; delete properties from the ignore list and convert class
-  ;; properties into file-local-variables
   (mapc
    (lambda (association)
      (let ((key (car association))
            (value (cdr association)))
-       ;; (and
-       ;;  (member key iorg-logic-ignore-properties)
-       ;;  (org-entry-delete (point) key))
        (and
         (string-match-p
          (format iorg-logic-class-property-key-regexp
@@ -438,48 +422,19 @@ from the super-classes of the class are included too, therefore
 properties with other prefixes (like :iorg-xyz: or :html-xyz:)
 might appear in an objects property drawer."
 
-  (interactive "sProject: \nfClass: ")
+  (interactive "sProject: \nsClass: ")
   (cond ((not (and (non-empty-string-p project)
                    (assoc project iorg-projects-config)))
          (message "%s"
                   (concat "Project not registered in customizable "
                           "variable 'iorg-projects-config'")))
-        (not (non-empty-string-p class)
+        ((not (non-empty-string-p class))
          (message "Invalid class name"))
         (t
-         (with-current-buffer
-             (find-file
-              (or
-               (org-id-goto 
-                (getkey (format
-                         iorg-logic-object-regexp class)
-                        org-id-locations))
-               (expand-file-name
-                (format iorg-logic-object-regexp class)
-                (iorg-projects-get-project-info
-                 project :objects))))
-
-               
-
-          (org-val-goto class)
-          (org-check-for-org-mode)
-          (save-restriction
-            (widen)
-          (while
-              (progn
-                ;; do the work
-                (show-all) 
-                (iorg-util-goto-first-entry)
-                
-
-
-                ;; test the condition
-                (not
-                 (string=
-                  (car
-                   (org-entry-get-multivalued-property
-                    (point) iorg-super))
-                  "root")))))))))
+         (iorg-logic--write-new-object-to-file
+          project class
+          (iorg-logic--construct-object-in-temp-buffer
+           project class)))))
 
 ;; FIXME interactive - not-create y-or-n
 ;; FIXME eliminate redundancy

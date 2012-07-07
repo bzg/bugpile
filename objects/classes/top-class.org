@@ -1,6 +1,6 @@
 #+Title: The class definition for 'top'
 
-* top
+* TODO top
   :PROPERTIES:
   :ID:       72567fcc-9b6c-4539-8c84-0c86b75122c8
   :top-foo:  bar

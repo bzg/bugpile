@@ -72,14 +72,12 @@ should be replaced by the name of the class, e.g. 'task'."
   :group 'iorg-logic
   :type 'string)
 
-(defcustom iorg-logic-class-property-key-regexp
-  (lambda ()
-    (format "^:?.+%s" iorg-logic-class-property-suffix))
+(defcustom iorg-logic-class-property-key-regexp "^:?.+%s%s"
   "Regexp that recognizes property keys in alists that end with
 the `iorg-logic-class-property-suffix', identifying them as
 class-properties."
   :group 'iorg-logic
-  :type 'function)
+  :type 'string)
 
 (defcustom iorg-logic-ignore-tags '("abstract")
   "List of strings that should be ignored when an object is
@@ -122,10 +120,33 @@ constructed out of a class hierarchy."
       (iorg-logic-goto-class-file project superclass)
       (iorg-logic--get-entry-properties-with-class-inheritance
        project superclass accum))))
+
+;; FIXME: properties missing?
+(defun iorg-logic--filter-properties (props)
+  "Returns PROPS (an alist) with all properties whose keys are member of `iorg-logic-ignore-properties', `org-special-properties', `org-global-properties', `org-default-properties' or `org-file-properties' removed."
+  (if (not (listp props))
+      (message "Not an alist with properties: %s" props)
+    (let ((lst (copy-alist props)))
+      (mapc
+       (lambda (p)
+         (let ((key (car p)))           
+           (and (or
+                 (member key iorg-logic-ignore-properties)
+                 (member key org-special-properties)
+                 (member key org-global-properties)
+                 (member key org-default-properties)
+                 (member key org-file-properties)
+                 (not (non-empty-string-p key)))
+                (setq lst (delete (assoc key lst) lst)))))
+       props)
+      lst)))
  
 ;; FIXME deal with non existing class
 (defun iorg-logic--construct-object-in-temp-buffer (project class)
-  "Return a buffer-string that contains an iOrg object with all todo's, tags and properties having default values. 
+  "Return a buffer-string that contains an iOrg object of CLASS in PROJECT.
+
+The iOrg object is a subtree with all todo's, tags and properties
+having the default values set in CLASS and its superclasses.
 
 The iOrg object is a top-level heading with a property drawer and
 optionally todo's and tags. It is constructed by combining all
@@ -153,12 +174,11 @@ its super-classes (except those tags found in
               (iorg-logic--filter-properties
                (iorg-logic--get-entry-properties-with-class-inheritance
                   project class nil)))))
-      ;; yank the copied subtree into the temp buffer and delete :ID
-      ;; and :iorg-super properties of class
+      ;; yank the copied subtree in temp buffer and delete property block
       (yank)
-      ;; FIXME why?? 
-      (org-entry-delete (point) "ID")
-      (org-entry-delete (point) "iorg-super")      
+      (delete-region
+       (car (org-get-property-block))
+       (cdr (org-get-property-block)))       
       ;; insert the accumulated and filtered class properties
       (mapc
        (lambda (p)
@@ -182,61 +202,57 @@ its super-classes (except those tags found in
       (buffer-substring-no-properties
        (point-min) (point-max)))))
 
-;; FIXME: properties missing?
-(defun iorg-logic--filter-properties (props)
-  "Returns PROPS (an alist) with all properties whose keys are member of `iorg-logic-ignore-properties', `org-special-properties', `org-global-properties', `org-default-properties' or `org-file-properties' removed."
-  (if (not (listp props))
-      (message "Not an alist with properties: %s" props)
-    (let ((lst (copy-alist props)))
-      (mapc
-       (lambda (p)
-         (let ((key (car p)))           
-           (and (or
-                 (member key iorg-logic-ignore-properties)
-                 (member key org-special-properties)
-                 (member key org-global-properties)
-                 (member key org-default-properties)
-                 (member key org-file-properties)
-                 (not (non-empty-string-p key)))
-                (setq lst (delete (assoc key lst) lst)))))
-       props)
-      lst)))
+;; 
+(defun iorg-logic--write-new-object-to-file (project class subtree)
+  "Write object (SUBTREE) of type class CLASS in PROJECT in objects file. 
+
+If objects file doesn't exist, create it, otherwise append
+subtree as as last entry to the Org file."
+  (iorg-logic-goto-objects-file project class)
+  (if (string= (buffer-string) "")
+      (progn
+        (goto-char (point-min))
+        (insert (format iorg-logic-objects-headline-format-string
+                        class))
+        (newline)
+        (insert subtree))
+    (goto-char (point-max))
+    (insert subtree))
+  (iorg-logic--postprocess-new-object))
 
 ;; FIXME delete not iOrg related tags/properties
 (defun iorg-logic--postprocess-new-object ()
   "Postprocess new object at point.
-n
-Eliminate all tags that are member of the
-`iorg-logic-ignore-tags' list as well as all headline properties
-whose key is member of the `iorg-logic-ignore-properties'
-list. Convert all headline properties whose key ends with the
+Convert all headline properties whose key ends with the
 `iorg-logic-class-property-suffix' into file-local-variables."
-  (let* ((old-tags (assoc "TAGS" (org-entry-properties)))
-         (new-tags
-          (remove "" (split-string (cdr old-tags) ":"))))
-    ;; delete tags from the ignore list
-    (org-set-tags-to 
-     (mapconcat
-      (lambda (tag)
-        (and
-         (member tag iorg-logic-ignore-tags)
-         (delete tag new-tags)))
-      new-tags " "))
-    ;; delete properties from the ignore list and convert class
-    ;; properties into file-local-variables
-    (mapc
-     (lambda (association)
-       (let ((key (car association))
-             (value (cdr association)))
-         (and
-          (member key iorg-logic-ignore-properties)
-          (org-entry-delete (point) key))
-         (and
-          (string-match-p
-           iorg-logic-class-property-key-regexp  key)
-          (add-file-local-variable key value)
-          (org-entry-delete (point) key))))
-     (org-entry-properties))))
+  ;; (let* ((old-tags (assoc "TAGS" (org-entry-properties)))
+  ;;        (new-tags
+  ;;         (remove "" (split-string (cdr old-tags) ":"))))
+  ;;   ;; delete tags from the ignore list
+  ;;   (org-set-tags-to 
+  ;;    (mapconcat
+  ;;     (lambda (tag)
+  ;;       (and
+  ;;        (member tag iorg-logic-ignore-tags)
+  ;;        (delete tag new-tags)))
+  ;;     new-tags " "))
+  ;; delete properties from the ignore list and convert class
+  ;; properties into file-local-variables
+  (mapc
+   (lambda (association)
+     (let ((key (car association))
+           (value (cdr association)))
+       ;; (and
+       ;;  (member key iorg-logic-ignore-properties)
+       ;;  (org-entry-delete (point) key))
+       (and
+        (string-match-p
+         (format iorg-logic-class-property-key-regexp
+                 key
+                 iorg-logic-class-property-suffix))
+        (add-file-local-variable key value))
+       (org-entry-delete (point) key)))
+   (org-entry-properties)))
     
 ;;; Public Functions (interactive)
 

@@ -1,0 +1,13 @@
+#+Title: The objects file for class 'top'
+* TODO top
+  :PROPERTIES:
+  :object-foo: bar
+  :object-foo_ALL: bar code
+  :object-bar: foo
+  :middle-foo: bar
+  :middle-bar: foo
+  :top-foo:  bar
+  :top-bar:  foo
+  :top-bar_ALL: foo manchu
+  :END:
+  [2012-07-06 Fr 11:59]

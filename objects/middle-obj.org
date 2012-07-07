@@ -1,0 +1,28 @@
+#+Title: The objects file for class 'middle'
+* middle
+  :PROPERTIES:
+  :object-foo: bar
+  :object-foo_ALL: bar code
+  :object-bar: foo
+  :middle-foo: bar
+  :middle-bar: foo
+  :END:
+  [2012-07-06 Fr 11:57]
+* middle
+  :PROPERTIES:
+  :object-foo: bar
+  :object-foo_ALL: bar code
+  :object-bar: foo
+  :middle-foo: bar
+  :middle-bar: foo
+  :END:
+  [2012-07-06 Fr 11:57]
+* middle
+  :PROPERTIES:
+  :object-foo: bar
+  :object-foo_ALL: bar code
+  :object-bar: foo
+  :middle-foo: bar
+  :middle-bar: foo
+  :END:
+  [2012-07-06 Fr 11:57]

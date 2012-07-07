@@ -157,10 +157,10 @@ current buffer or FILE."
           (find-file-existing file)
         (current-buffer))
     (org-goto-line
-     (line-number-at-pos (point-max))
-     (or (looking-at org-outline-regexp)
-         (re-search-backward org-outline-regexp-bol nil t))
-     (beginning-of-line))))
+     (line-number-at-pos (point-max)))
+    (or (looking-at org-outline-regexp)
+        (re-search-backward org-outline-regexp-bol nil t))
+    (beginning-of-line)))
 
 
 (defmacro iorg-util-in-file (file &rest body)

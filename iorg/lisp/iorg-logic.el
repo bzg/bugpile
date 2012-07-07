@@ -72,7 +72,7 @@ should be replaced by the name of the class, e.g. 'task'."
   :group 'iorg-logic
   :type 'string)
 
-(defcustom iorg-logic-class-property-key-regexp "^:?.+%s%s"
+(defcustom iorg-logic-class-property-key-regexp "\\(^:?.+\\)\\(%s\\)"
   "Regexp that recognizes property keys in alists that end with
 the `iorg-logic-class-property-suffix', identifying them as
 class-properties."
@@ -96,6 +96,20 @@ constructed out of a class hierarchy."
   "String that is used as the (pseudo) root class in the iOrg class hierarchy. There does not exist a class with that name, it just signals that the root of the hierarchy tree is reaches."
   :group 'iorg-logic
   :type 'string)
+
+(defcustom iorg-logic-file-local-vars-tag ":file_local_vars"
+  "String that is used to tag the (last) entry in an iOrg class file that contains the file local variables declaration."
+  :group 'iorg-logic
+  :type 'string)
+
+(defcustom iorg-logic-file-local-vars-headline
+  "File Local Variables (iOrg class properties)"
+  "String that is used as headline for the (last) entry in an iOrg class file that contains the file local variables declaration."
+  :group 'iorg-logic
+  :type 'string)
+
+
+
 
 ;;;; Functions
 
@@ -209,35 +223,118 @@ its super-classes (except those tags found in
 
 If objects file doesn't exist, create it, otherwise append
 subtree as as last entry to the Org file."
-  (iorg-logic-goto-objects-file project class)
-  (if (string= (buffer-string) "")
-      (progn
-        (goto-char (point-min))
-        (insert (format iorg-logic-objects-headline-format-string
-                        class))
+  (save-excursion
+    (iorg-logic-goto-objects-file project class)
+    (if (string= (buffer-string) "")
+        ;; objects file is empty
+        (progn
+          (goto-char (point-min))
+          (insert (format iorg-logic-objects-headline-format-string
+                          class))
+          (newline 2)
+          (insert subtree)
+          (message "insert subtree: %s" (point))
+          ;; postprocess new object
+          (iorg-logic--postprocess-new-object)
+          (message "after postprocess: %s" (point))
+          ;; create global ID for new object
+          (org-id-get-create))
+      ;; objects file is not empty
+      (iorg-util-goto-last-entry)
+      ;; is last entry for file-local-variables?
+      (if (member
+           (iorg-logic--normalize-tag-string
+            iorg-logic-file-local-vars-tag)
+           (org-get-tags))
+          ;; yes
+          (progn
+            (newline 1)
+            (forward-line -1)
+            (insert subtree)
+            ;; postprocess new object
+            (iorg-logic--postprocess-new-object 'file-local-var)
+            ;; create global ID for new object
+            (org-id-get-create))
+        ;; no
+        (goto-char
+         (org-entry-end-position))
         (newline)
-        (insert subtree))
-    (goto-char (point-max))
-    (insert subtree))
-  (iorg-logic--postprocess-new-object))
+        (insert subtree)
+        ;; postprocess new object
+        (iorg-logic--postprocess-new-object)
+        ;; create global ID for new object
+        (org-id-get-create)))))
+        
+(defun iorg-logic--normalize-tag-string (tag)
+  "Return TAG without leading ':'"
+  (cond ((not (non-empty-string-p tag))
+         (message
+          "tag %s not a non-empty string" tag))
+        ((string-match ":.+" tag)
+         (cadr (split-string tag ":")))
+        (t tag)))
 
-
-(defun iorg-logic--postprocess-new-object ()
+(defun iorg-logic--postprocess-new-object (&optional file-local-var)
   "Postprocess new object at point.
-Convert all headline properties whose key ends with the
-`iorg-logic-class-property-suffix' into file-local-variables."
-  (mapc
-   (lambda (association)
-     (let ((key (car association))
-           (value (cdr association)))
-       (and
-        (string-match-p
-         (format iorg-logic-class-property-key-regexp
-                 key
-                 iorg-logic-class-property-suffix))
-        (add-file-local-variable key value))
-       (org-entry-delete (point) key)))
-   (org-entry-properties)))
+
+Convert all headline properties whose keys end with the
+ `iorg-logic-class-property-suffix' into file-local-variables
+ with normalized key names and delete them afterwards. If
+ FILE-LOCAL-VAR is non nil, assume the last entry in the file is
+ tagged with `iorg-logic-file-local-vars-tag' and holds
+ the definitions of the file local variables."
+  ;; no last entry for file-local-vars
+  (save-excursion
+    (and (not file-local-var)
+         (save-excursion
+           (goto-char
+            (org-entry-end-position))
+           (newline)
+           (org-insert-heading)
+           (insert
+            iorg-logic-file-local-vars-headline)
+           (org-set-tags-to 
+            iorg-logic-file-local-vars-tag)))
+    ;; process entry properties
+    (mapc
+     (lambda (association)
+       (let ((key (car association))
+             (value (cdr association)))
+         ;; is key class-property?
+         (when (string-match-p
+                (format iorg-logic-class-property-key-regexp
+                        iorg-logic-class-property-suffix)
+                key)
+           ;; add association to file-local-variables
+           (save-excursion
+             (add-file-local-variable
+              (eval
+               `(quote
+                ,(intern
+                  (iorg-logic--normalize-property-key-name key))))
+              value))
+           ;; delete association from class-properties
+           (org-entry-delete (point) key))))
+     (iorg-logic--filter-properties
+      (org-entry-properties)))))
+
+(defun iorg-logic--normalize-property-key-name (key)
+  "Transform the KEY of an org-entry-property into its normal form. 
+
+All iOrg specific additions to the KEY name (like `iorg-logic-class-property-suffix') are removed, so that Org mode (and human readers) don't get confused by them."
+  (if (not (non-empty-string-p key))
+      (message "key '%s' must be a non-empty string")
+    ;; remove class-property suffix
+    (and
+     (string-match
+      (format 
+       iorg-logic-class-property-key-regexp
+       iorg-logic-class-property-suffix)
+      key)
+     (car
+      (split-string
+       key
+       iorg-logic-class-property-suffix)))))
     
 ;;; Public Functions (interactive)
 

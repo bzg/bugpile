@@ -26,3 +26,21 @@
   :middle-bar: foo
   :END:
   [2012-07-06 Fr 11:57]
+
+* middle
+  :PROPERTIES:
+  :object-foo: bar
+  :object-bar: foo
+  :middle-foo: bar
+  :middle-bar: foo
+  :top-foo:  foo doo
+  :ID:       98fea1ec-2820-4924-895b-d79b5e195ecc
+  :END:
+  [2012-07-06 Fr 11:57]
+
+* File Local Variables (iOrg class properties)              :file_local_vars:
+  [2012-07-08 So 01:02]
+# Local Variables:
+# object-foo_ALL: "bar code"
+# middle-class: "extinct"
+# End:

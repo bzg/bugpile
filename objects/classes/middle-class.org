@@ -6,5 +6,7 @@
   :middle-foo: bar
   :middle-bar: foo
   :iorg-super: object
+  :middle-class-C: extinct
+  :top-foo:  foo doo
   :END:
   [2012-07-06 Fr 11:57]

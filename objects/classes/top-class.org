@@ -6,6 +6,6 @@
   :top-foo:  bar
   :top-bar:  foo
   :iorg-super: middle
-  :top-bar_ALL: foo manchu
+  :top-bar_ALL-C: foo manchu
   :END:
   [2012-07-06 Fr 11:59]

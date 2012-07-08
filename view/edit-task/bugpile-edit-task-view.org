@@ -30,6 +30,4 @@
 
 /Edit an existing Task (Bug-Report or Feature-Request)/
 
-* anchor                                                    :noexport:anchor:
-
 

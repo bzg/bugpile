@@ -279,8 +279,7 @@ customizable in 'iorg-projects-config'.
    automatic exported to html, and reexported, when newer than html
    files. 
 5. open http://localhost:8008 in a browser to see the index.html page
-   of the bugpile project. following the links and buttons on this
-   page allows you to test bugpile/iorg. 
+   of the bugpile project.
 6. M-x iorg-controller-stop-project-servers RET bugpile to stop both
    servers. 
 7. goto 3. and start the servers again. if that doesn't really work -
@@ -288,9 +287,17 @@ customizable in 'iorg-projects-config'.
    be _restarted_ to get rid of code loaded during the first launch?
 
 ** play with bugpile
-after re-launch, try the following: 
+after re-launch (and most likely restart of Emacs), try the following:
 
-1. 
+1. add the feature-obj.org and bug-obj.org files to you agenda-files.
+   actually, to use org tag and property search in a project, all the
+   xyz-obj.org files in /bugpile/objects/ should be in the agenda file
+   list - and only those. (this caused a lot of trouble on my side, is
+   it buggy or unstable to change the agenda files?)
+2. open http://localhost:8008 in a browser again to see the index.html
+   page of the bugpile project.
+3. click on open new task
+ 
 
 
 

@@ -120,19 +120,19 @@ ORG-FILE is given as absolute file-name"
            (html-file
             (expand-file-name html-file-nondir org-file-dir)))           
       (if (and (member html-file-nondir dir-files)
-               (not (file-newer-than-file-p org-file html-file))                
-               html-file)
-          (save-window-excursion
-            (with-current-buffer (find-file org-file)
-              (and
-               (org-check-for-org-mode)
-               (org-export-to-file
-                ;; TODO replace e-html with iorg
-                'e-html
-                html-file)
-               ;; TODO Erics solution
-               (kill-buffer (find-file org-file))))
-            html-file)))))
+               (not (file-newer-than-file-p org-file html-file)))
+          html-file)
+      (save-window-excursion
+        (with-current-buffer (find-file org-file)
+          (and
+           (org-check-for-org-mode)
+           (org-export-to-file
+            ;; TODO replace e-html with iorg
+            'e-html
+            html-file)
+           ;; TODO Erics solution
+           (kill-buffer (find-file org-file))))
+        html-file))))
 
 
 (defun iorg-controller--serve-docroot (project proj-config &rest args)
@@ -259,6 +259,23 @@ servers."
         (cdr (assoc :docroot-port proj-config)))))))
 
 ;;; Public Functions (non-interactive)              
+
+(defun iorg-controller-edit-handler (httpcon)
+  "Generic handler for http requests to edit the View page.
+
+This functions uses the information in HTTPCON to return the page
+from which the request was sent in editable form.")
+
+(defun iorg-controller-send-handler (httpcon)
+  "Generic handler for http requests that send edited page data.
+
+This functions uses the information in HTTPCON to store the
+edited data and return the page in actualisized form.")
+
+(defun iorg-controller-reset-handler (httpcon)
+  "Generic handler for http requests to reset the edited page.
+
+This functions uses the information in HTTPCON to reset the edited page to its original state before the editied information is send to the server.")
 
 
 ;;; Public Functions (obsolete?)              

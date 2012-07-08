@@ -32,32 +32,11 @@
 /Select Tasks in the Result List/
 /and choose an Action to take on them/
 
-* Task 
+* Resultlist
   :PROPERTIES:
   :ID:       2e4d1477-2ea2-400e-b937-14408d7e2285
   :END:
 
-#+begin_src emacs-lisp
-(setq org-columns-default-format
- "%40ITEM(Task) %TODO %object-foo %html-edit %TAGS")
-#+end_src
-
-#+BEGIN: columnview :hlines 1 :id dd369e45-c335-4d14-a8e0-06ae854aada3
-| Task   | TODO | object-foo | html-edit | TAGS      |
-|--------+------+------------+-----------+-----------|
-| *      |      |            |           |           |
-| ** bug | TODO | bug        | link      | :foo:bar: |
-| ** bug | TODO | task       | link      | :foo:bar: |
-| ** bug | TODO | bug        | button    | :foo:bar: |
-| ** bug | TODO | html       | button    | :foo:bar: |
-| ** bug | TODO | obj        | link      | :foo:bar: |
-| ** bug | TODO | bug        | link      | :foo:bar: |
-| ** bug | TODO | task       | button    | :foo:bar: |
-#+END:
 
 
-PS
-This does not work. How to specify a file for :id global? 
-#+BEGIN: columnview :hlines 1 :id global file:"/home/tj/git/bugpile/objects/bug-obj.org""
 
-#+END:

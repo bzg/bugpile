@@ -31,6 +31,9 @@
 
 /Open a new Task (Bug-Report or Feature-Request)/
 
-* anchor                                                    :noexport:anchor:
+* Open New Task
+  :PROPERTIES:
+  :ID:       302eb833-aec6-47a9-a699-72b82e56e51f
+  :END:
 
 

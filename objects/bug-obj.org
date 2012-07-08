@@ -1,60 +1,56 @@
 #+Title: The objects file for class 'bug'
 
-*      
+* TODO bug                                                          :foo:bar:
   :PROPERTIES:
-  :ID:       dd369e45-c335-4d14-a8e0-06ae854aada3
+  :object-foo: bug task html obj
+  :html-headline-forms: notext
+  :html-edit: link
+  :html-edit-value: Edit
+  :html-send-button: Send
+  :html-reset-button: Reset
+  :task-author: 
+  :task-closed: 
+  :task-opened: 
+  :task-reopened: 
+  :task-assigned-to: 
+  :task-project: 
+  :bug-is-upstream: no
+  :bug-need-skills: intermediate
+  :ID:       40717d2f-4187-4bca-a242-52666ed99990
   :END:
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: bug
-   :html-edit: link 
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: task
-   :html-edit: link 
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
 
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: bug
-   :html-edit: button
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
 
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: html
-   :html-edit: button
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
-
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: obj
-   :html-edit: link 
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
-
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: bug
-   :html-edit: link 
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
-
-** TODO bug                                                         :foo:bar:
-   :PROPERTIES:
-   :object-foo: task
-   :html-edit: button
-   :ID:       ed9f0621-f636-48cb-bb5f-8a639cfc35a5
-   :END:
+* TODO bug                                                          :foo:bar:
+  :PROPERTIES:
+  :object-foo: bug task html obj
+  :html-headline-forms: notext
+  :html-edit: link
+  :html-edit-value: Edit
+  :html-send-button: Send
+  :html-reset-button: Reset
+  :task-author: 
+  :task-closed: 
+  :task-opened: 
+  :task-reopened: 
+  :task-assigned-to: 
+  :task-project: 
+  :bug-is-upstream: no
+  :bug-need-skills: intermediate
+  :ID:       ae32d1c4-4669-472f-a354-6adc192a1671
+  :END:
 
 
 * File Local Variables (iOrg class properties)              :file_local_vars:
 # Local Variables:
 # object-foo_ALL: "bug task html obj"
 # html-edit_ALL: "link button"
+# html-headline_forms_ALL: "all notext todo text tag"
+# html-index-action: "nil"
+# html-edit-action: "nil"
+# html-send-action: "nil"
+# html-reset-action: "nil"
+# task-priority_ALL: "urgent high medium low"
+# task-project_ALL: "org babel agenda exporter iorg"
+# bug-is-upstream_ALL: "yes no maybe"
+# bug-need-skills_ALL: "beginner intermediate advanced unknown"
 # End:

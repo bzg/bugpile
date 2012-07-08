@@ -6,6 +6,9 @@
 
 ;;; Consts
 
+(defconst iorg-logic-dblock-format-string 
+  "#+BEGIN: columnview :hlines 1 :id %s \n\n#+END:"
+  "String used by the `format' function to construct a dynamic block Pointing To a global ID that replaces the format specification '%s'") 
 ;;; Vars
 
 ;;; Customs
@@ -108,6 +111,14 @@ constructed out of a class hierarchy."
   :group 'iorg-logic
   :type 'string)
 
+(defcustom iorg-logic-dblock-collect-file-id
+  "dd369e45-c335-4d14-a8e0-06ae854aada3"
+  "Global ID of utility file '/iorg/lisp/iorg-dblock-collect.org'
+used to temporarily collect results of object searches and then
+update a dynamic block in an iOrg view file that points to this
+ID."
+  :group 'iorg-logic
+  :type 'string)
 
 ;;;; Functions
 

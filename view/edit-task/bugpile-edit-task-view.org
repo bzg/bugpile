@@ -1,4 +1,5 @@
-#+OPTIONS:    H:nil num:nil toc:2 \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
+#+OPTIONS:    H:nil num:nil toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
+#+OPTIONS:    author:nil email:nil creator:nil timestamp:nil
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate hideblocks
 #+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
 #+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
@@ -30,4 +31,7 @@
 
 /Edit an existing Task (Bug-Report or Feature-Request)/
 
-
+* Edit Task
+  :PROPERTIES:
+  :ID:       3675e953-7f75-4319-a1e5-dfb09cadea1f
+  :END:

@@ -19,7 +19,7 @@ loads all other iOrg source files.
 M-x customize-variable RET iorg-projects-config
 adapt the path of :dir in project "bugpile" to your settings
 
-* Make class hierarchy
+* Make class and objects (test logic)
 ** object
 The abstract 'object' class is already included in the repo, only
 action required: visit it in /bugpile/objects/classes/ and add an
@@ -233,7 +233,7 @@ FEATURE
   :html-reset-button: Reset
   :task-author: 
   :task-closed: 
-  :task-opened: 
+  :Task-opened: 
   :task-reopened: 
   :task-assigned-to: 
   :task-project: 
@@ -258,9 +258,43 @@ FEATURE
 #+end_src
 
 
-* Start elnode servers
-** serve docroot
-** serve init.org
+* Start elnode servers (test controller and logic)
+Since I could not achieve that the same elnode server serves the
+static html files from projects docroot and the users interactive http
+requests (doesn't make no sense anyway?), launching an iOrg project
+now starts 2 elnode servers, one for each task. Hosts and ports are
+customizable in 'iorg-projects-config'. 
+
+** launch bugpile
+1. goto iorg-controller-launch-project in
+   /bugpile/iorg/lisp/iorg-controller.el and read the docstring.
+2. (optional) goto iorg-projects-config' in
+   /bugpile/iorg/lisp/iorg-projects/iorg-projects.el and check the
+   host/port configuration for bugpile project and docroot. You can
+   customize this variable too. 
+3. M-x iorg-controller-launch-project RET bugpile
+4. open http://localhost:8009 in a browser to see the automatic index
+   of bugpiles docroot (and witness an elnode bug - the files in the
+   docroot are not served). Note that .org files in docroot are
+   automatic exported to html, and reexported, when newer than html
+   files. 
+5. open http://localhost:8008 in a browser to see the index.html page
+   of the bugpile project. following the links and buttons on this
+   page allows you to test bugpile/iorg. 
+6. M-x iorg-controller-stop-project-servers RET bugpile to stop both
+   servers. 
+7. goto 3. and start the servers again. if that doesn't really work -
+   is that a bug (of elnode?)? or is it that _Emacs_ as a server has to
+   be _restarted_ to get rid of code loaded during the first launch?
+
+** play with bugpile
+after re-launch, try the following: 
+
+1. 
+
+
+
+
  
      
    

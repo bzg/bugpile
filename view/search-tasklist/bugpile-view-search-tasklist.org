@@ -3,7 +3,7 @@
 #+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate hideblocks
 #+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
 #+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
-#+TITLE:      Bugpile - A Bugtracker for Org Mode
+#+TITLE:      Bugpile - Search Tasklist
 #+AUTHOR:     Thorsten Jolitz
 #+EMAIL:      tj[at]data-driven[dot]de
 #+LANGUAGE:   en
@@ -29,14 +29,9 @@
 #   </div>
 # #+end_html
 
-/Bug-Reports and Feature-Requests for GNU Emacs Org Mode/
+/Search the Tasks (Bug-Reports or Feature-Requests)/
+/stored in Bugpile/
 
-* Tasks (Bugs and Features)
-** [[http://localhost:8008/open-new-task][Open New Task]]
+* anchor                                                    :noexport:anchor:
 
-| How to write a good bug report    | [[http://localhost:8009/guidelines.html][guidelines]]    |
-| Report a bug or request a feature | [[http://localhost:8008/open-new-task][open new task]] |
 
-** [[http://localhost:8008/search-tasklist][Search Tasklist]]
-
-| Search and edit bug reports and feature requests | [[http://localhost:8008/search-tasklist][ search tasklist]] |

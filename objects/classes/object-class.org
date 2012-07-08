@@ -1,10 +1,9 @@
 #+Title: The abstract class definition for 'object' 
 
-* object                                                       :abstract:bar: 
+* object                                                       :abstract:
   :PROPERTIES:
   :iorg-super: root
-  :ID:       b035c285-0474-4e29-ae51-c2209e38029d
-  :object-foo: bar
-  :object-foo_ALL-C: bar 
+  :object-foo: obj
+  :object-foo_ALL-C: obj
   :END:
 

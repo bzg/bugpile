@@ -109,12 +109,12 @@ constructed out of a class hierarchy."
   :type 'string)
 
 
-
-
 ;;;; Functions
 
 ;;; Helper Functions
 
+;; FIXME extremely slow - due to recursion?
+;; FIXME accumulate tags over class hierarchy
 ;; FIXME multiple superclasses
 ;; FIXME avoid endless recursion if 'root' not found
 (defun iorg-logic--get-entry-properties-with-class-inheritance
@@ -349,8 +349,8 @@ In the iOrg context, a class is an Org file in the projects
 'classes' directory which is defined under the key :classes in
 the customizable variable 'iorg-projects-config'. It has a
 headline and one top-level entry. If TODO is non nil, the entry
-has a todo state. (Optional) headline tags for the are read from
-the TAGS-AND-PROPERTIES, that are associations like (:key .
+has a todo state. (Optional) headline tags for the class are read
+from TAGS-AND-PROPERTIES, that are associations like (:key .
 \"value1 value2\"), with one of them (optionally) defining the
 tags (:tags \"tag1\" \"tag2\").
 

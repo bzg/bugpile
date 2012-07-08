@@ -1,0 +1,53 @@
+#+Title: The objects file for class 'feature'
+
+* TODO feature                                                      :kung:fu:
+  :PROPERTIES:
+  :object-foo: feature task html obj
+  :html-headline-forms: notext
+  :html-edit: link
+  :html-edit-value: Edit
+  :html-send-button: Send
+  :html-reset-button: Reset
+  :task-author: 
+  :task-closed: 
+  :task-opened: 
+  :task-reopened: 
+  :task-assigned-to: 
+  :task-project: 
+  :feature-category: nice-to-have
+  :task-priority: low
+  :ID:       a30e39b2-1e13-427d-b8c9-f1a86ee11703
+  :END:
+
+* TODO feature                                                      :kung:fu:
+  :PROPERTIES:
+  :object-foo: feature task html obj
+  :html-headline-forms: notext
+  :html-edit: link
+  :html-edit-value: Edit
+  :html-send-button: Send
+  :html-reset-button: Reset
+  :task-author: 
+  :task-closed: 
+  :task-opened: 
+  :task-reopened: 
+  :task-assigned-to: 
+  :task-project: 
+  :feature-category: nice-to-have
+  :task-priority: low
+  :ID:       5e46a165-bb09-41c7-bee8-f129445ab47f
+  :END:
+
+* File Local Variables (iOrg class properties)              :file_local_vars:
+# Local Variables:
+# object-foo_ALL: "feature task html obj"
+# html-edit_ALL: "link button"
+# html-headline_forms_ALL: "all notext todo text tag"
+# html-index-action: "nil"
+# html-edit-action: "nil"
+# html-send-action: "nil"
+# html-reset-action: "nil"
+# task-priority_ALL: "urgent high medium low"
+# task-project_ALL: "org babel agenda exporter iorg"
+# feature-category_ALL: "must-nave nice-to-have may-be-once"
+# End:

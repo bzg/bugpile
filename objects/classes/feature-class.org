@@ -1,0 +1,12 @@
+#+Title: The class definition for 'feature'
+
+* TODO feature                                                      :kung:fu:
+  :PROPERTIES:
+  :ID:       e0909298-8319-49d8-b7cf-8f0c588044d1
+  :iorg-super: task
+  :object-foo: feature
+  :object-foo_ALL-C: feature
+  :feature-category_ALL-C: must-nave nice-to-have may-be-once
+  :feature-category: nice-to-have
+  :task-priority: low
+  :END:

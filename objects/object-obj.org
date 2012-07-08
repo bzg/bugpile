@@ -1,8 +1,0 @@
-#+Title: The objects file for class 'object'
-* object                                                       :abstract:bar: 
-  :PROPERTIES:
-  :object-foo: bar
-  :object-foo_ALL: bar code
-  :object-bar: foo
-  :END:
-

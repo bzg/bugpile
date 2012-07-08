@@ -1,18 +1,18 @@
-#+Title: The class definition for 'task' 
+#+Title: The class definition for 'task'
 
-* TODO task                                                             :bar:
-** class
+* TODO task                                                         :abstact:
   :PROPERTIES:
+  :ID:       a37f5d12-dc2b-41db-b4eb-69e10832f56b
   :iorg-super: html
-  :task-type_ALL: bug feature
-  :task-priority_ALL: low medium high urgent
-  :ID:       5bccaee7-201b-4f3d-8430-4dbf79064761
-  :END:
-** instance
-  :PROPERTIES:
-  :task-type: bug
-  :task-author: nil
-  :task-priority: medium
+  :object-foo: task
+  :object-foo_ALL-C: task
+  :task-author: 
+  :task-priority_ALL-C: urgent high medium low
+  :task-closed: 
+  :task-opened: 
+  :task-reopened: 
+  :task-assigned-to: 
+  :task-project_ALL-C: org babel agenda exporter iorg
+  :task-project: 
   :END:
 
-     

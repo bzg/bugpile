@@ -1,0 +1,14 @@
+#+Title: The class definition for 'bug'
+
+* TODO bug                                                          :foo:bar:
+  :PROPERTIES:
+  :ID:       72127249-c3a2-4a71-a35d-b1ef00cbfb25
+  :iorg-super: task
+  :object-foo: bug
+  :object-foo_ALL-C: bug
+  :bug-is-upstream_ALL-C: yes no maybe
+  :bug-is-upstream: no
+  :bug-need-skills_ALL-C: beginner intermediate advanced unknown
+  :bug-need-skills: intermediate
+  :END:
+

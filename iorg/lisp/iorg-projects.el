@@ -124,6 +124,8 @@ as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
                    bugpile-controller-show-task-handler)
                   ("^edit-task/$" .
                    bugpile-controller-edit-task-handler)
+                  ("^save-edits/$" .
+                  bugpile-controller-save-edits-handler)
                   ("^take-action-on-selected-tasks/$" .
                    bugpile-controller-take-action-on-selected-tasks-handler)
                   ))

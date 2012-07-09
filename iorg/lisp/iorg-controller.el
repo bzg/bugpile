@@ -267,7 +267,8 @@ servers."
 (defun org-dblock-write:bugpile-view-show-task (params)
   "Update dynamic block in file bugpile-view-show-task.org"
   (let ((id (plist-get params :id)))
-    ;; (insert "\n#+begin_src org \n")
+    ;; nested blocks are not exported?
+    ;; (insert "\n#+begin_src org \n") 
     (save-excursion
       (org-id-goto id)
       (org-copy-subtree))

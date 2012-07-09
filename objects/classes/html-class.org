@@ -3,7 +3,7 @@
 *  html                                                    :abstract:
   :PROPERTIES:
   :iorg-super: object
-  :html-form: iorg-controller-edit-handler
+  :html-form: http://localhost:8008/save-edits
   :html-button-value: submit
   :object-foo: html
   :object-foo_ALL-C: html

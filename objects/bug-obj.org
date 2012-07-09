@@ -1,9 +1,9 @@
 #+Title: The objects file for class 'bug'
 
-* TODO bug                                                          :2bug:iorg:
+* TODO bug                                                          :2bug:
   :PROPERTIES:
   :object-foo: bug task html obj
-  :html-form: iorg-controller-edit-handler
+  :html-form: http://localhost:8008/save-edits
   :html-button-value: edit
   :task-author: 
   :task-closed: 
@@ -17,10 +17,10 @@
   :END:
 
 
-* TODO bug                                                          :iorg:bug:
+* TODO bug                                                          :bug:
   :PROPERTIES:
   :object-foo: bug task html obj
-  :html-form: iorg-controller-edit-handler
+  :html-form: http://localhost:8008/save-edits
   :html-button-value: edit
   :task-author: 
   :task-closed: 
@@ -34,12 +34,13 @@
   :END:
 
 
-* TODO bug                                                          :foo:bar:
+* TODO bug                                 :iorg:foo:bar:
   :PROPERTIES:
   :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
   :object-foo: bug task html obj
-  :html-form: iorg-controller-edit-handler
+  :html-form: http://localhost:8008/save-edits
   :html-button-value: submit
+  :html-button-name: 2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
   :task-author: tj
   :task-closed: nil
   :task-opened: 09-07-2012
@@ -50,6 +51,9 @@
   :bug-need-skills: intermediate
   :ID:       2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
   :END:
+
+# When changing this ID, you need to change it in
+# bugpile-controller-edit-task-handler too. 
 
 Trying to change the agenda-file-list leads to problems. First, there
 is an error message like 'file list can't be a single directory', but

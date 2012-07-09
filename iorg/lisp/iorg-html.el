@@ -38,7 +38,7 @@
   :group 'org-iorg)
 
 (defcustom iorg-html-property-key-prefix-plist
-  '(:export ("html" "bugpile") :noexport  nil) 
+  '(:export ("object") :noexport  nil) 
   "Alist with a list of prefix strings in the cdr that are used to identify those headline properties that will be made editable by the iOrg exporter."
   :group 'iorg-html
   :type 'plist)
@@ -73,7 +73,8 @@
 
 
 (defun iorg-html--generate-property-key-regexp (prefix)
-  "Generate a regexp that matches all Org headline properties whose keys begin with PREFIX followed by a dash '-'."
+  "Generate a regexp that matches all Org headline properties
+whose keys begin with PREFIX followed by a dash '-'."
   (if (not (non-empty-string-p prefix))
       (error "PREFIX must be a non-empty string")
     (format "%s-[-[:alpha:]]+" prefix)))
@@ -81,7 +82,8 @@
 
 ;;; Helper Functions (transcode headline)
 (defun iorg-html--headline-todo (headline info)
-  "Wrap headline todo's in html select-box, reading values from the HEADLINE and INFO arguments"
+  "Wrap headline todo's in html select-box, reading values from
+the HEADLINE and INFO arguments"
   (let* ((todo (and (plist-get info :with-todo-keywords)
                     (let ((todo (org-element-property :todo-keyword headline)))
                       (and todo (org-export-data todo info)))))
@@ -90,6 +92,7 @@
 
     (when (and
            todo
+           ;; FIXME worked before, is now nil?
            org-todo-keywords-for-agenda
            (member todo org-todo-keywords-for-agenda))
       (format "%s%s%s"

@@ -127,8 +127,9 @@ ORG-FILE is given as absolute file-name"
           (and
            (org-check-for-org-mode)
            (org-export-to-file
-            ;; TODO replace e-html with iorg
-            'e-html
+            ;; TODO replace e-html with iorg-html
+            ;; 'e-html
+            'iorg-html
             html-file)
            ;; TODO Erics solution
            (kill-buffer (find-file org-file))))

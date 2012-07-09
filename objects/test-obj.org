@@ -1,0 +1,120 @@
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t3:
+  :PROPERTIES:
+  :test:     3
+  :END:
+* test                                                                   :t3:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t3:
+  :PROPERTIES:
+  :test:     3
+  :END:
+* test                                                                   :t3:
+  :PROPERTIES:
+  :test:     3
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t2:
+  :PROPERTIES:
+  :test:     2
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t1:
+  :PROPERTIES:
+  :test:     1
+  :END:
+* test                                                                   :t3:
+  :PROPERTIES:
+  :test:     3
+  :END:

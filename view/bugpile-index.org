@@ -31,7 +31,7 @@
 
 /Bug-Reports and Feature-Requests for GNU Emacs Org Mode/
 
-* Tasks (Bugs and Features)
+* Tasks (Bugs and Features)    
 ** [[http://localhost:8008/open-new-task][Open New Task]]
 
 | How to write a good bug report    | [[http://localhost:8009/guidelines.html][guidelines]]    |

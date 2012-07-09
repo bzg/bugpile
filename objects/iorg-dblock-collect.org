@@ -1,0 +1,39 @@
+*      
+  :PROPERTIES:
+  :ID:       6f780841-1905-442e-b881-534f89b4d57e
+  :END:
+** TODO bug                                                         :foo:bar:
+       :PROPERTIES:
+       :object-foo: bug
+       :html-edit: link 
+       :END:
+** TODO bug                                                         :feng:shui:
+       :PROPERTIES:
+       :object-foo: task
+       :html-edit: link 
+       :END:
+** TODO bug                                                         :foo:bar:
+       :PROPERTIES:
+       :object-foo: bug
+       :html-edit: button
+       :END:
+** TODO bug                                                         :kung:fu:
+       :PROPERTIES:
+       :object-foo: html
+       :html-edit: button
+       :END:
+** TODO bug                                                         :foo:bar:
+       :PROPERTIES:
+       :object-foo: obj
+       :html-edit: link 
+       :END:
+** TODO bug                                                         :hello:world:
+       :PROPERTIES:
+       :object-foo: bug
+       :html-edit: link 
+       :END:
+** TODO bug                                                         :foo:bar:
+      :PROPERTIES:
+      :object-foo: task
+      :html-edit: button
+      :END:

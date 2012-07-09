@@ -1,13 +1,10 @@
 #+Title: The objects file for class 'feature'
 
-* TODO feature                                                      :kung:fu:
+* TODO feature                                                      :iorg:feature: 
   :PROPERTIES:
   :object-foo: feature task html obj
-  :html-headline-forms: notext
-  :html-edit: link
-  :html-edit-value: Edit
-  :html-send-button: Send
-  :html-reset-button: Reset
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: submit
   :task-author: 
   :task-closed: 
   :task-opened: 
@@ -16,17 +13,14 @@
   :task-project: 
   :feature-category: nice-to-have
   :task-priority: low
-  :ID:       a30e39b2-1e13-427d-b8c9-f1a86ee11703
+  :ID:       7a44a449-cdac-436d-8d01-1a7931303294
   :END:
 
-* TODO feature                                                      :kung:fu:
+* TODO feature                                                      :iorg:feature:
   :PROPERTIES:
   :object-foo: feature task html obj
-  :html-headline-forms: notext
-  :html-edit: link
-  :html-edit-value: Edit
-  :html-send-button: Send
-  :html-reset-button: Reset
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: submit
   :task-author: 
   :task-closed: 
   :task-opened: 
@@ -35,18 +29,13 @@
   :task-project: 
   :feature-category: nice-to-have
   :task-priority: low
-  :ID:       5e46a165-bb09-41c7-bee8-f129445ab47f
+  :ID:       3c422e72-fcc6-43e8-8fba-626b8ced7b9e
   :END:
 
 * File Local Variables (iOrg class properties)              :file_local_vars:
+  [2012-07-09 Mo 03:43]
 # Local Variables:
 # object-foo_ALL: "feature task html obj"
-# html-edit_ALL: "link button"
-# html-headline_forms_ALL: "all notext todo text tag"
-# html-index-action: "nil"
-# html-edit-action: "nil"
-# html-send-action: "nil"
-# html-reset-action: "nil"
 # task-priority_ALL: "urgent high medium low"
 # task-project_ALL: "org babel agenda exporter iorg"
 # feature-category_ALL: "must-nave nice-to-have may-be-once"

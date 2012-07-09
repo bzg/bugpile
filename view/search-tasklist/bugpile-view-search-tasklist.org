@@ -37,4 +37,41 @@
   :ID:       c2ff8888-632d-4ecd-850d-af6f9c620098
   :END:
 
+Lets assume that this is a page with a HTML form that allows the user
+to build a query based on _tags_ and _property values_ of tasks. There
+might be a textfield for free text input and one or more html select
+boxes that allow the user to choose from a list of allowed values. 
 
+Matching tags and properties is functionality already available in Org
+mode (org-tags-view), as well as constructing sparse trees from regexp
+searches (with org-occur).
+
+Thus, making all the iOrg object files in /bugpile/objects/ members of
+the Org agenda-file-list enables selection of objects (that are
+nothing else but Org outline trees) by tag or property value or by
+regular expression search in the objects content. 
+
+Its all there, but unfortunately there are a few unconveniences:
+
+ 1. Both functions mentioned above do not return a list of sub-trees
+    they match but are called for side-effects. A deeper look into the
+    search and matching mechanism seems neccesary to get similar
+    functions to org-tags-view and org-occur that return a list of
+    matched subtrees (or their IDs). 
+ 2. On a server exclusively used for one iOrg application its ok to
+    define the applications object files as only Org agenda files. On a
+    private machine it is not, since then all the Org mode agenda
+    functionality is gone. Mixing private agenda files and e.g.
+    bugpile object files in the agenda-file-list doesn't seem to be a
+    good idea either. And changing the agenda files on the fly can
+    become a real hassle with preserved old state, strange error
+    messages and required Emacs re-start. An alternative variable that
+    holds e.g. the bugpile-object-files and exists in parallel to the
+    org-agenda-files seems neccesary. 
+
+Since both features, match functions that return the matched subtrees
+and a separate list of application-object-files, are not yet
+incorporated in bugpile, we cannot make use of Org modes power here
+and simply link to an (imaginary) [[http://localhost:8008/take-action-on-selected-tasks][result list]]. 
+
+ 

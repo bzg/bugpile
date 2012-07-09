@@ -3,17 +3,8 @@
 *  html                                                    :abstract:
   :PROPERTIES:
   :iorg-super: object
-  :html-edit_ALL-C: link button    
-  :html-headline_forms_ALL-C: all notext todo text tag
-  :html-index-action-C:   nil
-  :html-edit-action-C:    nil
-  :html-send-action-C:    nil
-  :html-reset-action-C:   nil
-  :html-headline-forms: notext
-  :html-edit: link    
-  :html-edit-value: Edit
-  :html-send-button: Send
-  :html-reset-button: Reset
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: submit
   :object-foo: html
   :object-foo_ALL-C: html
   :END:

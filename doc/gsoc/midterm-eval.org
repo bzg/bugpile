@@ -288,16 +288,28 @@ customizable in 'iorg-projects-config'.
 
 ** play with bugpile
 after re-launch (and most likely restart of Emacs), try the following:
+*** search tasklist (rudimentary functionality)
+1. evaluate
 
-1. add the feature-obj.org and bug-obj.org files to you agenda-files.
-   actually, to use org tag and property search in a project, all the
-   xyz-obj.org files in /bugpile/objects/ should be in the agenda file
-   list - and only those. (this caused a lot of trouble on my side, is
-   it buggy or unstable to change the agenda files?)
-2. open http://localhost:8008 in a browser again to see the index.html
-   page of the bugpile project.
-3. click on open new task
- 
+#+begin_src emacs-lisp
+(setq org-columns-default-format
+ "%40ITEM(Task) %TODO %object-foo %html-edit %TAGS")
+#+end_src
+
+#+results:
+: %40ITEM(Task) %TODO %object-foo %html-edit %TAGS
+
+2. delete the ID in /bugpile/objects/iorg-dblock-collect.org and
+create a new one on you machine with org-id-get-create
+
+3. use this new ID in the header of the dynamic block in file
+bugpile-view-take-action-on-selected-tasks.org in the
+/bugpile/view/take-action-on-selected-tasks/ directory.
+4. update the dblock with org-dblock-update
+5. open http://localhost:8008 in a browser again and follow the
+   'search tasklist' and then 'result list' links. 
+*** edit task (more or less)
+
 
 
 

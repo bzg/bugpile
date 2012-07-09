@@ -32,10 +32,50 @@
 /Select Tasks in the Result List/
 /and choose an Action to take on them/
 
-* Resultlist
+* Result List
   :PROPERTIES:
   :ID:       2e4d1477-2ea2-400e-b937-14408d7e2285
   :END:
+
+This is an imaginary result list of a user query. It shows all the
+tasks that were matched by the query either in tags, properties or
+free text (content). The result list is produced inside a dynamic
+block as a column view of a utility files that is used to collect all
+matching subtrees as second level entries under a top-level entry with
+a global ID, that is used as attribute of the dynamic block. 
+
+This is likely not portable to another machine yet, so you might have
+to delete the ID in /bugpile/objects/iorg-dblock-collect.org and
+create a new one on you machine with org-id-get-create, and then use
+this new ID in the header of the dynamic block in file
+bugpile-view-take-action-on-selected-tasks.org in the
+/bugpile/view/take-action-on-selected-tasks/ directory.
+
+For this page to be real
+ 1. the column view should present entries that were matched and
+    collected due to a user query
+ 2. the iorg-html export-backend should put a html checkbox in front
+    of each table row, put a html selectbox with possible actions at
+    the bottom of the page, and wrap the whole thing in a html form.
+
+ 
+
+#+BEGIN: columnview :hlines 1 :id #("6f780841-1905-442e-b881-534f89b4d57e" 0 36 (fontified t face org-property-value))
+| Task   | TODO | object-foo | html-edit | TAGS          |
+|--------+------+------------+-----------+---------------|
+| *      |      |            |           |               |
+| ** bug | TODO | bug        | link      | :foo:bar:     |
+| ** bug | TODO | task       | link      | :feng:shui:   |
+| ** bug | TODO | bug        | button    | :foo:bar:     |
+| ** bug | TODO | html       | button    | :kung:fu:     |
+| ** bug | TODO | obj        | link      | :foo:bar:     |
+| ** bug | TODO | bug        | link      | :hello:world: |
+| ** bug | TODO | task       | button    | :foo:bar:     |
+#+END:
+
+
+
+
 
 
 

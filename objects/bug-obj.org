@@ -1,13 +1,10 @@
 #+Title: The objects file for class 'bug'
 
-* TODO bug                                                          :foo:bar:
+* TODO bug                                                          :bug:iorg:
   :PROPERTIES:
   :object-foo: bug task html obj
-  :html-headline-forms: notext
-  :html-edit: link
-  :html-edit-value: Edit
-  :html-send-button: Send
-  :html-reset-button: Reset
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: edit
   :task-author: 
   :task-closed: 
   :task-opened: 
@@ -16,18 +13,15 @@
   :task-project: 
   :bug-is-upstream: no
   :bug-need-skills: intermediate
-  :ID:       40717d2f-4187-4bca-a242-52666ed99990
+  :ID:       14edcf29-a65c-49b5-813b-259b16b72c56
   :END:
 
 
-* TODO bug                                                          :foo:bar:
+* TODO bug                                                          :iorg:bug:
   :PROPERTIES:
   :object-foo: bug task html obj
-  :html-headline-forms: notext
-  :html-edit: link
-  :html-edit-value: Edit
-  :html-send-button: Send
-  :html-reset-button: Reset
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: edit
   :task-author: 
   :task-closed: 
   :task-opened: 
@@ -36,19 +30,14 @@
   :task-project: 
   :bug-is-upstream: no
   :bug-need-skills: intermediate
-  :ID:       ae32d1c4-4669-472f-a354-6adc192a1671
+  :ID:       7d1af136-c8f3-4a46-a79f-e16f3c9a6d97
   :END:
 
 
 * File Local Variables (iOrg class properties)              :file_local_vars:
+  [2012-07-09 Mo 03:41]
 # Local Variables:
 # object-foo_ALL: "bug task html obj"
-# html-edit_ALL: "link button"
-# html-headline_forms_ALL: "all notext todo text tag"
-# html-index-action: "nil"
-# html-edit-action: "nil"
-# html-send-action: "nil"
-# html-reset-action: "nil"
 # task-priority_ALL: "urgent high medium low"
 # task-project_ALL: "org babel agenda exporter iorg"
 # bug-is-upstream_ALL: "yes no maybe"

@@ -1,6 +1,6 @@
 #+Title: The objects file for class 'bug'
 
-* TODO bug                                                          :bug:iorg:
+* TODO bug                                                          :2bug:iorg:
   :PROPERTIES:
   :object-foo: bug task html obj
   :html-form: iorg-controller-edit-handler
@@ -34,8 +34,36 @@
   :END:
 
 
+* TODO bug                                                          :foo:bar:
+  :PROPERTIES:
+  :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
+  :object-foo: bug task html obj
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: submit
+  :task-author: tj
+  :task-closed: nil
+  :task-opened: 09-07-2012
+  :task-reopened: nil
+  :task-assigned-to: nil
+  :task-project: org-agenda
+  :bug-is-upstream: no
+  :bug-need-skills: intermediate
+  :ID:       2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
+  :END:
+
+Trying to change the agenda-file-list leads to problems. First, there
+is an error message like 'file list can't be a single directory', but
+it can. Second, the old directory and the new directory for the
+agenda-files are concatenated to an unvalid directory (instead of the
+new replacing the old).
+
+But this may not be a bug, because there might be some undetected
+configuration conflict somewhere that causes the misbehaviour.  
+
+
+
+
 * File Local Variables (iOrg class properties)              :file_local_vars:
-  [2012-07-09 Mo 03:41]
 # Local Variables:
 # object-foo_ALL: "bug task html obj"
 # task-priority_ALL: "urgent high medium low"

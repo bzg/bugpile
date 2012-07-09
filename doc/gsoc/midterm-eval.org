@@ -107,7 +107,8 @@ evaluate
    '(:task-priority . "low"))
 #+end_src
 
-find the class in /bugpile/objects/classes/, it should look like this:
+find the class in /bugpile/objects/classes/, it should look similar to
+this:
 
 #+begin_src org
 #+Title: The class definition for 'feature'
@@ -303,13 +304,48 @@ after re-launch (and most likely restart of Emacs), try the following:
 create a new one on you machine with org-id-get-create
 
 3. use this new ID in the header of the dynamic block in file
-bugpile-view-take-action-on-selected-tasks.org in the
-/bugpile/view/take-action-on-selected-tasks/ directory.
+bugpile-view-take-action-on-selected-tasks.org in the /bugpile/view/
+directory.
 4. update the dblock with org-dblock-update
-5. open http://localhost:8008 in a browser again and follow the
-   'search tasklist' and then 'result list' links. 
+5. open http://localhost:8008 in a browser again and follow first the
+   'search tasklist' and then 'result list' links.
 *** edit task (more or less)
+1. From the index page or from the take-action-on-selected-task
+   follow link 'show-task'. 
+2. copy this example bug into your /bugpile/objects/bug-obj.org file.
+   again, you might need to re-produce the ID and copy and paste the
+   new one into the :id header argument of the dblocks in
+   /bugpile/view/bugpile-view-show-task.org and
+   /bugpile/view/bugpile-view-edit-task.org.
 
+
+#+begin_src org
+* TODO bug                                                          :foo:bar:
+  :PROPERTIES:
+  :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
+  :object-foo: bug task html obj
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: submit
+  :task-author: tj
+  :task-closed: nil
+  :task-opened: 09-07-2012
+  :task-reopened: nil
+  :task-assigned-to: nil
+  :task-project: org-agenda
+  :bug-is-upstream: no
+  :bug-need-skills: intermediate
+  :ID:       2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
+  :END:
+
+Trying to change the agenda-file-list leads to problems. First, there
+is an error message like 'file list can't be a single directory', but
+it can. Second, the old directory and the new directory for the
+agenda-files are concatenated to an unvalid directory (instead of the
+new replacing the old).
+
+But this may not be a bug, because there might be some undetected
+configuration conflict somewhere that causes the misbehaviour.  
+#+end_src
 
 
 

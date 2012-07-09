@@ -261,25 +261,38 @@ servers."
 
 ;;; Public Functions (non-interactive)              
 
-(defun iorg-controller-edit-handler (httpcon)
-  "Generic handler for http requests to edit the View page.
 
-This functions uses the information in HTTPCON to return the page
-from which the request was sent in editable form.")
+;;; Functions for Dynamic Blocks
 
-(defun iorg-controller-send-handler (httpcon)
-  "Generic handler for http requests that send edited page data.
-
-This functions uses the information in HTTPCON to store the
-edited data and return the page in actualisized form.")
-
-(defun iorg-controller-reset-handler (httpcon)
-  "Generic handler for http requests to reset the edited page.
-
-This functions uses the information in HTTPCON to reset the edited page to its original state before the editied information is send to the server.")
+(defun org-dblock-write:bugpile-view-show-task (params)
+  "Update dynamic block in file bugpile-view-show-task.org"
+  (let ((id (plist-get params :id)))
+    ;; (insert "\n#+begin_src org \n")
+    (save-excursion
+      (org-id-goto id)
+      (org-copy-subtree))
+    (yank)))
+    ;; (insert "#+end_src")))
 
 
 ;;; Public Functions (obsolete?)              
+
+;; (defun iorg-controller-edit-handler (httpcon)
+;;   "Generic handler for http requests to edit the View page.
+
+;; This functions uses the information in HTTPCON to return the page
+;; from which the request was sent in editable form.")
+
+;; (defun iorg-controller-send-handler (httpcon)
+;;   "Generic handler for http requests that send edited page data.
+
+;; This functions uses the information in HTTPCON to store the
+;; edited data and return the page in actualisized form.")
+
+;; (defun iorg-controller-reset-handler (httpcon)
+;;   "Generic handler for http requests to reset the edited page.
+
+;; This functions uses the information in HTTPCON to reset the edited page to its original state before the editied information is send to the server.")
 
 ;; (defun iorg-change-state-handler (httpcon)
 ;;   "Called by the elnode form handler to update task state."

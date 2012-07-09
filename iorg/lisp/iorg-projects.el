@@ -120,6 +120,10 @@ as 'http://HOST:PORT', e.g. 'http://localhost:8008'"
                    bugpile-controller-open-new-task-handler)
                   ("^search-tasklist/$" .
                    bugpile-controller-search-tasklist-handler)
+                  ("^show-task/$" .
+                   bugpile-controller-show-task-handler)
+                  ("^edit-task/$" .
+                   bugpile-controller-edit-task-handler)
                   ("^take-action-on-selected-tasks/$" .
                    bugpile-controller-take-action-on-selected-tasks-handler)
                   ))

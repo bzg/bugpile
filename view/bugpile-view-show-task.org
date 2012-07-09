@@ -1,0 +1,81 @@
+#+OPTIONS:    H:nil num:nil toc:nil \n:nil @:t ::t |:t ^:{} -:t f:t *:t TeX:t LaTeX:t skip:nil d:(HIDE) tags:not-in-toc
+#+OPTIONS:    author:nil email:nil creator:nil timestamp:nil
+#+STARTUP:    align fold nodlcheck hidestars oddeven lognotestate hideblocks
+#+SEQ_TODO:   TODO(t) INPROGRESS(i) WAITING(w@) | DONE(d) CANCELED(c@)
+#+TAGS:       Write(w) Update(u) Fix(f) Check(c) noexport(n)
+#+TITLE:      Bugpile - Show Task
+#+AUTHOR:     Thorsten Jolitz
+#+EMAIL:      tj[at]data-driven[dot]de
+#+LANGUAGE:   en
+#+STYLE:      <style type="text/css">#outline-container-introduction{ clear:both; }</style>
+# #+LINK_UP:  http://orgmode.org/worg/org-faq.html
+#+LINK_HOME:  http://orgmode.org/worg/
+#+EXPORT_EXCLUDE_TAGS: noexport
+
+
+# #+name: banner
+# #+begin_html
+#   <div id="subtitle" style="float: center; text-align: center;">
+#   <p>
+#   Org Mode info-page for GNU's application to  <a href="http://www.google-melange.com/gsoc/homepage/google/gsoc2012">GSoC 2012</a>
+#   </p>
+#   <p>
+#   <a
+#   href="http://www.google-melange.com/gsoc/homepage/google/gsoc2012"/>
+# <img src="../../images/gsoc/2012/beach-books-beer-60pc.png"  alt="Beach, Books
+#   and Beer"/>
+#   </a>
+#   </p>
+#   </div>
+# #+end_html
+
+/Show Task (Bug-Report or Feature-Request)/
+
+* Task  
+  :PROPERTIES:
+  :ID:       e704e837-62f8-485d-8532-9ca0b6a04ad0
+  :END:
+
+The task in column view (is it possible to include the content text?):
+
+#+BEGIN: columnview :hlines 1 :id 2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
+| Task  | TODO | task-author | task-opened | task-project | bug-need-skills | TAGS      |
+|-------+------+-------------+-------------+--------------+-----------------+-----------|
+| * bug | TODO | tj          |  09-07-2012 | org-agenda   | intermediate    | :foo:bar: |
+#+END:
+
+
+The task in outline view:
+
+#+BEGIN: bugpile-view-show-task :hlines 1 :id 2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
+* TODO bug                                                          :foo:bar:
+  :PROPERTIES:
+  :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
+  :object-foo: bug task html obj
+  :html-form: iorg-controller-edit-handler
+  :html-button-value: submit
+  :task-author: tj
+  :task-closed: nil
+  :task-opened: 09-07-2012
+  :task-reopened: nil
+  :task-assigned-to: nil
+  :task-project: org-agenda
+  :bug-is-upstream: no
+  :bug-need-skills: intermediate
+  :ID:       2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
+  :EXPORT_OPTIONS: d:t
+  :END:
+
+Trying to change the agenda-file-list leads to problems. First, there
+is an error message like 'file list can't be a single directory', but
+it can. Second, the old directory and the new directory for the
+agenda-files are concatenated to an unvalid directory (instead of the
+new replacing the old).
+
+But this may not be a bug, because there might be some undetected
+configuration conflict somewhere that causes the misbehaviour.  
+
+#+END:
+
+[[http://localhost:8008/edit-task][Edit]] this task.
+

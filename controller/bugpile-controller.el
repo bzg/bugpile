@@ -126,9 +126,9 @@ process user edits, and present the modified task to the user."
            (elnode-http-params httpcon))
   (let ((view-id "3675e953-7f75-4319-a1e5-dfb09cadea1f")
         (obj-id "2f822a1e-4bb4-43be-bec4-b0c5caaa42a5")
-        (prop (elnode-http-param httpcon "simple-prop"))
-        (tag (elnode-http-param httpcon "simple-tag"))
-        (section (elnode-http-param httpcon "simple-section")))
+        (prop (elnode-http-param httpcon 'simple-prop))
+        (tag (elnode-http-param httpcon 'simple-tag))
+        (section (elnode-http-param httpcon 'simple-section)))
     (message "prop: %s \ntag: %s \nsection: %s" prop tag section)
     (save-excursion
       (save-restriction
@@ -138,8 +138,8 @@ process user edits, and present the modified task to the user."
         (widen)
         (show-all)
         ;; set property
-        (org-set-poperty
-         (car prop) (cdr prop))
+        (org-entry-put (point)
+        "object-foo" (cdr prop))
         ;; set tags
         (org-set-tags-to (cdr tag))
         ;; set content ??

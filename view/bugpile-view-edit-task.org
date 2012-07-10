@@ -43,7 +43,7 @@
 
 
 
-* TODO bug                                 :iorg:foo:bar:
+* TODO bug                                                          :foo:bar:
   :PROPERTIES:
   :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
   :object-foo: bug task html obj

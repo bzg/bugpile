@@ -49,7 +49,6 @@ global ID is used to switch to the Org buffer."
            org-id-locations)))
 
 
-
 ;;; Public Functions (non-interactive - generic emacs functions)
 
 ;; 'getkey(s)' functions courtesy of Pascal Bourguignon
@@ -229,6 +228,27 @@ that match REGEXP."
              (and (string-match-p reg x) x))
            prop)))
 
+
+;;; Public Functions (non-interactive - elnode stub functions)
+
+
+(defconst httpconn ""
+  "Conning the application with an empty sting")
+
+(defconst http-params
+   '((section . "The content text of a subtree.")
+  (prop . "bug fix")                          
+  (tag . :foo:doo:))
+"Simulating the http-params inside a httpcon")
+
+
+(defun elstub-http-params (httpconn)
+  "Simulates elnode, but uses a local constant instead of a real httpcon"
+http-params)
+
+(defun elstub-http-param (httpconn name)
+  "Simulates elnode, but uses a local constant instead of a real httpcon"
+(assoc name (elstub-http-params httpconn)))
 
 
 (provide 'iorg-util)

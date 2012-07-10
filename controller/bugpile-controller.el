@@ -63,6 +63,8 @@
   (elnode-log-access "bugpile-controller" httpcon)
   (message "show-task elnode-params: %s"
            (elnode-http-params httpcon))
+  (org-id-goto "e704e837-62f8-485d-8532-9ca0b6a04ad0")
+  (org-update-all-dblocks)
   (elnode-send-file httpcon
                     (iorg-controller--org-to-html
                      (concat
@@ -96,22 +98,28 @@ process user edits, and present the modified task to the user."
         (org-id-goto obj-id)
         (org-check-for-org-mode)
         (widen)
-        ;; (unless
-        ;;     (member "iorg" (org-get-tags))
-        ;;   (org-set-tags-to
-        ;;  (cons "iorg" (org-get-tags)))
+        (unless
+            (member "iorg" (org-get-tags))
+          (org-set-tags-to
+           (cons "iorg" (org-get-tags))))
         (org-copy-subtree)
         (org-id-goto view-id)
         (org-check-for-org-mode)
         (widen)
         (show-all)
         (iorg-util-goto-last-entry)
-        (when (member "anchor" (org-get-tags))
-          (goto-char
+        (if (member "anchor" (org-get-tags))
+            (progn
+              (goto-char
+               (org-entry-end-position))
+              (newline)
+              (yank)
+              (save-buffer))
+          (delete-region
+           (org-entry-beginning-position)
            (org-entry-end-position))
-          (newline)
           (yank)
-          (save-buffer)))))        
+          (save-buffer)))))       
   (elnode-send-file httpcon
                     (iorg-controller--org-to-html
                      (concat
@@ -124,7 +132,7 @@ process user edits, and present the modified task to the user."
   (elnode-log-access "bugpile-controller" httpcon)
   (message "save-edits elnode-params: %s"
            (elnode-http-params httpcon))
-  (let ((view-id "3675e953-7f75-4319-a1e5-dfb09cadea1f")
+  (let ((view-id "e704e837-62f8-485d-8532-9ca0b6a04ad0")
         (obj-id "2f822a1e-4bb4-43be-bec4-b0c5caaa42a5")
         (prop (elnode-http-param httpcon 'simple-prop))
         (tag (elnode-http-param httpcon 'simple-tag))
@@ -144,23 +152,15 @@ process user edits, and present the modified task to the user."
         (org-set-tags-to (cdr tag))
         ;; set content ??
         (save-buffer)
-        ;; goto view file
-        (org-id-goto view-id)
-        (org-check-for-org-mode)
-        (widen)
-        (show-all)
-        (iorg-util-goto-last-entry)
-        ;; remove iorg tag
-        (unless (member "anchor" (org-get-tags))
-          (org-set-tags-to
-           (remove "iorg" (org-get-tags)))
-          (save-buffer)))))
+        ;; update dblock in view file
+         (org-dblock-write:bugpile-view-show-task
+          obj-id))))
   (elnode-send-file httpcon
                     (iorg-controller--org-to-html
                      (concat
                       (iorg-projects-get-project-info
                        "bugpile" :view)
-                      "bugpile-view-edit-task.org"))))
+                      "bugpile-view-show-task.org"))))
 
 
 (defun bugpile-controller-take-action-on-selected-tasks-handler (httpcon)

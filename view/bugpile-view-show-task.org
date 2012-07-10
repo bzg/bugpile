@@ -39,9 +39,9 @@
 The task in column view (is it possible to include the content text?):
 
 #+BEGIN: columnview :hlines 1 :id 2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
-| Task  | TODO | task-author | task-opened | task-project | bug-need-skills | TAGS      |
-|-------+------+-------------+-------------+--------------+-----------------+-----------|
-| * bug | TODO | tj          |  09-07-2012 | org-agenda   | intermediate    | :foo:bar: |
+| Task  | TODO | task-author | task-opened | task-project | bug-need-skills | TAGS |
+|-------+------+-------------+-------------+--------------+-----------------+------|
+| * bug | TODO | tj          |  09-07-2012 | org-agenda   | intermediate    |      |
 #+END:
 
 
@@ -52,8 +52,9 @@ The task in outline view:
   :PROPERTIES:
   :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
   :object-foo:
-  :html-form: iorg-controller-edit-handler
+  :html-form: http://localhost:8008/save-edits
   :html-button-value: submit
+  :html-button-name: 2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
   :task-author: tj
   :task-closed: nil
   :task-opened: 09-07-2012
@@ -63,8 +64,10 @@ The task in outline view:
   :bug-is-upstream: no
   :bug-need-skills: intermediate
   :ID:       2f822a1e-4bb4-43be-bec4-b0c5caaa42a5
-  :EXPORT_OPTIONS: d:t
   :END:
+
+# When changing this ID, you need to change it in
+# bugpile-controller-edit-task-handler too. 
 
 Trying to change the agenda-file-list leads to problems. First, there
 is an error message like 'file list can't be a single directory', but
@@ -74,6 +77,10 @@ new replacing the old).
 
 But this may not be a bug, because there might be some undetected
 configuration conflict somewhere that causes the misbehaviour.  
+
+
+
+
 
 #+END:
 

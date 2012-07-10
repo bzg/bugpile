@@ -97,7 +97,7 @@ the HEADLINE and INFO arguments"
            (member todo org-todo-keywords-for-agenda))
       (format "%s%s%s"
               (concat "<span class=\"selectbox\">"
-                      "<select name:\"simple-todo\" size=\"1\">"
+                      "<select name=\"simple-todo\" size=\"1\">"
                       ;; FIXME generate unique value
                       "<option value=\"1\" selected>")
               todo
@@ -350,7 +350,7 @@ is an optional list of prefix strings.
                           "<tr>"
                           "<td>%s</td>"
                           ;; FIXME generate unique names
-                          "<td><input type=\"text\" name=\"simple-prop\""
+                          "<td><input type=\"text\" name=\"simple-prop\" "
                           "size=\"40\" maxlength=\"80\" value=\"%s\">"
                           "</input></td>"
                           "</tr>")
@@ -361,7 +361,7 @@ is an optional list of prefix strings.
                "")
               (format
                (concat
-                "<textarea class=\"textarea\" name=\"simple-section\""
+                "<textarea class=\"textarea\" name=\"simple-section\" "
                 "cols=\"80\" rows=\"35\">%s</textarea>")
                (iorg-html--get-org-input
                 section info prop-drawer))))))

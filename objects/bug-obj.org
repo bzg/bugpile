@@ -34,10 +34,10 @@
   :END:
 
 
-* TODO bug                                                     :iorg:dee:doo:
+* TODO bug                                                             :iorg:
   :PROPERTIES:
   :COLUMNS:  %40ITEM(Task) %TODO %task-author %task-opened %task-project %bug-need-skills %TAGS
-  :object-foo: whats up
+  :object-foo:
   :html-form: http://localhost:8008/save-edits
   :html-button-value: submit
   :html-button-name: 2f822a1e-4bb4-43be-bec4-b0c5caaa42a5

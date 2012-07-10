@@ -17,7 +17,7 @@
 ;;; Other stuff we need
 ;; remember this directory
 (setq iorg-projects-dir
-      (expand-file-name
+      (expand-qfile-name
        (file-name-directory
         (directory-file-name
          (file-name-directory

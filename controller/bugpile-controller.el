@@ -27,8 +27,10 @@
 (defun bugpile-controller-dispatcher-handler (httpcon)
   "Dispatch requests to the Bugpile application."
   (elnode-log-access "bugpile-controller" httpcon)
-  (message "dispatcher elnode-params: %s"
-           (elnode-http-params httpcon))
+  (message "dispatcher elnode-params: %s, %s, %s"
+           (elnode-http-params httpcon)
+           (elnode-http-pathinfo httpcon)
+           (elnode-http-query httpcon))
   (elnode-dispatcher httpcon
                      (iorg-projects-get-project-urls "bugpile")))
 
@@ -130,8 +132,10 @@ process user edits, and present the modified task to the user."
 (defun bugpile-controller-save-edits-handler (httpcon)
   "Save the modified object data."
   (elnode-log-access "bugpile-controller" httpcon)
-  (message "save-edits elnode-params: %s"
-           (elnode-http-params httpcon))
+  (message "save-edits elnode-params: %s, %s, %s"
+           (elnode-http-params httpcon)
+           (elnode-http-pathinfo httpcon)
+           (elnode-http-query httpcon))
   (let ((view-id "e704e837-62f8-485d-8532-9ca0b6a04ad0")
         (obj-id "2f822a1e-4bb4-43be-bec4-b0c5caaa42a5")
         (prop (elnode-http-param httpcon 'simple-prop))
